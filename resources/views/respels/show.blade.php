@@ -54,10 +54,10 @@
 								<option {{$Respels->RespelStatus == 'Revisado' ? 'selected' : '' }}>{{ trans('adminlte_lang::LangRespel.respelstatusrevisado') }}</option>
 							</select>
 						</li>
-						{{-- <li class="list-group-item">
+						<li class="list-group-item">
 							<label>Observaciones</label>
 							<p>{{$Respels->RespelStatusDescription}}</p>
-						</li> --}}
+						</li>
 						<li class="list-group-item" style="display: block; overflow: auto";>
 							{{-- hoja de seguridad --}}
 							@if($Respels->RespelHojaSeguridad!=='RespelHojaDefault.pdf')

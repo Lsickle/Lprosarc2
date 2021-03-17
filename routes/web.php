@@ -32,20 +32,37 @@ Route::get('/preguntas-frecuentes', function () {
     return view('preguntas.index');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::get('qr-code', function () 
+{
+
+	$qrCode = new Endroid\QrCode\QrCode('https://sispro.prosarc.com');
+
+	header('Content-Type: '.$qrCode->getContentType());
+	// return $qrCode->writeDataUri();
+	echo "<img src='".$qrCode->writeDataUri()."'>";
+});
+
+/* REGISTRO EXPRESS*/
+Route::middleware(['web'])->group(function () {
+	Route::get('/registroexpress', 'registroexpressController@create')->name('registroexpress');
+	Route::post('/sendregisterexpress', 'registroexpressController@store');
+	Route::get('/pdftest', 'serviceexpresscontroller@pdftest');
+});
+
+
+
+Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
     //    Route::get('/link1', function ()    {
-//        // Uses Auth Middleware
-//    });
-// Route::get('/', function () {
+	//        // Uses Auth Middleware
+	//    });
+	// Route::get('/', function () {
 	// Only verified users may enter...
 	
-
-
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
 	#adminlte_routes
 	Route::post('/changeRol/{id}', 'userController@changeRol');
-	Route::resource('/clientes', 'clientcontoller');
-	Route::post('/clientes/{id}/changeComercial', 'clientcontoller@changeComercial');
+	Route::resource('/clientes', 'ClientController');
+	Route::post('/clientes/{id}/changeComercial', 'ClientController@changeComercial');
 	Route::get('/cliente/{slug}', 'ClienteController@show')->name('cliente-show');
 	Route::get('/cliente/{slug}/edit', 'ClienteController@edit')->name('cliente-edit');
 	Route::put('/cliente/{slug}/update', 'ClienteController@update')->name('cliente-update');
@@ -53,6 +70,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/cliente/{slug}/negarCliStatus', 'ClienteController@negarCliStatus')->name('cliente-negarCliStatus');
 	Route::get('/cliente/{slug}/TipoFacturacionContado', 'ClienteController@facturacionContado')->name('cliente-facturacionContado');
 	Route::get('/cliente/{slug}/TipoFacturacionCredito', 'ClienteController@facturacionCredito')->name('cliente-facturacionCredito');
+	Route::get('/clientesexpress', 'ClientController@indexExpress')->name('clientes.clientesExpress');
 	Route::resource('/contactos', 'ContactoController');
 	Route::post('/contacto-vehiculo-create/{id}', 'VehiculoContactoController@store');
 	Route::put('/contacto-vehiculo-edit/{id}', 'VehiculoContactoController@update');
@@ -79,6 +97,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::put('/respels/{id}/updateStatusRespel', 'RespelController@updateStatusRespel');
 	Route::put('/respels/{id}/makePublicRespel', 'RespelController@makePublicRespel');
 	Route::put('/respels/{id}/updateTDE', 'RespelController@updateTDE');
+	Route::get('/respelsexpress', 'RespelController@indexExpress')->name('respels.indexExpress');
 	Route::post('/respelGener', 'RespelSedeGenerController@storeGener');
 	Route::delete('/respelGener/{id}', 'RespelSedeGenerController@destroyGener');
 	Route::post('/respelSGener', 'RespelSedeGenerController@storeSGener');
@@ -100,9 +119,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/personal', 'PersonalController');
 	Route::resource('/personalInterno', 'PersonalInternoController');
 	Route::resource('/vehicle','VehicleController');
+	Route::resource('/programacion-express','ProgramacionExpressController');
+	Route::post('/programacion-express/{id}/añadirVehiculo','ProgramacionExpressController@añadirVehiculo');
+	Route::put('/programacion-express/{id}/updateStatus','ProgramacionExpressController@updateStatus');
+	Route::post('/programacion-express/{id}/sendParafiscales','ProgramacionExpressController@sendParafiscales');
+
+
 	Route::resource('/vehicle-programacion','VehicProgController');
 	Route::put('/vehicle-programacion/{id}/updateStatus','VehicProgController@updateStatus');
 	Route::post('/vehicle-programacion/{id}/añadirVehiculo','VehicProgController@añadirVehiculo');
+	Route::post('/vehicle-programacion/{id}/sendParafiscales','VehicProgController@sendParafiscales');
 	Route::resource('/vehicle-mantenimiento','VehicManteController');
 	Route::resource('/tratamiento','TratamientoController');
 	Route::resource('/pretratamiento','PretratamientoController');
@@ -122,16 +148,45 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::put('/solicitud-residuo/{id}/UpdatePrice', 'SolicitudResiduoController@updateSolResPrice');
 	Route::resource('/solicitud-servicio', 'SolicitudServicioController');
 	Route::post('/solicitud-servicio/changestatus', 'SolicitudServicioController@changestatus');
+	Route::post('/solicitud-servicio/reversarStatus', 'SolicitudServicioController@reversarStatus');
+	Route::post('/solicitud-servicio/cancelarServicio', 'SolicitudServicioController@cancelarServicio');
 	Route::put('/solicitud-servicio/{id}/updateRms', 'SolicitudServicioController@updateRms');
 	Route::get('/solicitud-servicio/{id}/sendtobilling', 'SolicitudServicioController@sendtobilling');
+	Route::get('/solicitud-servicio/{id}/add-respel', 'SolicitudServicioController@addRespel');
+	Route::put('/solicitud-servicio/{id}/update-respel', 'SolicitudServicioController@updateRespel');
 	Route::put('/solicitud-servicio/repeat/{id}', 'SolicitudServicioController@repeat');
 	Route::get('/solicitud-servicio/{id}/documentos', 'SolicitudServicioController@solservdocindex')->name('solicitud-servicio.documentos');
+	Route::resource('/serviciosexpress', 'ServiceExpressController');
+	Route::post('/serviciosexpress/changestatus', 'ServiceExpressController@changestatus');
+	Route::post('/serviciosexpress/reversarStatus', 'ServiceExpressController@reversarStatus');
+	Route::post('/serviciosexpress/cancelarServicio', 'ServiceExpressController@cancelarServicio');
+	Route::put('/serviciosexpress/{id}/updateRms', 'ServiceExpressController@updateRms');
+	Route::get('/rutadeldia', 'ServiceExpressController@rutadeldia');
+	Route::get('/serviciosexpress/{id}/sendtobilling', 'ServiceExpressController@sendtobilling');
+	Route::get('/serviciosexpress/{id}/add-respel', 'ServiceExpressController@addRespel');
+	Route::put('/serviciosexpress/{id}/update-respel', 'ServiceExpressController@updateRespel');
+	Route::put('/serviciosexpress/repeat/{id}', 'ServiceExpressController@repeat');
+	Route::post('/serviciosexpress/certificarExpress', 'ServiceExpressController@certificarExpress');
+	Route::get('/serviciosexpress/{id}/documentos', 'ServiceExpressController@solservdocindex')->name('solicitud-servicio.documentos');
+	Route::resource('/observacion', 'ObservacionController');
+	Route::post('/recepcionerrada', 'ObservacionController@recepcionErrada');
+	Route::post('/recordatorio', 'ObservacionController@sendRecordatorio');
+	Route::get('/servicioscompletados', 'SolicitudServicioController@serviciosCompletados');
 	Route::get('/almacenamiento', 'SolicitudServicioController@indexalmacenados')->name('almacenamiento');
 	Route::get('/solicitud-servicio/{id}/documentos/create', 'CertificadoController@create');
+	Route::resource('/certificadosexpress', 'CertificadoExpressController');
+	Route::get('/certificadosexpress/{id}/firmar/{servicio}', 'CertificadoController@firmar');
+	Route::get('/certificadosexpress/{id}/firmar', 'CertificadoController@firmarindex');
+	Route::get('/certificadosexpress/{id}/wordtemplate', 'CertificadoController@wordtemplate');
+	Route::post('/certificadosexpress/{id}/independiente', 'CertificadoController@independiente');
 	Route::resource('/certificados', 'CertificadoController');
 	Route::get('/certificados/{id}/firmar/{servicio}', 'CertificadoController@firmar');
 	Route::get('/certificados/{id}/firmar', 'CertificadoController@firmarindex');
 	Route::get('/certificados/{id}/wordtemplate', 'CertificadoController@wordtemplate');
+	Route::post('/certificados/{id}/independiente', 'CertificadoController@independiente');
+	Route::resource('/verificationcodes', 'VerificationCodeController');
+	Route::resource('/groupcodes', 'GroupCodeController');
+	Route::resource('/verifycodes', 'VerificationCodeController');
 	Route::resource('/manifiestos', 'ManifiestoController');
 	Route::get('/manifiestos/{id}/firmar/{servicio}', 'ManifiestoController@firmar');
 	Route::get('/manifiestos/{id}/firmar', 'ManifiestoController@firmarindex');
@@ -153,7 +208,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::resource('/contratos', 'ContratoController');
 	Route::resource('/requeri-client', 'RequerimientosClienteController');
 	/*Rutas de peticiones de Ajax*/
-	Route::get('/muni-depart/{id}', 'AjaxController@MuniDepart');
+	// Route::get('/muni-depart/{id}', 'AjaxController@MuniDepart');
 	Route::get('/doc-number/{id}', 'AjaxController@DocNumber');
 	Route::get('/area-sede/{id}', 'AjaxController@AreasSedes');
 	Route::get('/cargo-area/{id}', 'AjaxController@CargosAreas');
@@ -166,6 +221,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/preTratamientoDinamico/{id}', 'AjaxController@preTratamientoDinamico');
 	Route::get('/SubcategoriaDinamico/{id}', 'AjaxController@SubcategoriaDinamico');
 	Route::get('/verificarduplicado/{numero}/{type}', 'AjaxController@verificarDuplicado');
+	Route::get('/certificarservicio/{servicio}', 'AjaxController@certificarServicio');
+	Route::get('/facturarservicio/{servicio}', 'AjaxController@facturarServicio');
+	Route::post('/recordatorioAjax', 'AjaxController@sendRecordatorio');
+	Route::put('/firmarCertificado/{slug}', 'AjaxController@firmarCertificado')->name('certificados.ajaxfirmar');
+	Route::get('/ClienteExpress-Residuos/{id}', 'AjaxController@clienteExpressResiduos');
+	
 	/*Rutas de generacion de PDF*/
 	Route::get('/PdfManiCarg/{id}','PdfController@PdfManiCarg');
 	/*Rutas de envio de e-mail */
@@ -173,3 +234,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get('/email-respel/{slug}', 'EmailController@sendEmailRespel')->name('email-respel');
 });
 
+Route::get('/muni-depart/{id}', 'AjaxController@MuniDepart');

@@ -14,7 +14,7 @@
 		<div id="RespelCantidadTipo`+id_div+contadorRespel[id_div]+`">
 			<div class="form-group col-md-6 collapse in ContentRespel`+id_div+contadorRespel[id_div]+`">
 				<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertypeunidad') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertypeunidaddescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertypeunidad') }}</label>
-				<select name="SolResTypeUnidad[`+id_div+`][]" id="SolResTypeUnidad`+id_div+contadorRespel[id_div]+`" class="form-control">
+				<select required name="SolResTypeUnidad[`+id_div+`][]" id="SolResTypeUnidad`+id_div+contadorRespel[id_div]+`" class="form-control">
 					<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 					<option value="99">{{ trans('adminlte_lang::message.solserunidad1') }}</option>
 					<option value="98">{{ trans('adminlte_lang::message.solserunidad2') }}</option>

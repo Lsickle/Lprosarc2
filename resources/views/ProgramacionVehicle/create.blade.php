@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::message.progvehictitle') }}
+Calendario
 @endsection
 @section('contentheader_title')
 <span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
@@ -65,7 +65,7 @@
 							<div class="box-body">
 								<div class="form-group col-xs-12 col-md-6">
 									<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
-									<input  class="form-control ProgVehFecha" type="date" id="ProgVehFecha" name="ProgVehFecha" min="{{date('Y-m-d', strtotime(today()))}}" value="{{old('ProgVehFecha')}}">
+									<input  class="form-control ProgVehFecha" type="date" id="ProgVehFecha" name="ProgVehFecha" min="{{date('Y-m-d', strtotime("1 months ago"))}}" value="{{old('ProgVehFecha')}}">
 									<small class="help-block with-errors"></small>
 								</div>
 								<div class="form-group col-xs-12 col-md-6">

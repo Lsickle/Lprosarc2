@@ -40,31 +40,10 @@
 									<th>{{trans('adminlte_lang::LangRespel.Respeltarj')}}</th>
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<th>{{trans('adminlte_lang::LangRespel.Respelcliente')}}</th>
-									@endif <div></div>
+									@endif
 									<th>{{trans('adminlte_lang::LangRespel.RespelStatus')}}</th>
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
-										<th nowrap><span data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="
-									<p class='row'>
-										<div class='col-md-6 col-sd-12 col-xs-12'>
-											<ul>
-												<li class='text-nowrap'><a class='fixed_widthbtn btn btn-default'><i class='fas fa-lg fa-hourglass-start'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Pendiente</b> </li>
-												<li class='text-nowrap'><a class='fixed_widthbtn btn btn-primary'><i class='fas fa-lg fa-list'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Evaluado</b> </li>
-												<li class='text-nowrap'><a class='fixed_widthbtn btn btn-primary'><i class='fas fa-lg fa-comments-dollar'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Cotizado</b> </li>
-												<li class='text-nowrap'><a class='fixed_widthbtn btn btn-success'><i class='fas fa-lg fa-thumbs-up'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Aprobado</b> </li>
-												<li class='text-nowrap'><a class='fixed_widthbtn btn btn-success'><i class='fas fa-lg fa-check-double'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Revisado</b> </li>
-											</ul>
-										</div>
-										<div class='col-md-6 col-sd-12 col-xs-12'>
-											<ul>
-												<li class='text-nowrap'><a class='fixed_widthbtn btn btn-warning'><i class='fas fa-lg fa-tasks'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Incompleto</b> </li>
-												<li class='text-nowrap'><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-lg fa-ban'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Rechazado</b> </li>
-												<li class='text-nowrap'><a class='fixed_widthbtn btn btn-warning'><i class='fas fa-lg fa-file-pdf'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Falta TDE</b> </li>
-												<li class='text-nowrap'><a class='fixed_widthbtn btn btn-primary'><i class='fas fa-lg fa-file-pdf'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>TDE actualizada</b> </li>
-												<li class='text-nowrap'><a class='fixed_widthbtn btn btn-danger'><i class='fas fa-lg fa-calendar-times'></i></a><i class='fas fa-lg fa-arrow-right'></i> <b>Vencido</b> </li>
-											</ul>
-										</div>
-									</p>
-									"><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>{{trans('adminlte_lang::LangRespel.Respelevaluar')}}</th>
+										<th nowrap><span><i style="color: Dodgerblue;" class="fas fa-info-circle fa-spin"></i></span>{{trans('adminlte_lang::LangRespel.Respelevaluar')}}</th>
 									@else
 										<th nowrap><span data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 100}' title="Status del Residuo" data-content="
 									<p class='row'>
@@ -101,7 +80,16 @@
 									@endif
 									{{-- <td>{{ \Carbon\Carbon::parse($respel->updated_at)->diffForHumans() }}</td> --}}
 									<td>{{ $respel->updated_at }}</td>
-									<td class="text-center">{{$respel->RespelName}}</td>
+									<td class="text-center">
+										@if($respel->SustanciaControlada == 1)
+											@if ($respel->SustanciaControladaTipo == 0)
+												<a title="Sustancia Controlada"><i class="fas fa-flask" style="color: green"></i></a>
+											@endif
+											@if ($respel->SustanciaControladaTipo == 1)
+												<a title="Sustancia de uso masivo"><i class="fas fa-flask" style="color: blue"></i></a>
+											@endif
+										@endif
+										{{$respel->RespelName}}</td>
 									<td class="text-center">{{$respel->TratName}}</td>
 
 									@if($respel->YRespelClasf4741 <> null)
@@ -126,12 +114,7 @@
 									@endif
 
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
-										@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL))
-											<td class="text-center">{{$respel->CliName}}</td>
-										@else
-											<td class="text-center"><a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Comercial Asignado</b>" data-content="<ul><li>{{$respel->PersFirstName}} {{$respel->PersLastName}}</li><li>{{$respel->PersEmail}}</li><li>{{$respel->PersCellphone}}</li></ul>"><i class="fas fa-user"></i></a> {{$respel->CliName}}</td>
-										@endif
-									@else
+										<td class="text-center">{{$respel->CliName}}</td>
 									@endif
 									<td class="text-center">{{$respel->RespelStatus}}</td>
 									@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE))
@@ -184,93 +167,93 @@
 										@switch($respel->RespelStatus)
 											{{-- evaluación pendiente --}}
 											@case('Pendiente')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Pendiente</b>" data-content="<p style='width: 50%'>Residuo registrado por el cliente que debe ser evaluado por el área encargada para asignar tratamientos viables... <br>Para mas detalles comuníquese con el <b>Jefe de Operaciones</b> </p>" class='btn fixed_widthbtn btn-default'><i class='fas fa-lg fa-hourglass-start'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn fixed_widthbtn btn-default'><i class='fas fa-lg fa-hourglass-start'></i></a></td>
 												@break
 											{{-- residuo Rechazado --}}
 											@case('Rechazado')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Rechazado</b>" data-content="<p style='width: 50%'>La viabilización de su residuo ha sido rechazada y/o no se disponen de tratamientos acordes a sus necesidades... <br>Para mas detalles sobre la evaluación comuníquese con el <b>Jefe de Operaciones</b> </p>" class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-ban'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-ban'></i></a></td>
 												@break
 											{{-- residuo Evaluado --}}
 											@case('Evaluado')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Evaluado</b>" data-content="<p style='width: 50%'>El Residuo ya posee un tratamiento viable asignados, sin embargo, el <b>Asesor Comercial</b> debe asignar las tarifas de acuerdo al tratamiento y ofertar alguna de las opciones... <br>Para mas detalles sobre la evaluación comuníquese con el <b>Jefe de Operaciones</b></p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-list'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-list'></i></a></td>
 												@break
 											{{-- residuo Cotizado --}}
 											@case('Cotizado')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Cotizado</b>" data-content="<p style='width: 50%'>El Residuo ya posee tratamiento asignado, sin embargo, se debe esperar a que sea aprobado por <b>Subgerencia</b> <br>Para mas detalles comuníquese con la <b>Subgerencia</b></p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-comments-dollar'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-comments-dollar'></i></a></td>
 												@break
 											{{-- residuo Aprobado --}}
 											@case('Aprobado')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Aprobado</b>" data-content="<p style='width: 50%'>Los tratamientos y tarifas del residuo han sido aprobadas por la <b>Subgerencia</b> y el cliente puede comenzar a ralacionar el residuo con los generadores para realizar solicitudes de servicio... es importante revisar la información del tratamiento ofertado... <br>Para mas detalles comuníquese con el <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-thumbs-up'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-thumbs-up'></i></a></td>
 												@break
 											{{-- cotización vencida --}}
 											@case('Vencido')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Vencido</b>" data-content="<p style='width: 50%'>Las tarifas asignadas al residuo exceden de la fecha negociada por el <b>Asesor Comercial</b> por lo cual podrían ser facturadas a un precio diferente... <br>Para mas detalles comuníquese con el <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-calendar-times'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-calendar-times'></i></a></td>
 												@break
 											{{-- información del residuo incompleta --}}
 											@case('Incompleto')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Incompleto</b>" data-content="<p style='width: 50%'>La información suministrada en el registro del residuo no es suficiente para poder asignar un tratamiento viable... <br>Para mas detalles sobre la evaluación comuníquese con el <b>Jefe de Operaciones</b> </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-tasks'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-tasks'></i></a></td>
 												@break
 											{{-- Residuo Revisado --}}
 											@case('Revisado')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Revisado</b>" data-content="<p style='width: 50%'>El residuo ha sido revisado por el área de logística y cuenta con la documentación necesaria para ser transportado por nuestros vehículos... <br>Para mas detalles comuníquese con el <b>Área de Logística</b> </p>" class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-check-double'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-check-double'></i></a></td>
 												@break
 											{{-- falta la TDE --}}
 											@case('Falta TDE')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tarjeta de emergencia no valida</b>" data-content="<p style='width: 50%'>La tarjeta de emergencia adjuntada no corresponde con la información del residuo, el cliente debe adjuntar la tarjeta de emergencia correcta para que las solicitudes de servicio puedan ser programadas con los vehículos de <b>Prosarc S.A. ESP.</b> ... <br>Para mas detalles comuníquese con el <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-pdf'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-pdf'></i></a></td>
 												@break
 											{{-- TDE actualizada --}}
 											@case('TDE actualizada')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tarjeta de emergencia actualizada</b>" data-content="<p style='width: 50%'>La tarjeta de emergencia adjuntada debe ser revisada por  el área de <b>Logística</b> quienes determinaran si la TDE es valida y cambiaran el estatus del residuo a revisado ... <br>Para mas detalles comuníquese con el <b>Área de Logística</b> </p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-file-pdf'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-file-pdf'></i></a></td>
 												@break
 											{{-- opción default --}}
 											@default
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Pendiente</b>" data-content="<p style='width: 50%'>Residuo registrado por el cliente que debe ser evaluado por el área encargada para asignar tratamientos viables... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-search'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}/edit' class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-search'></i></a></td>
 										@endswitch
 									@else
 										@switch($respel->RespelStatus)
 											{{-- evaluación pendiente --}}
 											@case('Pendiente')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Pendiente</b>" data-content="<p style='width: 50%'>Residuo registrado por el cliente que debe ser evaluado por el área encargada para asignar tratamientos viables... <br>Para mas detalles comuníquese con el <b>Jefe de Operaciones</b> </p>" class='btn fixed_widthbtn btn-default'><i class='fas fa-lg fa-hourglass-start'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-default'><i class='fas fa-lg fa-hourglass-start'></i></a></td>
 												@break
 											{{-- residuo Rechazado --}}
 											@case('Rechazado')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Rechazado</b>" data-content="<p style='width: 50%'>La viabilización de su residuo ha sido rechazada y/o no se disponen de tratamientos acordes a sus necesidades... <br>Para mas detalles comuníquese con el <b>Jefe de Operaciones</b> </p>" class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-ban'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-ban'></i></a></td>
 												@break
 											{{-- residuo Evaluado --}}
 											@case('Evaluado')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Evaluado</b>" data-content="<p style='width: 50%'>El Residuo ya posee un tratamiento viable asignado, sin embargo, el <b>Asesor Comercial</b> debe asignar las tarifas de acuerdo al tratamiento y ofertar alguna de las opciones... <br>Para mas detalles comuníquese con el <b>Jefe de Operaciones</b></p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-list'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-list'></i></a></td>
 												@break
 											{{-- residuo Cotizado --}}
 											@case('Cotizado')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Cotizado</b>" data-content="<p style='width: 50%'>El Residuo ya posee tratamiento asignado, sin embargo, se debe esperar a que sea aprobado por <b>Subgerencia</b> <br>Para mas detalles comuníquese con la <b>Subgerencia</b></p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-comments-dollar'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-comments-dollar'></i></a></td>
 												@break
 											{{-- residuo Aprobado --}}
 											@case('Aprobado')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Aprobado</b>" data-content="<p style='width: 50%'>Los tratamientos y tarifas del residuo han sido aprobadas por la <b>Subgerencia</b> y el cliente puede comenzar a ralacionar el residuo con los generadores para realizar solicitudes de servicio... es importante revisar la información del tratamiento ofertado... <br>Para mas detalles comuníquese con el <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-thumbs-up'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-thumbs-up'></i></a></td>
 												@break
 											{{-- cotización vencida --}}
 											@case('Vencido')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Vencido</b>" data-content="<p style='width: 50%'>Las tarifas asignadas al residuo exceden de la fecha negociada por el <b>Asesor Comercial</b> por lo cual podrían ser facturadas a un precio diferente... <br>Para mas detalles comuníquese con el <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-calendar-times'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-calendar-times'></i></a></td>
 												@break
 											{{-- información del residuo incompleta --}}
 											@case('Incompleto')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Incompleto</b>" data-content="<p style='width: 50%'>La información suministrada en el registro de su residuo no es suficiente para poder asignar un tratamiento viable... <br>Para mas detalles comuníquese con el <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-tasks'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-tasks'></i></a></td>
 												@break
 											{{-- Residuo Revisado --}}
 											@case('Revisado')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Revisado</b>" data-content="<p style='width: 50%'>El residuo ha sido revisado por el área de logística y cuenta con la documentación necesaria para ser transportado por nuestros vehículos... <br>Para mas detalles comuníquese con el <b>Área de Logística</b> </p>" class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-check-double'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-check-double'></i></a></td>
 												@break
 											{{-- falta la TDE --}}
 											@case('Falta TDE')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tarjeta de emergencia no valida</b>" data-content="<p style='width: 50%'>La tarjeta de emergencia adjuntada no corresponde con la información del residuo, el cliente debe adjuntar la tarjeta de emergencia correcta para que las solicitudes de servicio puedan ser programadas con los vehículos de <b>Prosarc S.A. ESP.</b> ... <br>Para mas detalles comuníquese con el <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-pdf'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-file-pdf'></i></a></td>
 												@break
 											{{-- TDE actualizada --}}
 											@case('TDE actualizada')
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Tarjeta de emergencia actualizada</b>" data-content="<p style='width: 50%'>La tarjeta de emergencia adjuntada debe ser revisada por el área de <b>Logística</b> quienes determinaran si la TDE es valida y cambiaran el estatus del residuo a revisado ... <br>Para mas detalles comuníquese con el <b>Área de Logística</b> </p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-file-pdf'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-file-pdf'></i></a></td>
 												@break
 											{{-- opción default --}}
 											@default
-												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Status Pendiente</b>" data-content="<p style='width: 50%'>Residuo registrado por el cliente que debe ser evaluado por el área encargada para asignar tratamientos viables... <br>Para mas detalles comuníquese con su <b>Asesor Comercial</b> </p>" class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-search'></i></a></td>
+												<td class="text-center"><a method='get' href='/respels/{{$respel->RespelSlug}}' class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-search'></i></a></td>
 										@endswitch
 									@endif
 									<td class="text-center">{{$respel->RespelIgrosidad}}</td>

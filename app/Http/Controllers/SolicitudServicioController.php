@@ -12,6 +12,8 @@ use Illuminate\Support\Arr;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\SolicitudResiduoController;
 use App\Mail\NewSolServEmail;
+use App\Mail\SolSerLeftRespel;
+use App\Mail\NewSolServProsarcEmail;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
 use App\audit;
@@ -29,6 +31,8 @@ use App\Tarifa;
 use App\Rango;
 use App\Certificado;
 use App\Certdato;
+use App\CertificadoExpress;
+use App\CertExpressdato;
 use App\Manifiesto;
 use App\Manifdato;
 use App\Requerimiento;
@@ -36,6 +40,7 @@ use App\Documento;
 use App\Docdato;
 use App\ProgramacionVehiculo;
 use App\RequerimientosCliente;
+use App\Observacion;
 use Permisos;
 
 
@@ -52,7 +57,39 @@ class SolicitudServicioController extends Controller
 			->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
 			->join('personals as Comercial', 'Comercial.ID_Pers', '=', 'clientes.CliComercial')
-			->select('solicitud_servicios.*', 'clientes.CliName', 'clientes.CliSlug', 'clientes.CliStatus', 'clientes.TipoFacturacion',  'personals.PersFirstName','personals.PersLastName', 'personals.PersSlug', 'personals.PersEmail', 'personals.PersCellphone', 'Comercial.PersFirstName as ComercialPersFirstName','Comercial.PersLastName as ComercialPersLastName', 'Comercial.PersSlug as ComercialPersSlug', 'Comercial.PersEmail as ComercialPersEmail', 'Comercial.PersCellphone as ComercialPersCellphone')
+			->select('solicitud_servicios.ID_SolSer',
+			'solicitud_servicios.SolSerStatus',
+			'solicitud_servicios.SolSerTipo',
+			'solicitud_servicios.SolSerAuditable',
+			'solicitud_servicios.SolSerConductor',
+			'solicitud_servicios.SolSerVehiculo',
+			'solicitud_servicios.SolSerSlug',
+			'solicitud_servicios.created_at',
+			'solicitud_servicios.updated_at',
+			'solicitud_servicios.SolSerDelete',
+			'solicitud_servicios.SolResAuditoriaTipo',
+			'solicitud_servicios.SolSerNameTrans',
+			'solicitud_servicios.SolSerNitTrans',
+			'solicitud_servicios.SolSerAdressTrans',
+			'solicitud_servicios.SolSerTypeCollect',
+			'solicitud_servicios.SolSerCollectAddress',
+			'solicitud_servicios.SolServCertStatus',
+			'clientes.CliName',
+			'clientes.CliSlug',
+			'clientes.CliStatus',
+			'clientes.TipoFacturacion',
+			'clientes.CliCategoria',
+			'personals.PersFirstName',
+			'personals.PersLastName',
+			'personals.PersSlug',
+			'personals.PersEmail',
+			'personals.PersCellphone',
+			'Comercial.ID_Pers as ComercialID_Pers',
+			'Comercial.PersFirstName as ComercialPersFirstName',
+			'Comercial.PersLastName as ComercialPersLastName',
+			'Comercial.PersSlug as ComercialPersSlug',
+			'Comercial.PersEmail as ComercialPersEmail',
+			'Comercial.PersCellphone as ComercialPersCellphone')
 			->where(function($query){
 				if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
 					$query->where('ID_Cli',userController::IDClienteSegunUsuario());
@@ -60,19 +97,16 @@ class SolicitudServicioController extends Controller
 				if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO) || in_array(Auth::user()->UsRol2, Permisos::SOLSERACEPTADO)){
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('solicitud_servicios.SolSerStatus', 'Pendiente');
-						// $query->whereIn('solicitud_servicios.SolSerStatus', ['Pendiente']);
-						// $query->orWhere('solicitud_servicios.SolSerStatus', 'Tratado');
 						$query->orWhere('solicitud_servicios.SolServCertStatus', 1);
 					}
 				}
-				// if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi)){
-				// 	if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-				// 		$query->whereIn('solicitud_servicios.SolSerStatus', ['Tratado', 'Conciliado']);
-				// 		// $query->orWhere('solicitud_servicios.SolSerStatus', 'Tratado');
-				// 		$query->where('solicitud_servicios.SolServCertStatus', 1);
-				// 	}
-				// }
+				if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES)){
+					if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)){
+						$query->where('Comercial.ID_Pers', Auth::user()->FK_UserPers);
+					}
+				}
 			})
+			->where('CliCategoria', 'Cliente')
 			->orderBy('created_at', 'desc')
 			->get();
 		$Cliente = Cliente::select('CliName','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
@@ -90,16 +124,11 @@ class SolicitudServicioController extends Controller
 				$servicio->recepcion = null;
 			}
 		}
-		// $Comerciales = DB::table('personals')
-		// 				->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
-		// 				->select('personals.*')
-		// 				->where('personals.PersDelete', 0)
-		// 				->where('users.UsRol', 'Comercial')
-		// 				->orWhere('users.UsRol2', 'Comercial')
-		// 				->get();
-		
-		// return $Servicios;
-		return view('solicitud-serv.index', compact('Servicios', 'Residuos', 'Cliente'));
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
+			return view('solicitud-serv.index', compact('Servicios', 'Residuos', 'Cliente'));
+		}else{
+			return view('solicitud-serv.indexprosarc', compact('Servicios', 'Residuos', 'Cliente'));
+		}
 	}
 
 
@@ -315,15 +344,26 @@ class SolicitudServicioController extends Controller
 		$SolicitudServicio->save();
 		$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
 
+
+		/*se guarda la observacion inicial de la creación del servicio*/
+		$Observacion = new Observacion();
+		$Observacion->ObsStatus = $SolicitudServicio->SolSerStatus;
+		$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
+		$Observacion->ObsTipo = 'cliente';
+		$Observacion->ObsRepeat = 1;
+		$Observacion->ObsDate = now();
+		$Observacion->ObsUser = Auth::user()->email;
+		$Observacion->ObsRol = Auth::user()->UsRol;
+		$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
+		$Observacion->save();
+		
 		// se verifica si el cliente tiene comercial asignado
 		$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
 		// se establece la lista de destinatarios
 		if ($SolicitudServicio['cliente']->CliComercial <> null) {
 			$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
-			$destinatarios = ['dirtecnica@prosarc.com.co',
-								'logistica@prosarc.com.co',
+			$destinatarios = ['logistica@prosarc.com.co',
 								'asistentelogistica@prosarc.com.co',
-								'auxiliarlogistico@prosarc.com.co',
 								'gerenteplanta@prosarc.com.co',
 								'subgerencia@prosarc.com.co',
 								'recepcionpda@prosarc.com.co',
@@ -331,10 +371,8 @@ class SolicitudServicioController extends Controller
 							 ];
 		}else{
 			$comercial = "";
-			$destinatarios = ['dirtecnica@prosarc.com.co',
-								'logistica@prosarc.com.co',
+			$destinatarios = ['logistica@prosarc.com.co',
 								'asistentelogistica@prosarc.com.co',
-								'auxiliarlogistico@prosarc.com.co',
 								'gerenteplanta@prosarc.com.co',
 								'subgerencia@prosarc.com.co',
 								'recepcionpda@prosarc.com.co'
@@ -367,14 +405,22 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResDelete = 0;
 				$SolicitudResiduo->SolResSlug = hash('sha256', rand().time().$SolicitudResiduo->SolResKgEnviado);
 				$SolicitudResiduo->FK_SolResSolSer = $ID_SolSer;
-				if (isset($request['SolResCantiUnidad'][$Generador][$y])&&(isset($request['SolResTypeUnidad'][$Generador][$y]))){
+				if ((isset($request['SolResTypeUnidad'][$Generador][$y]))){
 					if($request['SolResTypeUnidad'][$Generador][$y] == 99){
 						$SolicitudResiduo->SolResTypeUnidad = "Unidad";
 					}
 					else if($request['SolResTypeUnidad'][$Generador][$y] == 98){
 						$SolicitudResiduo->SolResTypeUnidad = "Litros";
 					}
-					$SolicitudResiduo->SolResCantiUnidad = $request['SolResCantiUnidad'][$Generador][$y];
+					if (isset($request['SolResCantiUnidad'][$Generador][$y])&&$request['SolResCantiUnidad'][$Generador][$y] != null) {
+						$SolicitudResiduo->SolResCantiUnidad = $request['SolResCantiUnidad'][$Generador][$y];
+						$SolicitudResiduo->SolResCantiUnidadConciliada = 0;
+						$SolicitudResiduo->SolResCantiUnidadRecibida = 0;
+					}else {
+						$SolicitudResiduo->SolResCantiUnidad = 0;
+						$SolicitudResiduo->SolResCantiUnidadConciliada = 0;
+						$SolicitudResiduo->SolResCantiUnidadRecibida = 0;
+					}
 				}
 				
 				switch ($request['SolResEmbalaje'][$Generador][$y]) {
@@ -490,6 +536,28 @@ class SolicitudServicioController extends Controller
 		if (!$SolicitudServicio) {
 			abort(404);
 		}
+
+		$Observaciones = Observacion::where('FK_ObsSolSer', $SolicitudServicio->ID_SolSer)->orderBy('ObsDate', 'desc')->get();
+
+		if($SolicitudServicio->SolSerStatus == 'Completado'||$SolicitudServicio->SolSerStatus == 'Corregido'){
+			$ultimoRecordatorio = Observacion::where('FK_ObsSolSer', $SolicitudServicio->ID_SolSer)
+								->where('ObsStatus', 'Recordatorio+')
+								->orderBy('ObsDate', 'desc')
+								->first();
+			if(!$ultimoRecordatorio){
+				$ultimoRecordatorio = Observacion::where('FK_ObsSolSer', $SolicitudServicio->ID_SolSer)
+								->where('ObsStatus', 'Completado')
+								->orderBy('ObsDate', 'asc')
+								->first();
+				if(!$ultimoRecordatorio){
+					$ultimoRecordatorio = collect();
+					$ultimoRecordatorio->ObsDate = $SolicitudServicio->updated_at;
+				}
+				$ultimoRecordatorio->ObsRepeat = 0;
+			}
+		}
+
+		
 		$SolSerCollectAddress = $SolicitudServicio->SolSerCollectAddress;
 		$SolSerConductor = $SolicitudServicio->SolSerConductor;
 		if($SolicitudServicio->SolSerTipo == 'Interno'){
@@ -517,6 +585,7 @@ class SolicitudServicioController extends Controller
 		$TextProgramacion = null;
 		switch ($SolicitudServicio->SolSerStatus) {
 			case 'Notificado':
+			case 'Programado':
 				setlocale(LC_ALL, "es_CO.UTF-8");
 				$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->first();
 				if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
@@ -536,7 +605,7 @@ class SolicitudServicioController extends Controller
 				// $ProgramacionesActivas = ($Programaciones);
 				break;
 
-			case 'Programado':
+			case 'Residuo Faltante':
 				setlocale(LC_ALL, "es_CO.UTF-8");
 				$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->first();
 				if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
@@ -545,9 +614,8 @@ class SolicitudServicioController extends Controller
 				else{
 					$horas = " en las horas de la mañana";
 				}
-				$TextProgramacion = "El día ".strftime("%d", strtotime($Programacion->ProgVehFecha))." del mes de ".strftime("%B", strtotime($Programacion->ProgVehFecha)).$horas;
+				$TextProgramacion = "";
 				$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
-				// ->where('ProgVehEntrada', null)
 				->where('ProgVehDelete', 0)
 				->get();
 				$ProgramacionesActivas = count(ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
@@ -679,12 +747,15 @@ class SolicitudServicioController extends Controller
 			$tratamientos = 'NoAutorizado';
 		}
 
-		// foreach ($Residuos->SolResRM as $key => $value) {
-		// 	$Residuos->SolResRM[$key] = explode($value);
-		// }
-		// return $Programaciones->count();
-		// return $cantidadesXtratamiento;
-		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento', 'tratamientos'));
+		/* validacion para encontrar la fecha de recepción en planta del servicio */
+		$fechaRecepcion = SolicitudServicio::find($servicio->ID_SolSer)->programacionesrecibidas()->first();
+		if($fechaRecepcion){
+			$SolicitudServicio->recepcion = $fechaRecepcion->ProgVehSalida;
+		}else{
+			$SolicitudServicio->recepcion = null;
+		}
+
+		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento', 'tratamientos', 'Observaciones', 'ultimoRecordatorio'));
 	}
 
 
@@ -694,16 +765,23 @@ class SolicitudServicioController extends Controller
 		if (!$Solicitud) {
 			abort(404);
 		}
-		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-			if($request->input('solserstatus') == 'No Deacuerdo'){
-				$Solicitud->SolSerStatus = 'No Conciliado';
+		if ($Solicitud->SolSerStatus <> 'Certificacion') {
+			if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+				if ($Solicitud->SolSerStatus == 'Completado' || $Solicitud->SolSerStatus == 'Corregido') {
+					if($request->input('solserstatus') == 'No Deacuerdo'){
+						$Solicitud->SolSerStatus = 'No Conciliado';
+					}
+					if($request->input('solserstatus') == 'Conciliada'){
+						$Solicitud->SolSerStatus = 'Conciliado';
+					}
+				} else {
+					if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
+						abort(403, 'el servicio no esta habilitado para la conciliación de pesos');
+					}
+				}
 			}
-			if($request->input('solserstatus') == 'Conciliada'){
-				$Solicitud->SolSerStatus = 'Conciliado';
-			}
-		}
-		if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)){
-			if($Solicitud->SolSerStatus <> 'Certificacion'){
+			
+			if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)){
 				switch ($request->input('solserstatus')) {
 					case 'Aprobada':
 						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2 ) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2 )){
@@ -720,6 +798,11 @@ class SolicitudServicioController extends Controller
 							$Solicitud->SolSerStatus = 'Completado';
 						}
 						break;
+					case 'Residuo Faltante':
+						if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)){
+							$Solicitud->SolSerStatus = 'Residuo Faltante';
+						}
+						break;
 					case 'Conciliación':
 						if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic2)){
 							$Solicitud->SolSerStatus = 'Corregido';
@@ -728,6 +811,11 @@ class SolicitudServicioController extends Controller
 					case 'Tratada':
 						if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1)){
 							$Solicitud->SolSerStatus = 'Tratado';
+						}
+						break;
+					case 'Conciliada':
+						if(in_array(Auth::user()->UsRol, Permisos::ADMINPLANTA) || in_array(Auth::user()->UsRol2, Permisos::ADMINPLANTA)){
+							$Solicitud->SolSerStatus = 'Conciliado';
 						}
 						break;
 					case 'Certificada':
@@ -751,8 +839,15 @@ class SolicitudServicioController extends Controller
 
 						}
 						break;
+					case 'Facturada':
+						if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES)){
+							$Solicitud->SolSerStatus = 'Facturado';
+						}
+						break;
 				}
 			}
+		}else{
+			abort(403, 'el servicio ya ha sido certificado y no admite cambios de status');
 		}
 		$Solicitud->SolSerDescript = $request->input('solserdescript');
 		$Solicitud->save();
@@ -769,8 +864,74 @@ class SolicitudServicioController extends Controller
 		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
 		$log->save();
 
+		
+		/*se guarda la observacion de la modificacion del servicio*/
+		$Observacion = new Observacion();
+		$Observacion->ObsStatus = $Solicitud->SolSerStatus;
+		$Observacion->ObsMensaje = $Solicitud->SolSerDescript;
+		switch ($Solicitud->SolSerStatus) {
+			case 'Aprobado':
+				$Observacion->ObsTipo = 'cliente';
+				break;
+			
+			case 'Programado':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
+			case 'Notificado':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
+			case 'Completado':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
+			case 'Conciliado':
+				if (in_array(Auth::user()->UsRol, Permisos::ADMINPLANTA) || in_array(Auth::user()->UsRol2, Permisos::ADMINPLANTA)) {
+					$Observacion->ObsTipo = 'prosarc';
+				}else{
+					$Observacion->ObsTipo = 'cliente';
+				}
+				break;
+			
+			case 'No Conciliado':
+				$Observacion->ObsTipo = 'cliente';
+				break;
+			
+			case 'Tratado':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
+			case 'Certificacion':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
+			case 'Corregido':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
+			case 'Residuo Faltante':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
+			case 'Facturado':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
+			default:
+			$Observacion->ObsTipo = 'prosarc';
+				break;
+		}
+		$Observacion->ObsRepeat = 1;
+		$Observacion->ObsDate = now();
+		$Observacion->ObsUser = Auth::user()->email;
+		$Observacion->ObsRol = Auth::user()->UsRol;
+		$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
+		$Observacion->save();
+		
 		switch($Solicitud->SolSerStatus){
 			case 'Tratado':
+			case 'Facturado':
 				return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
 				break;
 			case 'Aceptado':
@@ -950,6 +1111,51 @@ class SolicitudServicioController extends Controller
 				}
 			
 			$SolicitudServicio = $SolicitudNew;
+
+			if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
+				/*se guarda la observacion inicial del servicio repetido*/
+				$Observacion = new Observacion();
+				$Observacion->ObsStatus = $SolicitudServicio->SolSerStatus;
+				$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
+				$Observacion->ObsTipo = 'cliente';
+				$Observacion->ObsRepeat = 1;
+				$Observacion->ObsDate = now();
+				$Observacion->ObsUser = Auth::user()->email;
+				$Observacion->ObsRol = Auth::user()->UsRol;
+				$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
+				$Observacion->save();
+			
+			} else {
+
+				/* se incluye la primera observacion del cliente del servicio original */
+				$observacionOriginal = Observacion::where('FK_ObsSolSer', $SolicitudOld->ID_SolSer)->first();
+				/*se guarda la observacion inicial del servicio repetido*/
+				$Observacion = new Observacion();
+				$Observacion->ObsStatus = $observacionOriginal->ObsStatus;
+				$Observacion->ObsMensaje = $observacionOriginal->ObsMensaje;
+				$Observacion->ObsTipo = $observacionOriginal->ObsTipo;
+				$Observacion->ObsRepeat = 1;
+				$Observacion->ObsDate = $observacionOriginal->ObsDate;
+				$Observacion->ObsUser = $observacionOriginal->ObsUser;
+				$Observacion->ObsRol = $observacionOriginal->ObsRol;
+				$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
+				$Observacion->save();
+
+
+				/*se guarda la observacion inicial del servicio repetido*/
+				$Observacion = new Observacion();
+				$Observacion->ObsStatus = $SolicitudServicio->SolSerStatus;
+				$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
+				$Observacion->ObsTipo = 'prosarc';
+				$Observacion->ObsRepeat = 1;
+				$Observacion->ObsDate = now();
+				$Observacion->ObsUser = Auth::user()->email;
+				$Observacion->ObsRol = Auth::user()->UsRol;
+				$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
+				$Observacion->save();
+			}
+			
+			
 						// se verifica si el cliente tiene comercial asignado
 			$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudNew->FK_SolSerCliente)->first();
 			// se establece la lista de destinatarios
@@ -977,7 +1183,18 @@ class SolicitudServicioController extends Controller
 			$SolicitudServicio['comercial'] = $comercial;
 			$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudNew->FK_SolSerPersona)->first();
 
-			Mail::to($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
+			if ($SolicitudServicio->SolServMailCopia != "null") {
+				foreach (json_decode($SolicitudServicio->SolServMailCopia) as $key => $value) {
+					array_push($destinatarios, $value);
+				}
+			}
+
+			if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
+				Mail::to($SolicitudServicio['personalcliente']->PersEmail)->cc($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
+			}else{
+				Mail::to($SolicitudServicio['personalcliente']->PersEmail)->cc($destinatarios)->send(new NewSolServProsarcEmail($SolicitudServicio));
+			}
+					
 			return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudNew->SolSerSlug]);
 		}
 		else{
@@ -1104,6 +1321,18 @@ class SolicitudServicioController extends Controller
 			$log->Auditlog=json_encode($request->all());
 			$log->save();
 
+			/*se guarda la observacion de la modificacion del servicio*/
+			$Observacion = new Observacion();
+			$Observacion->ObsStatus = $SolicitudServicio->SolSerStatus;
+			$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
+			$Observacion->ObsTipo = 'cliente';
+			$Observacion->ObsRepeat = 1;
+			$Observacion->ObsDate = now();
+			$Observacion->ObsUser = Auth::user()->email;
+			$Observacion->ObsRol = Auth::user()->UsRol;
+			$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
+			$Observacion->save();
+			
 			return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudServicio->SolSerSlug]);
 		}
 		switch ($request->input('SolResAuditoriaTipo')) {
@@ -1247,6 +1476,18 @@ class SolicitudServicioController extends Controller
 		$log->Auditlog=json_encode($request->all());
 		$log->save();
 
+		/*se guarda la observacion de la modificacion del servicio*/
+		$Observacion = new Observacion();
+		$Observacion->ObsStatus = $SolicitudServicio->SolSerStatus;
+		$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
+		$Observacion->ObsTipo = 'cliente';
+		$Observacion->ObsRepeat = 1;
+		$Observacion->ObsDate = now();
+		$Observacion->ObsUser = Auth::user()->email;
+		$Observacion->ObsRol = Auth::user()->UsRol;
+		$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
+		$Observacion->save();
+		
 		return redirect()->route('solicitud-servicio.show', ['id' => $id]);
 	}
 
@@ -1260,14 +1501,16 @@ class SolicitudServicioController extends Controller
 	{
 		$SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
 
+		if (!$SolicitudServicio) {
+			abort(404, 'no se pudo eliminar la solicitud de servicio ya que no se encuentra en la base da datos');
+		}
+
 		switch ($SolicitudServicio->SolSerStatus) {
-			case 'Aprobado':
+			case 'Pendiente':
+			case 'Aceptado':
 			case 'Programado':
 			case 'Notificado':
 			case 'Aprobado':
-				if (!$SolicitudServicio) {
-					abort(404, 'no se pudo eliminar la solicitud de servicio ya que no se encuentra en la base da datos');
-				}
 				
 				$documentos = Documento::where('FK_CertSolser', $SolicitudServicio->ID_SolSer)->get();
 				
@@ -1318,7 +1561,7 @@ class SolicitudServicioController extends Controller
 			->where('solicitud_servicios.SolSerStatus', 'Certificacion')
 			->first();
 			if (!$SolicitudServicio) {
-				abort(403,	'Sus residuos aun no han sido certificados');
+				abort(403,'Sus residuos aun no han sido certificados');
 			}
 			$certificados = Certificado::where(function($query) use ($SolicitudServicio){
 			    $UserSedeID = DB::table('personals')
@@ -1330,8 +1573,7 @@ class SolicitudServicioController extends Controller
 			    ->value('clientes.ID_Cli');
 
 			    $query->where('FK_CertCliente', $UserSedeID);
-			    $query->where('CertSrc', '!=', 'CertificadoDefault.pdf');
-			    $query->where('CertAuthHseq', '!=', 0);
+			    $query->where('CertAuthJo', '!=', 0);
 			    $query->where('CertAuthJl', '!=', 0);
 			    $query->where('CertAuthDp', '!=', 0);
 			    $query->where('FK_CertSolser', $SolicitudServicio->ID_SolSer);
@@ -1349,22 +1591,27 @@ class SolicitudServicioController extends Controller
 				abort(404);
 			}
 
-			/* validacion para encontrar la fecha de recepción en planta del servicio */
-			$fechaRecepcion = SolicitudServicio::find($SolicitudServicio->ID_SolSer)->programacionesrecibidas()->first();
-			if($fechaRecepcion){
-				$SolicitudServicio->recepcion = $fechaRecepcion->ProgVehSalida;
-			}else{
-				$SolicitudServicio->recepcion = null;
-			}
 
 			$SolicitudServicio->cliente = Cliente::where('ID_CLi', $SolicitudServicio->FK_SolSerCliente)->first(['CliName', 'CliSlug']);
 
-			$certificados = Certificado::with(['certdato.solres'])
-			->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
-			->get();
+			if ($SolicitudServicio->cliente->CliCategoria == 'ClientePrepago') {
+				$certificados = CertificadoExpress::with(['certdato.solres'])
+				->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
+				->get();
 
+			} else {
+				$certificados = Certificado::with(['certdato.solres'])
+				->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
+				->get();
+			}
 		}
-		
+		/* validacion para encontrar la fecha de recepción en planta del servicio */
+		$fechaRecepcion = SolicitudServicio::find($SolicitudServicio->ID_SolSer)->programacionesrecibidas()->first();
+		if($fechaRecepcion){
+			$SolicitudServicio->recepcion = $fechaRecepcion->ProgVehSalida;
+		}else{
+			$SolicitudServicio->recepcion = null;
+		}
 
 		// return $certificados;
 		return view('solicitud-serv.documentos', compact('SolicitudServicio', 'certificados'));
@@ -1391,7 +1638,7 @@ class SolicitudServicioController extends Controller
 		return redirect()->route('solicitud-servicio.show', ['id' => $id]);
 	}
 
-		public function updateRms(Request $request, $id)
+	public function updateRms(Request $request, $id)
 	{
 		$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
 		if (!$Solicitud) {
@@ -1568,4 +1815,345 @@ class SolicitudServicioController extends Controller
 		}
 	}
 
+	/**
+	 * muestra el formulario para añadir residuos adicionales al servicio en status Residuo Faltante.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function addRespel($id)
+	{
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+			$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
+			if (!$Solicitud) {
+				abort(404);
+			}
+			if($Solicitud->SolSerStatus !== 'Residuo Faltante'){
+				abort(403, 'el servicio no se encuentra en el status correcto para añadir residuos');
+			}
+			if($Solicitud->SolSerCityTrans <> null){
+				$Municipio = Municipio::select('FK_MunCity')->where('ID_Mun', $Solicitud->SolSerCityTrans)->first();
+				$Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
+				$Municipios = Municipio::where('FK_MunCity', $Departamento->ID_Depart)->get();
+			}
+			if($Solicitud->FK_SolSerCollectMun <> null){
+				$Municipio2 = Municipio::select('FK_MunCity')->where('ID_Mun', $Solicitud->FK_SolSerCollectMun)->first();
+				$Departamento2 = Departamento::where('ID_Depart', $Municipio2->FK_MunCity)->first();
+				$Municipios2 = Municipio::where('FK_MunCity', $Departamento2->ID_Depart)->get();
+			}
+			$Departamentos = Departamento::all();
+			$Cliente = Cliente::where('ID_Cli', $Solicitud->FK_SolSerCliente)->first();
+            $Requerimientos = RequerimientosCliente::where('FK_RequeClient', $Cliente->ID_Cli)->get();
+			$Sedes = Sede::select('SedeSlug','SedeName', 'ID_Sede')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
+			$SGeneradors = DB::table('gener_sedes')
+				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
+				->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerName')
+				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->get();
+			$Persona = Personal::where('ID_Pers', $Solicitud->FK_SolSerPersona)
+				->select('PersSlug','PersFirstName','PersLastName')
+				->first();
+			$Personals = DB::table('personals')
+				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
+				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
+				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
+				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
+				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName', 'personals.PersEmail')
+				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
+				->where('personals.PersDelete', 0)
+				->get();
+			$KGenviados = DB::table('solicitud_residuos')
+				->select('SolResKgEnviado')
+				->where('FK_SolResSolSer', $Solicitud->ID_SolSer)
+				->get();
+			$totalenviado = 0;
+			foreach ($KGenviados as $KGenviado) {
+				$totalenviado = $totalenviado + $KGenviado->SolResKgEnviado;
+			}
+			return view('solicitud-serv.addrespel', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado', 'Requerimientos'));
+		}
+		else{
+			abort(403);
+		}
+	}
+
+	/**
+	 * ingresa los residuos adicionales a la base de datos.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function updateRespel(Request $request, $id)
+	{
+		// return $request;
+		$SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
+		if (!$SolicitudServicio) {
+			abort(404, 'solicitud de servicio no encontrada');
+		}
+
+		if(!is_null($request->input('SGenerador'))){
+			$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
+		}
+
+
+		$SolicitudServicio->SolSerStatus = 'Notificado';
+		$SolicitudServicio->SolSerDescript = $request->input('SolSerDescript');
+		$SolicitudServicio->save();
+
+
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="residuos adicionales";
+		$log->AuditRegistro=$SolicitudServicio->ID_SolSer;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=json_encode($request->all());
+		$log->save();
+
+		/*se guarda la observacion inicial de la creación del servicio*/
+		$Observacion = new Observacion();
+		$Observacion->ObsStatus = $SolicitudServicio->SolSerStatus;
+		if ($SolicitudServicio->SolSerDescript = "") {
+			$Observacion->ObsMensaje = 'Residuos faltantes ya incluidos por el cliente';
+		}else{
+			$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
+		}
+		$Observacion->ObsTipo = 'cliente';
+		$Observacion->ObsRepeat = 1;
+		$Observacion->ObsDate = now();
+		$Observacion->ObsUser = Auth::user()->email;
+		$Observacion->ObsRol = Auth::user()->UsRol;
+		$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
+		$Observacion->save();
+
+		$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
+		// se establece la lista de destinatarios
+		$destinatarios = ['recepcionpda@prosarc.com.co'];
+		$destinatarioscc = [];
+
+		if ($SolicitudServicio['cliente']->CliComercial <> null) {
+			$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
+			array_push($destinatarioscc, $comercial->PersEmail);
+		}else{
+			$comercial = "";
+		}
+
+		$SolicitudServicio['comercial'] = $comercial;
+		$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudServicio->FK_SolSerPersona)->first();
+
+		// añadir destinatarios para copia del cliente
+		if ($SolicitudServicio->SolServMailCopia !== "null") {
+			foreach (json_decode($SolicitudServicio->SolServMailCopia) as $key => $value) {
+				array_push($destinatarioscc, $value);
+			}
+		}
+
+		Mail::to($destinatarios)->cc($destinatarioscc)->send(new SolSerLeftRespel($SolicitudServicio));
+
+		return redirect()->route('solicitud-servicio.show', ['id' => $id]);
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function serviciosCompletados()
+	{
+		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
+			abort(401, 'no tiene autorización para acceder a esta página');
+		}
+
+		$Servicios = DB::table('solicitud_servicios')
+			->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+			->join('personals as Comercial', 'Comercial.ID_Pers', '=', 'clientes.CliComercial')
+			->select('solicitud_servicios.ID_SolSer',
+			'solicitud_servicios.SolSerStatus',
+			'solicitud_servicios.SolSerTipo',
+			'solicitud_servicios.SolSerAuditable',
+			'solicitud_servicios.SolSerConductor',
+			'solicitud_servicios.SolSerVehiculo',
+			'solicitud_servicios.SolSerSlug',
+			'solicitud_servicios.created_at',
+			'solicitud_servicios.updated_at',
+			'solicitud_servicios.SolSerDelete',
+			'solicitud_servicios.SolResAuditoriaTipo',
+			'solicitud_servicios.SolSerNameTrans',
+			'solicitud_servicios.SolSerNitTrans',
+			'solicitud_servicios.SolSerAdressTrans',
+			'solicitud_servicios.SolSerTypeCollect',
+			'solicitud_servicios.SolSerCollectAddress',
+			'solicitud_servicios.SolServCertStatus',
+			'clientes.CliName',
+			'clientes.CliSlug',
+			'clientes.CliStatus',
+			'clientes.TipoFacturacion',
+			'clientes.CliCategoria',
+			'personals.PersFirstName',
+			'personals.PersLastName',
+			'personals.PersSlug',
+			'personals.PersEmail',
+			'personals.PersCellphone',
+			'Comercial.PersFirstName as ComercialPersFirstName',
+			'Comercial.PersLastName as ComercialPersLastName',
+			'Comercial.PersSlug as ComercialPersSlug',
+			'Comercial.PersEmail as ComercialPersEmail',
+			'Comercial.PersCellphone as ComercialPersCellphone')
+			->where('solicitud_servicios.SolSerStatus', 'Completado')
+			->where('clientes.CliCategoria', 'Cliente')
+			->orderBy('created_at', 'desc')
+			->get();
+
+		$Cliente = Cliente::select('CliName','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
+		foreach ($Servicios as $servicio) {
+			/* validacion para encontrar la fecha de recepción en planta del servicio */
+			$fechaRecepcion = SolicitudServicio::find($servicio->ID_SolSer)->programacionesrecibidas()->first();
+			if($fechaRecepcion){
+				$servicio->recepcion = $fechaRecepcion->ProgVehSalida;
+			}else{
+				$servicio->recepcion = null;
+			}
+			$servicio->ultimoRecordatorio = SolicitudServicio::find($servicio->ID_SolSer)->ultimorecordatorio();
+			$servicio->fechaCompletado = SolicitudServicio::find($servicio->ID_SolSer)->fechacompletado();
+		}
+
+		// return $Servicios;
+		
+		return view('solicitud-serv.indexrecordatorios', compact('Servicios', 'Residuos', 'Cliente'));
+	}
+
+	public function reversarStatus(Request $request)
+	{
+		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
+		if (!$Solicitud) {
+			abort(404);
+		}
+		if ($Solicitud->SolSerStatus == 'Certificacion') {
+			if (!in_array(Auth::user()->UsRol, Permisos::REVERSARADMIN) && !in_array(Auth::user()->UsRol2, Permisos::REVERSARADMIN)) {
+				abort(403, 'el servicio ya ha sido certificado y no admite cambios de status');
+			}
+		}
+		switch ($request->input('solserstatus')) {
+			case 'Notificado':
+			case 'Completado':
+			case 'Residuo Faltante':
+			case 'Corregido':
+			case 'Programado':
+			case 'No Conciliado':
+			case 'Residuo Faltante':
+				if ($Solicitud->SolSerStatus == 'Conciliado'||$Solicitud->SolSerStatus == 'Tratado'||$Solicitud->SolSerStatus == 'Certificacion') {
+					$certificadosDelete = Certificado::with('certdato')->where('FK_CertSolser', $Solicitud->ID_SolSer)->get();
+					foreach ($certificadosDelete as $key => $value) {
+						foreach ($value->certdato as $key2 => $value2) {
+							$value2->delete();
+						}
+						$value->delete();
+					}
+				}
+				break;
+		}
+
+		$Solicitud->SolSerStatus = $request->input('solserstatus');
+		$Solicitud->SolSerDescript = $request->input('solserdescript');
+		$Solicitud->save();
+
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="Reversado Status";
+		$log->AuditRegistro=$Solicitud->ID_SolSer;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
+		$log->save();
+
+		
+		/*se guarda la observacion de la modificacion del servicio*/
+		$Observacion = new Observacion();
+		$Observacion->ObsStatus = 'Devuelto a status: '.$Solicitud->SolSerStatus;
+		$Observacion->ObsMensaje = $Solicitud->SolSerDescript;
+		$Observacion->ObsTipo = 'prosarc';
+		$Observacion->ObsRepeat = 1;
+		$Observacion->ObsDate = now();
+		$Observacion->ObsUser = Auth::user()->email;
+		$Observacion->ObsRol = Auth::user()->UsRol;
+		$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
+		$Observacion->save();
+		
+		return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
+
+	}
+
+	public function CancelarServicio(Request $request)
+	{
+		// return $request;	
+		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
+		if (!$Solicitud) {
+			abort(404);
+		}
+
+		$statusAllowingCancel = ['Pendiente',
+								'Cancelado',
+								'Aceptado',
+								'Aprobado',
+								'Programado',
+								'Notificado'];
+
+		if (!in_array($Solicitud->SolSerStatus, $statusAllowingCancel)) {
+			abort(403, 'el servicio #'.$Solicitud->ID_SolSer.' no debe ser cancelado, ya que se encuentra en status '.$Solicitud->SolSerStatus);
+		}
+
+		// eliminar las programaciones relacionadas con el servicio
+		$programacionesDelete = ProgramacionVehiculo::where('FK_ProgServi', $Solicitud->ID_SolSer)
+		->where('ProgVehDelete', 0)
+		->get();
+
+		foreach ($programacionesDelete as $key => $value) {
+			$value->ProgVehDelete = 1;
+			$value->save();
+		}
+
+		// cabiar el status del servicio
+		switch ($request->input('solserstatus')) {
+			case 'Aprobado':
+				$Solicitud->SolSerStatus = 'Aprobado';
+				break;
+			case 'Cancelado':
+				$Solicitud->SolSerStatus = 'Cancelado';
+				break;
+		}
+		$Solicitud->SolSerDescript = $request->input('solserdescript');
+		$Solicitud->save();
+
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="Servicio cancelado";
+		$log->AuditRegistro=$Solicitud->ID_SolSer;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
+		$log->save();
+
+		
+		/*se guarda la observacion de la modificacion del servicio*/
+		$Observacion = new Observacion();
+		// cabiar el status de la observación
+		switch ($request->input('solserstatus')) {
+			case 'Aprobado':
+				$Observacion->ObsStatus = 'Reactivado';
+				break;
+			case 'Cancelado':
+				$Observacion->ObsStatus = 'Cancelado';
+				break;
+		}
+		$Observacion->ObsMensaje = $Solicitud->SolSerDescript;
+		$Observacion->ObsTipo = 'prosarc';
+		$Observacion->ObsRepeat = 1;
+		$Observacion->ObsDate = now();
+		$Observacion->ObsUser = Auth::user()->email;
+		$Observacion->ObsRol = Auth::user()->UsRol;
+		$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
+		$Observacion->save();
+		return redirect()->route('solicitud-servicio.index');
+	}
 }

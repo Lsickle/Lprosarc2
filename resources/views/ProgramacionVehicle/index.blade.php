@@ -4,7 +4,7 @@
 @endsection
 @section('contentheader_title')
 <span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
-	{{'Servicios-Programación'}}
+	{{'Programación'}}
   <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
 @endsection
@@ -86,6 +86,9 @@
 										$conductor = $programacion->SolSerConductor;
 										$vehiculoPlaca = $programacion->SolSerVehiculo;
 									}
+									if (!isset($ayudante)) {
+										$ayudante = 'No definido';
+									}
 								@endphp
 								<tr style="{{$programacion->ProgVehDelete === 1 ? 'color: red' : ''}}">
 									<td>{{$programacion->CliName}}</td>
@@ -119,10 +122,10 @@
 
 									@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic2) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
 									@php
-										$Status = ['Aprobado', 'Programado'];
+										$Status = ['Aprobado', 'Programado', 'Notificado'];
 									@endphp
 									<td>
-										<a onclick="ModalStatus('{{$programacion->ID_ProgVeh}}', '{{$programacion->ID_SolSer}}', '{{in_array($programacion->SolSerStatus, $Status)}}', 'Programado', 'Notificar')" {{in_array($programacion->SolSerStatus, $Status) ? '' :  'disabled'}} style="text-align: center;" class="btn btn-{{in_array($programacion->SolSerStatus, $Status) ? 'success' : 'default'}}"><i class="fas fa-sign-out-alt"></i> {{ trans('adminlte_lang::message.progvehicserauth')}}</a>
+										<a onclick="ModalStatus('{{$programacion->ID_ProgVeh}}', '{{$programacion->ID_SolSer}}', '{{in_array($programacion->SolSerStatus, $Status)}}', 'Programado', 'Notificar')" style="text-align: center;" class="btn btn-{{$programacion->SolSerStatus == 'Programado' ? 'success' : ($programacion->SolSerStatus == 'Notificado' ? 'info' : 'default')}}"><i class="fas fa-sign-out-alt"></i> {{ trans('adminlte_lang::message.progvehicserauth')}}</a>
 									</td>
 									@endif
 								</tr>
@@ -159,13 +162,13 @@
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 								<div text-align: center; margin: auto;">
 									<span style=""><p>¿Quiere `+text+` la fecha programada para la solicitud <b>N° `+idServicio+`</b>?</p></span>
-									<form action="/vehicle-programacion/{{$programacion->ID_ProgVeh}}/updateStatus" method="POST" data-toggle="validator" id="SolSer">
+									<form action="/vehicle-programacion/`+slug+`/updateStatus" method="POST" data-toggle="validator" id="SolSer">
 										@csrf
 										@method('PUT')
 										<div class="form-group col-md-12">
 											<label  color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Observaciones de Logistica: <b>(Opcional)</b>" data-content="redacte los detalles u observaciones que desea enviar junto a la notificación de la programación para el servicio #`+idServicio+`"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones de Logistica:</label>
 											<small id="caracteresrestantes" class="help-block with-errors">`+(status == 'No Deacuerdo' ? '*' : '')+`</small>
-											<textarea onchange="updatecaracteres()" id="textDescription" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" `+(status == 'No Deacuerdo' ? 'required' : '')+` name="solserdescript">`+observacion+`</textarea>
+											<textarea onchange="updatecaracteres()" id="textDescription" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" required name="solserdescript">`+observacion+`</textarea>
 										</div>
 										<input type="submit" id="Cambiar`+slug+`" style="display: none;">
 										<input type="text" name="solserslug" value="`+slug+`" style="display: none;">

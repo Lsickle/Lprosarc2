@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\CertUpdated;
 use App\Mail\CertUpdatedComercial;
 use App\Certificado;
-use App\cliente;
+use App\Cliente;
 use App\Personal;
 use App\Generador;
 use App\Tratamiento;
@@ -19,6 +19,10 @@ use App\Permisos;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
 use App\Http\Requests\CertificadoUpdateRequest;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\LabelAlignment;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Response\QrCodeResponse;
 
 
 class CertificadoController extends Controller
@@ -47,9 +51,7 @@ class CertificadoController extends Controller
                     ->where('SolServCertStatus', 2)
                     ->get('ID_SolSer');
 
-                    // return $UserSedeID;
                     $query->where('FK_CertCliente', $UserSedeID);
-                    $query->where('CertSrc', '!=', 'CertificadoDefault.pdf');
                     $query->where('CertAuthJo', '!=', 0);
                     $query->where('CertAuthJl', '!=', 0);
                     $query->where('CertAuthDp', '!=', 0);
@@ -79,8 +81,10 @@ class CertificadoController extends Controller
                 $certificado->recepcion = "";
             }
             $certificado->cliente = $certificado->SolicitudServicio->cliente()->first('CliName')->CliName;
+            $certificado->SolSerStatus = $certificado->SolicitudServicio()->first('SolSerStatus')->SolSerStatus;
             return $certificado ;
         });
+        // return $certificados;
         return view('certificados.index', compact('certificados')); 
     }
 
@@ -187,17 +191,21 @@ class CertificadoController extends Controller
             
             $ultimoManif = Certificado::where('CertManifNumero', '!=', NULL)->orderBy('CertManifNumero', 'desc')->first('CertManifNumero');
 			$proximoManif = ($ultimoManif == NULL) ? 1 : ($ultimoManif->CertManifNumero+1);
-            // foreach ($certificado->SolicitudServicio->SolicitudResiduo as $key => $value) {
-            //     $arrayDeRms = [];
-
-            //     return $value;
-            // }
             $certificado->SolicitudServicio->SolicitudResiduo = $certificado->SolicitudServicio->SolicitudResiduo->map(function ($item) {
                 $rm = SolicitudResiduo::where('SolResSlug', $item->SolResSlug)->first('SolResRM');
                 $item->SolResRM2 = $rm->SolResRM;
                 return $item;
             });
-            return view('certificados.edit', compact(['certificado', 'proximoCertificado', 'proximoManif'])); 
+
+            $qrCode = new QrCode(route('certificados.show', ['certificado' => $certificado->CertSlug]));
+            $qrCode->setLogoPath(asset('img/LogoQR.png'));
+            $qrCode->setLogoSize(30, 30);
+            $qrCode->setSize(150);
+            $qrCode->setMargin(0);
+            $qrCode->setRoundBlockSize(true, QrCode::ROUND_BLOCK_SIZE_MODE_SHRINK);
+
+                // return $qrCode->writeDataUri();
+            return view('certificados.edit', compact(['certificado', 'proximoCertificado', 'proximoManif', 'qrCode']))->withHeaders('Content-Type', $qrCode->getContentType()); 
         }else{
             abort(404, "no posee permisos para la edición de certificados");
         }
@@ -328,17 +336,10 @@ class CertificadoController extends Controller
                                     'gerenteplanta@prosarc.com.co'
                                     ];
 
-            Mail::to($destinatarios)->send(new CertUpdated($certificado, $servicio));
+            $cliente = Cliente::where('ID_Cli', $servicio->FK_SolSerCliente)->first();
             
-                        // se verifica si el cliente tiene comercial asignado
+            Mail::to($destinatarios)->send(new CertUpdated($certificado, $servicio, $cliente));
 
-            $servicio['cliente'] = Cliente::where('ID_Cli', $servicio->FK_SolSerCliente)->first();
-            // se establece la lista de destinatarios
-            if ($servicio['cliente']->CliComercial <> null) {
-                $comercial = Personal::where('ID_Pers', $servicio['cliente']->CliComercial)->first();
-                $destinatariosComercial = [$comercial->PersEmail];
-                Mail::to($destinatariosComercial)->send(new CertUpdatedComercial($certificado, $servicio));
-            }
         }
         
         $log = new audit();
@@ -350,7 +351,9 @@ class CertificadoController extends Controller
         $log->save();
 
         // return view('certificados.edit', compact('certificado')); 
-        return redirect()->action('CertificadoController@edit', ['CertSlug' => $certificado->CertSlug]);
+        // return redirect()->action('CertificadoController@edit', ['CertSlug' => $certificado->CertSlug]);
+        return redirect()->route('certificados.index');
+
     }
 
     /**
@@ -583,6 +586,19 @@ class CertificadoController extends Controller
         $log->Auditlog=json_encode($id);
         $log->save();
 
+        if ($certificado->CertAuthJo != 0 && $certificado->CertAuthJl != 0 && $certificado->CertAuthDp != 0 ) {
+            $servicio = SolicitudServicio::where('ID_SolSer', $certificado->FK_CertSolser)->first();
+            $cliente = Cliente::where('ID_Cli', $servicio->FK_SolSerCliente)->first();
+            // se verifica si el cliente tiene comercial asignado
+            if ($cliente->CliComercial <> null) {
+                $comercial = Personal::where('ID_Pers', $cliente->CliComercial)->first();
+                // se establece la lista de destinatarios
+                $destinatariosComercial = [$comercial->PersEmail];
+                Mail::to($destinatariosComercial)->send(new CertUpdatedComercial($certificado, $servicio, $cliente));
+            }
+        }
+                  
+
         return redirect()->route('solicitud-servicio.documentos', [$servicio]);
     }
 
@@ -807,6 +823,18 @@ class CertificadoController extends Controller
         $log->Auditlog=json_encode($id);
         $log->save();
 
+        if ($certificado->CertAuthJo != 0 && $certificado->CertAuthJl != 0 && $certificado->CertAuthDp != 0 ) {
+            $servicio = SolicitudServicio::where('ID_SolSer', $certificado->FK_CertSolser)->first();
+            $cliente = Cliente::where('ID_Cli', $servicio->FK_SolSerCliente)->first();
+            // se verifica si el cliente tiene comercial asignado
+            if ($cliente->CliComercial <> null) {
+                $comercial = Personal::where('ID_Pers', $cliente->CliComercial)->first();
+                // se establece la lista de destinatarios
+                $destinatariosComercial = [$comercial->PersEmail];
+                Mail::to($destinatariosComercial)->send(new CertUpdatedComercial($certificado, $servicio, $cliente));
+            }
+        }
+
         return redirect()->route('certificados.index');
     }
 
@@ -839,13 +867,53 @@ class CertificadoController extends Controller
         }
 
         // return $certificado;
-        if ($certificado->tratamiento->TratName == 'TermoDestrucción') {
-            return view('certificados.imprimible', compact('certificado')); 
-        }else{
-            return view('certificados.manifiesto', compact('certificado')); 
+        switch ($certificado->tratamiento->TratName) {
+            case 'TermoDestrucción':
+                return view('certificados.imprimible', compact('certificado')); 
+                break;
+            case 'Posconsumo luminarias':
+                return view('certificados.luminarias', compact('certificado')); 
+                break;
+            default:
+                return view('certificados.manifiesto', compact('certificado')); 
+                break;
         }
     }
 
 
+    public function independiente(Request $request, $id)
+	{        
+        $certificadoOld = Certificado::where('ID_Cert', $id)->first();
+
+        $certificadoNew = $certificadoOld->replicate()->fill([
+            'CertSlug' => hash('sha256', rand().time()),
+            'created_at' => now(),
+            'updated_at' => now(),
+            'CertNumero' => 0,
+            'CertObservacion' => 'certificado con observacion generica',
+            'CertSrc' => 'CertificadoDefault.pdf',
+            'CertAuthHseq' => 0,
+            'CertAuthJo' => 0,
+            'CertAuthJl' => 0,
+            'CertAuthDp' => 0,
+        ]);
+        $certificadoNew->save();
+        
+        foreach ($request->input('residuos') as $key => $value) {
+            $certdato = Certdato::where('ID_CertDato', $value)->first();
+            $certdato->FK_DatoCert = $certificadoNew->ID_Cert;
+            $certdato->save();
+        }
+
+        $log = new audit();
+        $log->AuditTabla="certificados";
+        $log->AuditType="generado Cert independiente";
+        $log->AuditRegistro=$certificadoOld->ID_Cert;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request);
+        $log->save();
+        
+        return redirect()->route('certificados.show', ['id' => $certificadoNew->CertSlug]);
+	}
 
 }

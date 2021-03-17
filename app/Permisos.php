@@ -197,10 +197,25 @@ class Permisos{
 		clientcontoller::index
 	*/
 
+	const COMERCIALEXPRESS = ['Programador', 'Comercial'];
+	/* Using ->
+		clientcontoller::index
+	*/
+
+	const COMERCIALES = ['Programador', 'AdministradorBogota', 'Comercial'];
+	/* Using ->
+		clientcontoller::index
+	*/
+
 	const SUPERVISOR = ['Supervisor'];
 	/* Using ->
 		respel/index
 	*/
+	const ADMINPLANTA = ['AdministradorPlanta'];
+	/* Using ->
+		solicitudServicio/show
+	*/
+
 	const TESORERIA = ['Tesorería'];
 	/* Using ->
 		vehicle-programacion/index
@@ -237,6 +252,11 @@ class Permisos{
 		VehicProgController::index
 	 */
 
+	const CONDUCTOREXPRESS = ['Programador','Conductor'];
+	/* Using->
+		VehicProgController::index
+	 */
+
 	const GrupoEdicionRespel = ['Cliente','Programador','JefeOperaciones','AdministradorBogota','JefeComercial','Comercial','JefeLogistica','AsistenteLogistica'];
 	/* Using->
 		respelcontroller::edit
@@ -255,6 +275,21 @@ class Permisos{
 	const SIGNMANIFCERT = ['Programador','JefeLogistica','JefeOperaciones','AdministradorPlanta','Hseq','AsistenteLogistica','Supervisor'];
 	/*Using ->
 		solicitud-serv/show/documentos
+	*/
+
+	const REVERSAR = ['Programador','JefeOperaciones','Supervisor','JefeLogistica','AsistenteLogistica','AdministradorPlanta'];
+	/* Using ->
+		solserv/show
+	*/
+
+	const REVERSARADMIN = ['Programador','AdministradorPlanta'];
+	/* Using ->
+		solserv/show
+	*/
+	
+	const EXPRESS = ['Programador','AdministradorPlanta','Hseq','JefeLogistica','AsistenteLogistica','Conductor','JefeOperaciones','Supervisor','AdministradorBogota','JefeComercial','Tesorería','Comercial','AsistenteComercial'];
+	/* Using ->
+		solserv/show
 	*/
 
 	/*CONJUNTO DE ARRAY PARA EL MENU.PHP PARA PERSONAL DE PROSARC*/

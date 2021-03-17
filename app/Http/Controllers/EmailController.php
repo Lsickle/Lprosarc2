@@ -19,147 +19,271 @@ class EmailController extends Controller
     protected function sendemail($slug)
     {
         $SolSer = SolicitudServicio::where('SolSerSlug', $slug)->first();
-        if((Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')) && ($SolSer->SolSerStatus === 'No Conciliado' || $SolSer->SolSerStatus === 'Conciliado')){
-            $email = DB::table('solicitud_servicios')
-                ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
-                ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-                ->select('personals.PersEmail', 'personals.PersFirstName', 'personals.PersLastName', 'clientes.CliName', 'clientes.CliComercial', 'solicitud_servicios.*')
-                ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
-                ->first();
+            switch ($SolSer->SolSerStatus) {
 
-            $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
-            $destinatarios = ['logistica@prosarc.com.co',
-                                'asistentelogistica@prosarc.com.co',
-                                'recepcionpda@prosarc.com.co',
-                                'ingtratamiento1@prosarc.com.co',
-                                'ingtratamiento2@prosarc.com.co',
-                                'ingtratamiento3@prosarc.com.co',
-                                $comercial->PersEmail
-                            ];
-            $destinatarioscc = ['dirtecnica@prosarc.com.co',
-                                'auxiliarlogistico@prosarc.com.co',
-                                'gerenteplanta@prosarc.com.co'
-                            ];
-            Mail::to($destinatarios)
-            ->cc($destinatarioscc)
-            ->send(new SolSerEmailClient($email));
+                case 'No Conciliado':
+                    if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')) {
+                        $email = DB::table('solicitud_servicios')
+                            ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+                            ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                            ->select('personals.PersEmail', 'personals.PersFirstName', 'personals.PersLastName', 'clientes.CliName', 'clientes.CliComercial', 'solicitud_servicios.*')
+                            ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
+                            ->first();
 
-        }elseif($SolSer->SolSerStatus === 'Programado'){
-            $email = DB::table('solicitud_servicios')
-                ->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
-                ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-                ->select('personals.PersEmail', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida')
-                ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
-                ->where('progvehiculos.FK_ProgServi', '=', $SolSer->ID_SolSer)
-                ->where('progvehiculos.ProgVehDelete', 0)
-                ->first();
+                        $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+                        $destinatarios = ['asistentelogistica@prosarc.com.co',
+                                            'recepcionpda@prosarc.com.co',
+                                            'conciliaciones@prosarc.com.co',
+                                            'ingtratamiento1@prosarc.com.co',
+                                            'ingtratamiento2@prosarc.com.co',
+                                            'ingtratamiento3@prosarc.com.co',
+                                            'jefedetratamiento@prosarc.com.co',
+                                            $comercial->PersEmail
+                                        ];
+                        $destinatarioscc = ['auxiliarpda@prosarc.com.co'];
+                        Mail::to($destinatarios)
+                        ->cc($destinatarioscc)
+                        ->send(new SolSerEmailClient($email));
+                    }
+                    break;
 
-            if ($SolSer->SolServMailCopia == "null") {
-                Mail::to($email->PersEmail)
-                ->send(new SolSerEmail($email));
-            }else{
-                Mail::to($email->PersEmail)
-                ->cc(json_decode($SolSer->SolServMailCopia))
-                ->send(new SolSerEmail($email));
-            }
-            
-        }elseif($SolSer->SolSerStatus === 'Notificado'){
-            $email = DB::table('solicitud_servicios')
-                ->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
-                ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-                ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
-                ->select('personals.PersEmail', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida', 'clientes.*')
-                ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
-                ->where('progvehiculos.FK_ProgServi', '=', $SolSer->ID_SolSer)
-                ->where('progvehiculos.ProgVehDelete', 0)
-                ->first();
-            $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
-            $destinatarios = ['dirtecnica@prosarc.com.co',
-                                'logistica@prosarc.com.co',
-                                'asistentelogistica@prosarc.com.co',
-                                'auxiliarlogistico@prosarc.com.co',
-                                'gerenteplanta@prosarc.com.co',
-                                'subgerencia@prosarc.com.co',
-                                'recepcionpda@prosarc.com.co',
-                                $comercial->PersEmail
-                            ];
+                case 'Conciliado':
+                    if (Auth::user()->UsRol === trans('adminlte_lang::message.Cliente') || Auth::user()->UsRol === trans('adminlte_lang::message.Programador')) {
+                        $email = DB::table('solicitud_servicios')
+                            ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+                            ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                            ->select('personals.PersEmail', 'personals.PersFirstName', 'personals.PersLastName', 'clientes.CliName', 'clientes.CliComercial', 'solicitud_servicios.*')
+                            ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
+                            ->first();
 
-            if ($SolSer->SolServMailCopia == "null") {
-                Mail::to($email->PersEmail)
-                ->cc($destinatarios)
-                ->send(new SolSerEmail($email));
-            }else{
-                foreach (json_decode($SolSer->SolServMailCopia) as $key => $value) {
-                    array_push($destinatarios, $value);
-                }
-                Mail::to($email->PersEmail)
-                ->cc($destinatarios)
-                ->send(new SolSerEmail($email));
-            }
-            return redirect()->route('vehicle-programacion.index')->with('mensaje', trans('servicio notificado correctamente'));
+                        $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+                        $destinatarios = ['auxiliarlogistico@prosarc.com.co',
+                                            $comercial->PersEmail
+                                        ];
+                        $destinatarioscc = ['auxiliarpda@prosarc.com.co',
+                                            'ingtratamiento1@prosarc.com.co',
+                                            'ingtratamiento2@prosarc.com.co',
+                                            'ingtratamiento3@prosarc.com.co',
+                                            'dirtecnica@prosarc.com.co',
+                                            'conciliaciones@prosarc.com.co',
+                                            'recepcionpda@prosarc.com.co',
+                                            'gerenteplanta@prosarc.com.co'
+                                        ];
+                        Mail::to($destinatarios)
+                        ->cc($destinatarioscc)
+                        ->send(new SolSerEmailClient($email));
+                    }else{
+                        if (Auth::user()->UsRol === 'AdministradorPlanta') {
+                            $email = DB::table('solicitud_servicios')
+                                ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+                                ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                                ->select('personals.PersEmail', 'personals.PersFirstName', 'personals.PersLastName', 'clientes.CliName', 'clientes.CliComercial', 'solicitud_servicios.*')
+                                ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
+                                ->first();
 
-        }elseif($SolSer->SolSerStatus === 'Completado'){
-            $email = DB::table('solicitud_servicios')
-                ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-                ->select('personals.PersEmail', 'solicitud_servicios.*')
-                ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
-                ->first();
-            
-            $destinatarios = ['asistentelogistica@prosarc.com.co',
-                            $email->PersEmail];
+                            $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+                            $destinatarios = ['auxiliarlogistico@prosarc.com.co',
+                                                $comercial->PersEmail
+                                            ];
+                            $destinatarioscc = ['auxiliarpda@prosarc.com.co',
+                                                'ingtratamiento1@prosarc.com.co',
+                                                'ingtratamiento2@prosarc.com.co',
+                                                'ingtratamiento3@prosarc.com.co',
+                                                'conciliaciones@prosarc.com.co',
+                                                'recepcionpda@prosarc.com.co',
+                                                'gerenteplanta@prosarc.com.co'
+                                            ];
 
-            if ($SolSer->SolServMailCopia == "null") {
-                Mail::to($destinatarios)
-                ->send(new SolSerEmail($email));
-            }else{
-                Mail::to($destinatarios)
-                ->cc(json_decode($SolSer->SolServMailCopia))
-                ->send(new SolSerEmail($email));
-            }
-        
-        }elseif ($SolSer->SolSerStatus === 'Corregido') {
-            
-            $email = DB::table('solicitud_servicios')
-                ->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
-                ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-                ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
-                ->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.*')
-                ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
-                ->first();
-            $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
-            $destinatarios = ['logistica@prosarc.com.co',
-                                'gerenteplanta@prosarc.com.co',
-                                'recepcionpda@prosarc.com.co',
-                                $comercial->PersEmail
-                            ];
+                            if ($SolSer->SolServMailCopia !== "null") {
+                                foreach (json_decode($SolSer->SolServMailCopia) as $key => $value) {
+                                    array_push($destinatarioscc, $value);
+                                }
+                            }
 
-            if ($SolSer->SolServMailCopia == "null") {
-                Mail::to($email->PersEmail)->cc($destinatarios)->send(new SolSerEmail($email));
-            }else{
-                foreach (json_decode($SolSer->SolServMailCopia) as $key => $value) {
-                    array_push($destinatarios, $value);
-                }
-                Mail::to($email->PersEmail)->cc($destinatarios)->send(new SolSerEmail($email));
-            }
+                            Mail::to($destinatarios)
+                            ->cc($destinatarioscc)
+                            ->send(new SolSerEmail($email));
+                        }
+                    }
+                    
+                    break;
 
-        }else{
-            $email = DB::table('solicitud_servicios')
-                ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-                ->select('personals.PersEmail', 'solicitud_servicios.*')
-                ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
-                ->first();
+                case 'Programado':
+                    $email = DB::table('solicitud_servicios')
+                        ->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
+                        ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                        ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+                        ->select('personals.PersEmail', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida', 'clientes.CliName')
+                        ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
+                        ->where('progvehiculos.FK_ProgServi', '=', $SolSer->ID_SolSer)
+                        ->where('progvehiculos.ProgVehDelete', 0)
+                        ->first();
+
+                    if ($SolSer->SolServMailCopia == "null") {
+                        Mail::to($email->PersEmail)
+                        ->send(new SolSerEmail($email));
+                    }else{
+                        Mail::to($email->PersEmail)
+                        ->cc(json_decode($SolSer->SolServMailCopia))
+                        ->send(new SolSerEmail($email));
+                    }
+                    break;
                 
-            if ($SolSer->SolServMailCopia == "null") {
-                Mail::to($email->PersEmail)
-                ->send(new SolSerEmail($email));
-            }else{
-                Mail::to($email->PersEmail)
-                ->cc(json_decode($SolSer->SolServMailCopia))
-                ->send(new SolSerEmail($email));
+                case 'Notificado':
+                    $email = DB::table('solicitud_servicios')
+                        ->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
+                        ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                        ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+                        ->select('personals.PersEmail', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida', 'clientes.CliName', 'clientes.CliComercial')
+                        ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
+                        ->where('progvehiculos.FK_ProgServi', '=', $SolSer->ID_SolSer)
+                        ->where('progvehiculos.ProgVehDelete', 0)
+                        ->first();
+                    $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+                    $destinatarios = ['dirtecnica@prosarc.com.co',
+                                        'auxiliarlogistico@prosarc.com.co',
+                                        'auxiliarpda@prosarc.com.co',
+                                        'recepcionpda@prosarc.com.co',
+                                        'conciliaciones@prosarc.com.co',
+                                        $comercial->PersEmail
+                                    ];
+
+                    if ($SolSer->SolServMailCopia == "null") {
+                        Mail::to($email->PersEmail)
+                        ->cc($destinatarios)
+                        ->send(new SolSerEmail($email));
+                    }else{
+                        foreach (json_decode($SolSer->SolServMailCopia) as $key => $value) {
+                            array_push($destinatarios, $value);
+                        }
+                        Mail::to($email->PersEmail)
+                        ->cc($destinatarios)
+                        ->send(new SolSerEmail($email));
+                    }
+                    return redirect()->route('vehicle-programacion.index')->with('mensaje', trans('servicio notificado correctamente'));
+                    break;
+                
+                case 'Completado':
+                    $email = DB::table('solicitud_servicios')
+                        ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                        ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+                        ->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.CliName')
+                        ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
+                        ->first();
+                    
+                    $destinatarios = ['recepcionpda@prosarc.com.co',
+                                    'conciliaciones@prosarc.com.co',
+                                    $email->PersEmail];
+
+                    if ($SolSer->SolServMailCopia == "null") {
+                        Mail::to($destinatarios)
+                        ->send(new SolSerEmail($email));
+                    }else{
+                        Mail::to($destinatarios)
+                        ->cc(json_decode($SolSer->SolServMailCopia))
+                        ->send(new SolSerEmail($email));
+                    }
+                    break;
+                
+                case 'Corregido':
+                    $email = DB::table('solicitud_servicios')
+                        ->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
+                        ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                        ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+                        ->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.CliName', 'clientes.CliComercial')
+                        ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
+                        ->first();
+                    $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+                    $destinatarios = ['gerenteplanta@prosarc.com.co',
+                                        'recepcionpda@prosarc.com.co',
+                                        'dirtecnica@prosarc.com.co',
+                                        'conciliaciones@prosarc.com.co',
+                                        $comercial->PersEmail
+                                    ];
+
+                    if ($SolSer->SolServMailCopia !== "null") {
+                        foreach (json_decode($SolSer->SolServMailCopia) as $key => $value) {
+                            array_push($destinatarios, $value);
+                        }
+                    }
+                    Mail::to($email->PersEmail)->cc($destinatarios)->send(new SolSerEmail($email));
+                    break;               
+                case 'Residuo Faltante':
+                    $email = DB::table('solicitud_servicios')
+                        ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                        ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+                        ->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.CliName', 'clientes.CliComercial')
+                        ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
+                        ->first();
+                    
+                    $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+                    
+                    $destinatarios = ['recepcionpda@prosarc.com.co',
+                                    'conciliaciones@prosarc.com.co',
+                                    $comercial->PersEmail];
+
+                    if ($SolSer->SolServMailCopia !== "null") {
+                        foreach (json_decode($SolSer->SolServMailCopia) as $key => $value) {
+                            array_push($destinatarios, $value);
+                        }
+                    }
+
+                    Mail::to($email->PersEmail)->cc($destinatarios)->send(new SolSerEmail($email));
+                    break;
+                case 'Certificacion':
+                    $email = DB::table('solicitud_servicios')
+                        ->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
+                        ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                        ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+                        ->select('personals.PersEmail', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida', 'clientes.CliName', 'clientes.CliComercial')
+                        ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
+                        ->where('progvehiculos.FK_ProgServi', '=', $SolSer->ID_SolSer)
+                        ->where('progvehiculos.ProgVehDelete', 0)
+                        ->first();
+                        
+                    $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+					
+					if ($comercial) {
+						$destinatarios = [$comercial->PersEmail];
+					} else {
+						$destinatarios = [];
+					}
+					
+
+					$destinatarios = [$comercial->PersEmail];
+					if ($SolSer->SolServMailCopia == "null") {
+                        Mail::to($email->PersEmail)
+                        ->cc($destinatarios)
+                        ->send(new SolSerEmail($email));
+                    }else{
+                        foreach (json_decode($SolSer->SolServMailCopia) as $key => $value) {
+                            array_push($destinatarios, $value);
+                        }
+                        Mail::to($email->PersEmail)
+                        ->cc($destinatarios)
+                        ->send(new SolSerEmail($email));
+                    }
+                    return redirect()->route('solicitud-servicio.index');
+                    break;
+                default:
+                    $email = DB::table('solicitud_servicios')
+                        ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                        ->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+                        ->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.CliName', 'clientes.CliComercial')
+                        ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
+                        ->first();
+
+                    if ($SolSer->SolServMailCopia == "null") {
+                        Mail::to($email->PersEmail)
+                        ->send(new SolSerEmail($email));
+                    }else{
+                        Mail::to($email->PersEmail)
+                        ->cc(json_decode($SolSer->SolServMailCopia))
+                        ->send(new SolSerEmail($email));
+                    }
+                    break;
             }
-            
-        }
-        // return back();
+        return back();
         return redirect()->route('solicitud-servicio.index');
 
     }

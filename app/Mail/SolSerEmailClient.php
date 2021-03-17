@@ -33,19 +33,19 @@ class SolSerEmailClient extends Mailable implements ShouldQueue
     {
         switch ($this->email->SolSerStatus) {
             case 'Notificado':
-                $asuntoStatus = 'La Solicitud de Servicio #'.$this->email->ID_SolSer." ya cuenta con fecha PROGRAMADA";
+                $asuntoStatus = 'El Servicio #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." ya cuenta con fecha PROGRAMADO";
                 break;
             case 'Completado':
-                $asuntoStatus = 'Solicitud de Servicio #'.$this->email->ID_SolSer." se ha COMPLETADO la recepción de los residuos en Planta Prosarc S.A. ESP";
+                $asuntoStatus = 'En el Servicio #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." se ha COMPLETADO la recepción de los residuos en Planta Prosarc S.A. ESP";
                 break;
             case 'Conciliado':
-                $asuntoStatus = 'La Solicitud de Servicio #'.$this->email->ID_SolSer." ha sido CONCILIADA por el cliente";
+                $asuntoStatus = 'El Servicio #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." ha sido CONCILIADO";
                 break;
             case 'No Conciliado':
-                $asuntoStatus = 'La Solicitud de Servicio #'.$this->email->ID_SolSer." ha sido RECHAZADA por el cliente";
+                $asuntoStatus = 'Algunos Peso(s) del Servicio #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." han sido RECHAZADOS";
                 break;
             case 'Certificacion':
-                $asuntoStatus = 'La Solicitud de Servicio #'.$this->email->ID_SolSer." ha sido CERTIFICADA por Prosarc S.A. ESP";
+                $asuntoStatus = 'El Servicio #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." ha sido CERTIFICADO por Prosarc S.A. ESP";
                 break;
             default:
                 $asuntoStatus = "Solicitud de Servicio";
@@ -53,6 +53,6 @@ class SolSerEmailClient extends Mailable implements ShouldQueue
         }
         return $this->from('notificaciones@prosarc.com.co', $this->email->CliName)
                         ->subject($asuntoStatus)
-                        ->markdown('emails.SolSer.email');
+                        ->markdown('emails.SolSer.emailClient');
     }
 }

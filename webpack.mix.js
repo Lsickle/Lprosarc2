@@ -13,10 +13,6 @@ const mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
 	 .js('resources/assets/js/app-landing.js', 'public/js/app-landing.js')
-	 .js([
-				'node_modules/pdfmake/build/pdfmake.js',
-				'node_modules/pdfmake/build/vfs_fonts.js'
-		], 'public/js/dependencias2.js')
 	 .sourceMaps()
 	 .combine([
 			 'node_modules/bootstrap/dist/css/bootstrap.min.css',
@@ -31,15 +27,12 @@ mix.js('resources/assets/js/app.js', 'public/js')
 		], 'public/css/app.css')
 	 .combine([
 			 'node_modules/bootstrap/dist/css/bootstrap.min.css',
-			 'resources/assets/css/pratt_landing.min.css'
 	 ], 'public/css/all-landing.css')
 	 .combine([
 				'node_modules/@fortawesome/fontawesome-free/css/all.css',
 				'resources/assets/css/bootstrap-switch-personalizado.css',
 				'node_modules/smartwizard/dist/css/smart_wizard.css',
 				'node_modules/smartwizard/dist/css/smart_wizard_theme_arrows.css',
-				'node_modules/smartwizard/dist/css/smart_wizard_theme_circles.css',
-				'node_modules/smartwizard/dist/css/smart_wizard_theme_dots.css',
 				'node_modules/inputmask/css/inputmask.css',
 				'node_modules/select2/dist/css/select2.css',
 				'node_modules/toastr/build/toastr.css'
@@ -64,8 +57,6 @@ mix.js('resources/assets/js/app.js', 'public/js')
 				'node_modules/datatables.net-fixedheader-dt/css/fixedHeader.dataTables.css',
 				'node_modules/datatables.net-keytable-dt/css/keyTable.dataTables.css',
 				'node_modules/datatables.net-responsive-dt/css/responsive.dataTables.css',
-				'node_modules/datatables.net-rowgroup-dt/css/rowGroup.dataTables.css',
-				'node_modules/datatables.net-rowreorder-dt/css/rowReorder.dataTables.css',
 				'node_modules/datatables.net-scroller-dt/css/scroller.dataTables.css',
 				'node_modules/datatables.net-select-dt/css/select.dataTables.css'
 		], 'public/css/datatable-depen.css')
@@ -76,6 +67,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
 				'resources/assets/css/stilosPersonalizados.css',
 				'resources/assets/css/stilosloading.css'
 		], 'public/css/stilosPersonalizados.css')
+	 .combine([
+				'resources/assets/css/calendarioPersonalizado.css'
+		], 'public/css/calendarioPersonalizado.css')
 	 .scripts([
 				'node_modules/@fortawesome/fontawesome-free/js/all.js',
 				'resources/assets/js/bootstrap-switch.js',
@@ -108,12 +102,10 @@ mix.js('resources/assets/js/app.js', 'public/js')
 	 .scripts([
 				'node_modules/datatables.net/js/jquery.dataTables.js',
 				'node_modules/datatables.net-dt/js/dataTables.dataTables.js',
-				'node_modules/datatables.net-autofill/js/dataTables.autoFill.js',
 				'node_modules/datatables.net-buttons/js/dataTables.buttons.js',
 				'node_modules/datatables.net-buttons/js/buttons.html5.js',
-				'node_modules/datatables.net-buttons/js/buttons.flash.js',
+				'node_modules/datatables.net-buttons/js/buttons.flash.js',	
 				'node_modules/datatables.net-buttons/js/buttons.colVis.js',
-				'node_modules/datatables.net-buttons/js/buttons.print.js',
 				'node_modules/datatables.net-colreorder/js/dataTables.colReorder.js',
 				'node_modules/datatables.net-fixedcolumns/js/dataTables.fixedColumns.js',
 				'node_modules/datatables.net-fixedheader/js/dataTables.fixedHeader.js',
@@ -123,15 +115,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
 				'node_modules/datatables.net-scroller/js/dataTables.scroller.js',
 				'node_modules/datatables.net-select/js/dataTables.select.js',
 				'node_modules/datatables.net-dt/css/jquery.dataTables.js',
-				'node_modules/datatables.net-autofill-dt/js/autoFill.dataTables.js',
 				'node_modules/datatables.net-buttons-dt/js/buttons.dataTables.js',
-				'node_modules/datatables.net-colreorder-dt/js/colReorder.dataTables.js',
-				'node_modules/datatables.net-fixedcolumns-dt/js/fixedColumns.dataTables.js',
-				'node_modules/datatables.net-fixedheader-dt/js/fixedHeader.dataTables.js',
 				'node_modules/datatables.net-keytable-dt/js/keyTable.dataTables.js',
-				'node_modules/datatables.net-responsive-dt/js/responsive.dataTables.js',
-				'node_modules/datatables.net-rowgroup-dt/js/rowGroup.dataTables.js',
-				'node_modules/datatables.net-rowreorder-dt/js/rowReorder.dataTables.js',
 				'node_modules/datatables.net-scroller-dt/js/scroller.dataTables.js',
 				'node_modules/datatables.net-select-dt/js/select.dataTables.js'
 		], 'public/js/datatable-depen.js')

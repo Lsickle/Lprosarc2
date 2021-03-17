@@ -40,6 +40,9 @@ class SolicitudServicio extends Model
 	public function Certificado(){
 		return $this->hasMany('App\Certificado', 'ID_Cert','id');//como solicitud de servicio tiene muchos certificados
 	}
+	public function CertificadoExpress(){
+		return $this->hasMany('App\CertificadoExpress', 'ID_Cert','id');//como solicitud de servicio tiene muchos certificados
+	}
 	public function Manifiesto(){
 		return $this->hasMany('App\Manifiesto', 'ID_Manif', 'id');//como solicitud de servicio tiene muchos manifiestos
 	}
@@ -51,6 +54,9 @@ class SolicitudServicio extends Model
 	}
 	public function ManifiestoCarga(){
 		return $this->hasMany('App\ManifiestoCarga','ID_ManiCarg','id');//como solicitud de servicio tiene muchos manifiesto de carga
+	}
+	public function Observaciones(){
+		return $this->hasMany('App\Observacion', 'FK_ObsSolSer', 'ID_SolSer');//como solicitud de servicio tiene muchas observaciones
 	}
 
 	/*consulta para with de documentos*/
@@ -79,6 +85,16 @@ class SolicitudServicio extends Model
 	public function programacionesrecibidas()
 	{
 		return $this->programaciones()->whereNotNull('ProgVehEntrada')->where('ProgVehDelete', 0);
+	}
+
+	public function ultimorecordatorio()
+	{
+		return $this->Observaciones()->where('ObsStatus', 'Recordatorio+')->orderBy('ObsDate', 'desc')->first();
+	}
+
+	public function fechacompletado()
+	{
+		return $this->Observaciones()->where('ObsStatus', 'Completado')->orderBy('ObsDate', 'desc')->first();
 	}
 
 	protected $casts = [

@@ -34,18 +34,7 @@ class PersonalStoreRequest extends FormRequest
             'NewCargo'      => 'required_if:CargArea,NewArea|required_if:FK_PersCargo,NewCargo|min:4|nullable',
 
             'PersDocType'   => 'nullable|in:CC,CE,NIT,RUT',
-            'PersDocNumber' => ['nullable','max:25',Rule::unique('personals')->where(function($query) use ($request){
-                $Personal = DB::table('personals')
-                    ->select('PersDocNumber', 'PersDelete')
-                    ->where('PersDocNumber', '=', $request->input('PersDocNumber'))
-                    ->first();
-                if(isset($Personal)){
-                    $query->where('PersDocNumber', '=', $Personal->PersDocNumber);
-                    $query->where('PersDelete', '=', 0);
-                }
-                else
-                    $query->where('PersDocNumber', '=', null);
-            })],
+            'PersDocNumber' => 'nullable|max:25|unique:personals,PersDocNumber, ,PersSlug,PersDelete,0',
             'PersFirstName' => 'required|max:64',
             'PersSecondName'=> 'max:64|nullable',
             'PersLastName'  => 'required|max:64',
@@ -63,6 +52,9 @@ class PersonalStoreRequest extends FormRequest
             'PersIngreso'   => 'date',
             'PersSalida'    => 'date|after:PersIngreso|nullable',
             'Persfactura'   => 'max:2|nullable',
+            'PersParafiscales'    => 'sometimes|max:1024|mimes:pdf',
+			'PersDocOpcional'    => 'sometimes|max:2048|mimes:pdf',
+			'PersParafiscalesExpire'    => 'date|after:yesterday|nullable',
         ];
     }
 
@@ -80,6 +72,12 @@ class PersonalStoreRequest extends FormRequest
             'NewArea.required_if'         => 'El campo :attribute es inválido.',    
             'NewCargo.required_if'        => 'El campo :attribute es inválido.',
             'FK_PersCargo.required_unless'=> 'El campo :attribute es inválido.',
+            'PersDocNumber.unique'=> 'El valor del campo :attribute ya se encuentra registrado con otra persona.',
+            'PersParafiscalesExpire.after' => 'la fecha de Parafiscales (vencimiento) debe ser a partir del dia de hoy...',
+			'PersParafiscales.max' => 'el peso del archivo Parafiscales (PDF) debe ser a menor a :max Mb',
+			'PersDocOpcional.max' => 'el peso del archivo Documento Opcional (PDF) debe ser a menor a :max Mb',
+			'PersParafiscales.mimes' => 'el tipo del archivo Parafiscales debe ser .pdf',
+			'PersDocOpcional.mimes' => 'el tipo del archivo Documento Opcional debe ser .pdf',
         ];
     }
 }

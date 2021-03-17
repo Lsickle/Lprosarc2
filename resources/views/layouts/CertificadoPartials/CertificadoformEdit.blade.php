@@ -31,11 +31,6 @@ if ($collection2->isNotEmpty()) {
 }
 @endphp
 <div id="">
-	{{-- <div id="form-step-0" role="form" data-toggle="validator"> --}}
-		{{-- <div class="col-md-6 form-group has-feedback">
-			<label>Tipo</label>
-			<input maxlength="128" name="CertType" type="text" class="form-control" placeholder="Nombre del Residuo" value="{{$certificado->CertType}}">
-		</div> --}}
 		<div class="col-md-6 form-group has-feedback">
 			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>Tipo de documento<b>" data-content="Elija el tipo de documentos que corresponda para su creación…<br><ul>
 				<li>Certificado Prosarc</li>
@@ -63,7 +58,7 @@ if ($collection2->isNotEmpty()) {
 						</span>
 						<div class="input-group" id="inputGroupNumDoc">
 							{{-- <span class="input-group-addon" id="prefijo">M</span> --}}
-						<input required oninput="verificarDuplicado()" min="35000" max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$certificado->CertNumero}}">
+						<input required oninput="verificarDuplicado()" min="35000" max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="">
 							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
 						</div>
 					@else
@@ -73,7 +68,7 @@ if ($collection2->isNotEmpty()) {
 						</div>
 						<div class="input-group" id="inputGroupNumDoc">
 							{{-- <span class="input-group-addon" id="prefijo">M</span> --}}
-							<input required oninput="verificarDuplicado()" min="35000" max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="{{$proximoCertificado}}">
+							<input required oninput="verificarDuplicado()" min="35000" max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del certificado" value="">
 							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
 						</div>
 					@endif
@@ -88,7 +83,7 @@ if ($collection2->isNotEmpty()) {
 						</span>
 						<div class="input-group" id="inputGroupNumDoc">
 							<span class="input-group-addon" id="prefijo">M</span>
-							<input required oninput="verificarDuplicado()" min="2000" max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del manifiesto" value="{{$certificado->CertManifNumero}}">
+							<input required oninput="verificarDuplicado()" min="2000" max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del manifiesto" value="">
 							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
 						</div>
 					@else
@@ -98,7 +93,7 @@ if ($collection2->isNotEmpty()) {
 						</span>
 						<div class="input-group" id="inputGroupNumDoc">
 							<span class="input-group-addon" id="prefijo">M</span>
-							<input required oninput="verificarDuplicado()" min="2000" max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del manifiesto" value="{{$proximoManif}}">
+							<input required oninput="verificarDuplicado()" min="2000" max="999999" id="docNumberInput" name="CertNumero" type="number" class="form-control" placeholder="Número del manifiesto" value="">
 							<span class="btn btn-success input-group-addon" id="copiarNumero"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
 						</div>
 					@endif
@@ -131,35 +126,25 @@ if ($collection2->isNotEmpty()) {
 					
 			@endswitch
 		</div>
-
-		{{-- <div class="col-md-6 form-group has-feedback">
-			<label>Dato especial</label>
-			<input maxlength="32" name="CertiEspName" type="text" class="form-control" placeholder="Dato especial según requerimiento del cliente" value="{{$certificado->CertiEspName}}">
-		</div>
-
-		<div class="col-md-6 form-group has-feedback">
-			<label>Valor del Dato especial</label>
-			<input maxlength="32" name="CertiEspValue" type="text" class="form-control" placeholder="Valor del Dato especial" value="{{$certificado->CertiEspValue}}">
-		</div> --}}
-
 		<div class="col-md-6 form-group has-feedback">
 			<label>Observación</label>
 			<input maxlength="200" name="CertObservacion" type="text" class="form-control" placeholder="campo de observación" value="{{$certificado->CertObservacion}}">
 		</div>
-		
+		<div class="col-md-6 form-group has-feedback">
+			<label>tratamiento</label>
+			<input disabled readonly type="text" class="form-control" placeholder="{{$certificado->tratamiento->TratName}}">
+		</div>
 		<div class="col-md-6 form-group has-feedback">
 			<label>Codigo</label>
 			<div class="input-group" id="divQrCode">
 				<input id="inputQrCode" readonly  type="text" class="form-control" placeholder="Clave para generar codigo QR" value="https://sispro.prosarc.com/img/Certificados/{{$certificado->CertSlug}}.pdf">
-				<span class="btn btn-success input-group-addon" id="copiarCodigo"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
+				<span class="btn btn-success input-group-addon" id="copiarURL"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-copy fa-2x"></i> Copiar</span>
 			</div>
 		</div>
-
 		<div class="col-md-6 form-group has-feedback">
 			<label># Recibo de materiales</label>
 			<input maxlength="128" name="CertNumRm" type="text" class="form-control" placeholder="Numero de Recibo de materiales" value="{{$uniquestring}}">
 		</div>
-
 		<div class="col-md-6 form-group has-feedback">
 			<label id="srcLabel">Archivo Pdf del Certificado</label>
 			<small class="help-block with-errors"></small>
@@ -174,16 +159,15 @@ if ($collection2->isNotEmpty()) {
 				</div>
 			</div>
 		</div>
-		{{-- <div class="col-md-6 form-group has-feedback">
-			<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="<b>CertAnexo</b>" data-content="{{ trans('adminlte_lang::LangRespel.tarjetapopoverinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Anexos del certificado</label>
-			<small class="help-block with-errors">*</small>
-			<div class="input-group">
-				<input  type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
-				<div class="input-group-btn">
-					<a method='get' href='/img/TarjetaEmergencia/' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
-				</div>
+		<div class="col-md-6 form-group has-feedback">
+			<div class="input-group copyable" id="inputQR" style="cursor: pointer;">
+				<img src="{{$qrCode->writeDataUri()}}" alt="" id="inputQrImg">
+				{{-- <button class="btn btn-primary" id="copiarQR"><i style="font-size: 1.8rem; color: white;" class="fas fa-copy fa-2x"></i>Copiar QR</button> --}}
 			</div>
-		</div> --}}
+		</div>
+		<div class="col-md-12 pull-center">
+			<iframe src="/certificados/{{$certificado->CertSlug}}/wordtemplate" style="width: 100%;" title="plantilla"></iframe>
+		</div>
 </div>
 @section('NewScript')
 <script type="text/javascript">
@@ -261,8 +245,22 @@ if ($collection2->isNotEmpty()) {
 			id=$("#CertTypeSelect").val();
 			e.preventDefault();
 			copiarCertNum("docNumberInput", id);
-			
 		});
+	});
+	$(document).ready(function(){
+		$("#copiarURL").click(function(e){
+			id=$("#inputQrCode").val();
+			e.preventDefault();
+			copiarURL("inputQrCode");
+		});
+	});
+	$(".copyable").click(function (e) {
+		$(this).attr("contenteditable", true);
+		SelectText($(this).get(0));
+		document.execCommand('copy');
+		window.getSelection().removeAllRanges();
+		$(this).removeAttr("contenteditable");
+		NotifiTrue('Qr Copiado');
 	});
 </script>
 <script type="text/javascript">
@@ -292,6 +290,30 @@ if ($collection2->isNotEmpty()) {
 		document.execCommand("copy");
 		document.body.removeChild(aux);
 		NotifiTrue(Mensaje);
+	}
+	function copiarURL(id_elemento) {
+		var qrCode = document.createElement("input");
+		qrCode.setAttribute("value", document.getElementById(id_elemento).value);
+		var Mensaje2 = "¡URL para CódigoQR Copiada!";
+		document.body.appendChild(qrCode);
+		qrCode.select();
+		document.execCommand("copy");
+		document.body.removeChild(qrCode);
+		NotifiTrue(Mensaje2);
+	}
+	function SelectText(element) {
+		var doc = document;
+		if (doc.body.createTextRange) {
+			var range = document.body.createTextRange();
+			range.moveToElementText(element);
+			range.select();
+		} else if (window.getSelection) {
+			var selection = window.getSelection();
+			var range = document.createRange();
+			range.selectNodeContents(element);
+			selection.removeAllRanges();
+			selection.addRange(range);
+		}
 	}
 </script>
 <script>

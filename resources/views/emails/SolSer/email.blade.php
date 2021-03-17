@@ -49,7 +49,7 @@
         @break
     @case('Completado')
         @php
-            $text = 'esta lista para realizar una conciliación... por favor revise los pesos y/o cantidades conciliadas en cada uno de los residuos, y luego use el botón (Conciliado) para dar inicio al tratamiento de los residuos';
+            $text = "esta lista para realizar una conciliación, el cliente $email->CliName, debe revisar los pesos y/o cantidades conciliadas en cada uno de los residuos, y luego usar el botón (Conciliado) para dar inicio al tratamiento de los residuos";
         @endphp
         @break
     @case('No Conciliado')
@@ -59,7 +59,7 @@
         @break
     @case('Conciliado')
         @php
-            $text = "ha sido aceptada satisfactoriamente por el cliente $email->CliName, según las cantidades enviadas a conciliación... esto permite dar inicio al registro de las cantidades tratadas para cada residuo de la solicitud de servicio";
+            $text = "ha sido Conciliada por Prosarc S.A. ESP, según las cantidades recibidas... esto permite dar inicio al proceso de tratamiento y certificación para cada residuo de la solicitud de servicio";
         @endphp
         @break
     @case('Corregido')
@@ -70,6 +70,11 @@
     @case('Certificacion')
         @php
             $text = 'ha sido Certificada con éxito. esperamos que el proceso haya sido realizado a su entera satisfacción, ¡Gracias por su preferencia!';
+        @endphp
+        @break  
+    @case('Residuo Faltante')
+        @php
+            $text = 'Se han recibido residuos que NO están declarados. Por favor ingrese a la solicitud y agregue los residuos, con sus respectivas cantidades, de acuerdo a las siguientes observaciones';
         @endphp
         @break
 @endswitch
@@ -89,11 +94,15 @@ En estos momentos la Solicitud de Servicio N° {{$email->ID_SolSer}} {{$text}}.<
 @break
 
 @case('Completado')
+@case('Residuo Faltante')
 # Observaciones de RecepciónPDA
 @break
 
-@case('No Conciliado')
 @case('Conciliado')
+# Observaciones Gerente Planta:
+@break
+
+@case('No Conciliado')
 # Observaciones del Cliente: 
 @break
 
@@ -121,6 +130,24 @@ En estos momentos la Solicitud de Servicio N° {{$email->ID_SolSer}} {{$text}}.<
 Ver Solicitud
 @endcomponent
 
+@if ($email->SolSerStatus === 'Residuo Faltante')
+@php
+    $instruccion = 'En caso de NO tener el residuo registrado en la aplicación SisPRO, puede seguir los siguientes tutoriales para agregar el residuo y luego de la aprobación incluirlo en el servicio:';
+    $end = 'Si tiene alguna duda no olvide comunicarse con su asesor comercial. Saludos, Prosarc S.A. ESP.';
+@endphp
+{{$instruccion}}
+
+@component('mail::button', ['url' => url('https://www.youtube.com/watch?v=sZ5thp264nU')])
+{{-- {{$nameButton}} --}}
+Crear Residuo
+@endcomponent
+
+@component('mail::button', ['url' => url('https://www.youtube.com/watch?v=KNHrI2oM88A')])
+{{-- {{$nameButton}} --}}
+Relación Residuo/Generador
+@endcomponent
+@endif
+
 @if ($email->SolSerStatus === 'Conciliado' || $email->SolSerStatus === 'No Conciliado')
     @php
         $end = 'Por favor dar click en el botón para ver más detalles.';
@@ -130,6 +157,7 @@ Ver Solicitud
         $end = 'Si tiene alguna duda no olvide comunicarse con su asesor comercial. Saludos, Prosarc S.A. ESP.';
     @endphp
 @endif
+
 
 {{$end}}
 

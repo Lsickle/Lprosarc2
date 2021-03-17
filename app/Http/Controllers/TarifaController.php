@@ -18,7 +18,30 @@ class TarifaController extends Controller
      */
     public function index()
     {
-        $tarifas = Tarifa::All();
+        // $tarifas = Tarifa::All();
+
+        $Requerimientos = DB::table('requerimientos')
+				->join('tarifas', 'requerimientos.ID_Req', '=', 'tarifas.FK_TarifaReq')
+				->join('tratamientos', 'requerimientos.FK_ReqTrata', '=', 'tratamientos.ID_Trat')
+				->select('tarifas.*', 'requerimientos.*', 'tratamientos.*')
+				->where('tratamientos.TratName', 'Posconsumo luminarias')
+				->where('requerimientos.ofertado', 1)
+				->where('requerimientos.forevaluation', 1)
+                ->get();
+        // return $Requerimientos;
+        $conteo = 0;
+        
+        foreach ($Requerimientos as $key => $requerimiento) {
+            $tarifa = Tarifa::where('FK_TarifaReq', $requerimiento->ID_Req)->first();
+            if ($tarifa->Tarifatipo == 'Kg') {
+                $tarifa->Tarifatipo = 'Unid';
+                $conteo++;
+            }
+            $tarifa->save();
+        }
+
+        return $conteo;
+
 
         if(Auth::user()->UsRol === "Programador"){
             $tarifas = Tarifa::All();
