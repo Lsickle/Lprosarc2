@@ -10,8 +10,8 @@
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">reporte de cantidades</h3>
-                    {{-- <a href="recurso/create" class="btn btn-primary pull-right">Crear</a> --}}
-                    <li class="btn btn-default pull-right dropdown">
+                    <a style="margin-right: 0px;" href="recurso/create" class="btn btn-primary pull-right">Buscar</a>
+                    <li style="margin-right: 5px;" class="btn btn-default pull-right dropdown ">
                         <a class="nav-link dropdown-toggle py-0 px-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">Fechas</a>
                         
                         <ul class="dropdown-menu">
@@ -62,6 +62,49 @@
                             </table>
                         </ul>
                     </li>
+                    <!-- Single button -->
+                    <div class="btn-group">
+                        <select class="form-control select" id="Cliente" name="Cliente" required>
+                            <option value="">Cliente</option>
+                            <option value="">Todos</option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <!-- Single button -->
+                    <div class="btn-group">
+                        <select class="form-control select" id="Generador" name="Generador" required>
+                            <option value="">Generador</option>
+                            <option value="">Todos</option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <!-- Single button -->
+                    <div class="btn-group">
+                        <select class="form-control select" id="Tratamiento" name="Tratamiento" required>
+                            <option value="">Tratamiento</option>
+                            <option value="">Todos</option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <!-- Single button -->
+                    <div class="btn-group">
+                        <select class="form-control select" id="Residuo" name="Residuo" required>
+                            <option value="">Residuo</option>
+                            <option value="">Todos</option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </div>
                 </div>
                 <div class="box-body">
                     <table id="RecursosTable" class="table table-compact table-bordered table-striped">
