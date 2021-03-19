@@ -232,6 +232,14 @@ class SolicitudServicioController extends Controller
 	 */
 	public function store(SolServStoreRequest $request)
 	{
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="request store PRE-saved";
+		$log->AuditRegistro="";
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=json_encode($request->all());
+		$log->save();
+
 		// return $request;
 		$SolicitudServicio = new SolicitudServicio();
 		$SolicitudServicio->SolSerStatus = 'Aprobado';
