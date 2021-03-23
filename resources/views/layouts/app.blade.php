@@ -56,8 +56,8 @@ desired effect
 
     </div><!-- ./wrapper -->
 </div>  
-    @section('scripts')
     @include('layouts.partials.scripts')
+    @section('scripts')
     @show
 </body>
 </html>

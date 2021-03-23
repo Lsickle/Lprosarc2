@@ -69,6 +69,7 @@ $('form[data-toggle="validator"]').validator({
 	}
 });
 </script>
+@if(Route::currentRouteName()!=='solicitud-residuos.reportes')
 <script type="text/javascript">
 	function Selects(){
 		$('select').select2({
@@ -84,6 +85,7 @@ $(document).ready(function() {
 	Selects();
 });
 </script>
+@endif
 <script type="text/javascript">
 function SelectsMultiple(){
 	$('.select-multiple').select2({
