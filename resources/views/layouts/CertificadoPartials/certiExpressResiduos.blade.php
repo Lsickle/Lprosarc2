@@ -8,7 +8,6 @@
 		@endphp
 		<thead>
 			<tr>
-				{{-- <th># RM</th> --}}
 				<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
 				<th>{{trans('adminlte_lang::message.solserrespel')}}</th>
 				<th>Corriente</th>
@@ -43,15 +42,6 @@
 				}
 			@endphp
 			<tr>
-				{{-- <td>
-				@if ($Residuo->SolResRM2 !== null && is_Array($Residuo->SolResRM2))
-					@foreach ($Residuo->SolResRM2 as $rm => $value)
-						{{$value}}<br>
-					@endforeach
-				@else
-					{{'RM Invalido -> '}} {{$Residuo->SolResRM}}
-				@endif	
-				</td> --}}
 				<td><a title="Ver Residuo" href="/respels/{{$Residuo->generespel->respels->RespelSlug}}" target="_blank" ><i class="fas fa-external-link-alt"></i></a>{{$Residuo->SolResEmbalaje}}</td>
 				<td>
 					 {{$Residuo->generespel->respels->RespelName}}</td>
