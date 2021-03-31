@@ -142,7 +142,7 @@
                                         </td>
                                         <td>{{$solres->generespel->respels->RespelName}}</td>
                                         <td><b>Tratamiento: {{$solres->requerimiento->tratamiento->TratName}}</b></td>
-                                        <td>{{$servicio->cliente->CliName}}</td>
+                                        <td>{{$servicio->cliente->CliName}} <br> ({{$servicio->cliente->CliCategoria}})</td>
                                         <td>{{$solres->generespel->gener_sedes->generadors->GenerName}} <br> ({{$solres->generespel->gener_sedes->GSedeName}})</td>
                                         <td>{{$solres->SolResKgConciliado}}</td>
                                         <td>{{$solres->SolResCantiUnidadConciliada}}</td>
@@ -326,6 +326,13 @@
                         .pluck(8)
                         .reduce( function (a, b) {
                             return a + parseFloat(b);
+                        }, 0);
+
+                    var categoria = rows
+                        .data()
+                        .pluck(6)
+                        .reduce( function (a, b) {
+                            return b;
                         }, 0);
     
                     return $('<tr/>')
