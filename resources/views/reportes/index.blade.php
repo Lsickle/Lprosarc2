@@ -100,27 +100,49 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <table id="RecursosTable" class="table table-compact table-bordered table-striped">
+                    <table id="reporteTable" class=" table-compact table-bordered">
                         <thead>
                             <tr>
+                                <th>Servicio</th>
+                                <th>Recepcion</th>
                                 @if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
                                 <th>ID_SolRes</th>
                                 @endif
-                                <th>Solicitud de Servicio</th>
+                                <th>RM</th>
+                                <th>Residuo</th>
+                                <th>Tretamiento</th>
+                                <th>Cliente</th>
+                                <th>Generador</th>
                                 <th>Cantidad Kg</th>
                                 <th>Cantidad Unid</th>
+                                <th>Comercial</th>
                             </tr>
                         </thead>
                         <tbody id="readyTable">
-                            @foreach ($residuosconciliados as $residuoconciliado)
-                                <tr>
-                                    @if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
-                                    <td>{{$residuoconciliado->ID_SolRes}}</td>
-                                    @endif
-                                    <td>{{$residuoconciliado->SolicitudServicio->ID_SolSer}} <br> ({{$residuoconciliado->SolicitudServicio->SolSerStatus}}) </td>
-                                    <td>{{$residuoconciliado->SolResKgConciliado}}</td>
-                                    <td>{{$residuoconciliado->SolResCantiUnidadConciliada}}</td>
-                                </tr>
+                            @foreach ($servicios as $servicio)
+                                @foreach ($servicio->SolicitudResiduo as $solres)
+                                    <tr>
+                                        <td><b>Servicio:#{{$servicio->ID_SolSer}}</b>  <br> ({{$servicio->SolSerStatus}})</td>
+                                        <td>fecha rececpcion</td>
+                                        @if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+                                        <td>{{$solres->ID_SolRes}}</td>
+                                        @endif
+                                        <td>
+                                            @if (!is_null($solres->SolResRM))
+                                            @foreach ($solres->SolResRM as $rm)
+                                            {{$rm}} <br>
+                                            @endforeach
+                                            @endif
+                                        </td>
+                                        <td>{{$solres->generespel->respels->RespelName}}</td>
+                                        <td><b>Tratamiento: {{$solres->requerimiento->tratamiento->TratName}}</b></td>
+                                        <td>{{$servicio->cliente->CliName}}</td>
+                                        <td>{{$solres->generespel->gener_sedes->generadors->GenerName}} <br> ({{$solres->generespel->gener_sedes->GSedeName}})</td>
+                                        <td>{{$solres->SolResKgConciliado}}</td>
+                                        <td>{{$solres->SolResCantiUnidadConciliada}}</td>
+                                        <td>{{$servicio->cliente->comercialAsignado->PersEmail}}</td>
+                                    </tr>
+                                @endforeach
                             @endforeach
                         </tbody>
                     </table>
@@ -128,7 +150,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> 
 @endsection
 @section('scripts')
 <script type="text/javascript">
@@ -178,5 +200,156 @@
         SelectTratamiento();
         SelectResiduo();
     });
+</script>
+{{-- <script>
+    $(document).ready(function() {
+		$('#reporteTable').DataTable({
+			"scrollX": false,
+			"autoWidth": true,
+			// "select": true,
+			"colReorder": true,
+			"ordering": true,
+			"order": [0, 'desc'],
+			"searchHighlight": true,
+			"responsive": true,
+			"keys": true,
+			"lengthChange": true,
+			"searching": true,
+            "rowGroup": {
+                endRender: null,
+                startRender: function ( rows, group ) {
+                    var subtotalTrat = rows
+                        .data()
+                        .pluck(7)
+                        .reduce( function (a, b) {
+                            return a + parseFloat(b);
+                        }, 0);
+    
+                    return $('<tr/>')
+                        .append( '<td colspan="5">'+group+'</td>' )
+                        .append( '<td>'+subtotalTrat+' Kg.</td>' )
+                        .append( '<td/>' );
+                },
+                className: 'rowgroup-servicio',
+                dataSrc: [ 0, 4 ]
+            },
+            "columnDefs": [ {
+                targets: [ 0, 4 ],
+                visible: false
+            } ]
+		});
+	});
+	/*funcion para actualizar elplugin responsive in chrome*/
+	function recalcularwitdth() {
+	var table = $('.table').DataTable();
+	table.columns.adjust();
+	table.responsive.recalc();
+	// console.log('tabla recalculada');
+	}
+	$(document).ready(function () {
+		var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+		// la funcion se ejecuta unicaente en chrome
+		if(is_chrome)
+		{
+			setTimeout(recalcularwitdth, 100);
+		}
+	});
+</script> --}}
+<script>
+    $(document).ready(function() {
+		/*var rol defino el rol del usuario*/
+		var rol = "<?php echo Auth::user()->UsRol; ?>";
+		/*var botoncito define los botones que se usaran si el usuario es programador*/
+		var botoncito = (rol == 'Programador') ? [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {
+					extend: 'collection',
+					text: 'Selector',
+					buttons: ['selectRows', 'selectCells']
+				}] : [{extend: 'colvis', text: 'Columnas Visibles'}, {extend: 'excel', text: 'Excel'}];
+		/*inicializacion de datatable general*/      
+		$('#reporteTable').DataTable({
+			"dom": "<'row'<'col-md-3'l><'col-md-5'B><'col-md-4'f>>" +
+				"<'row'<'col-md-12'tr>>" +
+				"<'row'<'col-md-6'i><'col-md-6'p>>",
+			"scrollX": false,
+			"autoWidth": true,
+			// "select": true,
+			"colReorder": true,
+			"ordering": true,
+			"order": [0, 'desc'],
+			"searchHighlight": true,
+			"responsive": false,
+			"keys": true,
+			"lengthChange": true,
+			"searching": true,
+			"buttons": [
+				botoncito,
+			],
+			// "columns": [
+			//     { "type": "date-uk" },
+			//     ],
+			"language": {
+				"sProcessing":     "Procesando...",
+				"sLengthMenu":     "Mostrar _MENU_ registros",
+				"sZeroRecords":    "No se encontraron resultados",
+				"sEmptyTable":     "Ningún dato disponible en esta tabla",
+				"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+				"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+				"sInfoFiltered":   "",
+				"sInfoPostFix":    "",
+				"sSearch":         "Buscar:",
+				"sUrl":            "",
+				"sInfoThousands":  ",",
+				"sLoadingRecords": "Cargando...",
+				"oPaginate": {
+					"sFirst":    "Primero",
+					"sLast":     "Último",
+					"sNext":     "Siguiente",
+					"sPrevious": "Anterior"
+				},
+				"oAria": {
+					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				},
+				"colvis": 'Ajouté au presse-papiers'
+			},
+            "rowGroup": {
+                endRender: null,
+                startRender: function ( rows, group ) {
+                    var subtotalTrat = rows
+                        .data()
+                        .pluck(8)
+                        .reduce( function (a, b) {
+                            return a + parseFloat(b);
+                        }, 0);
+    
+                    return $('<tr/>')
+                        .append( '<td colspan="6">'+group+'</td>' )
+                        .append( '<td>'+subtotalTrat+' Kg.</td>' )
+                        .append( '<td/>' )
+                        .append( '<td/>' );
+                },
+                dataSrc: [ 0, 5 ]
+            },
+            "columnDefs": [ {
+                targets: [ 0, 5 ],
+                visible: false
+            } ]
+		});
+	});
+	/*funcion para actualizar elplugin responsive in chrome*/
+	function recalcularwitdth() {
+	var table = $('.table').DataTable();
+	table.columns.adjust();
+	table.responsive.recalc();
+	// console.log('tabla recalculada');
+	}
+	$(document).ready(function () {
+		var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+		// la funcion se ejecuta unicaente en chrome
+		if(is_chrome)
+		{
+			setTimeout(recalcularwitdth, 100);
+		}
+	});
 </script>
 @endsection

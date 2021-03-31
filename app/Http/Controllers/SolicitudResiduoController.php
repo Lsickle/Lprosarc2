@@ -21,6 +21,7 @@ use App\Personal;
 use App\Docdato;
 use App\Tratamiento;
 use App\Generador;
+use App\Certificado;
 use Permisos;
 
 class SolicitudResiduoController extends Controller
@@ -572,84 +573,93 @@ class SolicitudResiduoController extends Controller
 	{
 		if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)) {
 
-			switch (Auth::user()->UsRol) {
-            case ('Programador'):
-                // $clientes = Cliente::where('CliCategoria', 'Cliente')->get();
-                $clientes = DB::table('clientes')
-                    ->leftjoin('personals', 'clientes.CliComercial', '=', 'personals.ID_Pers')
-                    ->select('clientes.*', 'personals.PersFirstName','personals.PersLastName')
-                    ->where('CliDelete', 0)
-                    ->where('CliCategoria', 'Cliente')
-                    ->get();
-                 $personals = DB::table('personals')
-                        ->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
-                        ->select('personals.*')
-                        ->where('personals.PersDelete', 0)
-                        ->where('users.UsRol', 'Comercial')
-                        ->orWhere('users.UsRol2', 'Comercial')
-                        ->get();
-                return view('clientes.index', compact('clientes', 'personals'));
-                break;
-            
-            case ('Cliente'):
-                return redirect()->route('home');
-                break;
-            case ('Comercial'):
-                $clientes = Cliente::where('CliDelete', 0)->where('CliCategoria', 'Cliente')->where('CliComercial', Auth::user()->FK_UserPers)->get();
-                return view('clientes.index', compact('clientes'));
-                break;
-            default:
-
-                $clientes = DB::table('clientes')
-                    ->leftjoin('personals', 'clientes.CliComercial', '=', 'personals.ID_Pers')
-                    ->select('clientes.*', 'personals.PersFirstName','personals.PersLastName')
-                    ->where('CliDelete', 0)
-                    ->where('CliCategoria', 'Cliente')
-                    ->get();
-                $personals = '';
-                if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial)){
-                    $personals = DB::table('personals')
-                        ->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
-                        ->select('personals.*')
-                        ->where('personals.PersDelete', 0)
-                        ->where('users.UsRol', 'Comercial')
-                        ->get();
-                }
-                return view('clientes.index', compact('clientes', 'personals'));
-                break;
-            // default:
-			// 	abort(403, 'Unauthorized action.');
-                // abort(403, 'su rol actual ('.{{Auth::user()->UsRol}}.') no esta autorizado para ingresar a esta página');
-        }
-
 			$tratamientos = Tratamiento::all();
 			$generadores = Generador::all();
 			$clientes = Cliente::all();
 			$residuos = Respel::all();
 
-			$residuosconciliados = SolicitudResiduo::with('SolicitudServicio')->get();
-			// $mainreport = SolicitudResiduo::all();
-			$certificados = Certificado::where(function($query) use ($SolicitudServicio){
-			    $UserSedeID = DB::table('personals')
-			    ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
-			    ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
-			    ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
-			    ->join('clientes', 'clientes.ID_Cli', 'sedes.FK_SedeCli')
-			    ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
-			    ->value('clientes.ID_Cli');
-
-			    $query->where('FK_CertCliente', $UserSedeID);
-			    $query->where('CertAuthJo', '!=', 0);
-			    $query->where('CertAuthJl', '!=', 0);
-			    $query->where('CertAuthDp', '!=', 0);
-			    $query->where('FK_CertSolser', $SolicitudServicio->ID_SolSer);
-
-			})
-			->with(['tratamiento'])
+			$servicios = SolicitudServicio::with([
+				'SolicitudResiduo.generespel.respels', 
+				'SolicitudResiduo.generespel.gener_sedes.generadors',
+				'cliente.comercialAsignado',
+				'SolicitudResiduo.requerimiento.tratamiento'
+				])
+			->whereIn('SolSerStatus', ['Conciliado', 'Facturado', 'Certificacion'])
 			->get();
+			// return $servicios;
+			// $mainreport = SolicitudResiduo::all();
+			// $certificados = Certificado::where(function($query) use ($SolicitudServicio){
+			//     $UserSedeID = DB::table('personals')
+			//     ->join('cargos', 'cargos.ID_Carg', 'personals.FK_PersCargo')
+			//     ->join('areas', 'areas.ID_Area', 'cargos.CargArea')
+			//     ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
+			//     ->join('clientes', 'clientes.ID_Cli', 'sedes.FK_SedeCli')
+			//     ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+			//     ->value('clientes.ID_Cli');
+
+			//     $query->where('FK_CertCliente', $UserSedeID);
+			//     $query->where('CertAuthJo', '!=', 0);
+			//     $query->where('CertAuthJl', '!=', 0);
+			//     $query->where('CertAuthDp', '!=', 0);
+			//     $query->where('FK_CertSolser', $SolicitudServicio->ID_SolSer);
+
+			// })
+			// ->with(['tratamiento'])
+			// ->get();
 
         	// return view('reportes.index', compact('Respels')); 
-        	return view('reportes.index', compact('tratamientos', 'generadores', 'clientes', 'residuos', 'residuosconciliados')); 
+        	return view('reportes.index', compact('servicios', 'tratamientos', 'generadores', 'clientes', 'residuos')); 
+
+
+			switch (Auth::user()->UsRol) {
+				case ('Programador'):
+					// $clientes = Cliente::where('CliCategoria', 'Cliente')->get();
+					$clientes = DB::table('clientes')
+						->leftjoin('personals', 'clientes.CliComercial', '=', 'personals.ID_Pers')
+						->select('clientes.*', 'personals.PersFirstName','personals.PersLastName')
+						->where('CliDelete', 0)
+						->where('CliCategoria', 'Cliente')
+						->get();
+					$personals = DB::table('personals')
+							->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+							->select('personals.*')
+							->where('personals.PersDelete', 0)
+							->where('users.UsRol', 'Comercial')
+							->orWhere('users.UsRol2', 'Comercial')
+							->get();
+					return view('clientes.index', compact('clientes', 'personals'));
+					break;
+				
+				case ('Cliente'):
+					return redirect()->route('home');
+					break;
+				case ('Comercial'):
+					$clientes = Cliente::where('CliDelete', 0)->where('CliCategoria', 'Cliente')->where('CliComercial', Auth::user()->FK_UserPers)->get();
+					return view('clientes.index', compact('clientes'));
+					break;
+				default:
+
+					$clientes = DB::table('clientes')
+						->leftjoin('personals', 'clientes.CliComercial', '=', 'personals.ID_Pers')
+						->select('clientes.*', 'personals.PersFirstName','personals.PersLastName')
+						->where('CliDelete', 0)
+						->where('CliCategoria', 'Cliente')
+						->get();
+					$personals = '';
+					if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial)){
+						$personals = DB::table('personals')
+							->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+							->select('personals.*')
+							->where('personals.PersDelete', 0)
+							->where('users.UsRol', 'Comercial')
+							->get();
+					}
+					return view('clientes.index', compact('clientes', 'personals'));
+					break;
+				// default:
+				// 	abort(403, 'Unauthorized action.');
+					// abort(403, 'su rol actual ('.{{Auth::user()->UsRol}}.') no esta autorizado para ingresar a esta página');
+			}
 		}else{
 			abort(503, "no tiene permisos para acceder a la pagina de reportes");
 		}
