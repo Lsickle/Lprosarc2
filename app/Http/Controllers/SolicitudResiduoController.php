@@ -582,7 +582,8 @@ class SolicitudResiduoController extends Controller
 				'SolicitudResiduo.generespel.respels', 
 				'SolicitudResiduo.generespel.gener_sedes.generadors',
 				'cliente.comercialAsignado',
-				'SolicitudResiduo.requerimiento.tratamiento'
+				'SolicitudResiduo.requerimiento.tratamiento',
+				'programacionesrecibidas'
 				])
 			->whereIn('SolSerStatus', ['Conciliado', 'Facturado', 'Certificacion'])
 			->get();

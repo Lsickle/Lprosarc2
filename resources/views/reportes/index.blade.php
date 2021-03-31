@@ -123,7 +123,13 @@
                                 @foreach ($servicio->SolicitudResiduo as $solres)
                                     <tr>
                                         <td><b>Servicio:#{{$servicio->ID_SolSer}}</b>  <br> ({{$servicio->SolSerStatus}})</td>
-                                        <td>fecha rececpcion</td>
+                                        <td>
+                                        @if (!is_null($servicio->programacionesrecibidas))
+                                        @foreach ($servicio->programacionesrecibidas as $programacion)
+                                        {{date('Y/m/d', strtotime($programacion->ProgVehEntrada))}}
+                                        @endforeach
+                                        @endif
+                                        </td>
                                         @if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
                                         <td>{{$solres->ID_SolRes}}</td>
                                         @endif
