@@ -609,7 +609,7 @@ class SolicitudResiduoController extends Controller
 			// ->get();
 
         	// return view('reportes.index', compact('Respels')); 
-        	return view('reportes.index', compact('servicios', 'tratamientos', 'generadores', 'clientes', 'residuos')); 
+        	return view('reportes.index', compact('servicios')); 
 
 
 			switch (Auth::user()->UsRol) {

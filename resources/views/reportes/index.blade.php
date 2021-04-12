@@ -40,63 +40,6 @@
                                 </li>
                             </div>
                         </div>
-                        <div class="row">
-                            <form class="form">
-                                <div class="col-md-6" style="margin-top:1em">
-                                    <div class="input-group">
-                                        <input type="date" class="form-control" id="inlineFormInputGroupDate1" placeholder="Desde" describedby="inputGroupPrepend" required>
-                                        <span class="input-group-addon" id="basic-addon2"><i class="fas fa-calendar-day"></i> Desde</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6" style="margin-top:1em">
-                                    <div class="input-group">
-                                        <input type="date" class="form-control" id="inlineFormInputGroupDate1" placeholder="Hasta" describedby="inputGroupPrepend" required>
-                                        <span class="input-group-addon" id="basic-addon2"><i class="fas fa-calendar-day"></i> Hasta</span>
-                                    </div>
-                                </div>
-                                {{-- <button type="submit" class="btn btn-block btn-primary">Buscar</button> --}}
-                            </form>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6" style="margin-top:1em">
-                                <select class="form-control select" id="Cliente" name="Cliente" required>
-                                    <option value="">Cliente</option>
-                                    @foreach ($clientes as $cliente)
-                                    <option value="ID_Trat">{{$cliente->CliName}}</option>
-                                    @endforeach
-                                    <option value="">Todos</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6" style="margin-top:1em">
-                                <select class="form-control select" id="Generador" name="Generador" required>
-                                    <option value="">Generador</option>
-                                    @foreach ($generadores as $generador)
-                                    <option value="ID_Trat">{{$generador->GenerName}}</option>
-                                    @endforeach
-                                    <option value="">Todos</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6" style="margin-top:1em">
-                                <select class="form-control select" id="Tratamiento" name="Tratamiento" required>
-                                    <option value="">Tratamiento</option>
-                                    @foreach ($tratamientos as $tratamiento)
-                                    <option value="ID_Trat">{{$tratamiento->TratName}}</option>
-                                    @endforeach
-                                    <option value="ALL">Todos</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6" style="margin-top:1em">
-                                <select class="form-control select" id="Residuo" name="Residuo" required>
-                                    <option value="">Residuo</option>
-                                    @foreach ($residuos as $residuo)
-                                    <option value="ID_Trat">{{$residuo->RespelName}}</option>
-                                    @endforeach
-                                    <option value="">Todos</option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="box-body">
@@ -134,7 +77,7 @@
                                         <td>{{$solres->ID_SolRes}}</td>
                                         @endif
                                         <td>
-                                            @if (!is_null($solres->SolResRM))
+                                            @if (isset($solres->SolResRM)&&is_array($solres->SolResRM))
                                             @foreach ($solres->SolResRM as $rm)
                                             {{$rm}} <br>
                                             @endforeach
@@ -146,7 +89,11 @@
                                         <td>{{$solres->generespel->gener_sedes->generadors->GenerName}} <br> ({{$solres->generespel->gener_sedes->GSedeName}})</td>
                                         <td>{{$solres->SolResKgConciliado}}</td>
                                         <td>{{$solres->SolResCantiUnidadConciliada}}</td>
-                                        <td>{{$servicio->cliente->comercialAsignado->PersEmail}}</td>
+                                        @if (isset($servicio->cliente->comercialAsignado)&& (!is_null($servicio->cliente->comercialAsignado)))
+                                            <td>{{$servicio->cliente->comercialAsignado->PersEmail}}</td>
+                                        @else
+                                            <td>{{'sin comercial'}}</td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             @endforeach
