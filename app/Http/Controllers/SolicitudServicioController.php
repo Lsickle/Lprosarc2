@@ -1172,7 +1172,6 @@ class SolicitudServicioController extends Controller
 				$destinatarios = ['dirtecnica@prosarc.com.co',
 									'logistica@prosarc.com.co',
 									'asistentelogistica@prosarc.com.co',
-									'auxiliarlogistico@prosarc.com.co',
 									'gerenteplanta@prosarc.com.co',
 									'subgerencia@prosarc.com.co',
 									$comercial->PersEmail
@@ -1182,7 +1181,6 @@ class SolicitudServicioController extends Controller
 				$destinatarios = ['dirtecnica@prosarc.com.co',
 									'logistica@prosarc.com.co',
 									'asistentelogistica@prosarc.com.co',
-									'auxiliarlogistico@prosarc.com.co',
 									'gerenteplanta@prosarc.com.co',
 									'subgerencia@prosarc.com.co'
 								];	
