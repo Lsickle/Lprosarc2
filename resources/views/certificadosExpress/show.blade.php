@@ -145,7 +145,7 @@
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
 								<div class="tab-pane fade in active" id="Residuospane">
-									@include('layouts.CertificadoPartials.certiResiduos')
+									@include('layouts.CertificadoPartials.certiExpressResiduos')
 								</div>
 								<!-- tab-pane fade -->
 								<!-- tab-pane fade -->
