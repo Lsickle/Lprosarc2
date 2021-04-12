@@ -9,9 +9,9 @@
 {{-- <script type="text/javascript" src="{{ url (mix('/js/dependencias2.js')) }}"></script> --}}
 @endif
 <!-- DataTables -->
-<script type="text/javascript" src="{{ url (mix('/js/datatable-depen.js')) }}"></script>
+{{-- <script type="text/javascript" src="{{ url (mix('/js/datatable-depen.js')) }}"></script> --}}
 {{-- plugins de datatables --}}
-<script type="text/javascript" src="{{ url (mix('/js/datatable-plugins.js')) }}"></script>
+{{-- <script type="text/javascript" src="{{ url (mix('/js/datatable-plugins.js')) }}"></script> --}}
 @if(Route::currentRouteName()=='vehicle-programacion.create')
 	{{-- fullcalendar --}}
 	{{-- <script type="text/javascript" src="{{ url (mix('/js/fullcalendar.js')) }}"></script> --}}

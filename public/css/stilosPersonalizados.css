@@ -585,14 +585,3 @@ canvas {
 		margin-right: 15%;
 	}
 }
-.dtrg-level-0 {
-  border: 1px solid #8747a7;
-  color: #ffffff;
-  background-color: #8747a7 !important;
-}
-
-.dtrg-level-1 {
-  border: 1px solid #5a5a5a;
-  color: #ffffff;
-  background-color: #5a5a5a !important;
-}
