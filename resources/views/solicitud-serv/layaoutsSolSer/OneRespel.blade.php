@@ -76,8 +76,8 @@
 					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requiredescarguephoto') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiredescarguephotodescrit') }}</p>">
 						<label for="SolResFotoDescargue_Pesaje`+id_div+contadorRespel[id_div]+`">{{ trans('adminlte_lang::message.requiredescarguephoto') }}</label>
 						<div style="width: 100%; height: 34px;">
-							<input type="checkbox" class="fotoswitch" id="SolResFotoDescargue_Pesaje`+id_div+contadorRespel[id_div]+`" data-name="SolResFotoDescargue_Pesaje1`+id_div+contadorRespel[id_div]+`"/>
-							<input type="text" id="SolResFotoDescargue_Pesaje1`+id_div+contadorRespel[id_div]+`" name="SolResFotoDescargue_Pesaje[`+id_div+`][]" hidden value="0">
+							<input type="checkbox" class="fotoswitch" id="SolResFotoDescargue_Pesaje`+id_div+contadorRespel[id_div]+`" data-name="SolResFotoDescargue_PesajeX`+id_div+contadorRespel[id_div]+`"/>
+							<input type="text" id="SolResFotoDescargue_PesajeX`+id_div+contadorRespel[id_div]+`" name="SolResFotoDescargue_Pesaje[`+id_div+`][]" hidden value="0">
 						</div>
 					</label>
 				</div>
@@ -85,8 +85,8 @@
 					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requiretratamientophoto') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiretratamientophotodescrit') }}</p>">
 						<label for="SolResFotoTratamiento`+id_div+contadorRespel[id_div]+`">{{ trans('adminlte_lang::message.requiretratamientophoto') }}</label>
 						<div style="width: 100%; height: 34px;">
-							<input type="checkbox" class="fotoswitch" id="SolResFotoTratamiento`+id_div+contadorRespel[id_div]+`" value="0" data-name="SolResFotoTratamiento1`+id_div+contadorRespel[id_div]+`"/>
-							<input type="text" id="SolResFotoTratamiento1`+id_div+contadorRespel[id_div]+`" name="SolResFotoTratamiento[`+id_div+`][]" hidden value="0">
+							<input type="checkbox" class="fotoswitch" id="SolResFotoTratamiento`+id_div+contadorRespel[id_div]+`" value="0" data-name="SolResFotoTratamientoX`+id_div+contadorRespel[id_div]+`"/>
+							<input type="text" id="SolResFotoTratamientoX`+id_div+contadorRespel[id_div]+`" name="SolResFotoTratamiento[`+id_div+`][]" hidden value="0">
 						</div>
 					</label>
 				</div>
@@ -96,8 +96,8 @@
 					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requiredescarguevideo') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiredescarguevideodescrit') }}</p>">
 						<label for="SolResVideoDescargue_Pesaje`+id_div+contadorRespel[id_div]+`">{{ trans('adminlte_lang::message.requiredescarguevideo') }}</label>
 						<div style="width: 100%; height: 34px;">
-							<input type="checkbox" class="videoswitch" id="SolResVideoDescargue_Pesaje`+id_div+contadorRespel[id_div]+`" data-name="SolResVideoDescargue_Pesaje1`+id_div+contadorRespel[id_div]+`"/>
-							<input type="text" id="SolResVideoDescargue_Pesaje1`+id_div+contadorRespel[id_div]+`" name="SolResVideoDescargue_Pesaje[`+id_div+`][]" hidden value="0">
+							<input type="checkbox" class="videoswitch" id="SolResVideoDescargue_Pesaje`+id_div+contadorRespel[id_div]+`" data-name="SolResVideoDescargue_PesajeX`+id_div+contadorRespel[id_div]+`"/>
+							<input type="text" id="SolResVideoDescargue_PesajeX`+id_div+contadorRespel[id_div]+`" name="SolResVideoDescargue_Pesaje[`+id_div+`][]" hidden value="0">
 						</div>
 					</label>
 				</div>
@@ -105,28 +105,28 @@
 					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requiretratamientovideo') }}</b>" data-content="<p style='width: 50%'> {{ trans('adminlte_lang::message.requiretratamientovideodescrit') }}</p>">
 						<label for="SolResVideoTratamiento`+id_div+contadorRespel[id_div]+`">{{ trans('adminlte_lang::message.requiretratamientovideo') }}</label>
 						<div style="width: 100%; height: 34px;">
-							<input type="checkbox" class="videoswitch" id="SolResVideoTratamiento`+id_div+contadorRespel[id_div]+`" data-name="SolResVideoTratamiento1`+id_div+contadorRespel[id_div]+`"/>
-							<input type="text" id="SolResVideoTratamiento1`+id_div+contadorRespel[id_div]+`" name="SolResVideoTratamiento[`+id_div+`][]" hidden value="0">
+							<input type="checkbox" class="videoswitch" id="SolResVideoTratamiento`+id_div+contadorRespel[id_div]+`" data-name="SolResVideoTratamientoX`+id_div+contadorRespel[id_div]+`"/>
+							<input type="text" id="SolResVideoTratamientoX`+id_div+contadorRespel[id_div]+`" name="SolResVideoTratamiento[`+id_div+`][]" hidden value="0">
 						</div>
 					</label>
 				</div>
 			</div>
 			<div class="form-group col-md-6" style="border: 2px dashed #00c0ef">
 				<div class="form-group col-md-6">
-					<label for="SolResDevolucion`+id_div+contadorRespel[id_div]+`" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Devolución de Elementos</b>" data-content="<p style='width: 50%'> Se requiere que los embalajes sean devueltos por <b>Prosarc S.A. ESP.</b> al Cliente/Generador</p>">
-						Devolución Embalaje
+					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Devolución de Elementos</b>" data-content="<p style='width: 50%'> Se requiere que los embalajes sean devueltos por <b>Prosarc S.A. ESP.</b> al Cliente/Generador</p>">
+						<label for="SolResDevolucion`+id_div+contadorRespel[id_div]+`">Devolución Embalaje</label>
 						<div style="width: 100%; height: 34px;">
-							<input type="checkbox" class="embalajeswitch" id="SolResDevolucion`+id_div+contadorRespel[id_div]+`" data-name="SolResDevolucion1`+id_div+contadorRespel[id_div]+`"/>
-							<input type="text" id="SolResDevolucion1`+id_div+contadorRespel[id_div]+`" name="SolResDevolucion[`+id_div+`][]" hidden value="0">
+							<input type="checkbox" class="embalajeswitch" id="SolResDevolucion`+id_div+contadorRespel[id_div]+`" data-name="SolResDevolucionX`+id_div+contadorRespel[id_div]+`"/>
+							<input type="text" id="SolResDevolucionX`+id_div+contadorRespel[id_div]+`" name="SolResDevolucion[`+id_div+`][]" hidden value="0">
 						</div>
 					</label>
 				</div>
 				<div class="form-group col-md-6">
-					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Requiere Auditoria</b>" data-content="<p style='width: 50%'> Se requiere que el tratamiento del residuo sea auditado por personal del Cliente/Generador " for="SolResAuditoria`+id_div+contadorRespel[id_div]+`">
-						Requiere Auditoria
+					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Requiere Auditoria</b>" data-content="<p style='width: 50%'> Se requiere que el tratamiento del residuo sea auditado por personal del Cliente/Generador " >
+						<label for="SolResAuditoria`+id_div+contadorRespel[id_div]+`">Requiere Auditoria</label>
 						<div style="width: 100%; height: 34px;">
-							<input type="checkbox" class="auditoriaswitch" id="SolResAuditoria`+id_div+contadorRespel[id_div]+`" data-name="SolResAuditoria1`+id_div+contadorRespel[id_div]+`"/>
-							<input type="text" id="SolResAuditoria1`+id_div+contadorRespel[id_div]+`" name="SolResAuditoria[`+id_div+`][]" hidden value="0">
+							<input type="checkbox" class="auditoriaswitch" id="SolResAuditoria`+id_div+contadorRespel[id_div]+`" data-name="SolResAuditoriaX`+id_div+contadorRespel[id_div]+`"/>
+							<input type="text" id="SolResAuditoriaX`+id_div+contadorRespel[id_div]+`" name="SolResAuditoria[`+id_div+`][]" hidden value="0">
 						</div>
 					</label>
 				</div>
@@ -134,8 +134,8 @@
 					<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Cantidad a devolver</b>" data-content="<p style='width: 50%'> Cantidad de embalajes enviados y que deben ser devueltos al respectivo cliente o viceversa</p>">
 						<label for="SolResDevolCantidad`+id_div+contadorRespel[id_div]+`">Cantidad a devolver</label>
 						<div style="width: 100%; height: 34px;">
-							<input type="text" class="form-control" id="SolResDevolCantidad`+id_div+contadorRespel[id_div]+`" data-name="SolResDevolCantidad1`+id_div+contadorRespel[id_div]+`"/>
-							<input type="text" id="SolResDevolCantidad1`+id_div+contadorRespel[id_div]+`" name="SolResDevolCantidad[`+id_div+`][]" hidden value="0">
+							<input type="text" class="form-control" id="SolResDevolCantidad`+id_div+contadorRespel[id_div]+`" data-name="SolResDevolCantidadX`+id_div+contadorRespel[id_div]+`"/>
+							<input type="text" id="SolResDevolCantidadX`+id_div+contadorRespel[id_div]+`" name="SolResDevolCantidad[`+id_div+`][]" hidden value="0">
 						</div>
 					</label>
 				</div> --}}

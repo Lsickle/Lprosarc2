@@ -232,6 +232,14 @@ class SolicitudServicioController extends Controller
 	 */
 	public function store(SolServStoreRequest $request)
 	{
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="request store PRE-saved";
+		$log->AuditRegistro="";
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=json_encode($request->all());
+		$log->save();
+
 		// return $request;
 		$SolicitudServicio = new SolicitudServicio();
 		$SolicitudServicio->SolSerStatus = 'Aprobado';
@@ -1164,7 +1172,6 @@ class SolicitudServicioController extends Controller
 				$destinatarios = ['dirtecnica@prosarc.com.co',
 									'logistica@prosarc.com.co',
 									'asistentelogistica@prosarc.com.co',
-									'auxiliarlogistico@prosarc.com.co',
 									'gerenteplanta@prosarc.com.co',
 									'subgerencia@prosarc.com.co',
 									$comercial->PersEmail
@@ -1174,7 +1181,6 @@ class SolicitudServicioController extends Controller
 				$destinatarios = ['dirtecnica@prosarc.com.co',
 									'logistica@prosarc.com.co',
 									'asistentelogistica@prosarc.com.co',
-									'auxiliarlogistico@prosarc.com.co',
 									'gerenteplanta@prosarc.com.co',
 									'subgerencia@prosarc.com.co'
 								];	
