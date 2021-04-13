@@ -24,10 +24,10 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!-- DataTables -->
-    <link rel="stylesheet" type="text/css" href="{{ mix('/css/datatable-depen.css') }}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{ mix('/css/datatable-depen.css') }}"> --}}
 
     {{-- plugins de datatables --}}
-    <link rel="stylesheet" type="text/css" href="{{ mix('/css/datatable-plugins.css') }}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{ mix('/css/datatable-plugins.css') }}"> --}}
 
     {{-- Stilos Personalizados --}}
     <link href="{{ mix('/css/stilosPersonalizados.css') }}" rel="stylesheet" type="text/css" />
@@ -61,4 +61,17 @@
         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=../noscriptpage">
         {{-- @include('layouts.partials.noscript') --}}
     </noscript>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/autofill/2.3.5/css/autoFill.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/colreorder/1.5.3/css/colReorder.dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.0.3/css/dataTables.dateTime.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/keytable/2.6.1/css/keyTable.dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/rowgroup/1.1.2/css/rowGroup.dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/2.0.3/css/scroller.dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchbuilder/1.0.1/css/searchBuilder.dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchpanes/1.2.2/css/searchPanes.dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.css" />
 </head>
