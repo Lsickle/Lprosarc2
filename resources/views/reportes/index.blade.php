@@ -1,7 +1,7 @@
 @extends('layouts.appReportes')
 @section('htmlheader_title','Reportes')
 {{-- @endsection --}}
-@section('contentheader_title', 'Reportes')
+@section('contentheader_title', '')
 {{-- @endsection --}}
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -13,31 +13,8 @@
                         <div class="row">
                             <div class="col">
                                 <h3 class="box-title">reporte de cantidades</h3>
-                                <a style="margin-right: 0px;" href="recurso/create" class="btn btn-primary pull-right">Buscar</a>
-                                
-                                <li style="margin-right: 5px;" class="btn btn-default pull-right dropdown ">
-                                    <a class="nav-link dropdown-toggle py-0 px-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">Fechas</a>
-                                
-                                    <ul class="dropdown-menu">
-                                
-                                        {{-- <li role="separator" class="divider"></li> --}}
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <h6 class="dropdown-header">Rangos Predefinidos.</h6>
-                                                    <li><a class="dropdown-item px-3" href="#">Agosto</a></li>
-                                                    <li><a class="dropdown-item px-3" href="#">Septiembre</a></li>
-                                                    <li><a class="dropdown-item px-3" href="#">Octubre</a></li>
-                                                    <li><a class="dropdown-item px-3 active" href="#">Noviembre</a></li>
-                                                    <li role="separator" class="divider"></li>
-                                                    <li><a class="dropdown-item px-3" href="#">Ultimo Año </a></li>
-                                                    <li><a class="dropdown-item px-3" href="#">Ultimo mes</a></li>
-                                                    <li><a class="dropdown-item px-3" href="#">Ultimo Semana</a></li>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </ul>
-                                </li>
+                                <a style="margin-right: 0px;" href="recurso/create" class="btn btn-primary pull-right">Segmentacion</a>
+                                <a style="margin-right: 5px; color:#3c8dbc;" href="recurso/create" class="btn btn-default pull-right">Filtros</a>
                             </div>
                         </div>
                     </div>
@@ -54,6 +31,9 @@
                                 @endif
                                 <th>RM</th>
                                 <th>Residuo</th>
+                                <th>Peligro</th>
+                                <th>Clasf-4741</th>
+                                <th>Controlada</th>
                                 <th>Tratamiento</th>
                                 <th>Precio</th>
                                 <th>Cliente</th>
@@ -71,9 +51,9 @@
                                         <td>{{$servicio->SolSerStatus}}</td>
                                         <td>
                                         @if (!is_null($servicio->programacionesrecibidas))
-                                        @foreach ($servicio->programacionesrecibidas as $programacion)
-                                        {{date('Y/m/d', strtotime($programacion->ProgVehEntrada))}}
-                                        @endforeach
+                                            @foreach ($servicio->programacionesrecibidas as $programacion)
+                                                {{date('Y/m/d', strtotime($programacion->ProgVehEntrada))}}
+                                            @endforeach
                                         @endif
                                         </td>
                                         @if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
@@ -81,15 +61,39 @@
                                         @endif
                                         <td>
                                             @if (isset($solres->SolResRM)&&is_array($solres->SolResRM))
-                                            @foreach ($solres->SolResRM as $rm)
-                                            {{$rm}} <br>
-                                            @endforeach
+                                                @foreach ($solres->SolResRM as $rm)
+                                                    {{$rm}} <br>
+                                                @endforeach
                                             @endif
                                         </td>
-                                        <td>{{$solres->generespel->respels->RespelName}}</td>
+                                        <td>
+                                            {{$solres->generespel->respels->RespelName}}
+                                        </td>
+                                        <td>
+                                            @if($solres->generespel->respels->YRespelClasf4741 <> null)
+                                                {{$solres->generespel->respels->YRespelClasf4741}}
+                                            @elseif($solres->generespel->respels->ARespelClasf4741 <> null)
+                                                {{$solres->generespel->respels->ARespelClasf4741}}
+                                            @else()
+                                                {{'N/A'}}
+                                            @endif
+                                        </td>
+                                        <td>{{$solres->generespel->respels->RespelIgrosidad}}</td>
+                                        <td>
+                                            @if($solres->generespel->respels->SustanciaControlada == 1)
+                                                @if ($solres->generespel->respels->SustanciaControladaTipo == 0)
+                                                    {{'Sustancia Controlada'}}
+                                                @endif
+                                                @if ($solres->generespel->respels->SustanciaControladaTipo == 1)
+                                                    {{'Sustancia de uso masivo'}}
+                                                @endif
+                                            @else
+                                                {{'N/A'}}
+                                            @endif
+                                        </td>
                                         <td>{{$solres->requerimiento->tratamiento->TratName}}</td>
                                         <td>{{$solres->SolResPrecio}}</td>
-                                        <td>{{$servicio->cliente->CliName}} <br> ({{$servicio->cliente->CliCategoria}})</td>
+                                        <td>{{$servicio->cliente->CliName}}</td>
                                         <td>{{$solres->generespel->gener_sedes->generadors->GenerName}} <br> ({{$solres->generespel->gener_sedes->GSedeName}})</td>
                                         <td>{{$solres->SolResKgConciliado}}</td>
                                         <td>{{$solres->SolResCantiUnidadConciliada}}</td>
@@ -112,6 +116,9 @@
                                 @endif
                                 <th>RM</th>
                                 <th>Residuo</th>
+                                <th>Peligro</th>
+                                <th>Clasf-4741</th>
+                                <th>Controlada</th>
                                 <th>Tratamiento</th>
                                 <th>Precio</th>
                                 <th>Cliente</th>
@@ -157,13 +164,13 @@
 		var botoncito = (rol == 1) ? [{extend: 'colvis', text: 'Columnas'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {extend: 'collection', text: 'Selector', buttons: ['selectRows', 'selectCells']}] : [{extend: 'colvis', text: 'Columnas'}, {extend: 'excel', text: 'Excel'}];
 		/*inicializacion de datatable general*/
 		$('#reporteTable').DataTable({
-			"dom":"<'row'<'col-md-8'P><'col-md-4'<'card my-1'<'card-body'Q>>>>" +
-				"<'row justify-content-between pt-3 pb-0'<l><'text-center d-none d-md-block'B><f>>" +
+			"dom":"<'row'<'col-md-12 collapse'P><'col-md-12 collapse'<'card'<'card-body'Q>>>>" +
+				"<'row'<'col-md-3'l><'col-md-5'B><'col-md-4'f>>" +
 				"<'row'<'col-md-12'rt>>" +
-				"<'row pt-0 pb-3 justify-content-center justify-content-md-between'<'align-self-center'i><''p>>",
+				"<'row justify-content-center justify-content-md-between'<'col-md-12'<'align-self-center'i><''p>>>",
 			"searchPanes": {
 				cascadePanes: true,
-				layout: 'columns-2',
+				layout: 'columns-4',
 				// columns: [1,4],
 				count: '{total}',
 				countFiltered: '{shown} / {total}',
@@ -174,7 +181,7 @@
 					}
 				}
 			},
-			"scrollX": false,
+			"scrollX": true,
 			"serverSide": false,
 			"autoWidth": false,
 			"select": true,
@@ -182,7 +189,7 @@
 			"ordering": true,
 			"order": [0, 'desc'],
 			"searchHighlight": true,
-			"responsive": true,
+			"responsive": false,
 			"keys": true,
 			"lengthChange": true,
 			"searching": true,
