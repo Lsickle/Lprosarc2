@@ -6,7 +6,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html lang="es">
 
 @section('htmlheader')
-@include('layouts.partials.reportes.headerreportes')
+@include('layouts.partials.htmlheaderReportes')
 @show
 
 <!--
@@ -34,30 +34,30 @@ desired effect
     <div id="app" v-cloak>
         <div class="wrapper">
 
-            @include('layouts.partials.mainheader')
+            @include('layouts.partials.mainheaderReportes')
 
-            @include('layouts.partials.sidebar')
+            @include('layouts.partials.sidebarReportes')
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
 
-                @include('layouts.partials.contentheader')
+                @include('layouts.partials.contentheaderReportes')
 
                 <!-- Main content -->
-                @include('layouts.partials.loading')
+                @include('layouts.partials.loadingReportes')
                 <section class="content" id="contenido" style="display: none;">
                     <!-- Your Page Content Here -->
                     @yield('main-content')
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
 
-            @include('layouts.partials.controlsidebar')
+            @include('layouts.partials.controlsidebarReportes')
 
-            @include('layouts.partials.footer')
+            @include('layouts.partials.footerReportes')
 
         </div><!-- ./wrapper -->
     </div>
-    @include('layouts.partials.scripts')
+    @include('layouts.partials.scriptsReportes')
     @section('scripts')
     @show
 </body>
