@@ -573,11 +573,6 @@ class SolicitudResiduoController extends Controller
 	{
 		if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)) {
 
-			$tratamientos = Tratamiento::all();
-			$generadores = Generador::all();
-			$clientes = Cliente::all();
-			$residuos = Respel::all();
-
 			$servicios = SolicitudServicio::with([
 				'SolicitudResiduo.generespel.respels', 
 				'SolicitudResiduo.generespel.gener_sedes.generadors',
@@ -586,6 +581,7 @@ class SolicitudResiduoController extends Controller
 				'programacionesrecibidas'
 				])
 			->whereIn('SolSerStatus', ['Conciliado', 'Facturado', 'Certificacion'])
+			->where('ID_SolSer', '>=', 35000)
 			->get();
 			// return $servicios;
 			// $mainreport = SolicitudResiduo::all();

@@ -5,37 +5,13 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
-    
+
     <link href="{{ mix('/css/all.css') }}" rel="stylesheet" type="text/css" />
      <!-- Dependencias -->
     <link href="{{ mix('/css/dependencias.css') }}" rel="stylesheet" type="text/css">
 
-    @if(Route::currentRouteName()=='vehicle-programacion.create'||Route::currentRouteName()=='programacion-express.create')
-        {{-- Full Calendar --}}
-         <link href="{{ mix('/css/fullcalendar.css') }}" rel="stylesheet" type="text/css">
-    @endif
-
-     {{-- Chart --}}
-     <link href="{{ mix('/css/chart.css') }}" rel="stylesheet" type="text/css">
-
-     {{-- Moment --}}
-     {{-- <link href="{{ mix('/css/moment.css') }}" rel="stylesheet" type="text/css"> --}}
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!-- DataTables -->
-    {{-- <link rel="stylesheet" type="text/css" href="{{ mix('/css/datatable-depen.css') }}"> --}}
-
-    {{-- plugins de datatables --}}
-    {{-- <link rel="stylesheet" type="text/css" href="{{ mix('/css/datatable-plugins.css') }}"> --}}
-
     {{-- Stilos Personalizados --}}
     <link href="{{ mix('/css/stilosPersonalizados.css') }}" rel="stylesheet" type="text/css" />
-    @if(Route::currentRouteName()=='programacion-express.create')
-    {{-- Full Calendar VERDE --}}
-    <link href="{{ mix('/css/calendarioPersonalizado.css') }}" rel="stylesheet" type="text/css" />
-    @endif
-
     {{-- fuentes de google --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     
@@ -61,17 +37,5 @@
         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=../noscriptpage">
         {{-- @include('layouts.partials.noscript') --}}
     </noscript>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/autofill/2.3.5/css/autoFill.dataTables.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/colreorder/1.5.3/css/colReorder.dataTables.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.0.3/css/dataTables.dateTime.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/keytable/2.6.1/css/keyTable.dataTables.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.dataTables.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/rowgroup/1.1.2/css/rowGroup.dataTables.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/2.0.3/css/scroller.dataTables.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchbuilder/1.0.1/css/searchBuilder.dataTables.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchpanes/1.2.2/css/searchPanes.dataTables.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/af-2.3.5/b-1.7.0/b-colvis-1.7.0/b-html5-1.7.0/b-print-1.7.0/cr-1.5.3/date-1.0.3/kt-2.6.1/rr-1.2.7/sc-2.0.3/sb-1.0.1/sp-1.2.2/sl-1.3.3/datatables.min.css" />
 </head>

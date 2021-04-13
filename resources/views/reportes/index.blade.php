@@ -13,8 +13,16 @@
                         <div class="row">
                             <div class="col">
                                 <h3 class="box-title">reporte de cantidades</h3>
-                                <a style="margin-right: 0px;" href="recurso/create" class="btn btn-primary pull-right">Segmentacion</a>
-                                <a style="margin-right: 5px; color:#3c8dbc;" href="recurso/create" class="btn btn-default pull-right">Filtros</a>
+                                <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target=".panels" aria-expanded="false" aria-controls="collapseExample">
+                                    <div class="text-nowrap bd-highlight">
+                                        <i class="fas fa-filter"></i> Segmentacion
+                                    </div>
+                                </button>
+                                <button  style="margin-right: 5px; color:#3c8dbc;" class="btn btn-default pull-right" type="button" data-toggle="collapse" data-target=".filters" aria-expanded="false" aria-controls="collapseExample">
+                                    <div class="text-nowrap bd-highlight">
+                                        <i class="fas fa-filter"></i> Filtros
+                                    </div>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -37,7 +45,7 @@
                                 <th>Tratamiento</th>
                                 <th>Precio</th>
                                 <th>Cliente</th>
-                                <th>Generador</th>
+                                <th>Generador/Sede</th>
                                 <th>Cantidad Kg</th>
                                 <th>Cantidad Unid</th>
                                 <th>Comercial</th>
@@ -108,24 +116,6 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>Servicio</th>
-                                <th>Status</th>
-                                <th>Recepcion</th>
-                                @if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
-                                <th>ID_SolRes</th>
-                                @endif
-                                <th>RM</th>
-                                <th>Residuo</th>
-                                <th>Peligro</th>
-                                <th>Clasf-4741</th>
-                                <th>Controlada</th>
-                                <th>Tratamiento</th>
-                                <th>Precio</th>
-                                <th>Cliente</th>
-                                <th>Generador</th>
-                                <th>Cantidad Kg</th>
-                                <th>Cantidad Unid</th>
-                                <th>Comercial</th>
                             </tr>
                         </tfoot>
                     </table>
@@ -136,25 +126,9 @@
 </div> 
 @endsection
 @section('scripts')
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/autofill/2.3.5/js/dataTables.autoFill.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/colreorder/1.5.3/js/dataTables.colReorder.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/datetime/1.0.3/js/dataTables.dateTime.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/keytable/2.6.1/js/dataTables.keyTable.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/rowgroup/1.1.2/js/dataTables.rowGroup.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/scroller/2.0.3/js/dataTables.scroller.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/searchbuilder/1.0.1/js/dataTables.searchBuilder.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/searchpanes/1.2.2/js/dataTables.searchPanes.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/af-2.3.5/b-1.7.0/b-colvis-1.7.0/b-html5-1.7.0/b-print-1.7.0/cr-1.5.3/date-1.0.3/kt-2.6.1/rr-1.2.7/sc-2.0.3/sb-1.0.1/sp-1.2.2/sl-1.3.3/datatables.min.js"></script>
 <script src="{{asset('//cdn.datatables.net/plug-ins/1.10.24/api/sum().js')}}"></script>
 <script>
     $(document).ready(function() {
@@ -164,14 +138,14 @@
 		var botoncito = (rol == 1) ? [{extend: 'colvis', text: 'Columnas'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {extend: 'collection', text: 'Selector', buttons: ['selectRows', 'selectCells']}] : [{extend: 'colvis', text: 'Columnas'}, {extend: 'excel', text: 'Excel'}];
 		/*inicializacion de datatable general*/
 		$('#reporteTable').DataTable({
-			"dom":"<'row'<'col-md-12 collapse'P><'col-md-12 collapse'<'card'<'card-body'Q>>>>" +
+			"dom":"<'row'<'col-md-12 collapse panels'P><'col-md-12 collapse filters'<'card'<'card-body'Q>>>>" +
 				"<'row'<'col-md-3'l><'col-md-5'B><'col-md-4'f>>" +
-				"<'row'<'col-md-12'rt>>" +
+				"<'row'<'col-md-12'<'pre-x-scrollable'rt>>>" +
 				"<'row justify-content-center justify-content-md-between'<'col-md-12'<'align-self-center'i><''p>>>",
 			"searchPanes": {
 				cascadePanes: true,
 				layout: 'columns-4',
-				// columns: [1,4],
+				// columns: [1,2,4,5,6,7,8,9,11,12,15],
 				count: '{total}',
 				countFiltered: '{shown} / {total}',
 				viewTotal: true,
@@ -181,9 +155,9 @@
 					}
 				}
 			},
-			"scrollX": true,
+			"scrollX": false,
 			"serverSide": false,
-			"autoWidth": false,
+			"autoWidth": true,
 			"select": true,
 			"colReorder": true,
 			"ordering": true,
@@ -223,10 +197,10 @@
 				"colvis": 'Columnas Visibles'
 			},
 			"columnDefs": [
-				{ "type": "num-fmt", "targets": [0,2,3]},
-				{ "type": "date", "targets": [6,7]},
+				{ "type": "num-fmt", "targets": [0,3,4,10,13,14]},
+				{ "type": "date", "targets": [2]},
 				{ "type": "html", "targets": '_all'},
-				{ "orderable": false, "targets": [8] },
+				{ "orderable": false, "targets": [4] },
 				// { "className": "text-right", "targets": [2,3,5]},
 				// { "className": "text-left", "targets": [1]},
 				// { "visible": false, "targets": [4]}
@@ -234,22 +208,28 @@
 			"drawCallback": function () {
 				var api = this.api();
 				$( api.table().footer() ).html(
-					`<th  scope="col" colspan="2">TOTAL</th>
-					<th  scope="col" class="text-right pr-3">`+formatter.format(api.column( 2, {filter:'applied'} ).data().sum())+`</th>
-					<th  scope="col" colspan="6"></th>`
+					`<th  scope="col" colspan="11" class="text-right pr-3">`+formattermoney.format(api.column( 10, {filter:'applied'} ).data().sum())+`</th>
+					<th scope="col" colspan="3" class="text-right pr-3">`+formatternumber.format(api.column( 13, {filter:'applied'} ).data().sum())+`</th>
+                    <th scope="col" class="text-right pr-3">`+formatternumber.format(api.column( 14, {filter:'applied'} ).data().sum())+`</th>
+                    <th></th>`
 				);
+                // $('.dataTables_scrollFoot').empty();
 			}
 		});
 	});
-	var formatter = new Intl.NumberFormat('en-US', {
+	var formattermoney = new Intl.NumberFormat('es-CO', {
 	style: 'currency',
-	currency: 'USD',
+	currency: 'COP',
 	maximumFractionDigits: 2,
 	//maximumFractionDigits: 0,
 	});
+    var formatternumber = new Intl.NumberFormat('es-CO', {
+    maximumFractionDigits: 2,
+    //maximumFractionDigits: 0,
+    });
 	/*funcion para actualizar elplugin responsive in chrome*/
 	function recalcularwitdth() {
-	var table = $('#comprasTable').DataTable();
+	var table = $('#reporteTable').DataTable();
 	table.columns.adjust();
 	table.responsive.recalc();
 	// console.log('tabla recalculada');
