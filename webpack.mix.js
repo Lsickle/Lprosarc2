@@ -58,9 +58,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
 				'node_modules/datatables.net-keytable-dt/css/keyTable.dataTables.css',
 				'node_modules/datatables.net-responsive-dt/css/responsive.dataTables.css',
 				'node_modules/datatables.net-scroller-dt/css/scroller.dataTables.css',
-				'node_modules/datatables.net-select-dt/css/select.dataTables.css',
-				'node_modules/datatables.net-searchpanes-dt/css/searchPanes.dataTables.css',
-				'node_modules/datatables.net-searchBuilder-dt/css/searchBuilder.dataTables.css'
+				'node_modules/datatables.net-select-dt/css/select.dataTables.css'
 		], 'public/css/datatable-depen.css')
 	 .combine([
 				'node_modules/datatables.net-plugins/features/searchHighlight/dataTables.searchHighlight.css'
@@ -120,9 +118,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
 				'node_modules/datatables.net-buttons-dt/js/buttons.dataTables.js',
 				'node_modules/datatables.net-keytable-dt/js/keyTable.dataTables.js',
 				'node_modules/datatables.net-scroller-dt/js/scroller.dataTables.js',
-				'node_modules/datatables.net-select-dt/js/select.dataTables.js',
-		 		'node_modules/datatables.net-searchpanes-dt/js/searchPanes.dataTables.js',
-				'node_modules/datatables.net-searchBuilder-dt/js/searchBuilder.dataTables.js'
+				'node_modules/datatables.net-select-dt/js/select.dataTables.js'
 		], 'public/js/datatable-depen.js')
 	 .scripts([
 				// 'node_modules/datatables.net-plugins/pagination/input.js',
