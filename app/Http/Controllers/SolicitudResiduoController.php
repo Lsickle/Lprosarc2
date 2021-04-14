@@ -19,6 +19,9 @@ use App\ProgramacionVehiculo;
 use App\Cliente;
 use App\Personal;
 use App\Docdato;
+use App\Tratamiento;
+use App\Generador;
+use App\Certificado;
 use Permisos;
 
 class SolicitudResiduoController extends Controller
@@ -559,5 +562,89 @@ class SolicitudResiduoController extends Controller
 		$id = $SolicitudServicio->SolSerSlug;
 
 		return redirect()->route('solicitud-servicio.show', compact('id'));
+	}
+
+		/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function reportes()
+	{
+		if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)) {
+
+			switch (Auth::user()->UsRol) {
+				case ('Programador'):
+				case ('AdministradorBogota'):
+				case ('AdministradorPlanta'):
+				case ('AsistenteComercial'):
+				case ('JefeOperaciones'):
+				case ('Supervisor'):
+				case ('Tesorería'):
+				case ('AsistenteLogistica'):
+				case ('JefeLogistica'):
+					$servicios = SolicitudServicio::with([
+						'SolicitudResiduo.generespel.respels', 
+						'SolicitudResiduo.generespel.gener_sedes.generadors',
+						'SolicitudResiduo.certdato.certificado',
+						'cliente.comercialAsignado',
+						'SolicitudResiduo.requerimiento.tratamiento',
+						'programacionesrecibidas',
+						'SolicitudResiduo' => function ($query) {
+							$query->where('SolResKgConciliado', '>', 0);
+						}
+					])
+					->whereIn('SolSerStatus', ['Conciliado', 'Facturado', 'Certificacion'])
+					->where('ID_SolSer', '>=', 35018)
+					->whereHas('SolicitudResiduo.certdato.certificado')
+					->get();
+					break;
+
+				case ('Comercial'):
+					$idcomercial = Auth::user()->persona->ID_Pers;
+					$servicios = SolicitudServicio::with([
+						'SolicitudResiduo.generespel.respels', 
+						'SolicitudResiduo.generespel.gener_sedes.generadors',
+						'SolicitudResiduo.certdato.certificado',
+						'cliente.comercialAsignado',
+						'SolicitudResiduo.requerimiento.tratamiento',
+						'programacionesrecibidas',
+						'SolicitudResiduo' => function ($query) {
+							$query->where('SolResKgConciliado', '>', 0);
+						}
+					])
+					->whereIn('SolSerStatus', ['Conciliado', 'Facturado', 'Certificacion'])
+					->where('ID_SolSer', '>=', 35018)
+					->whereHas('SolicitudResiduo.certdato.certificado')
+					->whereHas('cliente', function ($query) use ($idcomercial) {
+							$query->where('CliComercial', $idcomercial);
+						}
+					)
+					->get();
+					break;
+
+				default:
+					$servicios = SolicitudServicio::with([
+						'SolicitudResiduo.generespel.respels', 
+						'SolicitudResiduo.generespel.gener_sedes.generadors',
+						'SolicitudResiduo.certdato.certificado',
+						'cliente.comercialAsignado',
+						'SolicitudResiduo.requerimiento.tratamiento',
+						'programacionesrecibidas',
+						'SolicitudResiduo' => function ($query) {
+							$query->where('SolResKgConciliado', '>', 0);
+						}
+					])
+					->whereIn('SolSerStatus', ['Conciliado', 'Facturado', 'Certificacion'])
+					->where('ID_SolSer', '=', 35018)
+					->whereHas('SolicitudResiduo.certdato.certificado')
+					->get();
+					break;
+			}
+
+        	return view('reportes.index', compact('servicios')); 
+		}else{
+			abort(503, "no tiene permisos para acceder a la pagina de reportes");
+		}
 	}
 }

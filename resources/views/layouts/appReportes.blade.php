@@ -6,7 +6,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html lang="es">
 
 @section('htmlheader')
-    @include('layouts.partials.htmlheader')
+@include('layouts.partials.reportes.htmlheaderReportes')
 @show
 
 <!--
@@ -29,35 +29,37 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="skin-blue fixed sidebar-mini sidebar-collapse">
+
+<body class="skin-blue sidebar-mini sidebar-collapse">
     <div id="app" v-cloak>
         <div class="wrapper">
 
-        @include('layouts.partials.mainheader')
+            @include('layouts.partials.reportes.mainheaderReportes')
 
-        @include('layouts.partials.sidebar')
+            @include('layouts.partials.reportes.sidebarReportes')
 
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
 
-            @include('layouts.partials.contentheader')
+                {{-- @include('layouts.partials.reportes.contentheaderReportes') --}}
 
-            <!-- Main content -->
-            @include('layouts.partials.loading')
-            <section class="content" id="contenido" style="display: none;">
-                <!-- Your Page Content Here -->
-                @yield('main-content')
-            </section><!-- /.content -->
-        </div><!-- /.content-wrapper -->
+                <!-- Main content -->
+                @include('layouts.partials.reportes.loadingReportes')
+                <section class="content" id="contenido" style="display: none;">
+                    <!-- Your Page Content Here -->
+                    @yield('main-content')
+                </section><!-- /.content -->
+            </div><!-- /.content-wrapper -->
 
-        @include('layouts.partials.controlsidebar')
+            @include('layouts.partials.reportes.controlsidebarReportes')
 
-        @include('layouts.partials.footer')
+            @include('layouts.partials.reportes.footerReportes')
 
-    </div><!-- ./wrapper -->
-</div>  
-    @include('layouts.partials.scripts')
+        </div><!-- ./wrapper -->
+    </div>
+    @include('layouts.partials.reportes.scriptsReportes')
     @section('scripts')
     @show
 </body>
+
 </html>

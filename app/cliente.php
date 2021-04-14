@@ -57,4 +57,8 @@ class Cliente extends Model
     public function certificadosdetransportador(){
 		return $this->hasMany('App\Manifiesto','FK_CertGestor', 'ID_Cli');
     }
+
+	public function comercialAsignado(){
+		return $this->hasOne('App\Personal','ID_Pers', 'CliComercial');
+    }
 }

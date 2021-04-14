@@ -34,8 +34,8 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     //se especifica la raclacion con la tabla personals
-    public function usuario(){
-        return $this->belongsTo('App\Personal','ID_Pers');
+    public function persona(){
+        return $this->belongsTo('App\Personal', 'FK_UserPers', 'ID_Pers');
     }
     
     //se especifica la raclacion con la tabla declaraciones
