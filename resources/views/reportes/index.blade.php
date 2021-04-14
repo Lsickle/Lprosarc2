@@ -34,9 +34,7 @@
                                 <th>Servicio</th>
                                 <th>Status</th>
                                 <th>Recepcion</th>
-                                @if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
                                 <th>ID_SolRes</th>
-                                @endif
                                 <th>RM</th>
                                 <th>Residuo</th>
                                 <th>Peligro</th>
@@ -75,9 +73,7 @@
                                             @endforeach
                                         @endif
                                         </td>
-                                        @if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
                                         <td>{{$solres->ID_SolRes}}</td>
-                                        @endif
                                         <td>
                                             @if (isset($solres->SolResRM)&&is_array($solres->SolResRM))
                                                 @foreach ($solres->SolResRM as $rm)
@@ -173,6 +169,8 @@
         @case('JefeOperaciones')
         @case('Supervisor')
         @case('Tesorería')
+        @case('AsistenteLogistica')
+        @case('JefeLogistica')
             $(document).ready(function() {
                 /*var rol defino el rol del usuario*/
                 var rol = "<?php echo Auth::user()->fk_rol; ?>";
@@ -260,7 +258,7 @@
             });
         @break
         @case('Comercial')
-            $(document).ready(function() {
+           $(document).ready(function() {
                 /*var rol defino el rol del usuario*/
                 var rol = "<?php echo Auth::user()->fk_rol; ?>";
                 /*var botoncito define los botones que se usaran si el usuario es programador*/
@@ -274,7 +272,7 @@
                     "searchPanes": {
                         cascadePanes: true,
                         layout: 'columns-4',
-                        // columns: [1,2,4,5,6,7,8,9,11,12,15],
+                        columns: [1,2,4,5,6,7,8,9,11,12,14,21,22],
                         count: '{total}',
                         countFiltered: '{shown} / {total}',
                         viewTotal: true,
@@ -318,7 +316,6 @@
                             "sNext":     "->",
                             "sPrevious": "<-"
                         },
-
                         "oAria": {
                             "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
                             "sSortDescending": ": Activar para ordenar la columna de manera descendente"
@@ -326,96 +323,7 @@
                         "colvis": 'Columnas Visibles'
                     },
                     "columnDefs": [
-                        { "type": "num-fmt", "targets": [0,3,4,10,13,14]},
-                        { "type": "date", "targets": [2]},
-                        { "type": "html", "targets": '_all'},
-                        { "orderable": false, "targets": [4] },
-                        // { "className": "text-right", "targets": [2,3,5]},
-                        // { "className": "text-left", "targets": [1]},
-                        // { "visible": false, "targets": [4]}
-                    ],
-                    "drawCallback": function () {
-                        var api = this.api();
-                        $( api.table().footer() ).html(
-                            `<th  scope="col" colspan="11" class="text-right pr-3">`+formattermoney.format(api.column( 10, {filter:'applied'} ).data().sum())+`</th>
-                            <th scope="col" colspan="3" class="text-right pr-3">`+formatternumber.format(api.column( 13, {filter:'applied'} ).data().sum())+`</th>
-                            <th scope="col" class="text-right pr-3">`+formatternumber.format(api.column( 14, {filter:'applied'} ).data().sum())+`</th>
-                            <th></th>`
-                        );
-                        // $('.dataTables_scrollFoot').empty();
-                    }
-                });
-            });
-        @break
-        @case('AsistenteLogistica')
-        @case('JefeLogistica')
-            $(document).ready(function() {
-                /*var rol defino el rol del usuario*/
-                var rol = "<?php echo Auth::user()->fk_rol; ?>";
-                /*var botoncito define los botones que se usaran si el usuario es programador*/
-                var botoncito = (rol == 1) ? [{extend: 'colvis', text: 'Columnas'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {extend: 'collection', text: 'Selector', buttons: ['selectRows', 'selectCells']}] : [{extend: 'colvis', text: 'Columnas'}, {extend: 'excel', text: 'Excel'}];
-                /*inicializacion de datatable general*/
-                $('#reporteTable').DataTable({
-                    "dom":"<'row'<'col-md-12 collapse panels'P><'col-md-12 collapse filters'<'card'<'card-body'Q>>>>" +
-                        "<'row'<'col-md-3'l><'col-md-5'B><'col-md-4'f>>" +
-                        "<'row'<'col-md-12'<'pre-x-scrollable'rt>>>" +
-                        "<'row justify-content-center justify-content-md-between'<'col-md-12'<'align-self-center'i><''p>>>",
-                    "searchPanes": {
-                        cascadePanes: true,
-                        layout: 'columns-4',
-                        // columns: [1,2,4,5,6,7,8,9,11,12,15],
-                        count: '{total}',
-                        countFiltered: '{shown} / {total}',
-                        viewTotal: true,
-                        dtOpts: {
-                            select: {
-                                style: 'multi'
-                            }
-                        }
-                    },
-                    "scrollX": false,
-                    "serverSide": false,
-                    "autoWidth": true,
-                    "select": true,
-                    "colReorder": true,
-                    "ordering": true,
-                    "order": [0, 'desc'],
-                    "searchHighlight": true,
-                    "responsive": false,
-                    "keys": true,
-                    "lengthChange": true,
-                    "searching": true,
-                    "buttons": [
-                        botoncito
-                    ],
-                    "language": {
-                        "sProcessing":     "Procesando...",
-                        "sLengthMenu":     "_MENU_ Filas",
-                        "sZeroRecords":    "No se encontraron resultados",
-                        "sEmptyTable":     "Ningún dato disponible en esta tabla",
-                        "sInfo":           "_START_ al _END_ de _TOTAL_",
-                        "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        "sInfoFiltered":   "",
-                        "sInfoPostFix":    "",
-                        "sSearch":         "_INPUT_",
-                        "sUrl":            "",
-                        "sInfoThousands":  ",",
-                        "sLoadingRecords": "Cargando...",
-                        "oPaginate": {
-                            "sFirst":    "Primero",
-                            "sLast":     "Último",
-                            "sNext":     "->",
-                            "sPrevious": "<-"
-                        },
-
-                        "oAria": {
-                            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                        },
-                        "colvis": 'Columnas Visibles'
-                    },
-                    "columnDefs": [
-                        // { "type": "num-fmt", "targets": [0,3,4,10,13,14]},
+                        { "type": "num-fmt", "targets": [0,3,4,10,12,13]},
                         { "type": "date", "targets": [2]},
                         { "type": "html", "targets": '_all'},
                         { "orderable": false, "targets": [4] },
@@ -429,13 +337,14 @@
                             `<th  scope="col" colspan="11" class="text-right pr-3">`+formattermoney.format(api.column( 10, {filter:'applied'} ).data().sum())+`</th>
                             <th scope="col" colspan="2" class="text-right pr-3">`+formatternumber.format(api.column( 12, {filter:'applied'} ).data().sum())+`</th>
                             <th scope="col" class="text-right pr-3">`+formatternumber.format(api.column( 13, {filter:'applied'} ).data().sum())+`</th>
-                            <th scope="col" colspan="8"></th>`
+                            <th scope="col" colspan="9"></th>`
                         );
                         // $('.dataTables_scrollFoot').empty();
                     }
                 });
             });
         @break
+
         @default
     
     @endswitch

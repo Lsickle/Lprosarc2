@@ -601,6 +601,7 @@ class SolicitudResiduoController extends Controller
 					break;
 
 				case ('Comercial'):
+					$idcomercial = Auth::user()->persona->ID_Pers;
 					$servicios = SolicitudServicio::with([
 						'SolicitudResiduo.generespel.respels', 
 						'SolicitudResiduo.generespel.gener_sedes.generadors',
@@ -614,9 +615,9 @@ class SolicitudResiduoController extends Controller
 					])
 					->whereIn('SolSerStatus', ['Conciliado', 'Facturado', 'Certificacion'])
 					->where('ID_SolSer', '>=', 35018)
-					->whereHas('SolicitudResiduo.certdato.certificado',
-						'cliente', function ($query) {
-							$query->where('CliComercial', '=', Auth::user()->persona->ID_Pers);
+					->whereHas('SolicitudResiduo.certdato.certificado')
+					->whereHas('cliente', function ($query) use ($idcomercial) {
+							$query->where('CliComercial', $idcomercial);
 						}
 					)
 					->get();

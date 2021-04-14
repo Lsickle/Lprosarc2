@@ -239,7 +239,7 @@
 					</li>
 					@if ((in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)))
 					<li style="height: 100%;">
-						<a href="/reportes" style="height: 100%;" title="Reportes"><i class="fas x2 fa-chart-pie" style="font-size: 1.5em"></i></a>
+						<a href="{{ url('/reportes') }}" style="height: 100%; font-size: 1.2em;" title="Reportes"><i style="font-size: 1.2em;" class="fas x2 fa-chart-bar"></i><b> Reporte</b></a>
 					</li>
 					@endif
 					
