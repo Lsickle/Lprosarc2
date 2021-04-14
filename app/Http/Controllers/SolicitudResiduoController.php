@@ -578,20 +578,25 @@ class SolicitudResiduoController extends Controller
 				case ('AdministradorBogota'):
 				case ('AdministradorPlanta'):
 				case ('AsistenteComercial'):
-				case ('AsistenteLogistica'):
-				case ('JefeLogistica'):
 				case ('JefeOperaciones'):
 				case ('Supervisor'):
 				case ('Tesorería'):
+				case ('AsistenteLogistica'):
+				case ('JefeLogistica'):
 					$servicios = SolicitudServicio::with([
 						'SolicitudResiduo.generespel.respels', 
 						'SolicitudResiduo.generespel.gener_sedes.generadors',
+						'SolicitudResiduo.certdato.certificado',
 						'cliente.comercialAsignado',
 						'SolicitudResiduo.requerimiento.tratamiento',
-						'programacionesrecibidas'
-						])
+						'programacionesrecibidas',
+						'SolicitudResiduo' => function ($query) {
+							$query->where('SolResKgConciliado', '>', 0);
+						}
+					])
 					->whereIn('SolSerStatus', ['Conciliado', 'Facturado', 'Certificacion'])
-					->where('ID_SolSer', '>=', 35000)
+					->where('ID_SolSer', '>=', 35018)
+					->whereHas('SolicitudResiduo.certdato.certificado')
 					->get();
 					break;
 
@@ -599,11 +604,17 @@ class SolicitudResiduoController extends Controller
 					$servicios = SolicitudServicio::with([
 						'SolicitudResiduo.generespel.respels', 
 						'SolicitudResiduo.generespel.gener_sedes.generadors',
+						'SolicitudResiduo.certdato.certificado',
 						'cliente.comercialAsignado',
+						'SolicitudResiduo.requerimiento.tratamiento',
+						'programacionesrecibidas',
+						'SolicitudResiduo' => function ($query) {
+							$query->where('SolResKgConciliado', '>', 0);
+						}
 					])
 					->whereIn('SolSerStatus', ['Conciliado', 'Facturado', 'Certificacion'])
-					->where('ID_SolSer', '>=', 35000)
-					->whereHas(
+					->where('ID_SolSer', '>=', 35018)
+					->whereHas('SolicitudResiduo.certdato.certificado',
 						'cliente', function ($query) {
 							$query->where('CliComercial', '=', Auth::user()->persona->ID_Pers);
 						}
@@ -615,16 +626,21 @@ class SolicitudResiduoController extends Controller
 					$servicios = SolicitudServicio::with([
 						'SolicitudResiduo.generespel.respels', 
 						'SolicitudResiduo.generespel.gener_sedes.generadors',
+						'SolicitudResiduo.certdato.certificado',
 						'cliente.comercialAsignado',
 						'SolicitudResiduo.requerimiento.tratamiento',
-						'programacionesrecibidas'
-						])
+						'programacionesrecibidas',
+						'SolicitudResiduo' => function ($query) {
+							$query->where('SolResKgConciliado', '>', 0);
+						}
+					])
 					->whereIn('SolSerStatus', ['Conciliado', 'Facturado', 'Certificacion'])
-					->where('ID_SolSer', '=', 35000)
+					->where('ID_SolSer', '=', 35018)
+					->whereHas('SolicitudResiduo.certdato.certificado')
 					->get();
 					break;
 			}
-			
+
         	return view('reportes.index', compact('servicios')); 
 		}else{
 			abort(503, "no tiene permisos para acceder a la pagina de reportes");
