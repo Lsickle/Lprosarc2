@@ -430,6 +430,9 @@ canvas {
           justify-content: space-between;
   margin-top: 8px;
 }
+.pre-x-scrollable {
+    overflow: auto;
+}
 /*Stilos del Loading con el logo de Prosarc*/
 #contenedor_carga{
 	background-color: #ecf0f5;
@@ -584,7 +587,4 @@ canvas {
 		margin-top: 20%;
 		margin-right: 15%;
 	}
-}
-.pre-x-scrollable {
-    overflow: auto;
 }
