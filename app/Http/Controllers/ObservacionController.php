@@ -255,14 +255,12 @@ class ObservacionController extends Controller
 
         if ($Observacion->ObsRepeat > 2) {
             $copy = ['recepcionpda@prosarc.com.co',
-                    'asistentelogistica@prosarc.com.co',
                     'conciliaciones@prosarc.com.co',
                     'logistica@prosarc.com.co',
                     $comercial->PersEmail
                 ];
         }else{
             $copy = ['recepcionpda@prosarc.com.co',
-                    'asistentelogistica@prosarc.com.co',
                     'conciliaciones@prosarc.com.co',
                     $comercial->PersEmail
                 ];
