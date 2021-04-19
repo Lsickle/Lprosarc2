@@ -14,7 +14,7 @@ use App\AuditRequest;
 use App\audit;
 use App\Cliente;
 use App\GenerSede;
-use App\generador;
+use App\Generador;
 use App\Sede;
 use App\Departamento;
 use App\Municipio;
@@ -112,7 +112,7 @@ class genercontroller extends Controller
     {
         $Sede = Sede::select('ID_Sede')->where('SedeSlug', $request->input('FK_GenerCli'))->first();
         
-        $Gener = new generador();
+        $Gener = new Generador();
         $Gener->GenerNit = $request->input('GenerNit');
         $Gener->GenerName = $request->input('GenerName');
         // $Gener->GenerShortname = $request->input('GenerShortname');
@@ -185,7 +185,7 @@ class genercontroller extends Controller
             ->oldest()
             ->get();
 
-        $Gener = new generador();
+        $Gener = new Generador();
         $Gener->GenerNit = $Cliente->CliNit;
         $Gener->GenerName = $Cliente->CliName;
         // $Gener->GenerShortname = $Cliente->CliShortname;
