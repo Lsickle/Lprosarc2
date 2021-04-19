@@ -13,7 +13,7 @@ use App\Cliente;
 use App\Personal;
 use App\Generador;
 use App\Tratamiento;
-use App\Audit;
+use App\audit;
 use App\Certdato;
 use App\Permisos;
 use App\SolicitudServicio;
@@ -815,7 +815,7 @@ class CertificadoController extends Controller
 
         $certificado->save();
 
-        $log = new Audit();
+        $log = new audit();
         $log->AuditTabla="certificado";
         $log->AuditType="firmado";
         $log->AuditRegistro=$certificado->ID_Cert;
