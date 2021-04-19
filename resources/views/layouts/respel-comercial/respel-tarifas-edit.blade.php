@@ -63,16 +63,22 @@
 							<div class="col-md-3 col-sm-6" {{-- {{$last > 1 ? "pull-left": "pull-right"}}" --}} id="rango{{$contadorphp}}{{$last}}">
 								<label style="font-size: 0.8em;" for="rangopriceinput{{$contadorphp}}{{$last}}">Desde {{isset($rango->TarifaDesde) ? $rango->TarifaDesde : 0 }} </label>
 								@if(($rango->TarifaDesde != 0)&&(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL)))
-								<a onclick="EliminarRango({{$contadorphp}},{{$last}})" id="minusrangeButton{{$contadorphp}}{{$last}}"><i style="color:red; margin: 0; padding: 0; margin-top: 0.25em; cursor: pointer;" class="fa fa-trash-alt pull-right"></i></a>
+									<a onclick="EliminarRango({{$contadorphp}},{{$last}})" id="minusrangeButton{{$contadorphp}}{{$last}}"><i style="color:red; margin: 0; padding: 0; margin-top: 0.25em; cursor: pointer;" class="fa fa-trash-alt pull-right"></i></a>
+									<div class="input-group">
+										<input id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control  addon-inline" placeholder="Precio" min="0" value="{{$rango->TarifaPrecio}}">
+										<span class="input-group-addon addon-inline input-source-observer">$</span>
+									</div>
+									<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$rango->TarifaDesde}}">
+								@else
+									<div class="input-group">
+										<input disabled id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control  addon-inline" placeholder="Precio" min="0" value="{{$rango->TarifaPrecio}}">
+										<span class="input-group-addon addon-inline input-source-observer">$</span>
+									</div>
+									<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$rango->TarifaDesde}}">
+									@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
+										<input name="Opcion[{{$contadorphp}}][TarifaPrecio][]" hidden value="{{$rango->TarifaPrecio}}">
+									@endif
 								@endif
-								<div class="input-group">
-								<input {{in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL) ? '' : 'disabled' }} id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control  addon-inline" placeholder="Precio" min="0" value="{{$rango->TarifaPrecio}}">
-								<span class="input-group-addon addon-inline input-source-observer">$</span>
-								</div>
-								<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$rango->TarifaDesde}}">
-								@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
-							   		<input name="Opcion[{{$contadorphp}}][TarifaPrecio][]" hidden value="{{$rango->TarifaPrecio}}">
-							    @endif
 							</div>
 			    		@endforeach
 			    	@else
@@ -81,11 +87,17 @@
 			    		</script>
 		    			<div class="col-md-3 col-sm-6" id="rango{{$contadorphp}}{{$last}}">
 		    				<label style="font-size: 0.8em;" for="rangopriceinput{{$contadorphp}}{{$last}}">Desde {{$last}} </label>
-		    				<input {{in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL) ? '' : 'disabled' }} id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control" placeholder="Precio" min="0">
-		    				<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$last}}">
-	    					@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
-	    				   		<input name="Opcion[{{$contadorphp}}][TarifaPrecio][]" hidden>
-	    				    @endif
+							@if (in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
+								<input id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control" placeholder="Precio" min="0">
+								<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$last}}">
+							@else
+								<input disabled id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control" placeholder="Precio" min="0">
+								<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$last}}">
+								@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
+									<input name="Opcion[{{$contadorphp}}][TarifaPrecio][]" hidden>
+								@endif
+							@endif
+		    				
 		    			</div>
 		    			@php
 		    			$last = $last+1;

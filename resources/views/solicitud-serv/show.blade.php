@@ -483,8 +483,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 															<a style="color: black">
 														@endif
 														<i class="fas fa-marker"></i></a>
-														{{$Residuo->SolResPrecio}}
-														 Pesos
+														{{$Residuo->SolResPrecio}} Pesos
 													</td>
 												@endif
 												<td style="text-align: center;">{{number_format($Residuo->SolResKgEnviado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}} Kilogramos</td>

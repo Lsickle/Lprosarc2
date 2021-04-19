@@ -674,7 +674,9 @@ class SolicitudServicioController extends Controller
 			->get();
 		
 		$Residuos = $Residuosoriginal->map(function ($item) {
-		  $requerimientos = Requerimiento::with(['pretratamientosSelected'])
+		  $requerimientos = Requerimiento::with(['pretratamientosSelected', 'tarifa.rangos' => function($query){
+			$query->orderBy('TarifaDesde');
+		  }])
 	        ->where('ID_Req', $item->FK_SolResRequerimiento)
 	        // ->where('forevaluation', 0)
 			->first();
@@ -682,6 +684,7 @@ class SolicitudServicioController extends Controller
 			$rm = SolicitudResiduo::where('SolResSlug', $item->SolResSlug)->first('SolResRM');
 	        
 	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
+	        $item->tarifa = $requerimientos->tarifa;
 	        $item->SolResRM2 = $rm->SolResRM;
 		  	return $item;
 		});
@@ -1668,7 +1671,9 @@ class SolicitudServicioController extends Controller
 	public function solservdocstore($id)
 	{
 			
-		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $id)->first();
+		$SolicitudServicio = SolicitudServicio::with(['SolicitudResiduo.requerimiento.tarifa.rangos' => function ($query){
+			$query->orderBy('TarifaDesde');
+		}])->where('ID_SolSer', $id)->first();
 		$serviciovalidado = $id;
 		/*cuenta los diferentes generadores*/
 		$generadoresdelasolicitud = GenerSede::whereHas('resgener.solres', function ($query) use ($serviciovalidado) {
@@ -1818,6 +1823,31 @@ class SolicitudServicioController extends Controller
 					}
 				}
 			}
+		}
+
+		/*ajuste de los precios para facturacion en cada residuo de la solicitud segun los rangos de tarifas */
+
+		foreach ($SolicitudServicio->SolicitudResiduo as $key => $solres) {
+			// a partir de 1 kg se asigna el precio segun la cantidad conciliada
+			if ($solres->SolResKgConciliado >= 1) {
+				foreach ($solres->requerimiento->tarifa->rangos as $rango) {
+					if ($solres->SolResKgConciliado >= $rango->TarifaDesde) {
+						$solres->SolResPrecio = $rango->TarifaPrecio;
+					}
+				}
+			}
+
+			/* entre 0 y 1 kilgramos se asigna el precion de la tarifa mas pequeña */
+			if (0 < $solres->SolResKgConciliado && $solres->SolResKgConciliado < 1) {
+				$solres->SolResPrecio = $solres->requerimiento->tarifa->rangos[0]->TarifaPrecio;
+			}
+
+			/* si el precio se mantiene en 0 y el peso es mayor a 0 se iguala el precio al primer rango */
+			if ($solres->SolResPrecio == 0 && $solres->SolResKgConciliado > 0) {
+				$solres->SolResPrecio = $solres->requerimiento->tarifa->rangos[0]->TarifaPrecio;
+			}
+
+			$solres->save();
 		}
 	}
 
