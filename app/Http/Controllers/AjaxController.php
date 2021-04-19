@@ -19,7 +19,7 @@ use App\SolicitudServicio;
 use App\Cliente;
 use App\Personal;
 use App\Permisos;
-use App\Audit;
+use App\audit;
 use App\Observacion;
 use App\Mail\SolSerEmail;
 use App\Mail\ConcilacionRecordatorio;
@@ -291,7 +291,7 @@ class AjaxController extends Controller
 						$Solicitud->SolSerDescript = $request->input('solserdescript');
 						$Solicitud->save();
 
-						$log = new Audit();
+						$log = new audit();
 						$log->AuditTabla="solicitud_servicios";
 						$log->AuditType="Modificado Status";
 						$log->AuditRegistro=$Solicitud->ID_SolSer;
@@ -388,7 +388,7 @@ class AjaxController extends Controller
 						$Solicitud->SolSerDescript = $request->input('solserdescript');
 						$Solicitud->save();
 
-						$log = new Audit();
+						$log = new audit();
 						$log->AuditTabla="solicitud_servicios";
 						$log->AuditType="Modificado Status";
 						$log->AuditRegistro=$Solicitud->ID_SolSer;
@@ -512,7 +512,7 @@ class AjaxController extends Controller
         $Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
         $Observacion->save();
 
-        $log = new Audit();
+        $log = new audit();
 		$log->AuditTabla="observaciones";
 		$log->AuditType="Add observacion";
 		$log->AuditRegistro=$Observacion->ID_Obs;
@@ -776,7 +776,7 @@ class AjaxController extends Controller
 
 			$certificado->save();
 
-			$log = new Audit();
+			$log = new audit();
 			$log->AuditTabla="certificado";
 			$log->AuditType="firmado";
 			$log->AuditRegistro=$certificado->ID_Cert;
