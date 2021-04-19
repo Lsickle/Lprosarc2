@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\userController;
 use App\Http\Requests\SedeGenerRequest;
 use App\AuditRequest;
-use App\generador;
+use App\Generador;
 use App\GenerSede;
 use App\Sede;
 use App\Cliente;
@@ -81,7 +81,7 @@ class sgenercontroller extends Controller
      */
     public function store(SedeGenerRequest $request)
     {
-        $Generador = generador::select('ID_Gener', 'GenerSlug')->where('GenerSlug', $request->input('FK_GSede'))->first();
+        $Generador = Generador::select('ID_Gener', 'GenerSlug')->where('GenerSlug', $request->input('FK_GSede'))->first();
         $GenerSede = new GenerSede();
         $GenerSede->GSedeName = $request->input('GSedeName');
         $GenerSede->GSedeAddress = $request->input('GSedeAddress');
@@ -139,7 +139,7 @@ class sgenercontroller extends Controller
         if (!$SedeGener) {
             abort(404);
         }
-        $Generador = generador::where('ID_Gener', $SedeGener->FK_GSede)->first();
+        $Generador = Generador::where('ID_Gener', $SedeGener->FK_GSede)->first();
         // Cuantas sedes tiene el generador para saber si aparece el boton de eliminan
         $CountSedeGener = GenerSede::where('FK_GSede', $Generador->ID_Gener)->where('GSedeDelete', 0)->get();
 
@@ -224,7 +224,7 @@ class sgenercontroller extends Controller
         if (!$GSede) {
             abort(404);
         }
-        $Generador = generador::select('ID_Gener')->where('GenerSlug', $request->input('FK_GSede'))->first();
+        $Generador = Generador::select('ID_Gener')->where('GenerSlug', $request->input('FK_GSede'))->first();
         $GSede->fill($request->except('FK_GSede'));
         $GSede->FK_GSede = $Generador->ID_Gener;
         $GSede->save();
@@ -243,7 +243,7 @@ class sgenercontroller extends Controller
     public function destroy($id)
     {
         $Gsede = GenerSede::where('GSedeSlug', $id)->first();
-        $Generador = generador::where('ID_Gener', $Gsede->FK_GSede)->first();
+        $Generador = Generador::where('ID_Gener', $Gsede->FK_GSede)->first();
         
         if ($Gsede->GSedeDelete == 0) {
             $Gsede->GSedeDelete = 1;
