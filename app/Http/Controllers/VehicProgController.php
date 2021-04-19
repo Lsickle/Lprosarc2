@@ -47,9 +47,9 @@ class VehicProgController extends Controller
 				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', 'clientes.ID_Cli')
 				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerStatus', 'solicitud_servicios.SolSerVehiculo', 'solicitud_servicios.SolSerConductor', 'clientes.CliName', 'clientes.CliCategoria')
 				->where(function($query){
-					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
-						$query->where('progvehiculos.ProgVehDelete', 0);
-					}
+					// if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+					// 	$query->where('progvehiculos.ProgVehDelete', 0);
+					// }
 					if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR)||in_array(Auth::user()->UsRol2, Permisos::CONDUCTOR)){
 						$query->where('progvehiculos.FK_ProgConductor', Auth::user()->FK_UserPers);
 						// $query->where('solicitud_servicios.SolSerStatus', 'Notificado');
