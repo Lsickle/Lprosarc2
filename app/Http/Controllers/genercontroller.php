@@ -63,7 +63,7 @@ class genercontroller extends Controller
         
         // para saber si no se debe mostrar el boton soy gener
         $Cliente = Cliente::select('CliNit')->where('ID_Cli', $ID_Cli)->first();
-        $Gener = generador::select('GenerNit')->where('GenerNit', $Cliente->CliNit)->where('GenerDelete', 0)->first();
+        $Gener = Generador::select('GenerNit')->where('GenerNit', $Cliente->CliNit)->where('GenerDelete', 0)->first();
         
         return view('generadores.index', compact('Generadors', 'Gener'));
     }
@@ -222,7 +222,7 @@ class genercontroller extends Controller
      */
     public function show($id)
     {
-        $Generador = generador::where('GenerSlug',$id)->first();
+        $Generador = Generador::where('GenerSlug',$id)->first();
         $Sede = Sede::where('ID_Sede', $Generador->FK_GenerCli)->first();
         $Cliente = Cliente::select('clientes.CliName', 'clientes.ID_Cli')->where('ID_Cli', $Sede->FK_SedeCli)->first();
         $GenerSedes = DB::table('gener_sedes')
@@ -266,7 +266,7 @@ class genercontroller extends Controller
         if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
             $ID_Cli = userController::IDClienteSegunUsuario();
             $Sedes = Sede::select('SedeName', 'ID_Sede', 'SedeSlug')->where('FK_SedeCli', $ID_Cli)->where('SedeDelete', 0)->get();
-            $Generador = generador::where('GenerSlug',$id)->first();
+            $Generador = Generador::where('GenerSlug',$id)->first();
             return view('generadores.edit', compact('Sedes', 'Generador'));
         }else{
             abot(403);
@@ -310,7 +310,7 @@ class genercontroller extends Controller
             'FK_GenerCli'   => 'required',
         ]);
         $Sede = Sede::select('ID_Sede')->where('SedeSlug',$request->input('FK_GenerCli'))->first();
-        $Generador = generador::where('GenerSlug',$id)->first();
+        $Generador = Generador::where('GenerSlug',$id)->first();
         $Generador->fill($request->except('FK_GenerCli'));
         $Generador->FK_GenerCli = $Sede->ID_Sede;
         $Generador->save();
@@ -329,7 +329,7 @@ class genercontroller extends Controller
      */
     public function destroy($slug)
     {
-        $Generador = generador::where('GenerSlug', $slug)->first();
+        $Generador = Generador::where('GenerSlug', $slug)->first();
         $SedesGeners = GenerSede::where('FK_GSede', $Generador->ID_Gener)->get();
         $ResiduosSedesGeners = DB::table('residuos_geners')
             ->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
