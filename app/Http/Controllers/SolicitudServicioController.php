@@ -674,7 +674,7 @@ class SolicitudServicioController extends Controller
 			->get();
 		
 		$Residuos = $Residuosoriginal->map(function ($item) {
-		  $requerimientos = Requerimiento::with(['pretratamientosSelected'])
+		  $requerimientos = Requerimiento::with(['pretratamientosSelected', 'tarifa.rangos'])
 	        ->where('ID_Req', $item->FK_SolResRequerimiento)
 	        // ->where('forevaluation', 0)
 			->first();
@@ -682,6 +682,7 @@ class SolicitudServicioController extends Controller
 			$rm = SolicitudResiduo::where('SolResSlug', $item->SolResSlug)->first('SolResRM');
 	        
 	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
+	        $item->tarifa = $requerimientos->tarifa;
 	        $item->SolResRM2 = $rm->SolResRM;
 		  	return $item;
 		});
@@ -763,6 +764,7 @@ class SolicitudServicioController extends Controller
 			$SolicitudServicio->recepcion = null;
 		}
 
+		return $Residuos;
 		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento', 'tratamientos', 'Observaciones', 'ultimoRecordatorio'));
 	}
 

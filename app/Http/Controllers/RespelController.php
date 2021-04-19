@@ -711,9 +711,7 @@ class RespelController extends Controller
                 $value->pretratamientosSelected()->detach();
                 $deletedRequerimientos = Requerimiento::where('ID_Req', $value['ID_Req'])->delete();
             }
-        }
 
-        if (in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL)) {
             if ($opciones) {
                 foreach ($opciones as $key => $value) {
                     if (isset($opciones[$key])) {
@@ -898,12 +896,15 @@ class RespelController extends Controller
                         
                     }
                 }
-            }  
+            }
+            $respel->RespelStatus = $request['RespelStatus'];
+            $respel->RespelStatusDescription = $request['RespelStatusDescription'];
+            $respel->updated_at = now();
+            $respel->save();
+        }else{
+            abort(401, 'No Autorizado');
         }
-        $respel->RespelStatus = $request['RespelStatus'];
-        $respel->RespelStatusDescription = $request['RespelStatusDescription'];
-        $respel->updated_at = now();
-        $respel->save();
+        
 
         /*auditoria de la actualizacion*/
         $log = new audit();
