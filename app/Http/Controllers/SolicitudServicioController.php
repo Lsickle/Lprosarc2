@@ -410,7 +410,8 @@ class SolicitudServicioController extends Controller
 	* Create from solicitud de residuo
 	*
 	*/
-	public function createSolRes($request, $ID_SolSer){
+	public function createSolRes($request, $ID_SolSer)
+	{
 		foreach ($request->input('SGenerador') as $Generador => $value) {
 			for ($y=0; $y < count($request['FK_SolResRg'][$Generador]); $y++) {
 				$SolicitudResiduo = new SolicitudResiduo();
