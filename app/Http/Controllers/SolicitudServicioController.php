@@ -137,8 +137,8 @@ class SolicitudServicioController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function indexalmacenados(){
-
+	public function indexalmacenados()
+	{
 		$SolicitudesServicios = SolicitudServicio::with(['Personal', 'cliente', 'municipio', 'SolicitudResiduo' => function ($query) {
 							$query->where('SolResKgConciliado', '!=', 'SolResKgTratado');
 							}])
@@ -351,6 +351,14 @@ class SolicitudServicioController extends Controller
 		$SolicitudServicio->FK_SolSerCliente = userController::IDClienteSegunUsuario();
 		$SolicitudServicio->save();
 		$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
+
+		$log = new audit();
+        $log->AuditTabla="Solicitud_servicios";
+        $log->AuditType="Nuevo servicio";
+        $log->AuditRegistro=$SolicitudServicio->ID_SolSer;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
 
 
 		/*se guarda la observacion inicial de la creación del servicio*/
@@ -1203,6 +1211,15 @@ class SolicitudServicioController extends Controller
 			}else{
 				Mail::to($SolicitudServicio['personalcliente']->PersEmail)->cc($destinatarios)->send(new NewSolServProsarcEmail($SolicitudServicio));
 			}
+
+			$log = new audit();
+			$log->AuditTabla="Solicitud_servicios";
+			$log->AuditType="servicio Repetido";
+			$log->AuditRegistro=$SolicitudOld->ID_SolSer;
+			$log->AuditUser=Auth::user()->email;
+			$log->Auditlog=json_encode($SolicitudNew->ID_SolSer);
+			$log->save();
+
 					
 			return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudNew->SolSerSlug]);
 		}
