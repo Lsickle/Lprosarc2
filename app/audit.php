@@ -11,7 +11,7 @@ class audit extends Model
     protected $fillable = ['AuditTabla', 'AuditType', 'AuditRegistro', 'AuditUser', 'Auditlog'];
 
     protected $casts = [
-        'Auditlog' => 'json',
+        // 'Auditlog' => 'array',
     ];
 
 }
