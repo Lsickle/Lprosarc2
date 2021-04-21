@@ -355,6 +355,10 @@ class ServiceExpressController extends Controller
 				// ->where('ProgVehEntrada', null)
 				->where('ProgVehDelete', 0)
 				->get();
+				$ProgramacionesActivas = count(ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+				->where('ProgVehEntrada', null)
+				->where('ProgVehDelete', 0)
+				->get());
 				break;
 		}
 		$Cliente = DB::table('clientes')
@@ -2178,17 +2182,6 @@ class ServiceExpressController extends Controller
 		$qrCode->setMargin(0);
 		$qrCode->setRoundBlockSize(true, QrCode::ROUND_BLOCK_SIZE_MODE_SHRINK);
 
-		// Storage::setVisibility('firmasClientes/'.$nombreDeFirma.'.png', 'public');
-
-		// return Storage::getVisibility('firmasClientes/'.$nombreDeFirma.'.png');
-
-		// return view('certificadosExpress.topdf', compact(['certificado','Solicitud','qrCode']));	
-		// return $certificado;
-		// $pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact(['certificado','Solicitud']));
-
-
-		// return $Solicitud->nombreDeFirma;
-        // return $certificado;
         switch ($certificado->tratamiento->TratName) {
             case 'TermoDestrucción':
 			$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact(['certificado','Solicitud', 'qrCode']));
@@ -2230,7 +2223,7 @@ class ServiceExpressController extends Controller
 
 		$destinatarios = [$comercial->PersEmail];
 
-		if ($Solicitud->SolServMailCopia == "null") {
+		if ($Solicitud->SolServMailCopia == "null"||$Solicitud->SolServMailCopia == "") {
 			Mail::to($email->PersEmail)
 			->cc($destinatarios)
 			->send(new SolSerExpressEmail($email, $pdf, $certificado));
