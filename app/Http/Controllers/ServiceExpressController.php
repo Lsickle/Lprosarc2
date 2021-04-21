@@ -2185,6 +2185,7 @@ class ServiceExpressController extends Controller
         switch ($certificado->tratamiento->TratName) {
             case 'TermoDestrucción':
 			$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact(['certificado','Solicitud', 'qrCode']));
+			Storage::put('certificadoExpress'.'/E-'.sprintf("%07s", $certificado->ID_Cert).'.pdf', $pdf->output(), 'public');
 
                 break;
             case 'Posconsumo luminarias':
