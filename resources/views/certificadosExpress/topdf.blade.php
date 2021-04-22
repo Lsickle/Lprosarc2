@@ -260,7 +260,7 @@
 										<b style="color: grey;">GENERADOR:</b><br>
 										<b>{{$certificado->sedegenerador->generadors->GenerName}}</b><br>
 										{{$certificado->sedegenerador->generadors->GenerNit}}<br>
-										{{$certificado->sedegenerador->GSedeAddress}}<b>{{ $certificado->sedegenerador->GSedeMapLocalidad != null ? $certificado->sedegenerador->GSedeMapLocalidad : ''  }}</b><br>
+										{{$certificado->sedegenerador->GSedeAddress}}<b> {{ $certificado->sedegenerador->GSedeMapLocalidad != null ? $certificado->sedegenerador->GSedeMapLocalidad : ''  }}</b><br>
 										<b style="color: grey;">CONTACTO:</b><br>
 										{{$certificado->sedegenerador->GSedeEmail}}<br>
 										{{$certificado->sedegenerador->GSedeCelular}}<br>

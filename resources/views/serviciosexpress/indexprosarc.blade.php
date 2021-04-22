@@ -34,7 +34,8 @@
                                     <th nowrap>Status</th>
                                     <th>{{trans('adminlte_lang::message.clientcliente')}}</th>
                                     <th>Contacto</th>
-                                    <th>{{trans('adminlte_lang::message.solseraddrescollect')}}</th>
+                                    <th>Dirección</th>
+                                    <th>Cantidad</th>
                                     <th>{{trans('adminlte_lang::message.seemore')}}</th>
                                     @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
                                         <th>{{trans('adminlte_lang::message.solserstatuscertifi')}}</th>
@@ -160,6 +161,7 @@
                                         Localidad: <b>{{$Servicio->SedeMapLocalidad}}</b>
                                         @endif
                                     </td>
+                                    <td>{{$Servicio->totalrerspel}} Kg</td>
                                     <td style="text-align: center;"><a
                                             href='/serviciosexpress/{{$Servicio->SolSerSlug}}' class="btn btn-info"
                                             title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i
