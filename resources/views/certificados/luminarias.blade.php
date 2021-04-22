@@ -535,7 +535,7 @@ switch ($mesfirma) {
 @endphp
 <p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-indent:
 -35.4pt'><b><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
-color:#0D0D0D'>Para constancia se firma en Mosquera, el día el día {{$diafirma}} de {{$mesTexto}} del {{$añofirma
+color:#0D0D0D'>Para constancia se firma en Mosquera, el día {{$diafirma}} de {{$mesTexto}} del {{$añofirma
 }}.</span></b></p>
 
 </div>
