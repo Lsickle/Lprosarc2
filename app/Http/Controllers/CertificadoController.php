@@ -13,7 +13,7 @@ use App\Cliente;
 use App\Personal;
 use App\Generador;
 use App\Tratamiento;
-use App\Audit;
+use App\audit;
 use App\Certdato;
 use App\Permisos;
 use App\SolicitudServicio;
@@ -81,6 +81,7 @@ class CertificadoController extends Controller
                 $certificado->recepcion = "";
             }
             $certificado->cliente = $certificado->SolicitudServicio->cliente()->first('CliName')->CliName;
+            $certificado->SolSerStatus = $certificado->SolicitudServicio()->first('SolSerStatus')->SolSerStatus;
             return $certificado ;
         });
         // return $certificados;
@@ -814,7 +815,7 @@ class CertificadoController extends Controller
 
         $certificado->save();
 
-        $log = new Audit();
+        $log = new audit();
         $log->AuditTabla="certificado";
         $log->AuditType="firmado";
         $log->AuditRegistro=$certificado->ID_Cert;
@@ -866,10 +867,16 @@ class CertificadoController extends Controller
         }
 
         // return $certificado;
-        if ($certificado->tratamiento->TratName == 'TermoDestrucción') {
-            return view('certificados.imprimible', compact('certificado')); 
-        }else{
-            return view('certificados.manifiesto', compact('certificado')); 
+        switch ($certificado->tratamiento->TratName) {
+            case 'TermoDestrucción':
+                return view('certificados.imprimible', compact('certificado')); 
+                break;
+            case 'Posconsumo luminarias':
+                return view('certificados.luminarias', compact('certificado')); 
+                break;
+            default:
+                return view('certificados.manifiesto', compact('certificado')); 
+                break;
         }
     }
 
@@ -883,8 +890,10 @@ class CertificadoController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
             'CertNumero' => 0,
-            'CertObservacion' => 'certificado con observacion generica',
+            'CertManifNumero' => 0,
+            'CertObservacion' => 'Documento para residuos independientes',
             'CertSrc' => 'CertificadoDefault.pdf',
+            'CertSrcManif' => 'CertificadoDefault.pdf',
             'CertAuthHseq' => 0,
             'CertAuthJo' => 0,
             'CertAuthJl' => 0,

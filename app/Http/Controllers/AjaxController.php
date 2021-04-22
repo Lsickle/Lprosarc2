@@ -12,13 +12,14 @@ use App\Area;
 use App\Requerimiento;
 use App\Tratamiento;
 use App\Pretratamientos;
+use App\Generador;
 use App\GenerSede;
 use App\Certificado;
 use App\SolicitudServicio;
 use App\Cliente;
 use App\Personal;
 use App\Permisos;
-use App\Audit;
+use App\audit;
 use App\Observacion;
 use App\Mail\SolSerEmail;
 use App\Mail\ConcilacionRecordatorio;
@@ -284,12 +285,13 @@ class AjaxController extends Controller
 				switch ($Solicitud->SolSerStatus) {
 					case 'Conciliado':
 					case 'Tratado':
+					case 'Facturado':
 						$Solicitud->SolSerStatus = 'Certificacion';
 						$Solicitud->SolServCertStatus = 2;
 						$Solicitud->SolSerDescript = $request->input('solserdescript');
 						$Solicitud->save();
 
-						$log = new Audit();
+						$log = new audit();
 						$log->AuditTabla="solicitud_servicios";
 						$log->AuditType="Modificado Status";
 						$log->AuditRegistro=$Solicitud->ID_SolSer;
@@ -369,6 +371,108 @@ class AjaxController extends Controller
 		}
 	}
 
+	/*Funcion para certtificacion de servicios via ajax*/
+	public function facturarServicio(Request $request, $servicio)
+	{
+		if ($request->ajax()) {
+			if (in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES)) {
+				$Solicitud = SolicitudServicio::where('SolSerSlug', $servicio)->first();
+				if (!$Solicitud) {
+					abort(404);
+				}
+				switch ($Solicitud->SolSerStatus) {
+					case 'Conciliado':
+					case 'Tratado':
+						$Solicitud->SolSerStatus = 'Facturado';
+						$Solicitud->SolServCertStatus = 1;
+						$Solicitud->SolSerDescript = $request->input('solserdescript');
+						$Solicitud->save();
+
+						$log = new audit();
+						$log->AuditTabla="solicitud_servicios";
+						$log->AuditType="Modificado Status";
+						$log->AuditRegistro=$Solicitud->ID_SolSer;
+						$log->AuditUser=Auth::user()->email;
+						$log->Auditlog=$Solicitud->SolSerStatus;
+						$log->save();
+
+						$resCode = 200;
+						$res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' del cliente facturada con exito';
+						break;
+						
+					case 'Facturado':
+						$resCode = 400;
+						$res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' ya se encuentra Facturada';
+						break;
+
+					case 'Certificacion':
+						$resCode = 400;
+						$res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' ya se encuentra certificada y no admite cambios de status';
+						break;
+					
+					default:
+						$resCode = 403;
+						$res = 'La solicitud de servicio #'.$Solicitud->ID_SolSer.', aun no se puede facturar, ya que se encuentra en status de '.$Solicitud->SolSerStatus;
+						break;
+				}
+				if ($resCode == 200) {
+
+					/*se guarda la observacion inicial de la creación del servicio*/
+					$Observacion = new Observacion();
+					$Observacion->ObsStatus = $Solicitud->SolSerStatus;
+					if ($Solicitud->SolSerDescript == "" || $Solicitud->SolSerDescript == null) {
+						$Observacion->ObsMensaje = 'Servicio enviado a Facturación';
+					}else{
+						$Observacion->ObsMensaje = $Solicitud->SolSerDescript;
+					}
+					$Observacion->ObsTipo = 'prosarc';
+					$Observacion->ObsRepeat = 1;
+					$Observacion->ObsDate = now();
+					$Observacion->ObsUser = Auth::user()->email;
+					$Observacion->ObsRol = Auth::user()->UsRol;
+					$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
+					$Observacion->save();
+
+					// $email = DB::table('solicitud_servicios')
+					// 	->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                	// 	->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+					// 	->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.CliName', 'clientes.CliComercial')
+					// 	->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
+					// 	->first();
+					
+					// $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+					
+					// if ($comercial) {
+					// 	$destinatarios = [$comercial->PersEmail];
+					// } else {
+					// 	$destinatarios = [];
+					// }
+					
+
+					// $destinatarios = [$comercial->PersEmail];
+					// if ($Solicitud->SolServMailCopia == "null") {
+                    //     Mail::to($email->PersEmail)
+                    //     ->cc($destinatarios)
+                    //     ->send(new SolSerEmail($email));
+                    // }else{
+                    //     foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
+                    //         array_push($destinatarios, $value);
+                    //     }
+                    //     Mail::to($email->PersEmail)
+                    //     ->cc($destinatarios)
+                    //     ->send(new SolSerEmail($email));
+                    // }
+				}
+				return response()->json(['message' => $res, 'code' => $resCode], $resCode);
+
+			}else{
+				return response()->json(['error' => 'Usuario no autorizado'], 401);
+			}
+			
+
+		}
+	}
+
 	/* envio de recordatorios via ajax*/
     public function sendRecordatorio(Request $request)
     {
@@ -408,7 +512,7 @@ class AjaxController extends Controller
         $Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
         $Observacion->save();
 
-        $log = new Audit();
+        $log = new audit();
 		$log->AuditTabla="observaciones";
 		$log->AuditType="Add observacion";
 		$log->AuditRegistro=$Observacion->ID_Obs;
@@ -430,7 +534,7 @@ class AjaxController extends Controller
         }
 
         $copy = ['recepcionpda@prosarc.com.co',
-                    'asistentelogistica@prosarc.com.co',
+                    'conciliaciones@prosarc.com.co',
                     $comercial->PersEmail
                 ];
 
@@ -671,7 +775,7 @@ class AjaxController extends Controller
 
 			$certificado->save();
 
-			$log = new Audit();
+			$log = new audit();
 			$log->AuditTabla="certificado";
 			$log->AuditType="firmado";
 			$log->AuditRegistro=$certificado->ID_Cert;
@@ -697,6 +801,43 @@ class AjaxController extends Controller
 			$Response['message'] = 'Documento aprobado por '.Auth::user()->email;
 
 			return response()->json($Response);
+		}
+	}
+
+	/*Funcion para ver los residuos de una sede de generador segun el cliente*/
+	public function clienteExpressResiduos(Request $request, $slug){
+		if ($request->ajax()){
+			$Cliente = Cliente::where('CliSlug', $slug)->first();
+			$Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
+			$generador = Generador::where('FK_GenerCli', $Sede->ID_Sede)->first();
+			$sGener = GenerSede::with(['resgener.respels'])->where('FK_GSede', $generador->ID_Gener)->first();
+
+			$Respels = DB::table('residuos_geners')
+				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+				->join('requerimientos', 'requerimientos.FK_ReqRespel', '=', 'respels.ID_Respel')
+				->select('gener_sedes.*', 'residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.RespelSlug', 'respels.ID_Respel', 'requerimientos.FK_ReqTrata', 'requerimientos.forevaluation', 'requerimientos.ofertado')
+				->whereIn('respels.RespelStatus', ['Aprobado', 'Revisado', 'Falta TDE', 'TDE actualizada', 'Vencido'])
+				->where('respels.RespelDelete', 0)
+				->where('gener_sedes.GSedeSlug', $sGener->GSedeSlug)
+				->where('residuos_geners.DeleteSGenerRes', '=', 0)
+				->where('requerimientos.forevaluation', 1)
+				->where('requerimientos.ofertado', 1)
+				->get();
+
+			foreach ($Respels as $key => $value) {
+				if (isset($Respels[$key]->FK_ReqTrata) && $Respels[$key]->ofertado == 1) {
+					$tratamiento = Tratamiento::where('ID_Trat', $Respels[$key]->FK_ReqTrata)->first('TratName');
+					if (isset($tratamiento->TratName)) {
+						$Respels[$key]->TratName = $tratamiento->TratName;
+					}else{
+						$Respels[$key]->TratName = '';
+					}
+				}else{
+					$Respels[$key]->TratName = '';
+				}
+			}
+				return response()->json($Respels);
 		}
 	}
 }

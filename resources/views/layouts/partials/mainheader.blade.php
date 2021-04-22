@@ -17,7 +17,27 @@
 	</a>
 
 	<!-- Header Navbar -->
-	<nav id="topLogo" class="navbar navbar-static-top" role="navigation" style="height: 100%">
+	@switch(Route::currentRouteName())
+		@case('programacion-express.index')
+		@case('programacion-express.create')
+		@case('programacion-express.show')
+		@case('programacion-express.edit')
+		@case('serviciosexpress.index')
+		@case('serviciosexpress.create')
+		@case('serviciosexpress.show')
+		@case('serviciosexpress.edit')
+		@case('respels.indexExpress')
+		@case('clientes.clientesExpress')
+		@php
+			$navColor = 'background-image: linear-gradient(40deg, #367fa9, #00913a);';
+		@endphp
+			@break
+		@default
+		@php
+			$navColor = 'background-image: linear-gradient(40deg, #367fa9, rgb(48, 63, 159));';
+		@endphp
+	@endswitch
+	<nav id="topLogo" class="navbar navbar-static-top" role="navigation" style="height: 100%;{{$navColor}}">
 		<!-- Sidebar toggle button-->
 		<a href="#" class="fas fa-bars" data-toggle="push-menu" role="button" style="cursor: pointer; color: #ffffff; font-size: 20px; margin: 15px">
 			
@@ -217,6 +237,12 @@
 					<li style="height: 100%;">
 						<a href="/preguntas-frecuentes" style="height: 100%;" title="Preguntas Frecuentes"><i class="fas x2 fa-question-circle" style="font-size: 1.5em"></i></a>
 					</li>
+					@if ((in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)))
+					<li style="height: 100%;">
+						<a href="{{ url('/reportes') }}" style="height: 100%; font-size: 1.2em;" title="Reportes"><i style="font-size: 1.2em;" class="fas x2 fa-chart-bar"></i><b> Reporte</b></a>
+					</li>
+					@endif
+					
 					<li style="height: 100%;">
 						<a href="{{ url('/logout') }}" id="logout"
 						   onclick="event.preventDefault();

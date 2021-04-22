@@ -30,6 +30,8 @@ use App\Tarifa;
 use App\Rango;
 use App\Certificado;
 use App\Certdato;
+use App\CertificadoExpress;
+use App\CertExpressdato;
 use App\Manifiesto;
 use App\Manifdato;
 use App\Requerimiento;
@@ -75,11 +77,13 @@ class SolicitudServicioController extends Controller
 			'clientes.CliSlug',
 			'clientes.CliStatus',
 			'clientes.TipoFacturacion',
+			'clientes.CliCategoria',
 			'personals.PersFirstName',
 			'personals.PersLastName',
 			'personals.PersSlug',
 			'personals.PersEmail',
 			'personals.PersCellphone',
+			'Comercial.ID_Pers as ComercialID_Pers',
 			'Comercial.PersFirstName as ComercialPersFirstName',
 			'Comercial.PersLastName as ComercialPersLastName',
 			'Comercial.PersSlug as ComercialPersSlug',
@@ -95,7 +99,13 @@ class SolicitudServicioController extends Controller
 						$query->orWhere('solicitud_servicios.SolServCertStatus', 1);
 					}
 				}
+				if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES)){
+					if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)){
+						$query->where('Comercial.ID_Pers', Auth::user()->FK_UserPers);
+					}
+				}
 			})
+			->where('CliCategoria', 'Cliente')
 			->orderBy('created_at', 'desc')
 			->get();
 		$Cliente = Cliente::select('CliName','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
@@ -126,8 +136,8 @@ class SolicitudServicioController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function indexalmacenados(){
-
+	public function indexalmacenados()
+	{
 		$SolicitudesServicios = SolicitudServicio::with(['Personal', 'cliente', 'municipio', 'SolicitudResiduo' => function ($query) {
 							$query->where('SolResKgConciliado', '!=', 'SolResKgTratado');
 							}])
@@ -221,6 +231,14 @@ class SolicitudServicioController extends Controller
 	 */
 	public function store(SolServStoreRequest $request)
 	{
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="request store PRE-saved";
+		$log->AuditRegistro="";
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=json_encode($request->all());
+		$log->save();
+
 		// return $request;
 		$SolicitudServicio = new SolicitudServicio();
 		$SolicitudServicio->SolSerStatus = 'Aprobado';
@@ -360,6 +378,14 @@ class SolicitudServicioController extends Controller
 		$SolicitudServicio->save();
 		$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
 
+		$log = new audit();
+        $log->AuditTabla="Solicitud_servicios";
+        $log->AuditType="Nuevo servicio";
+        $log->AuditRegistro=$SolicitudServicio->ID_SolSer;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request->all());
+        $log->save();
+
 
 		/*se guarda la observacion inicial de la creación del servicio*/
 		$Observacion = new Observacion();
@@ -380,7 +406,6 @@ class SolicitudServicioController extends Controller
 			$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
 			$destinatarios = ['logistica@prosarc.com.co',
 								'asistentelogistica@prosarc.com.co',
-								'auxiliarlogistico@prosarc.com.co',
 								'gerenteplanta@prosarc.com.co',
 								'subgerencia@prosarc.com.co',
 								'recepcionpda@prosarc.com.co',
@@ -390,7 +415,6 @@ class SolicitudServicioController extends Controller
 			$comercial = "";
 			$destinatarios = ['logistica@prosarc.com.co',
 								'asistentelogistica@prosarc.com.co',
-								'auxiliarlogistico@prosarc.com.co',
 								'gerenteplanta@prosarc.com.co',
 								'subgerencia@prosarc.com.co',
 								'recepcionpda@prosarc.com.co'
@@ -412,7 +436,8 @@ class SolicitudServicioController extends Controller
 	* Create from solicitud de residuo
 	*
 	*/
-	public function createSolRes($request, $ID_SolSer){
+	public function createSolRes($request, $ID_SolSer)
+	{
 		foreach ($request->input('SGenerador') as $Generador => $value) {
 			for ($y=0; $y < count($request['FK_SolResRg'][$Generador]); $y++) {
 				$SolicitudResiduo = new SolicitudResiduo();
@@ -684,7 +709,9 @@ class SolicitudServicioController extends Controller
 			->get();
 		
 		$Residuos = $Residuosoriginal->map(function ($item) {
-		  $requerimientos = Requerimiento::with(['pretratamientosSelected'])
+		  $requerimientos = Requerimiento::with(['pretratamientosSelected', 'tarifa.rangos' => function($query){
+			$query->orderBy('TarifaDesde');
+		  }])
 	        ->where('ID_Req', $item->FK_SolResRequerimiento)
 	        // ->where('forevaluation', 0)
 			->first();
@@ -692,6 +719,7 @@ class SolicitudServicioController extends Controller
 			$rm = SolicitudResiduo::where('SolResSlug', $item->SolResSlug)->first('SolResRM');
 	        
 	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
+	        $item->tarifa = $requerimientos->tarifa;
 	        $item->SolResRM2 = $rm->SolResRM;
 		  	return $item;
 		});
@@ -857,6 +885,11 @@ class SolicitudServicioController extends Controller
 
 						}
 						break;
+					case 'Facturada':
+						if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES)){
+							$Solicitud->SolSerStatus = 'Facturado';
+						}
+						break;
 				}
 			}
 		}else{
@@ -927,6 +960,10 @@ class SolicitudServicioController extends Controller
 				$Observacion->ObsTipo = 'prosarc';
 				break;
 
+			case 'Facturado':
+				$Observacion->ObsTipo = 'prosarc';
+				break;
+
 			default:
 			$Observacion->ObsTipo = 'prosarc';
 				break;
@@ -940,6 +977,7 @@ class SolicitudServicioController extends Controller
 		
 		switch($Solicitud->SolSerStatus){
 			case 'Tratado':
+			case 'Facturado':
 				return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
 				break;
 			case 'Aceptado':
@@ -1172,7 +1210,6 @@ class SolicitudServicioController extends Controller
 				$destinatarios = ['dirtecnica@prosarc.com.co',
 									'logistica@prosarc.com.co',
 									'asistentelogistica@prosarc.com.co',
-									'auxiliarlogistico@prosarc.com.co',
 									'gerenteplanta@prosarc.com.co',
 									'subgerencia@prosarc.com.co',
 									$comercial->PersEmail
@@ -1182,7 +1219,6 @@ class SolicitudServicioController extends Controller
 				$destinatarios = ['dirtecnica@prosarc.com.co',
 									'logistica@prosarc.com.co',
 									'asistentelogistica@prosarc.com.co',
-									'auxiliarlogistico@prosarc.com.co',
 									'gerenteplanta@prosarc.com.co',
 									'subgerencia@prosarc.com.co'
 								];	
@@ -1202,6 +1238,15 @@ class SolicitudServicioController extends Controller
 			}else{
 				Mail::to($SolicitudServicio['personalcliente']->PersEmail)->cc($destinatarios)->send(new NewSolServProsarcEmail($SolicitudServicio));
 			}
+
+			$log = new audit();
+			$log->AuditTabla="Solicitud_servicios";
+			$log->AuditType="servicio Repetido";
+			$log->AuditRegistro=$SolicitudOld->ID_SolSer;
+			$log->AuditUser=Auth::user()->email;
+			$log->Auditlog=json_encode($SolicitudNew->ID_SolSer);
+			$log->save();
+
 					
 			return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudNew->SolSerSlug]);
 		}
@@ -1509,15 +1554,16 @@ class SolicitudServicioController extends Controller
 	{
 		$SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
 
+		if (!$SolicitudServicio) {
+			abort(404, 'no se pudo eliminar la solicitud de servicio ya que no se encuentra en la base da datos');
+		}
+
 		switch ($SolicitudServicio->SolSerStatus) {
 			case 'Pendiente':
 			case 'Aceptado':
 			case 'Programado':
 			case 'Notificado':
 			case 'Aprobado':
-				if (!$SolicitudServicio) {
-					abort(404, 'no se pudo eliminar la solicitud de servicio ya que no se encuentra en la base da datos');
-				}
 				
 				$documentos = Documento::where('FK_CertSolser', $SolicitudServicio->ID_SolSer)->get();
 				
@@ -1601,10 +1647,16 @@ class SolicitudServicioController extends Controller
 
 			$SolicitudServicio->cliente = Cliente::where('ID_CLi', $SolicitudServicio->FK_SolSerCliente)->first(['CliName', 'CliSlug']);
 
-			$certificados = Certificado::with(['certdato.solres'])
-			->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
-			->get();
+			if ($SolicitudServicio->cliente->CliCategoria == 'ClientePrepago') {
+				$certificados = CertificadoExpress::with(['certdato.solres'])
+				->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
+				->get();
 
+			} else {
+				$certificados = Certificado::with(['certdato.solres'])
+				->where('FK_CertSolser', $SolicitudServicio->ID_SolSer)
+				->get();
+			}
 		}
 		/* validacion para encontrar la fecha de recepción en planta del servicio */
 		$fechaRecepcion = SolicitudServicio::find($SolicitudServicio->ID_SolSer)->programacionesrecibidas()->first();
@@ -1663,7 +1715,9 @@ class SolicitudServicioController extends Controller
 	public function solservdocstore($id)
 	{
 			
-		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $id)->first();
+		$SolicitudServicio = SolicitudServicio::with(['SolicitudResiduo.requerimiento.tarifa.rangos' => function ($query){
+			$query->orderBy('TarifaDesde');
+		}])->where('ID_SolSer', $id)->first();
 		$serviciovalidado = $id;
 		/*cuenta los diferentes generadores*/
 		$generadoresdelasolicitud = GenerSede::whereHas('resgener.solres', function ($query) use ($serviciovalidado) {
@@ -1813,6 +1867,31 @@ class SolicitudServicioController extends Controller
 					}
 				}
 			}
+		}
+
+		/*ajuste de los precios para facturacion en cada residuo de la solicitud segun los rangos de tarifas */
+
+		foreach ($SolicitudServicio->SolicitudResiduo as $key => $solres) {
+			// a partir de 1 kg se asigna el precio segun la cantidad conciliada
+			if ($solres->SolResKgConciliado >= 1) {
+				foreach ($solres->requerimiento->tarifa->rangos as $rango) {
+					if ($solres->SolResKgConciliado >= $rango->TarifaDesde) {
+						$solres->SolResPrecio = $rango->TarifaPrecio;
+					}
+				}
+			}
+
+			/* entre 0 y 1 kilgramos se asigna el precion de la tarifa mas pequeña */
+			if (0 < $solres->SolResKgConciliado && $solres->SolResKgConciliado < 1) {
+				$solres->SolResPrecio = $solres->requerimiento->tarifa->rangos[0]->TarifaPrecio;
+			}
+
+			/* si el precio se mantiene en 0 y el peso es mayor a 0 se iguala el precio al primer rango */
+			if ($solres->SolResPrecio == 0 && $solres->SolResKgConciliado > 0) {
+				$solres->SolResPrecio = $solres->requerimiento->tarifa->rangos[0]->TarifaPrecio;
+			}
+
+			$solres->save();
 		}
 	}
 
@@ -1992,6 +2071,7 @@ class SolicitudServicioController extends Controller
 			'clientes.CliSlug',
 			'clientes.CliStatus',
 			'clientes.TipoFacturacion',
+			'clientes.CliCategoria',
 			'personals.PersFirstName',
 			'personals.PersLastName',
 			'personals.PersSlug',
@@ -2003,6 +2083,7 @@ class SolicitudServicioController extends Controller
 			'Comercial.PersEmail as ComercialPersEmail',
 			'Comercial.PersCellphone as ComercialPersCellphone')
 			->where('solicitud_servicios.SolSerStatus', 'Completado')
+			->where('clientes.CliCategoria', 'Cliente')
 			->orderBy('created_at', 'desc')
 			->get();
 

@@ -45,7 +45,7 @@ class VehicProgController extends Controller
 			$programacions = DB::table('progvehiculos')
 				->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
 				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', 'clientes.ID_Cli')
-				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerStatus', 'solicitud_servicios.SolSerVehiculo', 'solicitud_servicios.SolSerConductor', 'clientes.CliName')
+				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerStatus', 'solicitud_servicios.SolSerVehiculo', 'solicitud_servicios.SolSerConductor', 'clientes.CliName', 'clientes.CliCategoria')
 				->where(function($query){
 					if(!in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 						$query->where('progvehiculos.ProgVehDelete', 0);
@@ -58,6 +58,7 @@ class VehicProgController extends Controller
 						$query->where('progvehiculos.ProgVehStatus', 'Pendiente');
 					}
 				})
+				->where('clientes.CliCategoria', 'Cliente')
 				->get();
 			$personals = DB::table('personals')
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
@@ -96,8 +97,9 @@ class VehicProgController extends Controller
 			$programacions = DB::table('progvehiculos')
 				->join('solicitud_servicios', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
 				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
-				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'clientes.CliName')
+				->select('progvehiculos.*', 'solicitud_servicios.ID_SolSer', 'clientes.CliName', 'clientes.CliCategoria')
 				->where('progvehiculos.ProgVehDelete', 0)
+				->where('clientes.CliCategoria', 'Cliente')
 				->get();
 			$transportadores = DB::table('clientes')
 				->select('CliName', 'CliSlug')
@@ -138,9 +140,10 @@ class VehicProgController extends Controller
 				->get();
 			$serviciosnoprogramados = DB::table('solicitud_servicios')
 				->join('clientes', 'solicitud_servicios.FK_SolSerCliente', '=', 'clientes.ID_Cli')
-				->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerTipo', 'clientes.CliName')
+				->select('solicitud_servicios.ID_SolSer', 'solicitud_servicios.SolSerSlug', 'solicitud_servicios.SolSerTipo', 'clientes.CliName', 'clientes.CliCategoria')
 				->where('SolSerDelete', 0)
 				->where('SolSerStatus', 'Aprobado')
+				->where('clientes.CliCategoria', 'Cliente')
 				->orderBy('solicitud_servicios.updated_at', 'asc')
 				->get();
 				/*return $programacions;*/
@@ -972,7 +975,6 @@ class VehicProgController extends Controller
 							$comercial = "";
 							$destinatarios = ['dirtecnica@prosarc.com.co',
 												'asistentelogistica@prosarc.com.co',
-												'auxiliarlogistico@prosarc.com.co',
 												'gerenteplanta@prosarc.com.co',
 												'recepcionpda@prosarc.com.co',
 												$emailCliente->PersEmail
@@ -1065,7 +1067,6 @@ class VehicProgController extends Controller
 							$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
 							$destinatarios = ['dirtecnica@prosarc.com.co',
 												'asistentelogistica@prosarc.com.co',
-												'auxiliarlogistico@prosarc.com.co',
 												'recepcionpda@prosarc.com.co',
 												'gerenteplanta@prosarc.com.co',
 												$emailCliente->PersEmail,
@@ -1075,7 +1076,6 @@ class VehicProgController extends Controller
 							$comercial = "";
 							$destinatarios = ['dirtecnica@prosarc.com.co',
 												'asistentelogistica@prosarc.com.co',
-												'auxiliarlogistico@prosarc.com.co',
 												'gerenteplanta@prosarc.com.co',
 												'recepcionpda@prosarc.com.co',
 												$emailCliente->PersEmail
@@ -1214,15 +1214,13 @@ class VehicProgController extends Controller
 			->first();
 		$comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
 		$destinatarios = ['asistentelogistica@prosarc.com.co',
-							'auxiliarlogistico@prosarc.com.co',
 							'auxiliarpda@prosarc.com.co',
 							'recepcionpda@prosarc.com.co',
-							'conciliaciones@prosarc.com.co',
 							$comercial->PersEmail
 						];
 		if ($cantidadDeResiduosControlados > 0) {
 			//enviar notificacion de servicion con sustancia controladas
-			Mail::to('dirtecnica@prosarc.com.co')->cc('sistemas@prosarc.com.co')->send(new SustanciaControladaProgramada($email, $SolicitudServicio));
+			Mail::to('dirtecnica@prosarc.com.co')->cc(['sistemas@prosarc.com.co', 'logistica@prosarc.com.co'])->send(new SustanciaControladaProgramada($email, $SolicitudServicio));
 		}else{
 			array_push($destinatarios, 'dirtecnica@prosarc.com.co');
 		}

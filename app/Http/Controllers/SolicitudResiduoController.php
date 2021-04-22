@@ -19,6 +19,9 @@ use App\ProgramacionVehiculo;
 use App\Cliente;
 use App\Personal;
 use App\Docdato;
+use App\Tratamiento;
+use App\Generador;
+use App\Certificado;
 use Permisos;
 
 class SolicitudResiduoController extends Controller
@@ -118,80 +121,157 @@ class SolicitudResiduoController extends Controller
  
 	public function updateSolRes(Request $request, $id){
 		// return $request->input('SolResRM');
+		
 		$SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
 		if (!$SolRes) {
 			abort(404);
 		}
 		$SolSer = SolicitudServicio::where('ID_SolSer', $SolRes->FK_SolResSolSer)->first();
 
-		$Validate = $request->validate([
-			'SolResKg'  => 'required|numeric|max:50000|nullable',
-			'SolResCantiUnidadRecibida'  => 'numeric|max:50000|nullable',
-		]);
-		switch($SolSer->SolSerStatus){
-			case 'Notificado':
-			case 'Programado':
-			case 'Notificado':
-				if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
-					$SolRes->SolResCantiUnidadRecibida = $request->input('SolResCantiUnidadRecibida');
-					$SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadRecibida');
-				}
-				$SolRes->SolResKgRecibido = $request->input('SolResKg');
-				$SolRes->SolResKgConciliado = $request->input('SolResKg');
-				$SolRes->SolResRM = $request->input('SolResRM');
-				break;
-			case 'No Conciliado':
-			case 'Completado':
-				if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
-					$SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadConciliada');
-					$SolRes->SolResKgConciliado = $request->input('SolResKg');
-				}else{
-					$SolRes->SolResKgConciliado = $request->input('SolResKg');
-				}
-				$SolRes->SolResRM = $request->input('SolResRM');
-				break;
-			case 'Conciliado':
-			case 'Certificacion':
-				if( $request->input('ValorConciliado') == NULL){
+
+		$Cliente = Cliente::where('ID_Cli', $SolSer->FK_SolSerCliente)->first();
+
+		if ($Cliente->CliCategoria == 'ClientePrepago') {
+			$Validate = $request->validate([
+				'SolResKg'  => 'required|numeric|max:500|nullable',
+				'SolResCantiUnidadRecibida'  => 'numeric|max:500|nullable',
+			]);
+			switch($SolSer->SolSerStatus){
+				case 'Notificado':
+				case 'Programado':
+				case 'Notificado':
 					if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
-						$SolRes->SolResCantiUnidadTratada = $request->input('SolResCantiUnidadTratada');
-						$SolRes->SolResKgTratado = $request->input('SolResKg');
-					}else{
-						$SolRes->SolResKgTratado = $request->input('SolResKg');
+						$SolRes->SolResCantiUnidadRecibida = $request->input('SolResCantiUnidadRecibida');
+						$SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadRecibida');
 					}
-				}else{
-					$SolRes->SolResKgTratado = $request->input('ValorConciliado');
-				}
-				$SolRes->SolResRM = $request->input('SolResRM');
-				break;
-			default:
-				abort(500);
-				break;
-		}
-		$SolRes->save();
-
-		if(isset($request['SupportPay'])){
-			if($SolSer->SolSerSupport <> null && file_exists(public_path().'/img/SupportPay/'.$SolSer->SolSerSupport)){
-				unlink(public_path().'/img/SupportPay/'.$SolSer->SolSerSupport);
+					$SolRes->SolResKgRecibido = $request->input('SolResKg');
+					$SolRes->SolResKgConciliado = $request->input('SolResKg');
+					$SolRes->SolResRM = $request->input('SolResRM');
+					break;
+				case 'No Conciliado':
+				case 'Completado':
+					if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
+						$SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadConciliada');
+						$SolRes->SolResKgConciliado = $request->input('SolResKg');
+					}else{
+						$SolRes->SolResKgConciliado = $request->input('SolResKg');
+					}
+					$SolRes->SolResRM = $request->input('SolResRM');
+					break;
+				case 'Conciliado':
+				case 'Certificacion':
+					if( $request->input('ValorConciliado') == NULL){
+						if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
+							$SolRes->SolResCantiUnidadTratada = $request->input('SolResCantiUnidadTratada');
+							$SolRes->SolResKgTratado = $request->input('SolResKg');
+						}else{
+							$SolRes->SolResKgTratado = $request->input('SolResKg');
+						}
+					}else{
+						$SolRes->SolResKgTratado = $request->input('ValorConciliado');
+					}
+					$SolRes->SolResRM = $request->input('SolResRM');
+					break;
+				default:
+					abort(500);
+					break;
 			}
-			$fileSupport = $request['SupportPay'];
-			$nameSupport = hash('sha256', rand().time().$fileSupport->getClientOriginalName()).'.pdf';
-			$fileSupport->move(public_path().'\img\SupportPay/',$nameSupport);
-			$SolSer->SolSerSupport = $nameSupport;
-			$SolSer->save();
+			$SolRes->save();
+
+			if(isset($request['SupportPay'])){
+				if($SolSer->SolSerSupport <> null && file_exists(public_path().'/img/SupportPay/'.$SolSer->SolSerSupport)){
+					unlink(public_path().'/img/SupportPay/'.$SolSer->SolSerSupport);
+				}
+				$fileSupport = $request['SupportPay'];
+				$nameSupport = hash('sha256', rand().time().$fileSupport->getClientOriginalName()).'.pdf';
+				$fileSupport->move(public_path().'\img\SupportPay/',$nameSupport);
+				$SolSer->SolSerSupport = $nameSupport;
+				$SolSer->save();
+			}
+
+			$log = new audit();
+			$log->AuditTabla="solicitud_residuos";
+			$log->AuditType="Modificado EXPRESS";
+			$log->AuditRegistro=$SolRes->ID_SolRes;
+			$log->AuditUser=Auth::user()->email;
+			$log->Auditlog=json_encode($request->all());
+			$log->save();
+
+			$id = $SolSer->SolSerSlug;
+
+			return redirect()->route('serviciosexpress.show', compact('id'));
+		} else {
+			$Validate = $request->validate([
+				'SolResKg'  => 'required|numeric|max:50000|nullable',
+				'SolResCantiUnidadRecibida'  => 'numeric|max:50000|nullable',
+			]);
+			switch($SolSer->SolSerStatus){
+				case 'Notificado':
+				case 'Programado':
+				case 'Notificado':
+					if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
+						$SolRes->SolResCantiUnidadRecibida = $request->input('SolResCantiUnidadRecibida');
+						$SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadRecibida');
+					}
+					$SolRes->SolResKgRecibido = $request->input('SolResKg');
+					$SolRes->SolResKgConciliado = $request->input('SolResKg');
+					$SolRes->SolResRM = $request->input('SolResRM');
+					break;
+				case 'No Conciliado':
+				case 'Completado':
+					if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
+						$SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadConciliada');
+						$SolRes->SolResKgConciliado = $request->input('SolResKg');
+					}else{
+						$SolRes->SolResKgConciliado = $request->input('SolResKg');
+					}
+					$SolRes->SolResRM = $request->input('SolResRM');
+					break;
+				case 'Conciliado':
+				case 'Certificacion':
+					if( $request->input('ValorConciliado') == NULL){
+						if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
+							$SolRes->SolResCantiUnidadTratada = $request->input('SolResCantiUnidadTratada');
+							$SolRes->SolResKgTratado = $request->input('SolResKg');
+						}else{
+							$SolRes->SolResKgTratado = $request->input('SolResKg');
+						}
+					}else{
+						$SolRes->SolResKgTratado = $request->input('ValorConciliado');
+					}
+					$SolRes->SolResRM = $request->input('SolResRM');
+					break;
+				default:
+					abort(500);
+					break;
+			}
+			$SolRes->save();
+
+			if(isset($request['SupportPay'])){
+				if($SolSer->SolSerSupport <> null && file_exists(public_path().'/img/SupportPay/'.$SolSer->SolSerSupport)){
+					unlink(public_path().'/img/SupportPay/'.$SolSer->SolSerSupport);
+				}
+				$fileSupport = $request['SupportPay'];
+				$nameSupport = hash('sha256', rand().time().$fileSupport->getClientOriginalName()).'.pdf';
+				$fileSupport->move(public_path().'\img\SupportPay/',$nameSupport);
+				$SolSer->SolSerSupport = $nameSupport;
+				$SolSer->save();
+			}
+
+			$log = new audit();
+			$log->AuditTabla="solicitud_residuos";
+			$log->AuditType="Modificado";
+			$log->AuditRegistro=$SolRes->ID_SolRes;
+			$log->AuditUser=Auth::user()->email;
+			$log->Auditlog=json_encode($request->all());
+			$log->save();
+
+			$id = $SolSer->SolSerSlug;
+
+			return redirect()->route('solicitud-servicio.show', compact('id'));
 		}
 
-		$log = new audit();
-		$log->AuditTabla="solicitud_residuos";
-		$log->AuditType="Modificado";
-		$log->AuditRegistro=$SolRes->ID_SolRes;
-		$log->AuditUser=Auth::user()->email;
-		$log->Auditlog=json_encode($request->all());
-		$log->save();
-
-		$id = $SolSer->SolSerSlug;
-
-		return redirect()->route('solicitud-servicio.show', compact('id'));
+		
 	}
 
 	/**
@@ -482,5 +562,89 @@ class SolicitudResiduoController extends Controller
 		$id = $SolicitudServicio->SolSerSlug;
 
 		return redirect()->route('solicitud-servicio.show', compact('id'));
+	}
+
+		/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function reportes()
+	{
+		if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)) {
+
+			switch (Auth::user()->UsRol) {
+				case ('Programador'):
+				case ('AdministradorBogota'):
+				case ('AdministradorPlanta'):
+				case ('AsistenteComercial'):
+				case ('JefeOperaciones'):
+				case ('Supervisor'):
+				case ('Tesorería'):
+				case ('AsistenteLogistica'):
+				case ('JefeLogistica'):
+					$servicios = SolicitudServicio::with([
+						'SolicitudResiduo.generespel.respels', 
+						'SolicitudResiduo.generespel.gener_sedes.generadors',
+						'SolicitudResiduo.certdato.certificado',
+						'cliente.comercialAsignado',
+						'SolicitudResiduo.requerimiento.tratamiento',
+						'programacionesrecibidas',
+						'SolicitudResiduo' => function ($query) {
+							$query->where('SolResKgConciliado', '>', 0);
+						}
+					])
+					->whereIn('SolSerStatus', ['Conciliado', 'Facturado', 'Certificacion'])
+					->where('ID_SolSer', '>=', 35018)
+					->whereHas('SolicitudResiduo.certdato.certificado')
+					->get();
+					break;
+
+				case ('Comercial'):
+					$idcomercial = Auth::user()->persona->ID_Pers;
+					$servicios = SolicitudServicio::with([
+						'SolicitudResiduo.generespel.respels', 
+						'SolicitudResiduo.generespel.gener_sedes.generadors',
+						'SolicitudResiduo.certdato.certificado',
+						'cliente.comercialAsignado',
+						'SolicitudResiduo.requerimiento.tratamiento',
+						'programacionesrecibidas',
+						'SolicitudResiduo' => function ($query) {
+							$query->where('SolResKgConciliado', '>', 0);
+						}
+					])
+					->whereIn('SolSerStatus', ['Conciliado', 'Facturado', 'Certificacion'])
+					->where('ID_SolSer', '>=', 35018)
+					->whereHas('SolicitudResiduo.certdato.certificado')
+					->whereHas('cliente', function ($query) use ($idcomercial) {
+							$query->where('CliComercial', $idcomercial);
+						}
+					)
+					->get();
+					break;
+
+				default:
+					$servicios = SolicitudServicio::with([
+						'SolicitudResiduo.generespel.respels', 
+						'SolicitudResiduo.generespel.gener_sedes.generadors',
+						'SolicitudResiduo.certdato.certificado',
+						'cliente.comercialAsignado',
+						'SolicitudResiduo.requerimiento.tratamiento',
+						'programacionesrecibidas',
+						'SolicitudResiduo' => function ($query) {
+							$query->where('SolResKgConciliado', '>', 0);
+						}
+					])
+					->whereIn('SolSerStatus', ['Conciliado', 'Facturado', 'Certificacion'])
+					->where('ID_SolSer', '=', 35018)
+					->whereHas('SolicitudResiduo.certdato.certificado')
+					->get();
+					break;
+			}
+
+        	return view('reportes.index', compact('servicios')); 
+		}else{
+			abort(503, "no tiene permisos para acceder a la pagina de reportes");
+		}
 	}
 }

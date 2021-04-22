@@ -22,7 +22,7 @@ class SolSerEmail extends Mailable implements ShouldQueue
      * @return void
      */
     public function __construct($email)
-    {   
+    {
         $this->email = $email;
     }
 

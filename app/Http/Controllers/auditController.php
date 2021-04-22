@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\audit;
 use Illuminate\Support\Facades\Auth;
+use App\audit;
+use Carbon\Carbon;
 
 class auditController extends Controller
 {
@@ -15,8 +16,26 @@ class auditController extends Controller
      */
     public function index()
     {
-        $auditorias = audit::all();
-        return $auditorias;
+        // $auditorias = audit::where('created_at', '>', Carbon::now()->subMonths(1))->orderBy('id', 'desc')->get();
+        $auditorias = audit::where('created_at', '>', Carbon::now()->subMonths(1))
+        // ->where('id', '>', 36818)
+        ->orderBy('id', 'desc')->get();
+        foreach ($auditorias as $key => $value) {
+            # code...
+        
+            if (is_array($value->Auditlog)) {
+                $value->tipo = 'array';
+            }else{
+                $result = json_decode($value->Auditlog, true, 4);
+                $value->Auditlog = $result;
+                if (is_array($result)) {
+                    $value->tipo = 'json';
+                }else{
+                    $value->tipo = 'string';
+                }
+            }
+        }
+        // return $auditorias;
         return view('audits.index', compact('auditorias'));
     }
 
@@ -27,7 +46,7 @@ class auditController extends Controller
      */
     public function create()
     {
-       
+
     }
 
     /**
