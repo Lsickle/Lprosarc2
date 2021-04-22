@@ -16,6 +16,7 @@ use App\Mail\NewSolServEmail;
 use App\Mail\SolSerLeftRespel;
 use App\Mail\NewSolServProsarcEmail;
 use App\Mail\SolSerExpressEmail;
+use App\Mail\CertExpressRetenidoEmail;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
 use App\audit;
@@ -2100,6 +2101,13 @@ class ServiceExpressController extends Controller
 			abort(404);
 		}
 
+		$totalrerspel = $Solicitud->SolicitudResiduo()->get('SolResKgConciliado')->sum('SolResKgConciliado');
+
+
+		if ($totalrerspel <= 0) {
+			abort(403, 'debe indicar las cantidades de los residuos antes de poder continuar');
+		}
+
 		/* se guarda la firma del cliente */
 		$data_uri = $request->input('solserFirma');
 		$encoded_image = explode(",", $data_uri)[1];
@@ -2205,8 +2213,6 @@ class ServiceExpressController extends Controller
                 break;
         }
 
-		$totalrerspel = $Solicitud->SolicitudResiduo()->get('SolResKgConciliado')->sum('SolResKgConciliado');
-
 		/**se envia notificacion con los archivos en formato pdf de los certificados */
 		$email = DB::table('solicitud_servicios')
 			->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
@@ -2238,13 +2244,22 @@ class ServiceExpressController extends Controller
 
 		if ($totalrerspel > 5) {
 			//enviar correo avisando que excede la cantidad de 5 kg
+			if ($comercial) {
+				Mail::to($comercial->PersEmail)->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
+			} else {
+				Mail::to('subgerencia@prosarc.com.co')->cc($destinatarios)->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
+			}
 		}else{
 			if ($totalrerspel > 0) {
-				Mail::to($email->PersEmail)
-				->cc($destinatarios)
-				->send(new SolSerExpressEmail($email, $pdf, $certificado));
+				//enviar certificado al cliente con copia a los destinatarios
+				Mail::to($email->PersEmail)->cc($destinatarios)->send(new SolSerExpressEmail($email, $pdf, $certificado));
 			}else{
-			//enviar correo avisando que la cantidad total es inferior o igual a 0 kg
+				//enviar correo avisando que la cantidad total es inferior o igual a 0 kg
+				if ($comercial) {
+					Mail::to($comercial->PersEmail)->send(new CertExpressSinSaldoEmail($email, $pdf, $certificado));
+				} else {
+					Mail::to('subgerencia@prosarc.com.co')->send(new CertExpressSinSaldoEmail($email, $pdf, $certificado));
+				}
 			}
 		}
 		

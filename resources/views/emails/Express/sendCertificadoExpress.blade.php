@@ -1,7 +1,3 @@
-{{-- @php
-    $url = url("/solicitud-servicio/{$email->SolSerSlug}");
-    $nameButton = 'Ver Solicitud de Servicio';
-@endphp --}}
 @component('mail::message')
 # Certificado del Servicio N° {{$email->ID_SolSer}}
 
