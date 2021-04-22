@@ -16,6 +16,7 @@ use App\Mail\NewSolServEmail;
 use App\Mail\SolSerLeftRespel;
 use App\Mail\NewSolServProsarcEmail;
 use App\Mail\SolSerExpressEmail;
+use App\Mail\CertExpressRetenidoEmail;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
 use App\audit;
@@ -123,8 +124,11 @@ class ServiceExpressController extends Controller
 			}else{
 				$servicio->recepcion = null;
 			}
+
+			$servicio->totalrerspel = SolicitudServicio::find($servicio->ID_SolSer)->SolicitudResiduo()->get('SolResKgConciliado')->sum('SolResKgConciliado');
 		}
-		return view('serviciosexpress.indexprosarc', compact('Servicios', 'Residuos'));
+		// return $Servicios;
+		return view('serviciosexpress.indexprosarc', compact('Servicios'));
     }
 
     /**
@@ -355,6 +359,10 @@ class ServiceExpressController extends Controller
 				// ->where('ProgVehEntrada', null)
 				->where('ProgVehDelete', 0)
 				->get();
+				$ProgramacionesActivas = count(ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+				->where('ProgVehEntrada', null)
+				->where('ProgVehDelete', 0)
+				->get());
 				break;
 		}
 		$Cliente = DB::table('clientes')
@@ -1277,7 +1285,8 @@ class ServiceExpressController extends Controller
 	* Create from solicitud de residuo
 	*
 	*/
-	public function createSolRes($request, $ID_SolSer){
+	public function createSolRes($request, $ID_SolSer)
+	{
 		foreach ($request->input('SGenerador') as $Generador => $value) {
 			for ($y=0; $y < count($request['FK_SolResRg'][$Generador]); $y++) {
 				$SolicitudResiduo = new SolicitudResiduo();
@@ -2092,6 +2101,13 @@ class ServiceExpressController extends Controller
 			abort(404);
 		}
 
+		$totalrerspel = $Solicitud->SolicitudResiduo()->get('SolResKgConciliado')->sum('SolResKgConciliado');
+
+
+		if ($totalrerspel <= 0) {
+			abort(403, 'debe indicar las cantidades de los residuos antes de poder continuar');
+		}
+
 		/* se guarda la firma del cliente */
 		$data_uri = $request->input('solserFirma');
 		$encoded_image = explode(",", $data_uri)[1];
@@ -2178,20 +2194,10 @@ class ServiceExpressController extends Controller
 		$qrCode->setMargin(0);
 		$qrCode->setRoundBlockSize(true, QrCode::ROUND_BLOCK_SIZE_MODE_SHRINK);
 
-		// Storage::setVisibility('firmasClientes/'.$nombreDeFirma.'.png', 'public');
-
-		// return Storage::getVisibility('firmasClientes/'.$nombreDeFirma.'.png');
-
-		// return view('certificadosExpress.topdf', compact(['certificado','Solicitud','qrCode']));	
-		// return $certificado;
-		// $pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact(['certificado','Solicitud']));
-
-
-		// return $Solicitud->nombreDeFirma;
-        // return $certificado;
         switch ($certificado->tratamiento->TratName) {
             case 'TermoDestrucción':
 			$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact(['certificado','Solicitud', 'qrCode']));
+			Storage::put('certificadoExpress'.'/E-'.sprintf("%07s", $certificado->ID_Cert).'.pdf', $pdf->output(), 'public');
 
                 break;
             case 'Posconsumo luminarias':
@@ -2207,8 +2213,6 @@ class ServiceExpressController extends Controller
                 break;
         }
 
-
-		// return $pdf->stream();
 		/**se envia notificacion con los archivos en formato pdf de los certificados */
 		$email = DB::table('solicitud_servicios')
 			->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
@@ -2230,19 +2234,33 @@ class ServiceExpressController extends Controller
 
 		$destinatarios = [$comercial->PersEmail];
 
-		if ($Solicitud->SolServMailCopia == "null") {
-			Mail::to($email->PersEmail)
-			->cc($destinatarios)
-			->send(new SolSerExpressEmail($email, $pdf, $certificado));
+		if ($Solicitud->SolServMailCopia == "null"||$Solicitud->SolServMailCopia == "") {
 
 		}else{
 			foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
 				array_push($destinatarios, $value);
 			}
-			Mail::to($email->PersEmail)
-			->cc($destinatarios)
-			->send(new SolSerExpressEmail($email, $pdf, $certificado));
+		}
 
+		if ($totalrerspel > 5) {
+			//enviar correo avisando que excede la cantidad de 5 kg
+			if ($comercial) {
+				Mail::to($comercial->PersEmail)->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
+			} else {
+				Mail::to('subgerencia@prosarc.com.co')->cc($destinatarios)->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
+			}
+		}else{
+			if ($totalrerspel > 0) {
+				//enviar certificado al cliente con copia a los destinatarios
+				Mail::to($email->PersEmail)->cc($destinatarios)->send(new SolSerExpressEmail($email, $pdf, $certificado));
+			}else{
+				//enviar correo avisando que la cantidad total es inferior o igual a 0 kg
+				if ($comercial) {
+					Mail::to($comercial->PersEmail)->send(new CertExpressSinSaldoEmail($email, $pdf, $certificado));
+				} else {
+					Mail::to('subgerencia@prosarc.com.co')->send(new CertExpressSinSaldoEmail($email, $pdf, $certificado));
+				}
+			}
 		}
 		
 		return redirect()->route('serviciosexpress.show', ['id' => $Solicitud->SolSerSlug]);
@@ -2406,7 +2424,8 @@ class ServiceExpressController extends Controller
 	}
 
 
-	public function pdftest(){
+	public function pdftest()
+	{
 
 		// return view('certificadosExpress.topdf', compact('certificado'));	
 		// return $certificado;
