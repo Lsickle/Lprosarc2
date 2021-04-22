@@ -123,8 +123,11 @@ class ServiceExpressController extends Controller
 			}else{
 				$servicio->recepcion = null;
 			}
+
+			$servicio->totalrerspel = SolicitudServicio::find($servicio->ID_SolSer)->SolicitudResiduo()->get('SolResKgConciliado')->sum('SolResKgConciliado');
 		}
-		return view('serviciosexpress.indexprosarc', compact('Servicios', 'Residuos'));
+		// return $Servicios;
+		return view('serviciosexpress.indexprosarc', compact('Servicios'));
     }
 
     /**
