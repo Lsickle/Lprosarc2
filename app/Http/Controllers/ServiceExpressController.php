@@ -1284,7 +1284,8 @@ class ServiceExpressController extends Controller
 	* Create from solicitud de residuo
 	*
 	*/
-	public function createSolRes($request, $ID_SolSer){
+	public function createSolRes($request, $ID_SolSer)
+	{
 		foreach ($request->input('SGenerador') as $Generador => $value) {
 			for ($y=0; $y < count($request['FK_SolResRg'][$Generador]); $y++) {
 				$SolicitudResiduo = new SolicitudResiduo();
@@ -2204,8 +2205,8 @@ class ServiceExpressController extends Controller
                 break;
         }
 
+		$totalrerspel = $Solicitud->SolicitudResiduo()->get('SolResKgConciliado')->sum('SolResKgConciliado');
 
-		// return $pdf->stream();
 		/**se envia notificacion con los archivos en formato pdf de los certificados */
 		$email = DB::table('solicitud_servicios')
 			->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
@@ -2228,18 +2229,23 @@ class ServiceExpressController extends Controller
 		$destinatarios = [$comercial->PersEmail];
 
 		if ($Solicitud->SolServMailCopia == "null"||$Solicitud->SolServMailCopia == "") {
-			Mail::to($email->PersEmail)
-			->cc($destinatarios)
-			->send(new SolSerExpressEmail($email, $pdf, $certificado));
 
 		}else{
 			foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
 				array_push($destinatarios, $value);
 			}
-			Mail::to($email->PersEmail)
-			->cc($destinatarios)
-			->send(new SolSerExpressEmail($email, $pdf, $certificado));
+		}
 
+		if ($totalrerspel > 5) {
+			//enviar correo avisando que excede la cantidad de 5 kg
+		}else{
+			if ($totalrerspel > 0) {
+				Mail::to($email->PersEmail)
+				->cc($destinatarios)
+				->send(new SolSerExpressEmail($email, $pdf, $certificado));
+			}else{
+			//enviar correo avisando que la cantidad total es inferior o igual a 0 kg
+			}
 		}
 		
 		return redirect()->route('serviciosexpress.show', ['id' => $Solicitud->SolSerSlug]);
@@ -2403,7 +2409,8 @@ class ServiceExpressController extends Controller
 	}
 
 
-	public function pdftest(){
+	public function pdftest()
+	{
 
 		// return view('certificadosExpress.topdf', compact('certificado'));	
 		// return $certificado;
