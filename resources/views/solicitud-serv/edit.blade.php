@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::message.solsertitle') }}
+Solicitud de servicio N° {{$Solicitud->ID_SolSer}}
 @endsection
 @section('contentheader_title')
 <span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
@@ -72,7 +72,9 @@
 										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertypetrans') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertypetransdescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertypetrans') }}</label>
 										<small class="help-block with-errors">*</small>
 										<select class="form-control" name="SolSerTipo" id="SolSerTipo" required="">
-											<option onclick="TransportadorProsarc()" {{$Solicitud->SolSerTipo == 'Interno' ? 'selected' : ''}} value="99">Prosarc S.A. ESP.</option>
+											@if ($Solicitud->SolSerTipo == 'Aprobado')
+												<option onclick="TransportadorProsarc()" {{$Solicitud->SolSerTipo == 'Interno' ? 'selected' : ''}} value="99">Prosarc S.A. ESP.</option>
+											@endif
 											<option onclick="TransportadorCliente()" {{$Solicitud->SolSerTipo == 'Cliente' ? 'selected' : ''}} value="98">{{$Cliente->CliName}}</option>
 											<option onclick="TransportadorGeneradores()" {{$Solicitud->SolSerTipo == 'Generador' ? 'selected' : ''}} value="97">Generador</option>
 											<option onclick="OtraTransportadora()"{{$Solicitud->SolSerTipo == 'Externo' ? 'selected' : ''}} value="96">Otra Empresa Transportadora</option>
@@ -403,24 +405,18 @@ $(document).ready(function(){
 	}else{
 		$("#SolSerPlatform").bootstrapSwitch('disabled',true);
 	}
-	// $('#SolSerBascula').bootstrapSwitch('disabled',false);
-	// $('#SolSerCapacitacion').bootstrapSwitch('disabled',false);
-	// $('#SolSerMasPerson').bootstrapSwitch('disabled',false);
-	// $('#SolSerVehicExclusive').bootstrapSwitch('disabled',false);
-	// $('#SolSerPlatform').bootstrapSwitch('disabled',false);
 @endif
-@if($Solicitud->SolSerStatus === 'Programado')
-	$("#SolSerTipo").parent().remove();
-	$("#transportador").removeClass('col-md-6');
-	$("#transportador").addClass('col-md-12');
-	$("#typeaditable").remove();
-	$("#typecollect").remove();
-	$("#sedecollect").remove();
-	$(".addresscollect").remove();
+@switch($Solicitud->SolSerStatus)
+	@case('Programado')
+	@case('Notificado')
 	$("#requirimientos").remove();
 	$("#AddGenerador").remove();
 	$('form[data-toggle="validator"]').validator('update');
-@endif
+		@break
+
+	@default
+		
+@endswitch
 function submitverify(){
 	var CantidadTotalkg = {{$totalenviado}};
 	for (var i = 0; i < contadorGenerador; i++) {
