@@ -1789,10 +1789,29 @@ class SolicitudServicioController extends Controller
 									$certificado->FK_CertGenerSede = $genersede->ID_GSede;
 									$certificado->FK_CertGestor = $key->requerimiento->tratamiento->gestor->FK_SedeCli;
 									$certificado->FK_CertTrat = $key->requerimiento->tratamiento->ID_Trat;
-									if ($SolicitudServicio->SolSerTipo == 'Externo') {
-										$certificado->FK_CertTransp = $cliente->ID_Cli;
-									}else{
-										$certificado->FK_CertTransp = 1;
+									switch ($SolicitudServicio->SolSerTipo) {
+										case 'Externo':
+											$certificado->FK_CertTransp = $cliente->ID_Cli;
+											
+											break;
+
+										case 'Cliente':
+											$certificado->FK_CertTransp = $cliente->ID_Cli;
+											
+											break;
+
+										case 'Generador':
+											$certificado->FK_CertTransp = $genersede->ID_GSede;
+											
+											break;
+
+										case 'Interno':
+											$certificado->FK_CertTransp = 1;
+											break;
+										
+										default:
+											$certificado->FK_CertTransp = 1;
+											break;
 									}
 
 									$certificado->SolicitudServicio->SolicitudResiduo = $certificado->SolicitudServicio->SolicitudResiduo->map(function ($item) {
@@ -1845,10 +1864,29 @@ class SolicitudServicioController extends Controller
 									$manifiesto->FK_ManifGenerSede = $genersede->ID_GSede;
 									$manifiesto->FK_ManifGestor = $key->requerimiento->tratamiento->gestor->FK_SedeCli;
 									$manifiesto->FK_ManifTrat = $key->requerimiento->tratamiento->ID_Trat;
-									if ($SolicitudServicio->SolSerTipo == 'Externo') {
-										$manifiesto->FK_ManifTransp = $cliente->ID_Cli;
-									}else{
-										$manifiesto->FK_ManifTransp = 1;
+									switch ($SolicitudServicio->SolSerTipo) {
+										case 'Externo':
+											$manifiesto->FK_ManifTransp = $cliente->ID_Cli;
+											
+											break;
+
+										case 'Cliente':
+											$manifiesto->FK_ManifTransp = $cliente->ID_Cli;
+											
+											break;
+
+										case 'Generador':
+											$manifiesto->FK_ManifTransp = $genersede->ID_GSede;
+											
+											break;
+
+										case 'Interno':
+											$manifiesto->FK_ManifTransp = 1;
+											break;
+										
+										default:
+											$manifiesto->FK_ManifTransp = 1;
+											break;
 									}
 									$manifiesto->save();
 
