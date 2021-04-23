@@ -1778,7 +1778,7 @@ class SolicitudServicioController extends Controller
 											break;
 
 										case 'Generador':
-											$certificado->FK_CertTransp = $genersede->ID_GSede;
+											$certificado->FK_CertTransp = $cliente->ID_Cli;
 											
 											break;
 
