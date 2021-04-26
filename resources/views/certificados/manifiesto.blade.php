@@ -115,34 +115,75 @@ transportadora:</span></p>
 
 <div align=center>
 
+@switch($certificado->SolicitudServicio->SolSerTipo)
+
+@case('Cliente')
+@case('Interno')
+
 <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none'>
  <tr>
-  <td width=415 valign=top style='width:311.6pt;border:solid gray 0.5pt;
+  <td width=397 valign=top style='width:297.45pt;border:solid gray 0.5pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
-  7.5pt;font-family:"Arial",sans-serif'>Empresa: <b>{{$certificado->transportador->ID_Cli == 1 ? $certificado->transportador->CliShortname : $certificado->transportador->CliName}} </b></span></p>
+  <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
+  color:#0D0D0D'>Empresa:  <b>{{$certificado->transportador->ID_Cli == 1 ? $certificado->transportador->CliShortname : $certificado->transportador->CliName}}</b></span></p>
   </td>
-  <td width=123 valign=top style='width:92.15pt;border:solid gray 0.5pt;
+  <td width=113 valign=top style='width:3.0cm;border:solid gray 0.5pt;
   border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
-  7.5pt;font-family:"Arial",sans-serif'>NIT: <b>{{$certificado->transportador->CliNit}}</b></span></p>
+  7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>NIT: <b>{{$certificado->transportador->CliNit}}</b></span></p>
   </td>
  </tr>
  <tr>
-  <td width=415 valign=top style='width:311.6pt;border:solid gray 0.5pt;
+  <td width=397 valign=top style='width:297.45pt;border:solid gray 0.5pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
-  7.5pt;font-family:"Arial",sans-serif'>Dirección: <b>{{$certificado->transportador->sedes[0]->SedeAddress}} ({{$certificado->transportador->sedes[0]->Municipios->MunName}})</b></span></p>
+  7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>Dirección:  <b>{{$certificado->transportador->sedes[0]->SedeAddress}} ({{$certificado->transportador->sedes[0]->Municipios->MunName}})</b></span></p>
   </td>
-  <td width=123 valign=top style='width:92.15pt;border-top:none;border-left:
-  none;border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;
-  padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
-  7.5pt;font-family:"Arial",sans-serif'>Ciudad: <b>{{$certificado->transportador->sedes[0]->Municipios->Departamento->DepartName}}</b> </span></p>
+  <td width=113 valign=top style='width:3.0cm;border-top:none;border-left:none;
+  border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
+  color:#0D0D0D'>Ciudad: <b>{{$certificado->transportador->sedes[0]->Municipios->Departamento->DepartName}}</b></span></p>
   </td>
  </tr>
 </table>
+
+@break
+
+@case('Generador')
+@case('Externo')
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=397 valign=top style='width:297.45pt;border:solid gray 0.5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
+  color:#0D0D0D'>Empresa:  <b>{{$certificado->SolicitudServicio->SolSerNameTrans}}</b></span></p>
+  </td>
+  <td width=113 valign=top style='width:3.0cm;border:solid gray 0.5pt;
+  border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
+  7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>NIT: <b>{{$certificado->SolicitudServicio->SolSerNitTrans}}</b></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=397 valign=top style='width:297.45pt;border:solid gray 0.5pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
+  7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>Dirección:  <b>{{$certificado->SolicitudServicio->SolSerAdressTrans}} ({{$certificado->SolicitudServicio->municipio->MunName}})</b></span></p>
+  </td>
+  <td width=113 valign=top style='width:3.0cm;border-top:none;border-left:none;
+  border-bottom:solid gray 0.5pt;border-right:solid gray 0.5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
+  color:#0D0D0D'>Ciudad: <b>{{$certificado->SolicitudServicio->municipio->Departamento->DepartName}}</b></span></p>
+  </td>
+ </tr>
+</table>
+
+@break
+
+@endswitch
 
 </div>
 
