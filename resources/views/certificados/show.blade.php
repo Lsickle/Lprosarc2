@@ -33,10 +33,11 @@
 							<li class="list-group-item">
 								<b>Servicio #</b> <a class="pull-right">{{$certificado->FK_CertSolser}}</a>
 							</li>
-							{{-- <li class="list-group-item">
-								<b>certificado #</b> <a class="pull-right">{{$certificado->ID_Cert}}</a>
-							</li> --}}
-							
+							@if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) ||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+								<li class="list-group-item">
+									<b>certificado #</b> <a class="pull-right">{{$certificado->ID_Cert}}</a>
+								</li>
+							@endif
 							<li class="list-group-item">
 								<label>Observaciones</label>
 								<textarea style="resize: vertical;" maxlength="250" name="RespelStatusDescription" id="taid" class="form-control" rows ="5">{{$certificado->CertObservacion}}</textarea>
