@@ -197,7 +197,20 @@ class CertificadoController extends Controller
                 return $item;
             });
 
-            $qrCode = new QrCode(route('certificados.show', ['certificado' => $certificado->CertSlug]));
+            switch ($certificado->CertType) {
+                case '0':
+                $qrCode = new QrCode('https://sispro.prosarc.com/img/Certificados/'.$certificado->CertSlug.'.pdf');
+                    break;
+
+                case '1':
+                $qrCode = new QrCode('https://sispro.prosarc.com/img/Manifiestos/'.$certificado->CertSlug.'.pdf');
+                    break;
+                
+                default:
+                $qrCode = new QrCode('https://sispro.prosarc.com/img/Certificados/'.$certificado->CertSlug.'.pdf');
+                    break;
+            }
+            // $qrCode = new QrCode(route('certificados.show', ['certificado' => $certificado->CertSlug]));
             $qrCode->setLogoPath(asset('img/LogoQR.png'));
             $qrCode->setLogoSize(30, 30);
             $qrCode->setSize(150);
