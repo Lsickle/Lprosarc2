@@ -33,10 +33,11 @@
 							<li class="list-group-item">
 								<b>Servicio #</b> <a class="pull-right">{{$certificado->FK_CertSolser}}</a>
 							</li>
-							<li class="list-group-item">
-								<b>certificado #</b> <a class="pull-right">{{$certificado->ID_Cert}}</a>
-							</li>
-							
+							@if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) ||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+								<li class="list-group-item">
+									<b>certificado #</b> <a class="pull-right">{{$certificado->ID_Cert}}</a>
+								</li>
+							@endif
 							<li class="list-group-item">
 								<label>Observaciones</label>
 								<textarea style="resize: vertical;" maxlength="250" name="RespelStatusDescription" id="taid" class="form-control" rows ="5">{{$certificado->CertObservacion}}</textarea>
@@ -55,21 +56,60 @@
 							<li class="list-group-item">
 								<b>Firma DP</b> <a class="pull-right">@if($certificado->CertAuthDp === 1)<i class='fas fa-signature'></i>@endif</a>
 							</li>
-							<li class="list-group-item" style="display: block; overflow: auto";>
-								<div class="col-md-12 form-group">
-									<label>documento</label>
-									<div class="input-group">
-										<input type="text" class="form-control" value="Ver Documento" disabled>
-										<div class="input-group-btn">
-											@if($certificado->CertSrc == 'CertificadoDefault.pdf')
-											<a class='btn btn-default'><i class='fas fa-file-pdf fa-lg'></i></a>
-											@else
-											<a method='get' href='/img/Certificados/{{$certificado->CertSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
-											@endif
+							@switch($certificado->CertType)
+								@case(0)
+									<li class="list-group-item" style="display: block; overflow: auto" ;>
+										<div class="col-md-12 form-group">
+											<label>Certificado</label>
+											<div class="input-group">
+												<input type="text" class="form-control" value="Ver Certificado" disabled>
+												<div class="input-group-btn">
+													@if($certificado->CertSrc == 'CertificadoDefault.pdf')
+													<a class='btn btn-default'><i class='fas fa-file-contract fa-lg'></i></a>
+													@else
+													<a method='get' href='/img/Certificados/{{$certificado->CertSrc}}' target='_blank' class='btn btn-success'><i class='fas fa-file-contract fa-lg'></i></a>
+													@endif
+												</div>
+											</div>
 										</div>
-									</div>	
-								</div>
-							</li>
+									</li>
+									@break
+								@case(1)
+									<li class="list-group-item" style="display: block; overflow: auto" ;>
+										<div class="col-md-12 form-group">
+											<label>Manifiesto</label>
+											<div class="input-group">
+												<input type="text" class="form-control" value="Ver Manifiesto" disabled>
+												<div class="input-group-btn">
+													@if($certificado->CertSrcManif == "CertificadoDefault.pdf")
+													<a class='btn btn-default'><i class='fas fa-file-pdf fa-lg'></i></a>
+													@else
+													<a method='get' href='/img/Manifiestos/{{$certificado->CertSrcManif}}' target='_blank' class='btn btn-primary'><i class='far fa-file-alt fa-lg'></i></a>
+													@endif
+												</div>
+											</div>
+										</div>
+									</li>
+									@break
+								@case(2)
+									<li class="list-group-item" style="display: block; overflow: auto" ;>
+										<div class="col-md-12 form-group">
+											<label>documento</label>
+											<div class="input-group">
+												<input type="text" class="form-control" value="Ver Certificado" disabled>
+												<div class="input-group-btn">
+													@if($certificado->CertSrcExt!=='CertificadoDefault.pdf')
+													<a class='btn btn-default'><i class='fas fa-file-pdf fa-lg'></i></a>
+													@else
+													<a method='get' href='/img/CertificadosEXT/{{$certificado->CertSrcExt}}' target='_blank' class='btn btn-success'><i class='fas fa-file-pdf fa-lg'></i></a>
+													@endif
+												</div>
+											</div>
+										</div>
+									</li>
+									@break
+								@default
+							@endswitch
 							<li class="list-group-item" style="display: block; overflow: auto";>
 								<div class="col-md-12 form-group">
 									<label>Anexos</label>

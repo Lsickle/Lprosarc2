@@ -197,7 +197,20 @@ class CertificadoController extends Controller
                 return $item;
             });
 
-            $qrCode = new QrCode(route('certificados.show', ['certificado' => $certificado->CertSlug]));
+            switch ($certificado->CertType) {
+                case '0':
+                $qrCode = new QrCode('https://sispro.prosarc.com/img/Certificados/'.$certificado->CertSlug.'.pdf');
+                    break;
+
+                case '1':
+                $qrCode = new QrCode('https://sispro.prosarc.com/img/Manifiestos/'.$certificado->CertSlug.'.pdf');
+                    break;
+                
+                default:
+                $qrCode = new QrCode('https://sispro.prosarc.com/img/Certificados/'.$certificado->CertSlug.'.pdf');
+                    break;
+            }
+            // $qrCode = new QrCode(route('certificados.show', ['certificado' => $certificado->CertSlug]));
             $qrCode->setLogoPath(asset('img/LogoQR.png'));
             $qrCode->setLogoSize(30, 30);
             $qrCode->setSize(150);
@@ -333,7 +346,8 @@ class CertificadoController extends Controller
             $servicio = SolicitudServicio::where('ID_SolSer', $certificado->FK_CertSolser)->first();
             $destinatarios = ['dirtecnica@prosarc.com.co',
                                     'logistica@prosarc.com.co',
-                                    'gerenteplanta@prosarc.com.co'
+                                    'gerenteplanta@prosarc.com.co',
+                                    'asistentedplanta@prosarc.com.co'
                                     ];
 
             $cliente = Cliente::where('ID_Cli', $servicio->FK_SolSerCliente)->first();
