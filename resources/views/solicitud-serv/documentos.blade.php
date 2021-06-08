@@ -245,9 +245,11 @@
 											<button id="{{'buttonfirmarDoc'.$certificado->CertSlug}}" class='btn fixed_widthbtn btn-warning' onclick="firmarDocumento('{{$certificado->CertSlug}}')"><i class='fas fa-lg fa-file-signature'></i></button>
 										</td>
 									@else
-										<td class="text-center">
-											<button id="{{'buttonfirmarDoc'.$certificado->CertSlug}}" class='btn fixed_widthbtn btn-default' disabled><i class='fas fa-lg fa-file-signature'></i></button>
-										</td>
+										@if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+											<td class="text-center">
+												<button id="{{'buttonfirmarDoc'.$certificado->CertSlug}}" class='btn fixed_widthbtn btn-default' disabled><i class='fas fa-lg fa-file-signature'></i></button>
+											</td>
+										@endif
 									@endif
 									@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
 										<td>
