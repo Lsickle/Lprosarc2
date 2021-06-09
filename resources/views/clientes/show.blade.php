@@ -18,7 +18,7 @@
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="box box-info">
 				<div class="box-body box-profile">
 					<div class="col-md-12 col-xs-12">
@@ -212,7 +212,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-8">
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs">
 					{{-- Barra de navegación --}}
@@ -220,11 +220,14 @@
 					@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 						<li><a href="#requerimientos" data-toggle="tab">Requerimientos</a></li>
 					@endif
+					<li><a href="#tarifas_cliente" data-toggle="tab">Tarifa</a></li>
 					@if ((Route::currentRouteName() === 'cliente-show')&&(in_array(Auth::user()->UsRol, Permisos::CLIENTE)))
 						<a href="/sclientes/create" class="btn btn-primary pull-right" style="margin-top: 0.5em; margin-right: 0.5em;"><b>{{ trans('adminlte_lang::message.create') }} Sede</b></a>
 					@endif
+					<li class="navbar-right">
+						<button><a href="{{route('clientetarifas.create', ['cliente' => $cliente->CliSlug])}}" class="btn btn-primary" target="_blank" rel="noopener noreferrer"><b><i class="fas fa-plus"></i> Tarifa</b></a></button>
+					</li>
 				</ul>
-
 				<div class="tab-content">
 					{{-- sedes --}}
 					<div class="active tab-pane" id="sedes" style='overflow-y:auto; max-height:305px;'>
@@ -369,6 +372,34 @@
 							</div>
 						</div>
 					@endif
+					<div class="tab-pane" id="tarifas_cliente" style='overflow-y:auto; max-height:305px;'>
+						<table id="TarifasClienteTable" class="table table-compact table-bordered table-striped">
+							<thead>
+								<tr>
+									<th>Tratamiento</th>
+									<th>Rango</th>
+									<th>Frecuencia</th>
+									<th>Precio</th>
+									<th>Cliente</th>
+									<th>Vence</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach ($cliente->clientetarifa as $tarifa)
+									@foreach ($tarifa->rangos as $rango)
+									<tr>
+										<td>{{$tarifa->tratamiento->TratName}}</td>
+										<td>desde {{$rango->CTarifaDesde}} {{$tarifa->Tarifatipo}}</td>
+										<td>{{$tarifa->TarifaFrecuencia}}</td>
+										<td>{{$rango->CTarifaPrecio}}</td>
+										<td>{{$tarifa->cliente->CliShortname}}</td>
+										<td>{{$tarifa->TarifaVencimiento}}</td>
+									</tr>
+									@endforeach
+								@endforeach
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>

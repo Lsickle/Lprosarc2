@@ -83,6 +83,12 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::post('/Soy-Gener/{id}', 'genercontroller@storeSoyGenerador');
 	Route::resource('/sgeneradores', 'sgenercontroller');
 	Route::resource('/respels', 'RespelController');
+
+	//Cliente tarifas routes
+
+	// Route::get('/cliente/{cliente}/tarifascliente_create', 'ClienteTarifasController@create');
+	// Route::post('/cliente/{cliente}/tarifascliente_store', 'ClienteTarifasController@store')->name('cliente-tarifas-store');
+	Route::resource('/cliente/{slug}/clientetarifas', 'ClienteTarifasController');
 	/*Route::resource('/vencidos', 'RespelController');*/
 
 
