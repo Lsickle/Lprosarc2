@@ -17,6 +17,8 @@ use App\Clasificacion;
 use App\Respel;
 use App\Requerimiento;
 use App\Permisos;
+use App\CTarifa;
+use App\TRangos;
 
 class ClienteTarifasController extends Controller
 {
@@ -64,11 +66,64 @@ class ClienteTarifasController extends Controller
      */
     public function store(Request $request, $CliSlug)
     {
-        return $request;
+        
+        $request->validate([
+            'FK_Tratamiento' => 'required|exists:tratamientos,ID_Trat',
+            'CTarifaDesde' => 'required|numeric|min:1',
+            'Tarifatipo' => 'required|in:Kg,Unid,Lt',
+            'CTarifaPrecio' => 'required|numeric|min:1',
+            'TarifaFrecuencia' => 'required|in:Servicio,Mensual',
+            'TarifaVencimiento' => 'required|date',
+        ], [
+            '*.required' => 'debe especificar un valor en el campo :attribute',
+            'CTarifaDesde.min' => 'ingrese un valor mayor o igual a 1 en el campo :attribute',
+            'CTarifaPrecio.min' => 'ingrese un valor mayor o igual a 1 en el campo :attribute',
+            'FK_Tratamiento.exists' => 'el :attribute seleccionado no se encuentra en la base de datos',
+        ], [
+            'FK_Tratamiento' => 'Tratamiento',
+            'CTarifaDesde' => 'Rango',
+            'Tarifatipo' => 'Unidad',
+            'CTarifaPrecio' => 'Precio',
+            'TarifaFrecuencia' => 'Frecuencia',
+            'TarifaVencimiento' => 'Vencimiento',
+        ]);
+
+        // check if CTarifa exist
+
+
         $cliente = Cliente::where('CliSlug', $CliSlug)->with(['clientetarifa.rangos', 'clientetarifa.tratamiento'])->first();
 
-        return $cliente;
-        return 'hello World';
+        $tarifaPrevia = CTarifa::where('FK_Cliente', $cliente->ID_Cli)
+            ->where('FK_Tratamiento', $request->input('FK_Tratamiento'))
+            ->where('Tarifatipo', $request->input('Tarifatipo'))
+            ->where('TarifaFrecuencia', $request->input('TarifaFrecuencia'))
+            ->first();
+        if ($tarifaPrevia === null) {
+            $Tarifanueva = new CTarifa();
+            $Tarifanueva->TarifaDelete = 0;
+            $Tarifanueva->TarifaVencimiento = $request->input('TarifaVencimiento');
+            $Tarifanueva->TarifaFrecuencia = $request->input('TarifaFrecuencia');
+            $Tarifanueva->Tarifatipo = $request->input('Tarifatipo');
+            $Tarifanueva->FK_Cliente = $cliente->ID_Cli;
+            $Tarifanueva->FK_Tratamiento = $request->input('FK_Tratamiento');
+            $Tarifanueva->save();
+
+            $Rangonuevo = new TRangos();
+            $Rangonuevo->CTarifaPrecio = $request->input('CTarifaPrecio');
+            $Rangonuevo->CTarifaDesde = $request->input('CTarifaDesde');
+            $Rangonuevo->FK_RangoCTarifa = $Tarifanueva->ID_CTarifa;
+            $Rangonuevo->save();
+        } else {
+            $Rangonuevo = new TRangos();
+            $Rangonuevo->CTarifaPrecio = $request->input('CTarifaPrecio');
+            $Rangonuevo->CTarifaDesde = $request->input('CTarifaDesde');
+            $Rangonuevo->FK_RangoCTarifa = $tarifaPrevia->ID_CTarifa;
+            $Rangonuevo->save();
+        }
+        
+        
+
+        return redirect()->route('clientetarifas.create', ['cliente' => $cliente->CliSlug]);
     }
 
     /**
@@ -108,11 +163,22 @@ class ClienteTarifasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param  string  $CliSlug
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($CliSlug, $ID_CRango)
     {
-        //
+        $Rangonuevo = TRangos::find($ID_CRango);
+        $Rangonuevo->delete();
+        
+        // cuenta de rangos de la tarifa
+        $tarifaparaborrar = CTarifa::where('ID_CTarifa', $Rangonuevo->FK_RangoCTarifa)->with('rangos')->first();
+
+        if ($tarifaparaborrar->rangos->Count() < 1) {
+            $tarifaparaborrar->delete();
+        }
+
+        return redirect()->route('clientetarifas.create', ['cliente' => $CliSlug]);
     }
 }
