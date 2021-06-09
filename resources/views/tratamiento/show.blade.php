@@ -192,10 +192,9 @@
                                 <table id="TarifasClienteTable" class="table table-compact table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Peso</th>
-                                            <th>Precio</th>
-                                            <th>Unidad</th>
+                                            <th>Rango</th>
                                             <th>Frecuencia</th>
+                                            <th>Precio</th>
                                             <th>Cliente</th>
                                             <th>Vence</th>
                                         </tr>
@@ -204,10 +203,9 @@
                                         @foreach ($tratamiento->tarifas_cliente as $tarifa)
                                             @foreach ($tarifa->rangos as $rango)
                                                 <tr>
-                                                    <td>{{$rango->CTarifaDesde}}</td>
-                                                    <td>{{$tarifa->CTarifaPrecio}}</td>
-                                                    <td>{{$tarifa->Tarifatipo}}</td>
+                                                    <td>desde {{$rango->CTarifaDesde}} {{$tarifa->Tarifatipo}}</td>
                                                     <td>{{$tarifa->TarifaFrecuencia}}</td>
+                                                    <td>{{$rango->CTarifaPrecio}}</td>
                                                     <td>{{$tarifa->cliente->CliShortname}}</td>
                                                     <td>{{$tarifa->TarifaVencimiento}}</td>
                                                 </tr>
