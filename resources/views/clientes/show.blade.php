@@ -389,7 +389,7 @@
 									@foreach ($tarifa->rangos as $rango)
 									<tr>
 										<td>{{$tarifa->tratamiento->TratName}}</td>
-          								<td>desde {{$rango->CTarifaDesde}} <b style="color: {{($tarifa->Tarifatipo == 'Kg' ? 'Black' : 'Red')}}">{{$tarifa->Tarifatipo}}</b></td>
+										<td>desde {{$rango->CTarifaDesde}} <b style="color: {{($tarifa->Tarifatipo == 'Kg' ? 'Black' : 'Red')}}">{{$tarifa->Tarifatipo}}</b></td>
 										<td>{{$tarifa->TarifaFrecuencia}}</td>
 										<td>{{$rango->CTarifaPrecio}}</td>
 										<td>{{$tarifa->cliente->CliShortname}}</td>
