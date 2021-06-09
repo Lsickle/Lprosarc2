@@ -93,9 +93,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#Clasificacionespane" data-toggle="tab">{{ trans('adminlte_lang::LangTratamiento.tratClasf') }}</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#TarifasClientepane" data-toggle="tab">Tarifas</a>
-                            </li>
                         </ul>
                         <!-- nav-content -->
                         <div class="tab-content" style="min-height:40vh;">
@@ -185,36 +182,6 @@
                                         @endif 
                                     </ul>
                                 </div>
-                            </div>
-                            <!-- /.tab-pane fade -->
-                            <!-- tab-pane fade -->
-                            <div class="tab-pane fade" id="TarifasClientepane">
-                                <table id="TarifasClienteTable" class="table table-compact table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Peso</th>
-                                            <th>Precio</th>
-                                            <th>Unidad</th>
-                                            <th>Frecuencia</th>
-                                            <th>Cliente</th>
-                                            <th>Vence</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($tratamiento->tarifas_cliente as $tarifa)
-                                            @foreach ($tarifa->rangos as $rango)
-                                                <tr>
-                                                    <td>{{$rango->CTarifaDesde}}</td>
-                                                    <td>{{$tarifa->CTarifaPrecio}}</td>
-                                                    <td>{{$tarifa->Tarifatipo}}</td>
-                                                    <td>{{$tarifa->TarifaFrecuencia}}</td>
-                                                    <td>{{$tarifa->cliente->CliShortname}}</td>
-                                                    <td>{{$tarifa->TarifaVencimiento}}</td>
-                                                </tr>
-                                            @endforeach
-                                        @endforeach
-                                    </tbody>
-                                </table>
                             </div>
                             <!-- /.tab-pane fade -->
                         </div>

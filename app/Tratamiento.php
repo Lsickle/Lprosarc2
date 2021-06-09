@@ -41,4 +41,8 @@ class Tratamiento extends Model
         return $this->hasMany('App\Manifiesto','FK_ManifTrat', 'ID_Trat');
     }
 
+    public function tarifas_cliente(){
+        return $this->hasMany('App\CTarifa','FK_Tratamiento', 'ID_Trat')->with('rangos');
+    }
+
 }
