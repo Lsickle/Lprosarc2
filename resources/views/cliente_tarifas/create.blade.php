@@ -53,7 +53,7 @@ Tarifas del cliente
                                         <label for="input1">Rango</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">Desde </span>
-                                            <input type="number" class="form-control" aria-label="Cantidad mas cercana la unidad" name="CTarifaDesde" required step="1">
+                                            <input type="number" class="form-control" aria-label="Cantidad mas cercana la unidad" name="CTarifaDesde" required min="0" step="1">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -66,7 +66,7 @@ Tarifas del cliente
                                     </div>
                                     <div class="col-md-3">
                                         <label for="input2">Precio</label>
-                                        <input id="input2" class="form-control" type="number" min="1" step="1" name="CTarifaPrecio" required>
+                                        <input id="input2" class="form-control" type="number" min="0" step="1" name="CTarifaPrecio" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="select2frecuencia">Frecuencia</label>
@@ -98,9 +98,7 @@ Tarifas del cliente
                             <table id="TarifasClienteTable" class="table table-compact table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        @if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR))
                                         <th>ID_CTarifa</th>
-                                        @endif
                                         <th>Tratamiento</th>
                                         <th>Rango</th>
                                         <th>Frecuencia</th>
@@ -114,9 +112,7 @@ Tarifas del cliente
                                     @foreach ($cliente->clientetarifa as $tarifa)
                                     @foreach ($tarifa->rangos as $rango)
                                     <tr>
-                                        @if (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR))
                                         <td>{{$tarifa->ID_CTarifa}}</td>
-                                        @endif
                                         <td>{{$tarifa->tratamiento->TratName}}</td>
                                         <td>desde {{$rango->CTarifaDesde}} <b style="color: {{($tarifa->Tarifatipo == 'Kg' ? 'Black' : 'Red')}}">{{$tarifa->Tarifatipo}}</b></td>
                                         <td>{{$tarifa->TarifaFrecuencia}}</td>
