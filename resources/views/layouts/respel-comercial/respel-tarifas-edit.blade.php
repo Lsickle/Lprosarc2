@@ -8,7 +8,12 @@
     	@endphp
 			@foreach($opcion->tarifas as $tarifa)
 				<div class=row>
-					<div class="col-md-4 col-sm-6" style="max-height: 58.1px;">
+					<div class="col-md-2 col-xs-6">
+						<label data-trigger="hover" data-toggle="popover" data-placement="bottom" title="<b>Tarifa especial</b>" data-content="<p> Activar este switch causara que se tomen en cuenta estas tarifas para definir el precio por unidad e los residuos en cada servicio son este residuo sea conciliado</p>"> Tarifa Especial
+							<input data-switch="Opcion[{{$contadorphp}}][TarifaSpecial]" id="main_Opcion`+contador+`ReqFotoDestruccion" value="1" type="checkbox" class="testswitch" name="Opcion[{{$contadorphp}}][TarifaSpecial]" />
+						</label>
+					</div>
+					<div class="col-md-2 col-sm-6" style="max-height: 58.1px;">
 						<label for="expireRange{{$contadorphp}}" style="font-size: 0.9em; margin-bottom: 0px;">Vencimiento</label>
 						<input {{in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL) ? '' : 'disabled' }} id="expireRange{{$contadorphp}}" name="Opcion[{{$contadorphp}}][TarifaVencimiento]" type="date" class="form-control" value="{{$tarifa->TarifaVencimiento}}">
 						@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))

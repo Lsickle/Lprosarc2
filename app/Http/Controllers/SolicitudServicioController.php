@@ -1888,7 +1888,6 @@ class SolicitudServicioController extends Controller
 		/*ajuste de los precios para facturacion en cada residuo de la solicitud segun los rangos de tarifas */
 
 		foreach ($SolicitudServicio->SolicitudResiduo as $key => $solres) {
-			// a partir de 1 kg se asigna el precio segun la cantidad conciliada
 			switch ($solres->SolResTypeUnidad) {
 				case 'Unidad':
 					$tarifatipo = 'Unid';
@@ -1912,7 +1911,7 @@ class SolicitudServicioController extends Controller
 
 			$residuoparaprecio = SolicitudResiduo::where('ID_SolRes', $solres->ID_SolRes)->first();
 
-			if ($tarifaPrevia === null) {
+			if ($tarifaPrevia === null || $solres->SolResKgConciliado <= 0) {
 				$residuoparaprecio->SolResPrecio = 0;
 			} else {
 				foreach ($tarifaPrevia->rangos as $rango) {
@@ -1940,6 +1939,8 @@ class SolicitudServicioController extends Controller
 				}
 			}
 			$residuoparaprecio->save();
+
+			// a partir de 1 kg se asigna el precio segun la cantidad conciliada
 
 			// if ($solres->SolResKgConciliado > 0) {
 			// 	foreach ($solres->requerimiento->tarifa->rangos as $rango) {
