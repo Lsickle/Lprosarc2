@@ -69,22 +69,22 @@ class ClienteTarifasController extends Controller
         
         $request->validate([
             'FK_Tratamiento' => 'required|exists:tratamientos,ID_Trat',
-            'CTarifaDesde' => 'required|numeric|min:1',
+            'CTarifaDesde' => 'required|numeric|min:0',
             'Tarifatipo' => 'required|in:Kg,Unid,Lt',
-            'CTarifaPrecio' => 'required|numeric|min:1',
-            'TarifaFrecuencia' => 'required|in:Servicio,Mensual',
+            'CTarifaPrecio' => 'required|numeric|min:0',
+            // 'TarifaFrecuencia' => 'required|in:Servicio,Mensual',
             'TarifaVencimiento' => 'required|date',
         ], [
             '*.required' => 'debe especificar un valor en el campo :attribute',
-            'CTarifaDesde.min' => 'ingrese un valor mayor o igual a 1 en el campo :attribute',
-            'CTarifaPrecio.min' => 'ingrese un valor mayor o igual a 1 en el campo :attribute',
+            'CTarifaDesde.min' => 'ingrese un valor mayor a 0 en el campo :attribute',
+            'CTarifaPrecio.min' => 'ingrese un valor mayor a 0 en el campo :attribute',
             'FK_Tratamiento.exists' => 'el :attribute seleccionado no se encuentra en la base de datos',
         ], [
             'FK_Tratamiento' => 'Tratamiento',
             'CTarifaDesde' => 'Rango',
             'Tarifatipo' => 'Unidad',
             'CTarifaPrecio' => 'Precio',
-            'TarifaFrecuencia' => 'Frecuencia',
+            // 'TarifaFrecuencia' => 'Frecuencia',
             'TarifaVencimiento' => 'Vencimiento',
         ]);
 
@@ -96,13 +96,13 @@ class ClienteTarifasController extends Controller
         $tarifaPrevia = CTarifa::where('FK_Cliente', $cliente->ID_Cli)
             ->where('FK_Tratamiento', $request->input('FK_Tratamiento'))
             ->where('Tarifatipo', $request->input('Tarifatipo'))
-            ->where('TarifaFrecuencia', $request->input('TarifaFrecuencia'))
             ->first();
         if ($tarifaPrevia === null) {
             $Tarifanueva = new CTarifa();
             $Tarifanueva->TarifaDelete = 0;
             $Tarifanueva->TarifaVencimiento = $request->input('TarifaVencimiento');
-            $Tarifanueva->TarifaFrecuencia = $request->input('TarifaFrecuencia');
+            $Tarifanueva->TarifaFrecuencia = 'Servicio';
+            // $Tarifanueva->TarifaFrecuencia = $request->input('TarifaFrecuencia');
             $Tarifanueva->Tarifatipo = $request->input('Tarifatipo');
             $Tarifanueva->FK_Cliente = $cliente->ID_Cli;
             $Tarifanueva->FK_Tratamiento = $request->input('FK_Tratamiento');

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnTransprecioToSolicitudServiciosTable extends Migration
+class ModifyPrecioColumnToSolicitudResiduosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddColumnTransprecioToSolicitudServiciosTable extends Migration
      */
     public function up()
     {
-        Schema::table('solicitud_servicios', function (Blueprint $table) {
-            $table->unsignedDecimal('SolSerTranspPrecio', 8, 2)->default(0);
+        Schema::table('solicitud_residuos', function (Blueprint $table) {
+            $table->unsignedDecimal('SolResPrecio', 8, 2)->default(0)->change();
         });
     }
 
@@ -25,8 +25,8 @@ class AddColumnTransprecioToSolicitudServiciosTable extends Migration
      */
     public function down()
     {
-        Schema::table('solicitud_servicios', function (Blueprint $table) {
-            $table->dropColumn('SolSerTranspPrecio');
+        Schema::table('solicitud_residuos', function (Blueprint $table) {
+            $table->integer('SolResPrecio')->default(0)->change();
         });
     }
 }

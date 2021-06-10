@@ -21,7 +21,7 @@ class CTarifa extends Model
     }
 
     public function rangos(){
-    	return $this->hasMany('App\TRangos', 'FK_RangoCTarifa', 'ID_CTarifa');
+    	return $this->hasMany('App\TRangos', 'FK_RangoCTarifa', 'ID_CTarifa')->orderBy('CTarifaDesde', 'desc');
     }
 
 

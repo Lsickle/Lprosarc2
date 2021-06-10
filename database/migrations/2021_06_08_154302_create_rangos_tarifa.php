@@ -15,8 +15,8 @@ class CreateRangostarifa extends Migration
     {
         Schema::create('rangostarifa', function (Blueprint $table) {
             $table->bigIncrements('ID_CRango');
-            $table->string('CTarifaPrecio');
-            $table->string('CTarifaDesde');
+            $table->unsignedDecimal('CTarifaPrecio', 8, 2)->default(0);
+            $table->unsignedDecimal('CTarifaDesde', 8, 2)->default(0);
             $table->unsignedBigInteger('FK_RangoCTarifa');
             $table->foreign('FK_RangoCTarifa')->references('ID_CTarifa')->on('clientetarifa')->onDelete('cascade');
             $table->timestamps();

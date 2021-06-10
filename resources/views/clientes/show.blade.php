@@ -376,11 +376,12 @@
 						<table id="TarifasClienteTable" class="table table-compact table-bordered table-striped">
 							<thead>
 								<tr>
+									<th>ID</th>
 									<th>Tratamiento</th>
 									<th>Rango</th>
-									<th>Frecuencia</th>
+									{{-- <th>Frecuencia</th> --}}
 									<th>Precio</th>
-									<th>Cliente</th>
+									{{-- <th>Cliente</th> --}}
 									<th>Vence</th>
 								</tr>
 							</thead>
@@ -388,11 +389,12 @@
 								@foreach ($cliente->clientetarifa as $tarifa)
 									@foreach ($tarifa->rangos as $rango)
 									<tr>
+										<td>{{$tarifa->ID_CTarifa}}</td>
 										<td>{{$tarifa->tratamiento->TratName}}</td>
-										<td>desde {{$rango->CTarifaDesde}} <b style="color: {{($tarifa->Tarifatipo == 'Kg' ? 'Black' : 'Red')}}">{{$tarifa->Tarifatipo}}</b></td>
-										<td>{{$tarifa->TarifaFrecuencia}}</td>
+										<td>desde {{$rango->CTarifaDesde}} <b style="color: {{($tarifa->Tarifatipo == 'Kg' ? 'Black' : 'Green')}}">{{$tarifa->Tarifatipo}}</b></td>
+										{{-- <td>{{$tarifa->TarifaFrecuencia}}</td> --}}
 										<td>{{$rango->CTarifaPrecio}}</td>
-										<td>{{$tarifa->cliente->CliShortname}}</td>
+										{{-- <td>{{$tarifa->cliente->CliShortname}}</td> --}}
 										<td>{{$tarifa->TarifaVencimiento}}</td>
 									</tr>
 									@endforeach

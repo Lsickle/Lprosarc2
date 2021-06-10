@@ -68,13 +68,13 @@ Tarifas del cliente
                                         <label for="input2">Precio</label>
                                         <input id="input2" class="form-control" type="number" min="0" step="1" name="CTarifaPrecio" required>
                                     </div>
-                                    <div class="col-md-3">
+                                    {{-- <div class="col-md-3">
                                         <label for="select2frecuencia">Frecuencia</label>
                                         <select class="form-control select" id="select2frecuencia" name="TarifaFrecuencia" required>
                                             <option selected value="Servicio">Servicio</option>
                                             <option value="Mensual">Mensual</option>
                                         </select>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-md-3">
                                         <label for="input3">Vencimiento</label>
                                         <input min="{{date('Y-m-d')}}" id="input3" class="form-control" type="date" name="TarifaVencimiento" required>
@@ -98,12 +98,12 @@ Tarifas del cliente
                             <table id="TarifasClienteTable" class="table table-compact table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>ID_CTarifa</th>
+                                        <th>ID</th>
                                         <th>Tratamiento</th>
                                         <th>Rango</th>
-                                        <th>Frecuencia</th>
+                                        {{-- <th>Frecuencia</th> --}}
                                         <th>Precio</th>
-                                        <th>Cliente</th>
+                                        {{-- <th>Cliente</th> --}}
                                         <th>Vence</th>
                                         <th>Eliminar</th>
                                     </tr>
@@ -114,10 +114,10 @@ Tarifas del cliente
                                     <tr>
                                         <td>{{$tarifa->ID_CTarifa}}</td>
                                         <td>{{$tarifa->tratamiento->TratName}}</td>
-                                        <td>desde {{$rango->CTarifaDesde}} <b style="color: {{($tarifa->Tarifatipo == 'Kg' ? 'Black' : 'Red')}}">{{$tarifa->Tarifatipo}}</b></td>
-                                        <td>{{$tarifa->TarifaFrecuencia}}</td>
+                                        <td>desde {{$rango->CTarifaDesde}} <b style="color: {{($tarifa->Tarifatipo == 'Kg' ? 'Black' : 'Green')}}">{{$tarifa->Tarifatipo}}</b></td>
+                                        {{-- <td>{{$tarifa->TarifaFrecuencia}}</td> --}}
                                         <td>{{$rango->CTarifaPrecio}}</td>
-                                        <td>{{$tarifa->cliente->CliShortname}}</td>
+                                        {{-- <td>{{$tarifa->cliente->CliShortname}}</td> --}}
                                         <td>{{$tarifa->TarifaVencimiento}}</td>
                                         <td>
                                             <form method="POST" id="Eliminar{{$rango->ID_CRango}}" action="{{route('clientetarifas.destroy', ['slug' => $cliente->CliSlug, 'clientetarifa' => $rango->ID_CRango])}}">
