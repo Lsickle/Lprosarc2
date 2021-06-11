@@ -14,7 +14,7 @@ class AddSpecialColumnToTarifasTable extends Migration
     public function up()
     {
         Schema::table('tarifas', function (Blueprint $table) {
-            $table->boolean('TarifaSpeciol')->default(0);
+            $table->boolean('TarifaSpecial')->default(0);
         });
     }
 
@@ -26,7 +26,7 @@ class AddSpecialColumnToTarifasTable extends Migration
     public function down()
     {
         Schema::table('tarifas', function (Blueprint $table) {
-            $table->dropColumn('TarifaSpeciol');
+            $table->dropColumn('TarifaSpecial');
         });
     }
 }

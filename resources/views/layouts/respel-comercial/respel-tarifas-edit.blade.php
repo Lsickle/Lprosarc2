@@ -10,7 +10,7 @@
 				<div class=row>
 					<div class="col-md-2 col-xs-6">
 						<label data-trigger="hover" data-toggle="popover" data-placement="bottom" title="<b>Tarifa especial</b>" data-content="<p> Activar este switch causara que se tomen en cuenta estas tarifas para definir el precio por unidad e los residuos en cada servicio son este residuo sea conciliado</p>"> Tarifa Especial
-							<input data-switch="Opcion[{{$contadorphp}}][TarifaSpecial]" id="main_Opcion`+contador+`ReqFotoDestruccion" value="1" type="checkbox" class="testswitch" name="Opcion[{{$contadorphp}}][TarifaSpecial]" />
+							<input {{$tarifa->TarifaSpecial === 1 ? "checked" : ""}} data-switch="Opcion[{{$contadorphp}}][TarifaSpecial]" id="main_Opcion`+contador+`TarifaSpecial" value="1" type="checkbox" class="testswitch" name="Opcion[{{$contadorphp}}][TarifaSpecial]" />
 						</label>
 					</div>
 					<div class="col-md-2 col-sm-6" style="max-height: 58.1px;">

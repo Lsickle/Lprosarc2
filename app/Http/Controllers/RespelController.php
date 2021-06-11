@@ -776,12 +776,16 @@ class RespelController extends Controller
                                 /*se verifica que las tarifas no esten disabled en la vista*/
                                 if (isset($opciones[$key]['TarifaFrecuencia'])) {
                                     // $tarifa = new Tarifa();
+                                    
                                     $tarifa = Tarifa::where('FK_TarifaReq', $requerimientoparaActualizar->ID_Req)->first();
                                     $tarifa->TarifaFrecuencia=$opciones[$key]['TarifaFrecuencia'];
-                                    $tarifa->TarifaVencimiento=$opciones[$key]['TarifaVencimiento'];   
+                                    $tarifa->TarifaVencimiento=$opciones[$key]['TarifaVencimiento'];
                                     $tarifa->Tarifatipo=$opciones[$key]['Tarifatipo'];
                                     $tarifa->TarifaDelete=0;
                                     $tarifa->FK_TarifaReq=$requerimientoparaActualizar->ID_Req;
+                                    if (isset($opciones[$key]['TarifaSpecial'])) {
+                                        $tarifa->TarifaSpecial=$opciones[$key]['TarifaSpecial'];
+                                    }
                                     $tarifa->save();
 
                                     foreach ($opciones[$key]['TarifaDesde'] as $key2 => $value2) {
@@ -879,6 +883,9 @@ class RespelController extends Controller
                                     $tarifa->Tarifatipo=$opciones[$key]['Tarifatipo'];
                                     $tarifa->TarifaDelete=0;
                                     $tarifa->FK_TarifaReq=$requerimiento->ID_Req;
+                                    if (isset($opciones[$key]['TarifaSpecial'])) {
+                                        $tarifa->TarifaSpecial=$opciones[$key]['TarifaSpecial'];
+                                    }
                                     $tarifa->save();
 
                                     foreach ($opciones[$key]['TarifaDesde'] as $key2 => $value2) {
