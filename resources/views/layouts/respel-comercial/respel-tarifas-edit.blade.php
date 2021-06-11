@@ -9,7 +9,7 @@
 			@foreach($opcion->tarifas as $tarifa)
 				<div class=row>
 					<div class="col-md-2 col-xs-6">
-						<label data-trigger="hover" data-toggle="popover" data-placement="bottom" title="<b>Tarifa especial</b>" data-content="<p> Activar este switch causara que se tomen en cuenta estas tarifas para definir el precio por unidad e los residuos en cada servicio son este residuo sea conciliado</p>"> Tarifa Especial
+						<label data-trigger="hover" data-toggle="popover" data-placement="bottom" title="<b>Tarifa especial</b>" data-content="<p> Activar este switch causara que se tomen en cuenta estas tarifas para definir el precio por unidad durante la conciliación de pesos</p>"> Tarifa Especial
 							<input {{$tarifa->TarifaSpecial === 1 ? "checked" : ""}} data-switch="Opcion[{{$contadorphp}}][TarifaSpecial]" id="main_Opcion`+contador+`TarifaSpecial" value="1" type="checkbox" class="testswitch" name="Opcion[{{$contadorphp}}][TarifaSpecial]" />
 						</label>
 					</div>
@@ -56,9 +56,9 @@
 				<div class="row" id="rango{{$contadorphp}}row">
 					@if(count($tarifa->rangos) > 0)
 						@foreach($tarifa->rangos as $rango)
-						<script type="text/javaScript">
+							<script type="text/javaScript">
 								contadorRango[{{$contadorphp}}][{{$last}}] = {{$last}};
-						</script>
+							</script>
 							@php
 							$last = $last+1;
 							@endphp
@@ -76,7 +76,7 @@
 									<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$rango->TarifaDesde}}">
 								@else
 									<div class="input-group">
-										<input disabled id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control  addon-inline" placeholder="Precio" min="0" value="{{$rango->TarifaPrecio}}">
+										<input id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control  addon-inline" placeholder="Precio" min="0" value="{{$rango->TarifaPrecio}}">
 										<span class="input-group-addon addon-inline input-source-observer">$</span>
 									</div>
 									<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$rango->TarifaDesde}}">
