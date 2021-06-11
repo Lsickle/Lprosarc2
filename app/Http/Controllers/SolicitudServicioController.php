@@ -721,6 +721,36 @@ class SolicitudServicioController extends Controller
 	        
 	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
 	        $item->tarifa = $requerimientos->tarifa;
+			if ($requerimientos->tarifa->TarifaSpecial === 1) {
+				switch ($item->SolResTypeUnidad) {
+					case 'Unidad':
+						$tarifatipo = 'Unid';
+						break;
+
+					case 'Litros':
+						$tarifatipo = 'Lt';
+						break;
+					
+					default:
+						$tarifatipo = 'Kg';
+						break;
+				}
+
+				$tarifaResiduo = CTarifa::with('rangos')
+					->where('FK_Cliente', $SolicitudServicio->FK_SolSerCliente)
+					->where('FK_Tratamiento', $requerimientos->FK_ReqTrata)
+					->where('Tarifatipo', $tarifatipo)
+					->first();
+					
+				if ($tarifaResiduo === null) {
+					$item->ctarifa = $requerimientos->tarifa;
+				}else{
+					$item->ctarifa = $tarifaResiduo;
+				}
+				$tarifaCliente === null
+			}else{
+				$item->ctarifa = $requerimientos->tarifa;
+			}
 	        $item->SolResRM2 = $rm->SolResRM;
 		  	return $item;
 		});
@@ -1694,7 +1724,7 @@ class SolicitudServicioController extends Controller
 	{
 			
 		$SolicitudServicio = SolicitudServicio::with(['SolicitudResiduo.requerimiento.tarifa.rangos' => function ($query){
-			$query->orderBy('TarifaDesde');
+			$query->orderBy('TarifaDesde', 'desc');
 		}])->where('ID_SolSer', $id)->first();
 		$serviciovalidado = $id;
 		/*cuenta los diferentes generadores*/
@@ -1918,6 +1948,22 @@ class SolicitudServicioController extends Controller
 			} else {
 				if ($tarifaResiduo->TarifaSpecial === 1) {
 					foreach ($tarifaResiduo->rangos as $rango) {
+						switch ($solres->SolResTypeUnidad) {
+							case 'Unidad':
+							case 'Litros':
+								if ($solres->SolResCantiUnidadConciliada > $rango->TarifaDesde) {
+									$residuoparaprecio->SolResPrecio = $rango->TarifaPrecio;
+									break 2;
+								}
+								break;
+							
+							default:
+								if ($solres->SolResKgConciliado > $rango->TarifaDesde) {
+									$residuoparaprecio->SolResPrecio = $rango->TarifaPrecio;
+									break 2;
+								}
+								break;
+						}
 						if ($solres->SolResKgConciliado >= $rango->TarifaDesde) {
 							$solres->SolResPrecio = $rango->TarifaPrecio;
 						}
@@ -1930,7 +1976,6 @@ class SolicitudServicioController extends Controller
 
 								if ($solres->SolResCantiUnidadConciliada > $rango->CTarifaDesde) {
 									$residuoparaprecio->SolResPrecio = $rango->CTarifaPrecio;
-									// $residuoparaprecio->SolResPrecio = 0;
 									break 2;
 								}
 
@@ -1939,7 +1984,6 @@ class SolicitudServicioController extends Controller
 							default:
 								if ($solres->SolResKgConciliado > $rango->CTarifaDesde) {
 									$residuoparaprecio->SolResPrecio = $rango->CTarifaPrecio;
-									// $residuoparaprecio->SolResPrecio = 0;
 									break 2;
 								}
 								break;
