@@ -785,6 +785,14 @@ class RespelController extends Controller
                                     $tarifa->FK_TarifaReq=$requerimientoparaActualizar->ID_Req;
                                     if (isset($opciones[$key]['TarifaSpecial'])) {
                                         $tarifa->TarifaSpecial=$opciones[$key]['TarifaSpecial'];
+
+                                        $log = new audit();
+                                        $log->AuditTabla="tarifas y rangos";
+                                        $log->AuditType="rangos Updated";
+                                        $log->AuditRegistro=$respel->ID_Respel;
+                                        $log->AuditUser=Auth::user()->email;
+                                        $log->Auditlog=$opciones[$key];
+                                        $log->save();
                                     }
                                     $tarifa->save();
 
@@ -885,6 +893,14 @@ class RespelController extends Controller
                                     $tarifa->FK_TarifaReq=$requerimiento->ID_Req;
                                     if (isset($opciones[$key]['TarifaSpecial'])) {
                                         $tarifa->TarifaSpecial=$opciones[$key]['TarifaSpecial'];
+
+                                        $log = new audit();
+                                        $log->AuditTabla="tarifas y rangos";
+                                        $log->AuditType="rangos Updated";
+                                        $log->AuditRegistro=$respel->ID_Respel;
+                                        $log->AuditUser=Auth::user()->email;
+                                        $log->Auditlog=$opciones[$key];
+                                        $log->save();
                                     }
                                     $tarifa->save();
 
@@ -919,7 +935,7 @@ class RespelController extends Controller
         $log->AuditType="Evaluacion Updated";
         $log->AuditRegistro=$respel->ID_Respel;
         $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=json_encode($request->all());
+        $log->Auditlog=$request->all();
         $log->save();
 
         if($respel->RespelPublic === 0){
