@@ -376,7 +376,9 @@ class RespelController extends Controller
 
         // se incorporan las tarifas al array                
         foreach ($requerimientos as $requerimiento) {
-            $tarifas = Tarifa::with(['rangos'])
+            $tarifas = Tarifa::with(['rangos' => function ($query) {
+                return $query->orderBy('TarifaDesde','ASC');
+            }])
             ->where('FK_TarifaReq', '=', $requerimiento->ID_Req)
             ->get();
             $requerimiento['tarifas'] = $tarifas;
@@ -473,7 +475,9 @@ class RespelController extends Controller
                 // se incorporan las tarifas al array                
                 foreach ($requerimientos as $requerimiento) {
                     // adjuntar tarifas relacionadas
-                    $requerimiento['tarifas'] = Tarifa::with(['rangos'])
+                    $requerimiento['tarifas'] = Tarifa::with(['rangos' => function ($query) {
+                        return $query->orderBy('TarifaDesde','ASC');
+                    }])
                     ->where('FK_TarifaReq', '=', $requerimiento->ID_Req)
                     ->get();
                     

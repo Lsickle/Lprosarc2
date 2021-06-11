@@ -1902,65 +1902,72 @@ class SolicitudServicioController extends Controller
 					break;
 			}
 
-			$tarifaPrevia = CTarifa::with('rangos')
+			$tarifaCliente = CTarifa::with('rangos')
 			->where('FK_Cliente', $cliente->ID_Cli)
 			->where('FK_Tratamiento', $solres->requerimiento->FK_ReqTrata)
 			->where('Tarifatipo', $tarifatipo)
 			->first();
+
+			$tarifaResiduo = $solres->requerimiento->tarifa;
 			
 
 			$residuoparaprecio = SolicitudResiduo::where('ID_SolRes', $solres->ID_SolRes)->first();
 
-			if ($tarifaPrevia === null || $solres->SolResKgConciliado <= 0) {
+			if ($tarifaCliente === null || $solres->SolResKgConciliado <= 0) {
 				$residuoparaprecio->SolResPrecio = 0;
 			} else {
-				foreach ($tarifaPrevia->rangos as $rango) {
-					switch ($solres->SolResTypeUnidad) {
-						case 'Unidad':
-						case 'Litros':
-
-							if ($solres->SolResCantiUnidadConciliada > $rango->CTarifaDesde) {
-								$residuoparaprecio->SolResPrecio = $rango->CTarifaPrecio;
-								// $residuoparaprecio->SolResPrecio = 0;
-								break 2;
-							}
-
-							break;
-						
-						default:
-							if ($solres->SolResKgConciliado > $rango->CTarifaDesde) {
-								$residuoparaprecio->SolResPrecio = $rango->CTarifaPrecio;
-								// $residuoparaprecio->SolResPrecio = 0;
-								break 2;
-							}
-							break;
+				if ($tarifaResiduo->TarifaSpecial === 1) {
+					foreach ($tarifaResiduo->rangos as $rango) {
+						if ($solres->SolResKgConciliado >= $rango->TarifaDesde) {
+							$solres->SolResPrecio = $rango->TarifaPrecio;
+						}
 					}
-					
+				}else{
+					foreach ($tarifaCliente->rangos as $rango) {
+						switch ($solres->SolResTypeUnidad) {
+							case 'Unidad':
+							case 'Litros':
+
+								if ($solres->SolResCantiUnidadConciliada > $rango->CTarifaDesde) {
+									$residuoparaprecio->SolResPrecio = $rango->CTarifaPrecio;
+									// $residuoparaprecio->SolResPrecio = 0;
+									break 2;
+								}
+
+								break;
+							
+							default:
+								if ($solres->SolResKgConciliado > $rango->CTarifaDesde) {
+									$residuoparaprecio->SolResPrecio = $rango->CTarifaPrecio;
+									// $residuoparaprecio->SolResPrecio = 0;
+									break 2;
+								}
+								break;
+						}
+						
+					}
 				}
+				
 			}
 			$residuoparaprecio->save();
 
 			// a partir de 1 kg se asigna el precio segun la cantidad conciliada
 
-			// if ($solres->SolResKgConciliado > 0) {
-			// 	foreach ($solres->requerimiento->tarifa->rangos as $rango) {
-			// 		if ($solres->SolResKgConciliado >= $rango->TarifaDesde) {
-			// 			$solres->SolResPrecio = $rango->TarifaPrecio;
-			// 		}
-			// 	}
-			// }
+			if ($solres->SolResKgConciliado > 0) {
+				
+			}
 
-			// /* entre 0 y 1 kilgramos se asigna el precion de la tarifa mas pequeña */
-			// if (0 < $solres->SolResKgConciliado && $solres->SolResKgConciliado < 1) {
-			// 	$solres->SolResPrecio = $solres->requerimiento->tarifa->rangos[0]->TarifaPrecio;
-			// }
+			/* entre 0 y 1 kilgramos se asigna el precion de la tarifa mas pequeña */
+			if (0 < $solres->SolResKgConciliado && $solres->SolResKgConciliado < 1) {
+				$solres->SolResPrecio = $solres->requerimiento->tarifa->rangos[0]->TarifaPrecio;
+			}
 
 			// /* si el precio se mantiene en 0 y el peso es mayor a 0 se iguala el precio al primer rango */
 			// if ($solres->SolResPrecio == 0 && $solres->SolResKgConciliado > 0) {
 			// 	$solres->SolResPrecio = $solres->requerimiento->tarifa->rangos[0]->TarifaPrecio;
 			// }
 
-			// $solres->save();
+			$solres->save();
 		}
 	}
 
