@@ -710,14 +710,14 @@ class SolicitudServicioController extends Controller
 			->get();
 		
 		$Residuos = $Residuosoriginal->map(function ($item) {
-		  $requerimientos = Requerimiento::with(['pretratamientosSelected', 'tarifa.rangos' => function($query){
-			$query->orderBy('TarifaDesde');
-		  }])
-	        ->where('ID_Req', $item->FK_SolResRequerimiento)
-	        // ->where('forevaluation', 0)
+			$requerimientos = Requerimiento::with(['pretratamientosSelected', 'tarifa.rangos' => function($query){
+				$query->orderBy('TarifaDesde');
+			}])
+			->where('ID_Req', $item->FK_SolResRequerimiento)
+			// ->where('forevaluation', 0)
 			->first();
 			
-			$rm = SolicitudResiduo::where('SolResSlug', $item->SolResSlug)->first('SolResRM');
+			$rm = SolicitudResiduo::with('SolicitudServicio')->where('SolResSlug', $item->SolResSlug)->first(['SolResRM', 'FK_SolResSolSer']);
 	        
 	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
 	        $item->tarifa = $requerimientos->tarifa;
@@ -737,19 +737,18 @@ class SolicitudServicioController extends Controller
 				}
 
 				$tarifaResiduo = CTarifa::with('rangos')
-					->where('FK_Cliente', $SolicitudServicio->FK_SolSerCliente)
+					->where('FK_Cliente', $rm->SolicitudServicio->FK_SolSerCliente)
 					->where('FK_Tratamiento', $requerimientos->FK_ReqTrata)
 					->where('Tarifatipo', $tarifatipo)
 					->first();
 					
 				if ($tarifaResiduo === null) {
-					$item->ctarifa = $requerimientos->tarifa;
+					$item->ctarifa = null;
 				}else{
 					$item->ctarifa = $tarifaResiduo;
 				}
-				$tarifaCliente === null
 			}else{
-				$item->ctarifa = $requerimientos->tarifa;
+				$item->ctarifa = null;
 			}
 	        $item->SolResRM2 = $rm->SolResRM;
 		  	return $item;
@@ -1943,7 +1942,7 @@ class SolicitudServicioController extends Controller
 
 			$residuoparaprecio = SolicitudResiduo::where('ID_SolRes', $solres->ID_SolRes)->first();
 
-			if ($tarifaCliente === null || $solres->SolResKgConciliado <= 0) {
+			if ($tarifaResiduo === null || $solres->SolResKgConciliado <= 0) {
 				$residuoparaprecio->SolResPrecio = 0;
 			} else {
 				if ($tarifaResiduo->TarifaSpecial === 1) {
@@ -1951,67 +1950,47 @@ class SolicitudServicioController extends Controller
 						switch ($solres->SolResTypeUnidad) {
 							case 'Unidad':
 							case 'Litros':
-								if ($solres->SolResCantiUnidadConciliada > $rango->TarifaDesde) {
+								if ($solres->SolResCantiUnidadConciliada >= $rango->TarifaDesde) {
 									$residuoparaprecio->SolResPrecio = $rango->TarifaPrecio;
+									$residuoparaprecio->SolResTypePrecio = 1;
 									break 2;
 								}
 								break;
-							
 							default:
-								if ($solres->SolResKgConciliado > $rango->TarifaDesde) {
+								if ($solres->SolResKgConciliado >= $rango->TarifaDesde) {
 									$residuoparaprecio->SolResPrecio = $rango->TarifaPrecio;
+									$residuoparaprecio->SolResTypePrecio = 1;
 									break 2;
 								}
 								break;
-						}
-						if ($solres->SolResKgConciliado >= $rango->TarifaDesde) {
-							$solres->SolResPrecio = $rango->TarifaPrecio;
 						}
 					}
 				}else{
-					foreach ($tarifaCliente->rangos as $rango) {
-						switch ($solres->SolResTypeUnidad) {
-							case 'Unidad':
-							case 'Litros':
-
-								if ($solres->SolResCantiUnidadConciliada > $rango->CTarifaDesde) {
-									$residuoparaprecio->SolResPrecio = $rango->CTarifaPrecio;
-									break 2;
-								}
-
-								break;
-							
-							default:
-								if ($solres->SolResKgConciliado > $rango->CTarifaDesde) {
-									$residuoparaprecio->SolResPrecio = $rango->CTarifaPrecio;
-									break 2;
-								}
-								break;
+					if ($tarifaCliente !== null) {
+						foreach ($tarifaCliente->rangos as $rango) {
+							switch ($solres->SolResTypeUnidad) {
+								case 'Unidad':
+								case 'Litros':
+									if ($solres->SolResCantiUnidadConciliada > $rango->CTarifaDesde) {
+										$residuoparaprecio->SolResPrecio = $rango->CTarifaPrecio;
+										$residuoparaprecio->SolResTypePrecio = 2;
+										break 2;
+									}
+									break;
+								default:
+									if ($solres->SolResKgConciliado > $rango->CTarifaDesde) {
+										$residuoparaprecio->SolResPrecio = $rango->CTarifaPrecio;
+										$residuoparaprecio->SolResTypePrecio = 2;
+										break 2;
+									}
+									break;
+							}
 						}
-						
 					}
+					
 				}
-				
 			}
 			$residuoparaprecio->save();
-
-			// a partir de 1 kg se asigna el precio segun la cantidad conciliada
-
-			if ($solres->SolResKgConciliado > 0) {
-				
-			}
-
-			/* entre 0 y 1 kilgramos se asigna el precion de la tarifa mas pequeña */
-			if (0 < $solres->SolResKgConciliado && $solres->SolResKgConciliado < 1) {
-				$solres->SolResPrecio = $solres->requerimiento->tarifa->rangos[0]->TarifaPrecio;
-			}
-
-			// /* si el precio se mantiene en 0 y el peso es mayor a 0 se iguala el precio al primer rango */
-			// if ($solres->SolResPrecio == 0 && $solres->SolResKgConciliado > 0) {
-			// 	$solres->SolResPrecio = $solres->requerimiento->tarifa->rangos[0]->TarifaPrecio;
-			// }
-
-			$solres->save();
 		}
 	}
 
@@ -2227,7 +2206,7 @@ class SolicitudServicioController extends Controller
 
 	public function reversarStatus(Request $request)
 	{
-		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
+		$Solicitud = SolicitudServicio::with('SolicitudResiduo')->where('SolSerSlug', $request->input('solserslug'))->first();
 		if (!$Solicitud) {
 			abort(404);
 		}
@@ -2244,13 +2223,18 @@ class SolicitudServicioController extends Controller
 			case 'Programado':
 			case 'No Conciliado':
 			case 'Residuo Faltante':
-				if ($Solicitud->SolSerStatus == 'Conciliado'||$Solicitud->SolSerStatus == 'Tratado'||$Solicitud->SolSerStatus == 'Certificacion') {
+				if ($Solicitud->SolSerStatus == 'Conciliado'||$Solicitud->SolSerStatus == 'Tratado'||$Solicitud->SolSerStatus == 'Certificacion'||$Solicitud->SolSerStatus == 'Facturado') {
 					$certificadosDelete = Certificado::with('certdato')->where('FK_CertSolser', $Solicitud->ID_SolSer)->get();
 					foreach ($certificadosDelete as $key => $value) {
 						foreach ($value->certdato as $key2 => $value2) {
 							$value2->delete();
 						}
 						$value->delete();
+					}
+					foreach ($Solicitud->SolicitudResiduo as $key => $residuoparareversar) {
+						$residuoparareversar->SolResPrecio = 0;
+						$residuoparareversar->SolResTypePrecio = 0;
+						$residuoparareversar->save();
 					}
 				}
 				break;

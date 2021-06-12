@@ -485,19 +485,28 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														<i class="fas fa-marker"></i></a>
 														{{$Residuo->SolResPrecio}} <br> 
 
+														@switch($Residuo->SolResTypePrecio)
+															@case(1)
+																<b style="color:blue">
+																
+																@break
+															@case(2)
+																<b style="color:green">
+																
+																@break
+
+															@case(3)
+																<b style="color:red">
+																@break
+															@default
+																<b style="color:black">
+														@endswitch
+															
 														@if ($Residuo->tarifa->TarifaSpecial === 1)
-															@if ($Residuo->tarifa->rangos->contains('TarifaPrecio', $Residuo->SolResPrecio))
-															<b>(T_Residuo)</b>
-															@else
-															<b style="color:red">(T_Modificada)</b>
-															@endif
+															(T_Residuo)</b>
 														@else
-															<b style="color:green">(T_Cliente)</b>
+															(T_Cliente)</b>
 														@endif
-
-														
-
-														
 													</td>
 												@endif
 												<td style="text-align: center;">{{number_format($Residuo->SolResKgEnviado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}} Kilogramos</td>
