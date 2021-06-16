@@ -16,13 +16,28 @@
 		<a class="btn btn-success" id="ClasifA" onclick="AgregarA()">A</a>
 	@endif
 </div> --}}
-<div class="col-md-6" id="Clasif">
+@if ($Respels->YRespelClasf4741 != 'No peligroso')
 	@if($Respels->YRespelClasf4741 <> null)
+	<div class="col-md-6" id="Clasif">
 		@include('layouts.RespelPartials.layoutsRes.ClasYdisabled')
-	@else
+	</div>
+	@elseif($Respels->ARespelClasf4741 <> null)
+	<div class="col-md-6" id="Clasif">
 		@include('layouts.RespelPartials.layoutsRes.ClasAdisabled')
+	</div>
+	@else
+	<div class="col-md-6" id="Clasif">
+		<label>Clasificación</label>
+		<input type="text" class="form-control" disabled value="N/D">
+	</div>
 	@endif
-</div>
+@else
+	<div class="col-md-6" id="Clasif">
+		<label>Clasificación</label>
+		<input type="text" class="form-control" disabled value="N/A">
+	</div>
+@endif
+
 <div class="col-md-6">
 	<label>Peligrosidad</label>
 	<select name="RespelIgrosidad" class="form-control" disabled>
