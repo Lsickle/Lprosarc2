@@ -34,7 +34,13 @@
 							<b>Peligrosidad</b> <a href="#" title="" data-toggle="popover" id="correocopy" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Respels->RespelIgrosidad}}</p>" class="pull-right textpopover" data-original-title="Peligrosidad" style="width: 50%;">{{$Respels->RespelIgrosidad}}</a>
 						</li>
 						<li class="list-group-item">
-							<b>Clasificación</b> <a class="pull-right">{{$Respels->YRespelClasf4741 <> null ? $Respels->YRespelClasf4741 : $Respels->ARespelClasf4741 }}</a>
+							<b>Clasificación</b> <a class="pull-right">
+								@if ($Respels->RespelIgrosidad != 'No peligroso')
+								{{($Respels->YRespelClasf4741 <> null ? $Respels->YRespelClasf4741 : ($Respels->ARespelClasf4741 <> null ? $Respels->ARespelClasf4741 : "N/D"))}}
+								@else
+								N/A
+								@endif
+							</a>
 						</li>
 						<li class="list-group-item">
 							<b>Estado Físico</b> <a class="pull-right">{{$Respels->RespelEstado}}</a>
@@ -191,7 +197,7 @@
 						<!-- nav-content -->
 						<div class="tab-content" style="display: block; overflow: auto;">
 							<!-- tab-pane fade -->
-							<div class="tab-pane fade in active" id="Residuopane">
+								<div class="tab-pane fade in active" id="Residuopane">
 									@include('layouts.respel-cliente.respel-residuo')
 								</div>
 								<!-- /.tab-pane fade -->
