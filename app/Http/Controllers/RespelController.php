@@ -587,8 +587,15 @@ class RespelController extends Controller
         $respel->RespelName = $request['RespelName'];
         $respel->RespelDescrip = $request['RespelDescrip'];
         $respel->RespelIgrosidad = $request['RespelIgrosidad'];
-        $respel->YRespelClasf4741 = $request['YRespelClasf4741'];
-        $respel->ARespelClasf4741 = $request['ARespelClasf4741'];
+
+        if ($request['RespelIgrosidad'] == 'No peligroso') {
+            $respel->YRespelClasf4741 = null;
+            $respel->ARespelClasf4741 = null;
+        }else{
+            $respel->YRespelClasf4741 = $request['YRespelClasf4741'];
+            $respel->ARespelClasf4741 = $request['ARespelClasf4741'];
+        }
+
         $respel->RespelEstado = $request['RespelEstado'];
         $respel->SustanciaControlada = $request['SustanciaControlada'];
         $respel->SustanciaControladaTipo = $request['SustanciaControladaTipo'];

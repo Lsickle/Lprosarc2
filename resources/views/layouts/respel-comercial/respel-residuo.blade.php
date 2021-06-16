@@ -16,13 +16,17 @@
 		<a class="btn btn-success" id="ClasifA" onclick="AgregarA()">A</a>
 	@endif
 </div> --}}
+@if($Respels->YRespelClasf4741 <> null)
 <div class="col-md-6" id="Clasif">
-	@if($Respels->YRespelClasf4741 <> null)
 		@include('layouts.RespelPartials.layoutsRes.ClasYdisabled')
-	@else
-		@include('layouts.RespelPartials.layoutsRes.ClasAdisabled')
-	@endif
 </div>
+@elseif($Respels->ARespelClasf4741 <> null)
+<div class="col-md-6" id="Clasif">
+	@include('layouts.RespelPartials.layoutsRes.ClasAdisabled')
+</div>
+@else
+
+@endif
 <div class="col-md-6">
 	<label>Peligrosidad</label>
 	<select name="RespelIgrosidad" class="form-control" disabled>

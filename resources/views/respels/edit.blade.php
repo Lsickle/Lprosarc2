@@ -97,9 +97,17 @@
 						<h3 class="profile-username text-center">{{$Respels->RespelName}}</h3>
 						<p class="text-muted text-center">{{$Respels->RespelDescrip}}</p>
 						<ul class="list-group list-group-unbordered">
+							@if ($Respels->RespelIgrosidad != 'No peligroso')
 							<li class="list-group-item">
-								<b>Clasificación</b> <a class="pull-right">{{$Respels->YRespelClasf4741 <> null ? $Respels->YRespelClasf4741 : $Respels->ARespelClasf4741 }}</a>
+								<b>Clasificación</b> <a class="pull-right">
+									{{($Respels->YRespelClasf4741 <> null ? $Respels->YRespelClasf4741 : ($Respels->ARespelClasf4741 <> null ? $Respels->ARespelClasf4741 : "N/A"))}}
+								</a>
 							</li>
+							@else
+							<li class="list-group-item">
+								<b>Clasificación</b> <a class="pull-right">N/A</a>
+							</li>
+							@endif
 							<li class="list-group-item">
 								<b>Peligrosidad</b> <a href="#" title="" data-toggle="popover" id="correocopy" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Respels->RespelIgrosidad}}</p>" class="pull-right textpopover" data-original-title="Peligrosidad" style="width: 50%;">{{$Respels->RespelIgrosidad}}</a>
 							</li>
