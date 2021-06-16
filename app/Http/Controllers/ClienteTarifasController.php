@@ -120,6 +120,14 @@ class ClienteTarifasController extends Controller
             $Rangonuevo->FK_RangoCTarifa = $tarifaPrevia->ID_CTarifa;
             $Rangonuevo->save();
         }
+
+        $log = new audit();
+        $log->AuditTabla="CTarifa";
+        $log->AuditType="CTarifa Nueva";
+        $log->AuditRegistro=$Tarifanueva->ID_CTarifa;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$Tarifanueva;
+        $log->save();
         
         
 
@@ -177,6 +185,15 @@ class ClienteTarifasController extends Controller
 
         if ($tarifaparaborrar->rangos->Count() < 1) {
             $tarifaparaborrar->delete();
+
+            
+            $log = new audit();
+            $log->AuditTabla="CTarifa";
+            $log->AuditType="CTarifa Eliminada";
+            $log->AuditRegistro=$tarifaparaborrar->ID_CTarifa;
+            $log->AuditUser=Auth::user()->email;
+            $log->Auditlog=$tarifaparaborrar;
+            $log->save();
         }
 
         return redirect()->route('clientetarifas.create', ['cliente' => $CliSlug]);
