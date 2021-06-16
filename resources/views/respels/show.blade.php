@@ -36,7 +36,7 @@
 						<li class="list-group-item">
 							<b>Clasificación</b> <a class="pull-right">
 								@if ($Respels->RespelIgrosidad != 'No peligroso')
-								{{($Respels->YRespelClasf4741 <> null ? $Respels->YRespelClasf4741 : ($Respels->ARespelClasf4741 <> null ? $Respels->ARespelClasf4741 : "N/A"))}}
+								{{($Respels->YRespelClasf4741 <> null ? $Respels->YRespelClasf4741 : ($Respels->ARespelClasf4741 <> null ? $Respels->ARespelClasf4741 : "N/D"))}}
 								@else
 								N/A
 								@endif
@@ -197,7 +197,7 @@
 						<!-- nav-content -->
 						<div class="tab-content" style="display: block; overflow: auto;">
 							<!-- tab-pane fade -->
-							<div class="tab-pane fade in active" id="Residuopane">
+								<div class="tab-pane fade in active" id="Residuopane">
 									@include('layouts.respel-cliente.respel-residuo')
 								</div>
 								<!-- /.tab-pane fade -->
