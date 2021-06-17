@@ -897,10 +897,23 @@ class RespelController extends Controller
                                            $rango->save(); 
                                        }               
                                     }
+                                }else{
+                                    $tarifa = new Tarifa();
+                                    $tarifa->TarifaFrecuencia='Servicio';
+                                    $tarifa->TarifaVencimiento= now()->subYear()->format('Y-m-d');
+                                    $tarifa->Tarifatipo='Kg';
+                                    $tarifa->TarifaDelete=0;
+                                    $tarifa->FK_TarifaReq=$requerimiento->ID_Req;
+                                    $tarifa->save();
+
+                                    $rango = new Rango();
+                                    $rango->TarifaPrecio=1500;
+                                    $rango->TarifaDesde=1;
+                                    $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
+                                    $rango->save();
                                 }
                             }
                         }
-                        
                     }
                 }
             }
