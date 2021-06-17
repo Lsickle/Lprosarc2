@@ -97,9 +97,17 @@
 						<h3 class="profile-username text-center">{{$Respels->RespelName}}</h3>
 						<p class="text-muted text-center">{{$Respels->RespelDescrip}}</p>
 						<ul class="list-group list-group-unbordered">
+							@if ($Respels->RespelIgrosidad != 'No peligroso')
 							<li class="list-group-item">
-								<b>Clasificación</b> <a class="pull-right">{{$Respels->YRespelClasf4741 <> null ? $Respels->YRespelClasf4741 : $Respels->ARespelClasf4741 }}</a>
+								<b>Clasificación</b> <a class="pull-right">
+									{{($Respels->YRespelClasf4741 <> null ? $Respels->YRespelClasf4741 : ($Respels->ARespelClasf4741 <> null ? $Respels->ARespelClasf4741 : "N/D"))}}
+								</a>
 							</li>
+							@else
+							<li class="list-group-item">
+								<b>Clasificación</b> <a class="pull-right">N/A</a>
+							</li>
+							@endif
 							<li class="list-group-item">
 								<b>Peligrosidad</b> <a href="#" title="" data-toggle="popover" id="correocopy" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Respels->RespelIgrosidad}}</p>" class="pull-right textpopover" data-original-title="Peligrosidad" style="width: 50%;">{{$Respels->RespelIgrosidad}}</a>
 							</li>
@@ -252,11 +260,11 @@
 								<li class="nav-item">
 									<a class="nav-link" href="#Requerimientospane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.requertabtittle') }}</a>
 								</li>
-								<li class="nav-item">
 								@if(in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL) || in_array(Auth::user()->UsRol2, Permisos::SEDECOMERCIAL))
+								<li class="nav-item">
 									<a class="nav-link" href="#Tarifaspane" data-toggle="tab">{{ trans('adminlte_lang::LangRespel.tarifatabtittle') }}</a>
-								@endif
 								</li>
+								@endif
 							</ul>
 							<!-- nav-content -->
 							<div class="tab-content" style="display: block; overflow: auto;">
@@ -308,6 +316,7 @@
 								</div>
 								<!-- /.tab-pane fade -->
 								<!-- tab-pane fade -->
+								@if(in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL) || in_array(Auth::user()->UsRol2, Permisos::SEDECOMERCIAL))
 								<div class="tab-pane fade" id="Tarifaspane">
 									<script type="text/javascript">
 										var contadorRango = [];
@@ -328,6 +337,7 @@
 									@endforeach
 									{{-- @include('layouts.respel-comercial.respel-tarifas') --}}
 								</div>
+								@endif
 								<div id="modalrango"></div>
 								<!-- /.tab-pane fade -->
 							</div>

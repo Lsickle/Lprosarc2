@@ -92,13 +92,18 @@
 										{{$respel->RespelName}}</td>
 									<td class="text-center">{{$respel->TratName}}</td>
 
-									@if($respel->YRespelClasf4741 <> null)
-										<td class="text-center">{{$respel->YRespelClasf4741}}</td>
-									@elseif($respel->ARespelClasf4741 <> null)
-										<td class="text-center">{{$respel->ARespelClasf4741}}</td>
-									@else()
+									@if ($respel->RespelIgrosidad)
+										@if($respel->YRespelClasf4741 <> null)
+											<td class="text-center">{{$respel->YRespelClasf4741}}</td>
+										@elseif($respel->ARespelClasf4741 <> null)
+											<td class="text-center">{{$respel->ARespelClasf4741}}</td>
+										@else
+											<td class="text-center">N/D</td>
+										@endif
+									@else
 										<td class="text-center">N/A</td>
 									@endif
+									
 
 
 									@if($respel->RespelHojaSeguridad!=="RespelHojaDefault.pdf")
