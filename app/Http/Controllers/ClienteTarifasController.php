@@ -113,21 +113,32 @@ class ClienteTarifasController extends Controller
             $Rangonuevo->CTarifaDesde = $request->input('CTarifaDesde');
             $Rangonuevo->FK_RangoCTarifa = $Tarifanueva->ID_CTarifa;
             $Rangonuevo->save();
+
+            $log = new audit();
+            $log->AuditTabla="CTarifa";
+            $log->AuditType="CTarifa Nueva";
+            $log->AuditRegistro=$Tarifanueva->ID_CTarifa;
+            $log->AuditUser=Auth::user()->email;
+            $log->Auditlog=$Tarifanueva;
+            $log->save();
+
         } else {
             $Rangonuevo = new TRangos();
             $Rangonuevo->CTarifaPrecio = $request->input('CTarifaPrecio');
             $Rangonuevo->CTarifaDesde = $request->input('CTarifaDesde');
             $Rangonuevo->FK_RangoCTarifa = $tarifaPrevia->ID_CTarifa;
             $Rangonuevo->save();
+
+            $log = new audit();
+            $log->AuditTabla="TRangos";
+            $log->AuditType="rango adicional";
+            $log->AuditRegistro=$Rangonuevo->ID_CRango;
+            $log->AuditUser=Auth::user()->email;
+            $log->Auditlog=$Rangonuevo;
+            $log->save();
         }
 
-        $log = new audit();
-        $log->AuditTabla="CTarifa";
-        $log->AuditType="CTarifa Nueva";
-        $log->AuditRegistro=$Tarifanueva->ID_CTarifa;
-        $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=$Tarifanueva;
-        $log->save();
+        
         
         
 
@@ -177,11 +188,19 @@ class ClienteTarifasController extends Controller
      */
     public function destroy($CliSlug, $ID_CRango)
     {
-        $Rangonuevo = TRangos::find($ID_CRango);
-        $Rangonuevo->delete();
+        $Rangoparaborrar = TRangos::find($ID_CRango);
+        $Rangoparaborrar->delete();
         
         // cuenta de rangos de la tarifa
-        $tarifaparaborrar = CTarifa::where('ID_CTarifa', $Rangonuevo->FK_RangoCTarifa)->with('rangos')->first();
+        $tarifaparaborrar = CTarifa::where('ID_CTarifa', $Rangoparaborrar->FK_RangoCTarifa)->with('rangos')->first();
+
+        $log = new audit();
+        $log->AuditTabla="TRangos";
+        $log->AuditType="TRangos Eliminado";
+        $log->AuditRegistro=$tarifaparaborrar->ID_CRango;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=$Rangoparaborrar;
+        $log->save();
 
         if ($tarifaparaborrar->rangos->Count() < 1) {
             $tarifaparaborrar->delete();
