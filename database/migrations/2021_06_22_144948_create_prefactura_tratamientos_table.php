@@ -14,15 +14,16 @@ class CreatePrefacturaTratamientosTable extends Migration
     public function up()
     {
         Schema::create('prefactura_tratamientos', function (Blueprint $table) {
-            $table->bigIncrements('id_PreFacTratamiento');
-            $table->unsignedInteger('fk_prefactura')->nullable();
-            $table->unsignedInteger('fk_tratamiento')->nullable();
+            $table->bigIncrements('ID_PrefacTratamiento');
+            $table->unsignedBigInteger('FK_Prefactura')->nullable();
+            $table->foreign('FK_Prefactura')->references('ID_Prefactura')->on('prefacturas')->onDelete('set null');
+            $table->unsignedInteger('FK_Tratamiento')->nullable();
+            $table->foreign('FK_Tratamiento')->references('ID_Trat')->on('tratamientos')->onDelete('set null');
             $table->unsignedDecimal('Subtotal_tratamiento', 8, 2)->default(0);
             $table->unsignedDecimal('cantidad_tratamiento', 8, 2)->default(0);
             $table->unsignedDecimal('unidad_tratamiento', 8, 2)->default(0);
             $table->unsignedDecimal('total_prefactratamiento', 8, 2)->default(0);
             $table->json('RMs');
-            $table->date('Fecha Recepcion');
             $table->timestamps();
             $table->softDeletes();
         });
