@@ -6,17 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Prefactura extends Model
 {
-    protected $table='areas';
-    protected $fillable = ['AreaName'];
-    protected $primaryKey = 'ID_Area';
+    protected $table='prefacturas';
+    protected $fillable = ['Costo_transporte', 'Subtotal_procesos', 'Total_prefactura', 'status_prefactura', 'orden_compra', 'Fecha_Servicio', 'FK_Comercial', 'FK_Cliente', 'FK_Servicio'];
+    protected $primaryKey = 'ID_Prefactura';
 
-    public function sede(){
-    	return $this->belongsTo('App\Sede','FK_AreaSede','ID_Sede');
+    public function comercial(){
+    	return $this->belongsTo('App\Personal','FK_Comercial','ID_Pers');
     }
-    public function GenerSedes(){
-    	return $this->belongsTo('App\GenerSede','ID_GSede');
+    public function cliente(){
+    	return $this->belongsTo('App\Cliente','FK_Cliente', 'ID_GSede');
     }
+    public function servicio(){
+    	return $this->belongsTo('App\SolicitudServicio','FK_Servicio','ID_SolSer');
+    }
+
+
     public function Cargos(){
-    	return $this->hasMany('App\Cargo', 'CargArea', 'ID_Area');//Como una area tiene muchos cargos
+    	return $this->hasMany('App\PrefacturaTratamiento', 'FK_Prefactura', 'ID_Prefactura');//Como una area tiene muchos cargos
     }
 }
