@@ -375,7 +375,7 @@ class AjaxController extends Controller
 	public function facturarServicio(Request $request, $servicio)
 	{
 		$request->validate([
-			'ordenCompra' => 'required|exists:tratamientos,ID_Trat',
+			'ordenCompra' => 'required|max:20',
 			'costoTransporte' => 'required|numeric|min:0',
 		], [
 			'*.required' => 'debe especificar un valor en el campo :attribute',

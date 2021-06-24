@@ -343,7 +343,7 @@
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label for="orden_compra">Orden de Compra</label>
-                                                    <input type="number" name="orden_compra" id="orden_compra" class="form-control" min="0">
+                                                    <input type="text" name="orden_compra" id="orden_compra" class="form-control" min="0" maxlength="20">
                                                 </div>
                                             </form>
                                         </div>
