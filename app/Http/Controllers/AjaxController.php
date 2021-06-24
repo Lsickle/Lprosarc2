@@ -375,16 +375,16 @@ class AjaxController extends Controller
 	public function facturarServicio(Request $request, $servicio)
 	{
 		$request->validate([
-            'ordenCompra' => 'required|exists:tratamientos,ID_Trat',
-            'costoTransporte' => 'required|numeric|min:0',
-        ], [
-            '*.required' => 'debe especificar un valor en el campo :attribute',
-            'costoTransporte.min' => 'ingrese un valor mayor a 0 en el campo :attribute',
-            'costoTransporte.numeric' => 'ingrese un valor mayor a 0 en el campo :attribute',
-        ], [
-            'ordenCompra' => '"Orden De Compra"',
-            'costoTransporte' => '"Costo de transporte"',
-        ]);
+			'ordenCompra' => 'required|exists:tratamientos,ID_Trat',
+			'costoTransporte' => 'required|numeric|min:0',
+		], [
+			'*.required' => 'debe especificar un valor en el campo :attribute',
+			'costoTransporte.min' => 'ingrese un valor mayor a 0 en el campo :attribute',
+			'costoTransporte.numeric' => 'ingrese un valor mayor a 0 en el campo :attribute',
+		], [
+			'ordenCompra' => 'Orden De Compra',
+			'costoTransporte' => 'Costo de transporte',
+		]);
 		
 		$data = [];
 		if ($request->ajax()) {
@@ -862,5 +862,14 @@ class AjaxController extends Controller
 			}
 				return response()->json($Respels);
 		}
+	}
+	/*Funcion para ver por medio de Ajax los Municipios que le competen a un Departamento*/
+	public function renewTokenAfterError(Request $request)
+	{
+		$response = "";
+		if ($request->ajax()) {
+			$response = csrf_token();
+		}
+		return response()->json($response);
 	}
 }

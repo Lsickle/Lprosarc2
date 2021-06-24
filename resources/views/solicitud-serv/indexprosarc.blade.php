@@ -179,6 +179,22 @@
             }
         });
     }
+    function renewTokenAfterError() {
+        $.ajax({
+            url: "{{url('/renewtokenaftererror')}}",
+            method: 'GET',
+            data:{},
+            success: function(response){
+                console.log('renewtokenaftererror OK');
+                renewtoken(response);
+                console.log(response);
+            },
+            error: function(xhr, status, error){
+                renewtoken('invalid Token');
+                console.log('renewtokenaftererror FAIL');
+            },
+        });
+    }
 </script>
     @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
         <script>    
@@ -367,6 +383,7 @@
                                 buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Actualizando...`);
                             },
                             success: function(res){
+                                console.log('success');
                                 let buttonsubmit = $('.classFacturarStatus'+slug);
                                 switch (res['code']) {
                                     case 200:
@@ -401,55 +418,45 @@
                                 }
                                 renewtoken(res['new_token']);
                             },
-                            error: function(error){
+                            error: function(xhr, status, error){
                                 let buttonsubmit = $('.classFacturarStatus'+slug);
-                                switch (error['responseJSON']['code']) {
+                                switch (xhr.status) {
                                     case 400:
-                                        buttonsubmit.each(function() {
-                                            $(this).on('click', function(event) {
-                                                event.preventDefault();
-                                            });
-                                            $(this).disabled = true;
-                                            $(this).prop('disabled', true);
-                                        });
-                                        buttonsubmit.prop('class', 'btn btn-default');
-                                        buttonsubmit.empty();
-                                        buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturado`);
-                                        toastr.error(error['responseJSON']['message']);
-                                        renewtoken(error['responseJSON']['new_token']);
+                                        console.log('error 400');
+                                        break;
+
+                                    case 401:
+                                        console.log('error 401');
+                                        break;
+
+                                    case 419:
+                                        console.log('error 419');
+                                        toastr.error('token CSRF no coincide... Recargue la pagina e intente de nuevo');
+
                                         break;
 
                                     case 422:
-                                        buttonsubmit.each(function() {
-                                            $(this).on('click', function(event) {
-                                                event.preventDefault();
-                                            });
-                                            $(this).disabled = true;
-                                            $(this).prop('disabled', true);
-                                        });
-                                        buttonsubmit.prop('class', 'btn btn-default');
-                                        buttonsubmit.empty();
-                                        buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturado`);
-                                        toastr.error(error['responseJSON']['message']);
-                                        renewtoken(error['responseJSON']['new_token']);
+                                        console.log('error 422');
                                         break;
                                 
                                     default:
-                                        buttonsubmit.each(function() {
-                                            $(this).on('click', function(event) {
-                                                event.preventDefault();
-                                            });
-                                            $(this).disabled = false;
-                                            $(this).prop('disabled', false);
-                                        });
-                                        buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
-                                        buttonsubmit.empty();
-                                        buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
-                                        toastr.error(error['responseJSON']['message']);
-                                        renewtoken(error['responseJSON']['new_token']);
+                                        console.log('error default');
                                         break;
                                 }
-                                
+                                buttonsubmit.each(function() {
+                                    $(this).on('click', function(event) {
+                                        event.preventDefault();
+                                    });
+                                    $(this).disabled = false;
+                                    $(this).prop('disabled', false);
+                                });
+                                buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
+                                buttonsubmit.empty();
+                                buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
+                                $.each(xhr.responseJSON.errors, function(key,value) {
+                                    toastr.error(value);
+                                });
+                                renewTokenAfterError();
                             },
                             complete: function(){
                                 //

@@ -231,6 +231,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::get('/certificarservicio/{servicio}', 'AjaxController@certificarServicio');
 	Route::post('/facturarservicio/{servicio}', 'AjaxController@facturarServicio');
 	Route::post('/recordatorioAjax', 'AjaxController@sendRecordatorio');
+	Route::get('/renewtokenaftererror', 'AjaxController@renewTokenAfterError');
 	Route::put('/firmarCertificado/{slug}', 'AjaxController@firmarCertificado')->name('certificados.ajaxfirmar');
 	Route::get('/ClienteExpress-Residuos/{id}', 'AjaxController@clienteExpressResiduos');
 	
