@@ -229,7 +229,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::get('/SubcategoriaDinamico/{id}', 'AjaxController@SubcategoriaDinamico');
 	Route::get('/verificarduplicado/{numero}/{type}', 'AjaxController@verificarDuplicado');
 	Route::get('/certificarservicio/{servicio}', 'AjaxController@certificarServicio');
-	Route::get('/facturarservicio/{servicio}', 'AjaxController@facturarServicio');
+	Route::post('/facturarservicio/{servicio}', 'AjaxController@facturarServicio');
 	Route::post('/recordatorioAjax', 'AjaxController@sendRecordatorio');
 	Route::put('/firmarCertificado/{slug}', 'AjaxController@firmarCertificado')->name('certificados.ajaxfirmar');
 	Route::get('/ClienteExpress-Residuos/{id}', 'AjaxController@clienteExpressResiduos');

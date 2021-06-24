@@ -374,6 +374,29 @@ class AjaxController extends Controller
 	/*Funcion para certtificacion de servicios via ajax*/
 	public function facturarServicio(Request $request, $servicio)
 	{
+		$request->validate([
+            'ordenCompra' => 'required|exists:tratamientos,ID_Trat',
+            'costoTransporte' => 'required|numeric|min:0',
+        ], [
+            '*.required' => 'debe especificar un valor en el campo :attribute',
+            'costoTransporte.min' => 'ingrese un valor mayor a 0 en el campo :attribute',
+            'costoTransporte.numeric' => 'ingrese un valor mayor a 0 en el campo :attribute',
+        ], [
+            'ordenCompra' => '"Orden De Compra"',
+            'costoTransporte' => '"Costo de transporte"',
+        ]);
+		
+		$data = [];
+		if ($request->ajax()) {
+			$data['slug'] = $servicio;
+			$data['new_token'] = csrf_token();
+			$data['peticionType'] = 'ajax';
+			$data['request'] = $request;
+		}else{
+			$data['peticionType'] = 'NO ajax';
+		}
+		return $data;
+		// return $servicio;
 		if ($request->ajax()) {
 			if (in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES)) {
 				$Solicitud = SolicitudServicio::where('SolSerSlug', $servicio)->first();

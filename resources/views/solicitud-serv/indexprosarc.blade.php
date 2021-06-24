@@ -170,6 +170,16 @@
 </div>
 @endsection
 @section('NewScript')
+<script>
+    function renewtoken(token) {
+        $('meta[name="csrf-token"]').attr('content', token);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': token
+            }
+        });
+    }
+</script>
     @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
         <script>    
             function ModalCertificacion(slug, id, boolean, value, text){
@@ -308,11 +318,22 @@
                                             <div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
                                                 <i class="fas fa-exclamation-triangle"></i>
                                                 <span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere `+text+` la solicitud <b>N° `+id+`</b>?</p></span>
-                                            </div> 
+                                            </div>
+                                             
+                                            <form action="/facturarservicio/`+slug+`" class="row" id="facturarservicio`+slug+`">
+                                                <div class="form-group col-md-6">
+                                                    <label for="Costo_transporte">Costo Transporte</label>
+                                                    <input type="number" name="Costo_transporte" id="Costo_transporte" class="form-control" min="0" step="0.01">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="orden_compra">Orden de Compra</label>
+                                                    <input type="number" name="orden_compra" id="orden_compra" class="form-control" min="0">
+                                                </div>
+                                            </form>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
-                                            <button type="button" id="buttonFacturarStatusOK`+slug+`" data-dismiss="modal" class='btn btn-success'>Si, acepto</button>
+                                            <button type="submit" form="facturarservicio`+slug+`" id="buttonFacturarStatusOK`+slug+`" data-dismiss="modal" class='btn btn-success'>Si, acepto</button>
                                         </div>
                                     </div>
                                 </div>
@@ -323,13 +344,16 @@
                         $('#buttonFacturarStatusOK'+slug).on( "click", function() {
                             $.ajaxSetup({
                             headers: {
-                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             }
                             });
                             $.ajax({
                             url: "{{url('/facturarservicio')}}/"+slug,
-                            method: 'GET',
-                            data:{},
+                            method: 'POST',
+                            data:{
+                                ordenCompra:$('#orden_compra').val(),
+                                costoTransporte:$('#Costo_transporte').val()
+                            },
                             beforeSend: function(){
                                 let buttonsubmit = $('.classFacturarStatus'+slug);
                                 buttonsubmit.each(function() {
@@ -375,6 +399,7 @@
                                         toastr.error(res['error']);
                                         break;
                                 }
+                                renewtoken(res['new_token']);
                             },
                             error: function(error){
                                 let buttonsubmit = $('.classFacturarStatus'+slug);
@@ -390,7 +415,23 @@
                                         buttonsubmit.prop('class', 'btn btn-default');
                                         buttonsubmit.empty();
                                         buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturado`);
-                                        
+                                        toastr.error(error['responseJSON']['message']);
+                                        renewtoken(error['responseJSON']['new_token']);
+                                        break;
+
+                                    case 422:
+                                        buttonsubmit.each(function() {
+                                            $(this).on('click', function(event) {
+                                                event.preventDefault();
+                                            });
+                                            $(this).disabled = true;
+                                            $(this).prop('disabled', true);
+                                        });
+                                        buttonsubmit.prop('class', 'btn btn-default');
+                                        buttonsubmit.empty();
+                                        buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturado`);
+                                        toastr.error(error['responseJSON']['message']);
+                                        renewtoken(error['responseJSON']['new_token']);
                                         break;
                                 
                                     default:
@@ -404,10 +445,11 @@
                                         buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
                                         buttonsubmit.empty();
                                         buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
-    
+                                        toastr.error(error['responseJSON']['message']);
+                                        renewtoken(error['responseJSON']['new_token']);
                                         break;
                                 }
-                                toastr.error(error['responseJSON']['message']);
+                                
                             },
                             complete: function(){
                                 //
