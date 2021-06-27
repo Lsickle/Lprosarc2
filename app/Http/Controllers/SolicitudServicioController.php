@@ -41,6 +41,9 @@ use App\ProgramacionVehiculo;
 use App\RequerimientosCliente;
 use App\Observacion;
 use App\CTarifa;
+use App\Prefactura;
+use App\PrefacturaTratamiento;
+use App\PrefacturaResiduo;
 use Permisos;
 
 
@@ -2232,10 +2235,33 @@ class SolicitudServicioController extends Controller
 						$residuoparareversar->SolResTypePrecio = 0;
 						$residuoparareversar->save();
 					}
+					$prefaturaToDelete = Prefactura::with('prefacTratamiento.prefacresiduo')->where('FK_Servicio', $Solicitud->ID_SolSer)->get();
+					foreach ($prefaturaToDelete as $key => $value) {
+						foreach ($value->prefacTratamiento as $key2 => $value2) {
+							foreach ($value2->prefacresiduo as $key3 => $value3) {
+								$value3->delete();
+							}
+							$value2->delete();
+						}
+						$value->delete();
+					}
+				}
+				break;
+				case 'Conciliado':
+				if ($Solicitud->SolSerStatus == 'Tratado'||$Solicitud->SolSerStatus == 'Certificacion'||$Solicitud->SolSerStatus == 'Facturado') {
+					$prefaturaToDelete = Prefactura::with('prefacTratamiento.prefacresiduo')->where('FK_Servicio', $Solicitud->ID_SolSer)->get();
+					foreach ($prefaturaToDelete as $key => $value) {
+						foreach ($value->prefacTratamiento as $key2 => $value2) {
+							foreach ($value2->prefacresiduo as $key3 => $value3) {
+								$value3->delete();
+							}
+							$value2->delete();
+						}
+						$value->delete();
+					}
 				}
 				break;
 		}
-
 		$Solicitud->SolSerStatus = $request->input('solserstatus');
 		$Solicitud->SolSerDescript = $request->input('solserdescript');
 		$Solicitud->save();

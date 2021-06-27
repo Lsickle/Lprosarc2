@@ -13,8 +13,8 @@ class PrefacturaResiduo extends Model
     public function prefactura(){
     	return $this->belongsTo('App\Prefactura','FK_Prefactura','ID_Prefactura');
     }
-    public function tratamiento(){
-    	return $this->belongsTo('App\Tratamiento','FK_PreFacTratamiento', 'ID_Trat');
+    public function prefacTratamiento(){
+    	return $this->belongsTo('App\PrefacturaTratamiento','FK_PreFacTratamiento', 'ID_PrefacTratamiento');
     }
 
     /**

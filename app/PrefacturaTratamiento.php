@@ -18,7 +18,7 @@ class PrefacturaTratamiento extends Model
     }
 
     public function prefacresiduo(){
-    	return $this->hasMany('App\PrefacturaResiduo', 'FK_Prefactura', 'ID_PrefacTratamiento');//Como una area tiene muchos cargos
+    	return $this->hasMany('App\PrefacturaResiduo', 'FK_PreFacTratamiento', 'ID_PrefacTratamiento');//Como una area tiene muchos cargos
     }
 
     

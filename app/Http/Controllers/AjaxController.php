@@ -532,7 +532,7 @@ class AjaxController extends Controller
 							$prefacturaResiduo->save();
 
 							$prefacturaTratamiento->cantidad_tratamiento += $prefacturaResiduo->cantidad_respel;
-							$prefacturaTratamiento->Subtotal_tarifa_trat += $prefacturaResiduo->precio_tarifa;
+							$prefacturaTratamiento->Subtotal_tarifa_trat = $prefacturaResiduo->precio_tarifa;
 							$prefacturaTratamiento->Total_prefactratamiento += $prefacturaResiduo->subtotal_respel;
 							/* falta agrupar los numeros de los recibos de materiales ya que estan en formato string y puede dar error */
 							if (Arr::accessible($residuo->SolResRM)) {

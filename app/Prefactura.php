@@ -21,7 +21,7 @@ class Prefactura extends Model
     }
 
 
-    public function Cargos(){
+    public function prefacTratamiento(){
     	return $this->hasMany('App\PrefacturaTratamiento', 'FK_Prefactura', 'ID_Prefactura');//Como una area tiene muchos cargos
     }
 }
