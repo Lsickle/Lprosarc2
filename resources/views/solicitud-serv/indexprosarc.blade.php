@@ -383,7 +383,7 @@
                                 buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Actualizando...`);
                             },
                             success: function(res){
-                                console.log('success');
+                                console.log(res);
                                 let buttonsubmit = $('.classFacturarStatus'+slug);
                                 switch (res['code']) {
                                     case 200:
@@ -399,6 +399,24 @@
                                         buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturaado`);
     
                                         toastr.success(res['message']);
+                                        break;
+                                    case 400:
+                                        buttonsubmit.each(function() {
+                                            $(this).on('click', function(event) {
+                                                event.preventDefault();
+                                            });
+                                            $(this).disabled = false;
+                                            $(this).prop('disabled', false);
+                                        });
+                                        buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
+                                        buttonsubmit.empty();
+                                        buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
+                                        console.log('error 400');
+                                        if (res['message']) {
+                                            toastr.error(res['message']);
+                                        }else{
+                                            toastr.error('Error 400:Petición o Solicitud Incorrecta');
+                                        }
                                         break;
                                 
                                     default:
@@ -423,10 +441,12 @@
                                 switch (xhr.status) {
                                     case 400:
                                         console.log('error 400');
+                                        toastr.error('Error 400:Petición o Solicitud Incorrecta');
                                         break;
 
                                     case 401:
                                         console.log('error 401');
+                                        toastr.error('Error 401: usuario no autorizado, inicie sesion e intente de nuevo');
                                         break;
 
                                     case 419:
@@ -437,10 +457,12 @@
 
                                     case 422:
                                         console.log('error 422');
+                                        toastr.error('datos invalidos, verifique que esta ingresando la información correctamente');
                                         break;
                                 
                                     default:
                                         console.log('error default');
+                                        toastr.error('error no definido');
                                         break;
                                 }
                                 buttonsubmit.each(function() {

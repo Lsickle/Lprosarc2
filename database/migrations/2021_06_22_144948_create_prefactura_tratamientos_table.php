@@ -19,10 +19,10 @@ class CreatePrefacturaTratamientosTable extends Migration
             $table->foreign('FK_Prefactura')->references('ID_Prefactura')->on('prefacturas')->onDelete('set null');
             $table->unsignedInteger('FK_Tratamiento')->nullable();
             $table->foreign('FK_Tratamiento')->references('ID_Trat')->on('tratamientos')->onDelete('set null');
-            $table->unsignedDecimal('Subtotal_tratamiento', 8, 2)->default(0);
-            $table->unsignedDecimal('cantidad_tratamiento', 8, 2)->default(0);
-            $table->unsignedDecimal('unidad_tratamiento', 8, 2)->default(0);
-            $table->unsignedDecimal('total_prefactratamiento', 8, 2)->default(0);
+            $table->string('unidad_tratamiento')->default('Kg');
+            $table->unsignedDecimal('cantidad_tratamiento', 8, 2)->default(0); //max 999999,99
+            $table->unsignedDecimal('Subtotal_tarifa_trat', 8, 2)->default(0); //max 999999,99
+            $table->unsignedDecimal('Total_prefactratamiento', 14, 2)->default(0); //max 99999999,99
             $table->json('RMs');
             $table->timestamps();
             $table->softDeletes();

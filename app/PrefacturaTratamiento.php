@@ -20,4 +20,14 @@ class PrefacturaTratamiento extends Model
     public function prefacresiduo(){
     	return $this->hasMany('App\PrefacturaResiduo', 'FK_Prefactura', 'ID_PrefacTratamiento');//Como una area tiene muchos cargos
     }
+
+    
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'RMs' => 'array',
+    ];
 }

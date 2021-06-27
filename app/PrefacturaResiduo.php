@@ -16,4 +16,13 @@ class PrefacturaResiduo extends Model
     public function tratamiento(){
     	return $this->belongsTo('App\Tratamiento','FK_PreFacTratamiento', 'ID_Trat');
     }
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'RMs' => 'array',
+    ];
 }
