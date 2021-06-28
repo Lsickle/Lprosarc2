@@ -1980,8 +1980,8 @@ class SolicitudServicioController extends Controller
 
 		$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
 		// se establece la lista de destinatarios
-		$destinatarios = ['recepcionpda@prosarc.com.co'];
-		$destinatarioscc = [];
+		$destinatarios = ['conciliaciones@prosarc.com.co'];
+		$destinatarioscc = ['recepcionpda@prosarc.com.co'];
 
 		if ($SolicitudServicio['cliente']->CliComercial <> null) {
 			$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
