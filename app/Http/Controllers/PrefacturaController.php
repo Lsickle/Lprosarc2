@@ -14,7 +14,9 @@ class PrefacturaController extends Controller
      */
     public function index()
     {
-        //
+        $prefacturas = Prefactura::with(['cliente', 'comercial', 'servicio.programacionesrecibidas', 'prefacTratamiento.prefacresiduo'])->get();
+
+        return view('prefacturas.index', compact('prefacturas'));
     }
 
     /**
@@ -46,7 +48,7 @@ class PrefacturaController extends Controller
      */
     public function show(Prefactura $prefactura)
     {
-        //
+        return view('prefacturas.show', compact('prefactura'));
     }
 
     /**

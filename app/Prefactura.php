@@ -14,7 +14,7 @@ class Prefactura extends Model
     	return $this->belongsTo('App\Personal','FK_Comercial','ID_Pers');
     }
     public function cliente(){
-    	return $this->belongsTo('App\Cliente','FK_Cliente', 'ID_GSede');
+    	return $this->belongsTo('App\Cliente','FK_Cliente', 'ID_Cli');
     }
     public function servicio(){
     	return $this->belongsTo('App\SolicitudServicio','FK_Servicio','ID_SolSer');

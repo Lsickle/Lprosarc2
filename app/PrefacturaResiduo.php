@@ -18,6 +18,10 @@ class PrefacturaResiduo extends Model
     	return $this->belongsTo('App\PrefacturaTratamiento','FK_PreFacTratamiento', 'ID_PrefacTratamiento');
     }
 
+    public function SolicitudResiduo(){
+    	return $this->belongsTo('App\SolicitudResiduo','FK_SolRespel','ID_SolRes');
+    }
+
     /**
      * The attributes that should be cast to native types.
      *

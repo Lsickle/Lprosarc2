@@ -234,6 +234,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::get('/renewtokenaftererror', 'AjaxController@renewTokenAfterError');
 	Route::put('/firmarCertificado/{slug}', 'AjaxController@firmarCertificado')->name('certificados.ajaxfirmar');
 	Route::get('/ClienteExpress-Residuos/{id}', 'AjaxController@clienteExpressResiduos');
+	Route::resource('/prefacturas', 'PrefacturaController');
 	
 	/*Rutas de generacion de PDF*/
 	Route::get('/PdfManiCarg/{id}','PdfController@PdfManiCarg');

@@ -112,6 +112,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 							->addIf(in_array(Auth::user()->UsRol, Permisos::PROGRAMACIONES) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMACIONES), (Link::toUrl('/vehicle-programacion', '<i class="fas fa-calendar-alt"></i> <span>'. trans('adminlte_lang::message.MenuPrograVehicSidebar').'</span>')))
 							->addIf(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1), (Link::toUrl('/vehicle-programacion/create', '<i class="fas fa-calendar-alt"></i> <span>Calendario</span>')))
 							->addIf(in_array(Auth::user()->UsRol, Permisos::ALMACENAMIENTO) || in_array(Auth::user()->UsRol2, Permisos::ALMACENAMIENTO), (Link::toUrl('/almacenamiento', '<i class="fas fa-pallet"></i> <span>'. trans('adminlte_lang::message.MenuAlmacenSidebar').'</span>')))
+							->addIf(in_array(Auth::user()->UsRol, Permisos::SEDECOMERCIAL) || in_array(Auth::user()->UsRol2, Permisos::SEDECOMERCIAL), (Link::toUrl('/prefacturas', '<i class="fas fa-receipt"></i> <span>Prefacturas</span>')))
 							->addClass('treeview-menu')
 						)
 					)
