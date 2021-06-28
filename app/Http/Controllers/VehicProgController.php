@@ -16,6 +16,7 @@ use App\Mail\CancelSolServEmail;
 use App\Mail\SolSerEmail;
 use App\Mail\ProgramacionParafiscales;
 use App\Mail\SustanciaControladaProgramada;
+use App\Mail\ServicioTipoRecorrido;
 use App\audit;
 use App\ProgramacionVehiculo;
 use App\Vehiculo;
@@ -240,6 +241,7 @@ class VehicProgController extends Controller
 		$programacion->FK_ProgServi = $request->input('FK_ProgServi');
 		$programacion->ProgVehDelete = 0;
 		$programacion->ProgVehStatus = 'Autorizado';
+		$programacion->progVehExclusive = $request->input('progVehExclusive');
 		$programacion->save();
 		// return $request->input('FK_ProgServi');
 
@@ -813,6 +815,7 @@ class VehicProgController extends Controller
 		}
 		// return $request;
 		$programacion->ProgVehFecha = $request->input('ProgVehFecha');
+		$programacion->ProgVehExclusive = $request->input('ProgVehExclusive');
 		$salida = date('H:i:s', strtotime($request->input('ProgVehSalida')));
 		$llegada = date('H:i:s', strtotime($request->input('ProgVehEntrada')));
 		if($salida >= 12){
@@ -1226,16 +1229,21 @@ class VehicProgController extends Controller
 		}
 
 		if ($SolicitudServicio->SolServMailCopia == "null") {
-			Mail::to($email->PersEmail)
-			->cc($destinatarios)
-			->send(new SolSerEmail($email));
+			if ($programacion->ProgVehExclusive == 0) {
+				Mail::to($email->PersEmail)->cc($destinatarios)->send(new ServicioTipoRecorrido($email));
+			}else{
+				Mail::to($email->PersEmail)->cc($destinatarios)->send(new SolSerEmail($email));
+			}
+			
 		}else{
 			foreach (json_decode($SolicitudServicio->SolServMailCopia) as $key => $value) {
 				array_push($destinatarios, $value);
 			}
-			Mail::to($email->PersEmail)
-			->cc($destinatarios)
-			->send(new SolSerEmail($email));
+			if ($programacion->ProgVehExclusive == 0) {
+				Mail::to($email->PersEmail)->cc($destinatarios)->send(new ServicioTipoRecorrido($email));
+			}else{
+				Mail::to($email->PersEmail)->cc($destinatarios)->send(new SolSerEmail($email));
+			}
 		}
 
 		if($request->input('destino') == 'vehiprog-edit'){
