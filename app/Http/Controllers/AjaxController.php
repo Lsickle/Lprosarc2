@@ -590,7 +590,7 @@ class AjaxController extends Controller
 
 					// $email = DB::table('solicitud_servicios')
 					// 	->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-                	// 	->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+					// 	->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
 					// 	->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.CliName', 'clientes.CliComercial')
 					// 	->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
 					// 	->first();
@@ -606,17 +606,17 @@ class AjaxController extends Controller
 
 					// $destinatarios = [$comercial->PersEmail];
 					// if ($Solicitud->SolServMailCopia == "null") {
-                    //     Mail::to($email->PersEmail)
-                    //     ->cc($destinatarios)
-                    //     ->send(new SolSerEmail($email));
-                    // }else{
-                    //     foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
-                    //         array_push($destinatarios, $value);
-                    //     }
-                    //     Mail::to($email->PersEmail)
-                    //     ->cc($destinatarios)
-                    //     ->send(new SolSerEmail($email));
-                    // }
+					//     Mail::to($email->PersEmail)
+					//     ->cc($destinatarios)
+					//     ->send(new SolSerEmail($email));
+					// }else{
+					//     foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
+					//         array_push($destinatarios, $value);
+					//     }
+					//     Mail::to($email->PersEmail)
+					//     ->cc($destinatarios)
+					//     ->send(new SolSerEmail($email));
+					// }
 				}
 				return response()->json([
 					'message' => $res, 

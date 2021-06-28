@@ -2247,7 +2247,8 @@ class SolicitudServicioController extends Controller
 					}
 				}
 				break;
-				case 'Conciliado':
+
+			case 'Conciliado':
 				if ($Solicitud->SolSerStatus == 'Tratado'||$Solicitud->SolSerStatus == 'Certificacion'||$Solicitud->SolSerStatus == 'Facturado') {
 					$prefaturaToDelete = Prefactura::with('prefacTratamiento.prefacresiduo')->where('FK_Servicio', $Solicitud->ID_SolSer)->get();
 					foreach ($prefaturaToDelete as $key => $value) {
