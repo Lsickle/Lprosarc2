@@ -523,13 +523,13 @@ class AjaxController extends Controller
 								if (Arr::isAssoc($residuo->SolResRM)) {
 									$prefacturaResiduo->RMs = '{"a":array asociativo}';
 								}else{
-									$prefacturaResiduo->RMs = $residuo->ID_SolRes;
+									$prefacturaResiduo->RMs = $residuo->SolResRM;
 								}
 								// $prefacturaResiduo->RMs = $residuo->SolResRM;
 							}else{
 								$prefacturaResiduo->RMs = '{"a":no array}';
 							}
-							$prefacturaResiduo->FK_SolRespel = $residuo->SolResPrecio;
+							$prefacturaResiduo->FK_SolRespel = $residuo->ID_SolRes;
 							$prefacturaResiduo->save();
 
 							$prefacturaTratamiento->cantidad_tratamiento += $prefacturaResiduo->cantidad_respel;

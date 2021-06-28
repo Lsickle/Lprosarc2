@@ -76,13 +76,32 @@ Prefacturas
 									<td></td>
 									<td></td>
 									<td></td>
-									<td><a method='get' href='{{route('prefacturas.show', ['prefactura' => $prefactura])}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>
+									<td></td>
 								</tr>
 								@foreach ($prefactura->prefacTratamiento as $tratamiento)
 								<tr>
 									<td>{{$prefactura->comercial->PersFirstName}} {{$prefactura->comercial->PersLastName}}</td>
 									<td>{{$prefactura->FK_Servicio}}</td>
-									<td>{{$tratamiento->certificado}}</td>
+									<td>
+									@php
+										$certificadosdeTratamiento = [];
+									@endphp
+									@foreach ($tratamiento->prefacresiduo as $residuo)
+										@if ($residuo->SolicitudResiduo->certdato->certificado->CertType == 0)
+											@php
+											array_push($certificadosdeTratamiento, $residuo->SolicitudResiduo->certdato->certificado->CertNumero);
+											@endphp
+										@else
+											@php
+											array_push($certificadosdeTratamiento, "M-".$residuo->SolicitudResiduo->certdato->certificado->CertManifNumero);
+											@endphp
+										@endif
+									@endforeach
+									@foreach (array_unique($certificadosdeTratamiento) as $certnumber)
+									{{$certnumber}}
+									<br>
+									@endforeach
+									</td>
 									<td>
 										@foreach (json_decode($tratamiento->RMs) as $rm => $value)
 										{{$value}}<br>
@@ -118,7 +137,7 @@ Prefacturas
 									<td></td>
 									<td>Total</td>
 									<td>{{$prefactura->Total_prefactura}}</td>
-									<td></td>
+									<td><a method='get' href='{{route('prefacturas.show', ['prefactura' => $prefactura])}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>
 								</tr>
 							@endforeach
 							</tbody>

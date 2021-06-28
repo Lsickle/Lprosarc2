@@ -17,7 +17,7 @@ Prefactura {{$prefactura->ID_Prefactura}}
 					<div class="box-body box-profile">
 						<div class="table-responsive">
 							<table class="table table-hover">
-								<thead>
+								<thead style="background-color:#212529; color:#fff; font-weight: bold;">
 									<tr>
 										<td>Comercial</td>
 										<td>Servicio</td>
@@ -38,7 +38,11 @@ Prefactura {{$prefactura->ID_Prefactura}}
 									<tr>
 										<td>{{$prefactura->comercial->PersFirstName}} {{$prefactura->comercial->PersLastName}}</td>
 										<td>{{$prefactura->FK_Servicio}}</td>
-										<td>certificado</td>
+										@if ($residuo->SolicitudResiduo->certdato->certificado->CertType == 0)
+										<td>{{$residuo->SolicitudResiduo->certdato->certificado->CertNumero}}</td>
+										@else
+										<td>M {{$residuo->SolicitudResiduo->certdato->certificado->CertManifNumero}}</td>
+										@endif
 										<td>
 											@foreach ($residuo->RMs as $rm => $value)
 											{{$value}}<br>
@@ -47,7 +51,7 @@ Prefactura {{$prefactura->ID_Prefactura}}
 										<td>{{$prefactura->cliente->CliName}}</td>
 										<td>{{$prefactratamiento->tratamiento->TratName}}</td>
 										<td>{{$residuo->unidad_respel}}</td>
-										<td>respelname</td>
+										<td>{{$residuo->SolicitudResiduo->requerimiento->respel->RespelName}}</td>
 										<td>{{$residuo->cantidad_respel}}</td>
 										<td>{{$residuo->precio_tarifa}}</td>
 										<td>{{$residuo->subtotal_respel}}</td>
