@@ -24,8 +24,8 @@ Lista de Certificados
 								<th>Fecha recepción</th>
 								@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 									<th>Cliente</th>
-									<th># RM</th>
-								@endif
+									@endif
+								<th># RM</th>
 								<th>Servicio</th>
 								<th>Tratamiento</th>
 								<th># Documento</th>
@@ -58,8 +58,8 @@ Lista de Certificados
 									<td>{{date('Y/m/d', strtotime($certificado->recepcion))}}</td>
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<td class="text-center"><b>{{$certificado->cliente}}</b></td>
-										<td class="text-center">{{$certificado->CertNumRm}}</td>
-									@endif
+										@endif
+									<td class="text-center">{{$certificado->CertNumRm}}</td>
 									<td class="text-center">#{{$certificado->FK_CertSolser}}</br>
 									({{$certificado->SolSerStatus}})
 									</td>

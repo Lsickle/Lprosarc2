@@ -24,8 +24,8 @@
 								<th>Fecha recepción</th>
 								@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 									<th>Cliente</th>
-									<th># RM</th>
-								@endif
+									@endif
+								<th># RM</th>
 								<th>Servicio</th>
 								<th>Tratamiento</th>
 								<th># Documento</th>
@@ -53,8 +53,8 @@
 									<td>{{date('Y/m/d', strtotime($SolicitudServicio->recepcion))}}</td>
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<td class="text-center">{{$SolicitudServicio->cliente->CliName}}</td>
-										<td class="text-center">{{$certificado->CertNumRm}}</td>
-									@endif
+										@endif
+									<td class="text-center">{{$certificado->CertNumRm}}</td>
 									<td>{{$certificado->FK_CertSolser}}</td>
 									<td>{{$certificado->tratamiento->TratName}}</td>
 									<td class="text-center">
@@ -245,9 +245,11 @@
 											<button id="{{'buttonfirmarDoc'.$certificado->CertSlug}}" class='btn fixed_widthbtn btn-warning' onclick="firmarDocumento('{{$certificado->CertSlug}}')"><i class='fas fa-lg fa-file-signature'></i></button>
 										</td>
 									@else
+										@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<td class="text-center">
 											<button id="{{'buttonfirmarDoc'.$certificado->CertSlug}}" class='btn fixed_widthbtn btn-default' disabled><i class='fas fa-lg fa-file-signature'></i></button>
 										</td>
+										@endif
 									@endif
 									@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
 										<td>
