@@ -559,7 +559,7 @@ color:#0D0D0D'>Para constancia se firma en Mosquera, el día {{$diafirma}} de {{
   <p class=MsoNormal><b><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif'>VICTOR
   VELASCO</span></b></p>
   <p class=MsoNormal style='text-align:justify'><b><span lang=ES
-  style='font-size:7.5pt;font-family:"Arial",sans-serif'>Jefe de Operaciones</span></b></p>
+  style='font-size:7.5pt;font-family:"Arial",sans-serif'>Jefe Técnico</span></b></p>
   </td>
  </tr>
  <tr>
