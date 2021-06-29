@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use App\SolicitudServicio;
 use App\Personal;
 
-class SolSerLeftRespel extends Mailable
+class SolSerLeftRespel extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
 
     public $SolicitudServicio;
 

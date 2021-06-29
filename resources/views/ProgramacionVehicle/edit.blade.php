@@ -172,6 +172,13 @@
 									<small class="help-block with-errors"></small>
 								</div>
 								<div class="form-group col-md-12">
+									<label>Tipo de Servicio</label>
+									<select name="ProgVehExclusive" id="progVehExclusive" class="form-control" required>
+										<option selected value="0">Recorrido</option>
+										<option value="1">Exclusivo</option>
+									</select>
+								</div>
+								<div class="form-group col-md-12">
 									<label>Tipo de Transportador</label>
 									<select name="typetransportador" id="typetransportador" class="form-control">
 										<option value="">Seleccione...</option>
@@ -296,15 +303,22 @@
 				<label for="">Status</label>
 				<input disabled type="text" class="form-control" value="{{$programacion->ProgVehStatus}}">
 			</div>
-			<div class="form-group col-md-6">
+			<div class="form-group col-md-3">
 				<label for="ProgVehFecha">{{ trans('adminlte_lang::message.progvehicfech') }}</label>
 				<small class="help-block with-errors">*</small>
 				<input type="date" class="form-control" id="ProgVehFecha" name="ProgVehFecha" value="{{date('Y-m-d', strtotime($programacion->ProgVehFecha))}}" required="" disabled="">
 			</div>
-			<div class="form-group col-md-6">
+			<div class="form-group col-md-3">
 				<label for="ProgVehSalida">{{ trans('adminlte_lang::message.progvehicsalida') }}</label>
 				<small class="help-block with-errors">*</small>
 				<input type="time" class="form-control" id="ProgVehSalida" name="ProgVehSalida" value="{{date('H:i', strtotime($programacion->ProgVehSalida))}}" required="" disabled="">
+			</div>
+			<div class="form-group col-md-6">
+				<label>Tipo de Servicio</label>
+				<select name="ProgVehExclusive" id="progVehExclusive" class="form-control" required>
+					<option {{$programacion->ProgVehExclusive == 0 ? 'selected': ''}} value="0">Recorrido</option>
+					<option {{$programacion->ProgVehExclusive == 1 ? 'selected': ''}} value="1">Exclusivo</option>
+				</select>
 			</div>
 			<div class="form-group col-md-6">
 				<label for="ProgVehEntrada">{{ trans('adminlte_lang::message.progvehicllegada') }}</label>
