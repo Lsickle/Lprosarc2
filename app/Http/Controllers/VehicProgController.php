@@ -1331,6 +1331,7 @@ class VehicProgController extends Controller
 		$programacion->FK_ProgServi = $id;
 		$programacion->ProgVehDelete = 0;
 		$programacion->ProgVehStatus =  $request->input('StatusProgServi');
+		$programacion->ProgVehExclusive =  $request->input('ProgVehExclusive');
 		$programacion->save();
 
 		// $SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
