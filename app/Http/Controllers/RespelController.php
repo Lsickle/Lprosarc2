@@ -587,8 +587,15 @@ class RespelController extends Controller
         $respel->RespelName = $request['RespelName'];
         $respel->RespelDescrip = $request['RespelDescrip'];
         $respel->RespelIgrosidad = $request['RespelIgrosidad'];
-        $respel->YRespelClasf4741 = $request['YRespelClasf4741'];
-        $respel->ARespelClasf4741 = $request['ARespelClasf4741'];
+
+        if ($request['RespelIgrosidad'] == 'No peligroso') {
+            $respel->YRespelClasf4741 = null;
+            $respel->ARespelClasf4741 = null;
+        }else{
+            $respel->YRespelClasf4741 = $request['YRespelClasf4741'];
+            $respel->ARespelClasf4741 = $request['ARespelClasf4741'];
+        }
+
         $respel->RespelEstado = $request['RespelEstado'];
         $respel->SustanciaControlada = $request['SustanciaControlada'];
         $respel->SustanciaControladaTipo = $request['SustanciaControladaTipo'];
@@ -890,10 +897,23 @@ class RespelController extends Controller
                                            $rango->save(); 
                                        }               
                                     }
+                                }else{
+                                    $tarifa = new Tarifa();
+                                    $tarifa->TarifaFrecuencia='Servicio';
+                                    $tarifa->TarifaVencimiento= now()->subYear()->format('Y-m-d');
+                                    $tarifa->Tarifatipo='Kg';
+                                    $tarifa->TarifaDelete=0;
+                                    $tarifa->FK_TarifaReq=$requerimiento->ID_Req;
+                                    $tarifa->save();
+
+                                    $rango = new Rango();
+                                    $rango->TarifaPrecio=1500;
+                                    $rango->TarifaDesde=1;
+                                    $rango->FK_RangoTarifa=$tarifa->ID_Tarifa;
+                                    $rango->save();
                                 }
                             }
                         }
-                        
                     }
                 }
             }
