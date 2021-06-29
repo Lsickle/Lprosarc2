@@ -167,7 +167,7 @@ class VehicProgController extends Controller
 		$validate = $request->validate([
 			// 'ProgVehPrecintos'   =>   'max:16|min:1'
 		]);
-		/*return $request;*/
+		// return $request;
 		$programacion = new ProgramacionVehiculo();
 		if(date('H', strtotime($request->input('ProgVehSalida'))) >= 12){
 			$turno = "0";
@@ -241,7 +241,7 @@ class VehicProgController extends Controller
 		$programacion->FK_ProgServi = $request->input('FK_ProgServi');
 		$programacion->ProgVehDelete = 0;
 		$programacion->ProgVehStatus = 'Autorizado';
-		$programacion->progVehExclusive = $request->input('progVehExclusive');
+		$programacion->ProgVehExclusive = $request->input('ProgVehExclusive');
 		$programacion->save();
 		// return $request->input('FK_ProgServi');
 
