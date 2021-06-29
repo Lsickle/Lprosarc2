@@ -76,6 +76,7 @@ Calendario
 								<div class="form-group col-md-12">
 									<label>Tipo de Servicio</label>
 									<select name="ProgVehExclusive" id="progVehExclusive" class="form-control" required>
+										{{-- <option value="">Seleccione...</option> --}}
 										<option selected value="0">Recorrido</option>
 										<option value="1">Exclusivo</option>
 									</select>
