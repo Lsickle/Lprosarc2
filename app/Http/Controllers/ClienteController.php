@@ -18,7 +18,7 @@ class ClienteController extends Controller
 {
     public function show($slug)
     {
-        $cliente = Cliente::where('CliSlug', $slug)->first();
+        $cliente = Cliente::with('clientetarifa.rangos')->where('CliSlug', $slug)->first();
         if (!$cliente) {
             abort(404);
         }
