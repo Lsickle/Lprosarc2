@@ -197,7 +197,7 @@
     }
 </script>
     @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
-        <script>    
+        <script>
             function ModalCertificacion(slug, id, boolean, value, text){
                 if(boolean == 1){
                     $('#ModalStatus').empty();
@@ -210,7 +210,7 @@
                                         <div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
                                             <i class="fas fa-exclamation-triangle"></i>
                                             <span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere `+text+` la solicitud <b>N° `+id+`</b>?</p></span>
-                                        </div> 
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
@@ -261,7 +261,7 @@
 
                                     toastr.success(res['message']);
                                     break;
-                            
+
                                 default:
                                     buttonsubmit.each(function() {
                                         $(this).on('click', function(event) {
@@ -292,9 +292,9 @@
                                     buttonsubmit.prop('class', 'btn btn-default');
                                     buttonsubmit.empty();
                                     buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificado`);
-                                    
+
                                     break;
-                            
+
                                 default:
                                     buttonsubmit.each(function() {
                                         $(this).on('click', function(event) {
@@ -335,7 +335,7 @@
                                                 <i class="fas fa-exclamation-triangle"></i>
                                                 <span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere `+text+` la solicitud <b>N° `+id+`</b>?</p></span>
                                             </div>
-                                             
+
                                             <form action="/facturarservicio/`+slug+`" class="row" id="facturarservicio`+slug+`">
                                                 <div class="form-group col-md-6">
                                                     <label for="Costo_transporte">Costo Transporte</label>
@@ -397,7 +397,7 @@
                                         buttonsubmit.prop('class', 'btn btn-default');
                                         buttonsubmit.empty();
                                         buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturaado`);
-    
+
                                         toastr.success(res['message']);
                                         break;
                                     case 400:
@@ -418,7 +418,7 @@
                                             toastr.error('Error 400:Petición o Solicitud Incorrecta');
                                         }
                                         break;
-                                
+
                                     default:
                                         buttonsubmit.each(function() {
                                             $(this).on('click', function(event) {
@@ -430,7 +430,7 @@
                                         buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
                                         buttonsubmit.empty();
                                         buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
-    
+
                                         toastr.error(res['error']);
                                         break;
                                 }
@@ -459,25 +459,42 @@
                                         console.log('error 422');
                                         toastr.error('datos invalidos, verifique que esta ingresando la información correctamente');
                                         break;
-                                
+
                                     default:
                                         console.log('error default');
                                         toastr.error('error no definido');
                                         break;
                                 }
-                                buttonsubmit.each(function() {
-                                    $(this).on('click', function(event) {
-                                        event.preventDefault();
-                                    });
-                                    $(this).disabled = false;
-                                    $(this).prop('disabled', false);
-                                });
-                                buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
-                                buttonsubmit.empty();
-                                buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
-                                $.each(xhr.responseJSON.errors, function(key,value) {
-                                    toastr.error(value);
-                                });
+                               switch (error['responseJSON']['code']) {
+                                    case 400:
+                                        buttonsubmit.each(function() {
+                                            $(this).on('click', function(event) {
+                                                event.preventDefault();
+                                            });
+                                            $(this).disabled = true;
+                                            $(this).prop('disabled', true);
+                                        });
+                                        buttonsubmit.prop('class', 'btn btn-default');
+                                        buttonsubmit.empty();
+                                        buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturado`);
+
+                                        break;
+
+                                    default:
+                                        buttonsubmit.each(function() {
+                                                $(this).on('click', function(event) {
+                                                    event.preventDefault();
+                                                });
+                                                $(this).disabled = false;
+                                                $(this).prop('disabled', false);
+                                            });
+                                            buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
+                                            buttonsubmit.empty();
+                                            buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
+                                            $.each(xhr.responseJSON.errors, function(key,value) {
+                                                toastr.error(value);
+                                            });
+                                }
                                 renewTokenAfterError();
                             },
                             complete: function(){
