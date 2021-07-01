@@ -148,7 +148,7 @@ class TratamientoController extends Controller
     public function show($id)
     {   
         // $tratamiento = Tratamiento::where('ID_Trat', $id)->first();
-        $tratamiento = Tratamiento::with(['pretratamientos', 'clasificaciones'])
+        $tratamiento = Tratamiento::with(['pretratamientos', 'clasificaciones', 'tarifas_cliente'])
             ->where('ID_Trat', $id)
             ->where('TratDelete', 0)
             ->first();

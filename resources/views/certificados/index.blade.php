@@ -36,8 +36,8 @@ Lista de Certificados
 									<th>Aprobación Logística</th>
 									<th>Aprobación Operaciones</th>
 								@endif
-								
-								
+
+
 								@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 									<th>Ver</th>
 								@endif
@@ -103,10 +103,10 @@ Lista de Certificados
 											@endif
 											@break
 										@default
-											
+
 									@endswitch
-									
-									
+
+
 									@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 										<td class="text-center" id="AD{{$certificado->CertSlug}}">
 											@switch($certificado->CertAuthDp)
@@ -118,27 +118,27 @@ Lista de Certificados
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Director de Planta</p>
 													@break
-												
+
 												@case(2)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Jefe de Logística</p>
 													@break
-												
+
 												@case(3)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Jefe de Operaciones</p>
 													@break
-												
+
 												@case(4)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Supervisor de Turno</p>
 													@break
-												
+
 												@case(5)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Ingeniero HSEQ</p>
 													@break
-													
+
 												@case(6)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Asistente de Logística</p>
@@ -163,27 +163,27 @@ Lista de Certificados
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Director de Planta</p>
 													@break
-												
+
 												@case(2)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Jefe de Logística</p>
 													@break
-												
+
 												@case(3)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Jefe de Operaciones</p>
 													@break
-												
+
 												@case(4)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Supervisor de Turno</p>
 													@break
-												
+
 												@case(5)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Ingeniero HSEQ</p>
 													@break
-													
+
 												@case(6)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Asistente de Logística</p>
@@ -198,7 +198,7 @@ Lista de Certificados
 												<p>Error en Firma Digital</p>
 											@endswitch
 										</td>
-										
+
 										<td class="text-center" id="AO{{$certificado->CertSlug}}">
 											@switch($certificado->CertAuthJo)
 												@case(0)
@@ -209,27 +209,27 @@ Lista de Certificados
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Director de Planta</p>
 													@break
-												
+
 												@case(2)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Jefe de Logística</p>
 													@break
-												
+
 												@case(3)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Jefe de Operaciones</p>
 													@break
-												
+
 												@case(4)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Supervisor de Turno</p>
 													@break
-												
+
 												@case(5)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Ingeniero HSEQ</p>
 													@break
-													
+
 												@case(6)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Asistente de Logística</p>
@@ -274,7 +274,7 @@ Lista de Certificados
 											<button id="{{'buttonCertStatus'.$certificado->SolicitudServicio->SolSerSlug}}" onclick="ModalStatus('{{$certificado->SolicitudServicio->SolSerSlug}}', '{{$certificado->SolicitudServicio->ID_SolSer}}', '{{in_array($certificado->SolicitudServicio->SolSerStatus, $Status)}}', 'Certificada', 'certificar')" {{in_array($certificado->SolicitudServicio->SolSerStatus, $Status) ? '' :  'disabled'}} style="text-align: center;" class="{{'classCertStatus'.$certificado->SolicitudServicio->SolSerSlug}} btn btn-{{in_array($certificado->SolicitudServicio->SolSerStatus, $Status) ? 'success' : 'default'}}"><i class="fas fa-certificate"></i> {{trans('adminlte_lang::message.solserstatuscertifi')}}</button>
 										</td>
 									@endif
-									
+
 									<td>{{$certificado->updated_at}}</td>
 								</tr>
 								@endforeach
@@ -288,6 +288,32 @@ Lista de Certificados
 @endsection
 @section('NewScript')
 <script>
+    function renewtoken(token) {
+        $('meta[name="csrf-token"]').attr('content', token);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': token
+            }
+        });
+    }
+    function renewTokenAfterError() {
+        $.ajax({
+            url: "{{url('/renewtokenaftererror')}}",
+            method: 'GET',
+            data:{},
+            success: function(response){
+                console.log('renewtokenaftererror OK');
+                renewtoken(response);
+                console.log(response);
+            },
+            error: function(xhr, status, error){
+                renewtoken('invalid Token');
+                console.log('renewtokenaftererror FAIL');
+            },
+        });
+    }
+</script>
+<script>
 	function ModalStatus(slug, id, boolean, value, text){
 		if(boolean == 1){
 			$('#ModalStatus').empty();
@@ -300,7 +326,7 @@ Lista de Certificados
 								<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
 									<i class="fas fa-exclamation-triangle"></i>
 									<span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere `+text+` la solicitud <b>N° `+id+`</b>?</p></span>
-								</div> 
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
@@ -351,7 +377,7 @@ Lista de Certificados
 
 							toastr.success(res['message']);
 							break;
-					
+
 						default:
 							buttonsubmit.each(function() {
 								$(this).on('click', function(event) {
@@ -382,9 +408,9 @@ Lista de Certificados
 							buttonsubmit.prop('class', 'btn btn-default');
 							buttonsubmit.empty();
 							buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificado`);
-							
+
 							break;
-					
+
 						default:
 							buttonsubmit.each(function() {
 								$(this).on('click', function(event) {
@@ -420,7 +446,17 @@ Lista de Certificados
 								<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
 									<i class="fas fa-exclamation-triangle"></i>
 									<span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere `+text+` la solicitud <b>N° `+id+`</b>?</p></span>
-								</div> 
+								</div>
+                                <form action="/facturarservicio/`+slug+`" class="row" id="facturarservicio`+slug+`">
+                                    <div class="form-group col-md-6">
+                                        <label for="Costo_transporte">Costo Transporte</label>
+                                        <input type="number" name="Costo_transporte" id="Costo_transporte" class="form-control" min="0" step="0.01">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="orden_compra">Orden de Compra</label>
+                                        <input type="text" name="orden_compra" id="orden_compra" class="form-control" min="0" maxlength="20">
+                                    </div>
+                                </form>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
@@ -435,13 +471,16 @@ Lista de Certificados
 			$('#buttonFacturarStatusOK'+slug).on( "click", function() {
 				$.ajaxSetup({
 				headers: {
-					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				}
 				});
 				$.ajax({
 				url: "{{url('/facturarservicio')}}/"+slug,
-				method: 'GET',
-				data:{},
+				method: 'POST',
+				data:{
+                    ordenCompra:$('#orden_compra').val(),
+                    costoTransporte:$('#Costo_transporte').val()
+                },
 				beforeSend: function(){
 					let buttonsubmit = $('.classFacturarStatus'+slug);
 					buttonsubmit.each(function() {
@@ -455,6 +494,7 @@ Lista de Certificados
 					buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Actualizando...`);
 				},
 				success: function(res){
+                    console.log(res);
 					let buttonsubmit = $('.classFacturarStatus'+slug);
 					switch (res['code']) {
 						case 200:
@@ -471,7 +511,26 @@ Lista de Certificados
 
 							toastr.success(res['message']);
 							break;
-					
+
+                        case 400:
+                            buttonsubmit.each(function() {
+                                $(this).on('click', function(event) {
+                                    event.preventDefault();
+                                });
+                                $(this).disabled = false;
+                                $(this).prop('disabled', false);
+                            });
+                            buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
+                            buttonsubmit.empty();
+                            buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
+                            console.log('error 400');
+                            if (res['message']) {
+                                toastr.error(res['message']);
+                            }else{
+                                toastr.error('Error 400:Petición o Solicitud Incorrecta');
+                            }
+                            break;
+
 						default:
 							buttonsubmit.each(function() {
 								$(this).on('click', function(event) {
@@ -487,39 +546,68 @@ Lista de Certificados
 							toastr.error(res['error']);
 							break;
 					}
+                    renewtoken(res['new_token']);
 				},
-				error: function(error){
+				error: function(xhr, status, error){
 					let buttonsubmit = $('.classFacturarStatus'+slug);
-					switch (error['responseJSON']['code']) {
-						case 400:
-							buttonsubmit.each(function() {
-								$(this).on('click', function(event) {
-									event.preventDefault();
-								});
-								$(this).disabled = true;
-								$(this).prop('disabled', true);
-							});
-							buttonsubmit.prop('class', 'btn btn-default');
-							buttonsubmit.empty();
-							buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturado`);
-							
-							break;
-					
-						default:
-							buttonsubmit.each(function() {
-								$(this).on('click', function(event) {
-									event.preventDefault();
-								});
-								$(this).disabled = false;
-								$(this).prop('disabled', false);
-							});
-							buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
-							buttonsubmit.empty();
-							buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
+                    switch (xhr.status) {
+                        case 400:
+                            console.log('error 400');
+                            toastr.error('Error 400:Petición o Solicitud Incorrecta');
+                            break;
 
-							break;
-					}
-					toastr.error(error['responseJSON']['message']);
+                        case 401:
+                            console.log('error 401');
+                            toastr.error('Error 401: usuario no autorizado, inicie sesion e intente de nuevo');
+                            break;
+
+                        case 419:
+                            console.log('error 419');
+                            toastr.error('token CSRF no coincide... Recargue la pagina e intente de nuevo');
+
+                            break;
+
+                        case 422:
+                            console.log('error 422');
+                            toastr.error('datos invalidos, verifique que esta ingresando la información correctamente');
+                            break;
+
+                        default:
+                            console.log('error default');
+                            toastr.error('error no definido');
+                            break;
+                    }
+                        switch (error['responseJSON']['code']) {
+                            case 400:
+                                buttonsubmit.each(function() {
+                                    $(this).on('click', function(event) {
+                                        event.preventDefault();
+                                    });
+                                    $(this).disabled = true;
+                                    $(this).prop('disabled', true);
+                                });
+                                buttonsubmit.prop('class', 'btn btn-default');
+                                buttonsubmit.empty();
+                                buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturado`);
+
+                                break;
+
+                            default:
+                                buttonsubmit.each(function() {
+                                        $(this).on('click', function(event) {
+                                            event.preventDefault();
+                                        });
+                                        $(this).disabled = false;
+                                        $(this).prop('disabled', false);
+                                    });
+                                    buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
+                                    buttonsubmit.empty();
+                                    buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
+                                    $.each(xhr.responseJSON.errors, function(key,value) {
+                                        toastr.error(value);
+                                    });
+                        }
+                        renewTokenAfterError();
 				},
 				complete: function(){
 					//
@@ -538,6 +626,22 @@ function renewtoken(token) {
 			'X-CSRF-TOKEN': token
 		}
 	});
+}
+function renewTokenAfterError() {
+    $.ajax({
+        url: "{{url('/renewtokenaftererror')}}",
+        method: 'GET',
+        data:{},
+        success: function(response){
+            console.log('renewtokenaftererror OK');
+            renewtoken(response);
+            console.log(response);
+        },
+        error: function(xhr, status, error){
+            renewtoken('invalid Token');
+            console.log('renewtokenaftererror FAIL');
+        },
+    });
 }
 function firmarDocumento(CertSlug){
 	$.ajaxSetup({
@@ -586,42 +690,42 @@ function firmarDocumento(CertSlug){
 				case 0:
 				ADfirmaCorrespondiente = `<p>Pendiente</p>`;
 					break;
-				
+
 				case 1:
 				ADfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
 				<p>Director de Planta</p>`;
 					break;
-				
+
 				case 2:
 				ADfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
 				<p>Jefe de Logística</p>`;
 					break;
-				
+
 				case 3:
 				ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Jefe de Operaciones</p>`;
 					break;
-				
+
 				case 4:
 				ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Supervisor de Turno</p>`;
 					break;
-				
+
 				case 5:
 				ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Ingeniero HSEQ</p>`;
 					break;
-				
+
 				case 6:
 				ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Asistente de Logística</p>`;
 					break;
-				
+
 				case 7:
 				ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Programador</p>`;
 					break;
-				
+
 				default:
 				ADfirmaCorrespondiente = `<p>Error en Firma Digital</p>`;
 					break;
@@ -631,42 +735,42 @@ function firmarDocumento(CertSlug){
 				case 0:
 				ALfirmaCorrespondiente = `<p>Pendiente</p>`;
 					break;
-				
+
 				case 1:
 				ALfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
 				<p>Director de Planta</p>`;
 					break;
-				
+
 				case 2:
 				ALfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
 				<p>Jefe de Logística</p>`;
 					break;
-				
+
 				case 3:
 				ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Jefe de Operaciones</p>`;
 					break;
-				
+
 				case 4:
 				ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Supervisor de Turno</p>`;
 					break;
-				
+
 				case 5:
 				ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Ingeniero HSEQ</p>`;
 					break;
-				
+
 				case 6:
 				ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Asistente de Logística</p>`;
 					break;
-				
+
 				case 7:
 				ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Programador</p>`;
 					break;
-				
+
 				default:
 				ALfirmaCorrespondiente = `<p>Error en Firma Digital</p>`;
 					break;
@@ -676,42 +780,42 @@ function firmarDocumento(CertSlug){
 				case 0:
 				AOfirmaCorrespondiente = `<p>Pendiente</p>`;
 					break;
-				
+
 				case 1:
 				AOfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
 				<p>Director de Planta</p>`;
 					break;
-				
+
 				case 2:
 				AOfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
 				<p>Jefe de Logística</p>`;
 					break;
-				
+
 				case 3:
 				AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Jefe de Operaciones</p>`;
 					break;
-				
+
 				case 4:
 				AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Supervisor de Turno</p>`;
 					break;
-				
+
 				case 5:
 				AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Ingeniero HSEQ</p>`;
 					break;
-				
+
 				case 6:
 				AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Asistente de Logística</p>`;
 					break;
-				
+
 				case 7:
 				AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Programador</p>`;
 					break;
-				
+
 				default:
 				AOfirmaCorrespondiente = `<p>Error en Firma Digital</p>`;
 					break;
@@ -756,7 +860,7 @@ function firmarDocumento(CertSlug){
 					buttonsubmit.empty();
 					buttonsubmit.append(`<i class="fas fa-lg fa-file-signature"></i>`);
 					break;
-			
+
 				default:
 					buttonsubmit.each(function() {
 						$(this).on('click', function(event) {

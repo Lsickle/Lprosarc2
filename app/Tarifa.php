@@ -8,7 +8,7 @@ class Tarifa extends Model
 {
     protected $table = 'tarifas';
 
-    protected $fillable= ['TarifaVencimiento', 'TarifaFrecuencia', 'Tarifatipo', 'FK_TarifaReq'];
+    protected $fillable= ['TarifaVencimiento', 'TarifaFrecuencia', 'Tarifatipo', 'FK_TarifaReq', 'TarifaSpecial'];
 
     protected $primaryKey = 'ID_Tarifa';
 

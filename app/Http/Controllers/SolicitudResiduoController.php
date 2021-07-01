@@ -293,6 +293,7 @@ class SolicitudResiduoController extends Controller
 			'SolResPrecio'  => 'required|numeric|nullable',
 		]);
 		$SolRes->SolResPrecio = $request->input('SolResPrecio');
+		$SolRes->SolResTypePrecio = 3;
 		$SolRes->save();
 
 		$log = new audit();

@@ -281,6 +281,7 @@ class ClientController extends Controller
 
             $SedeSlug = userController::IDSedeSegunUsuario();
             $Requerimientos = RequerimientosCliente::where('FK_RequeClient', $cliente->ID_Cli)->first();
+
             return view('clientes.show', compact('cliente', 'Sedes', 'SedeSlug', 'Requerimientos'));
         }else{
             abort(403);

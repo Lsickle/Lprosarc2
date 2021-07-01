@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Http\Requests\SolServStoreRequest;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +40,10 @@ use App\Docdato;
 use App\ProgramacionVehiculo;
 use App\RequerimientosCliente;
 use App\Observacion;
+use App\CTarifa;
+use App\Prefactura;
+use App\PrefacturaTratamiento;
+use App\PrefacturaResiduo;
 use Permisos;
 
 
@@ -144,14 +147,14 @@ class SolicitudServicioController extends Controller
 							}])
 							->orderBy('created_at', 'desc')
 							->get();
-		
-		
+
+
 		/*se inicializan las variables para el calculo de totales */
-		$total['recibido'] = 0;		
-		$total['conciliado'] = 0;		
-		$total['tratado'] = 0;		
+		$total['recibido'] = 0;
+		$total['conciliado'] = 0;
+		$total['tratado'] = 0;
 		$cantidadesXtratamiento = [];
-		
+
 
 		/* se itera sobre todos los residuos de las solicitudes de servicio */
 		foreach ($SolicitudesServicios as $servicio) {
@@ -177,7 +180,7 @@ class SolicitudServicioController extends Controller
 			}
 		}
 		// return $total;
-		
+
 		return view('solicitud-serv.almacenamiento', compact('SolicitudesServicios', 'cantidadesXtratamiento', 'total'));
 	}
 	/**
@@ -227,7 +230,7 @@ class SolicitudServicioController extends Controller
 	/**
 	 * Store a newly created resource in storage.
 	 *
-	 * @param  \Illuminate\Http\  $request 
+	 * @param  \Illuminate\Http\  $request
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(SolServStoreRequest $request)
@@ -258,58 +261,85 @@ class SolicitudServicioController extends Controller
 				$SolicitudServicio->SolResAuditoriaTipo = "No Auditable";
 				break;
 		}
-		if($request->input('SolSerTipo') == 99){
-			$cliente = DB::table('clientes')
-				->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-				->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-				->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.ID_Mun')
-				->where('ID_Cli', 1)
-				->first();
-			$tipo = "Interno";
-			$transportadorname = $cliente->CliName;
-			$transportadornit = $cliente->CliNit;
-			$transportadoradress = $cliente->SedeAddress;
-			$transportadorcity = $cliente->ID_Mun;
-			$conductor = null;
-			$vehiculo = null;
-		}
-		else{
-			if($request->input('SolSerTransportador') <> 98){
+		$direccioncollect = 'No aplica';
+
+		switch ($request->input('SolSerTipo')) {
+			case '96':
+				$transportadorname = $request->input('SolSerNameTrans');
+				$transportadornit = $request->input('SolSerNitTrans');
+				$transportadoradress = $request->input('SolSerAdressTrans');
+				$transportadorcity = $request->input('SolSerCityTrans');
+				$tipo = "Externo";
+				$conductor = $request->input('SolSerConductor');
+				$vehiculo = $request->input('SolSerVehiculo');
+				break;
+
+			case '97':
+				$generador = DB::table('generadors')
+					->join('gener_sedes', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
+					->join('municipios', 'gener_sedes.FK_GSedeMun', '=', 'municipios.ID_Mun')
+					->select('generadors.ID_Gener', 'generadors.GenerNit', 'generadors.GenerName', 'gener_sedes.GSedeAddress', 'municipios.ID_Mun')
+					->where('GSedeSlug', $request->input('SolSerTransportador'))
+					->first();
+				$transportadorname = $generador->GenerName;
+				$transportadornit = $generador->GenerNit;
+				$transportadoradress = $generador->GSedeAddress;
+				$transportadorcity = $generador->ID_Mun;
+				$tipo = "Generador";
+				$conductor = $request->input('SolSerConductor');
+				$vehiculo = $request->input('SolSerVehiculo');
+				break;
+
+			case '98':
 				$cliente = DB::table('clientes')
 					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 					->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.ID_Mun')
-					->where('ID_Cli', userController::IDClienteSegunUsuario())
+					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'sedes.SedeSlug', 'municipios.ID_Mun')
+					->where('SedeSlug', $request->input('SolSerTransportador'))
 					->first();
 				$transportadorname = $cliente->CliName;
 				$transportadornit = $cliente->CliNit;
 				$transportadoradress = $cliente->SedeAddress;
 				$transportadorcity = $cliente->ID_Mun;
-			}
-			else{
-				$transportadorname = $request->input('SolSerNameTrans');
-				$transportadornit = $request->input('SolSerNitTrans');
-				$transportadoradress = $request->input('SolSerAdressTrans');
-				$transportadorcity = $request->input('SolSerCityTrans');
-			}
-			$tipo = "Externo";
-			$conductor = $request->input('SolSerConductor');
-			$vehiculo = $request->input('SolSerVehiculo');
+				$tipo = "Cliente";
+				$conductor = $request->input('SolSerConductor');
+				$vehiculo = $request->input('SolSerVehiculo');
+				break;
+
+			case '99':
+				$cliente = DB::table('clientes')
+					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+					->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.ID_Mun')
+					->where('ID_Cli', 1)
+					->first();
+				$tipo = "Interno";
+				$transportadorname = $cliente->CliName;
+				$transportadornit = $cliente->CliNit;
+				$transportadoradress = $cliente->SedeAddress;
+				$transportadorcity = $cliente->ID_Mun;
+				$conductor = null;
+				$vehiculo = null;
+				switch ($request->input('SolSerTypeCollect')) {
+					case 99:
+						$direccioncollect = "Recolección en la sede de cada generador";
+						break;
+					case 98:
+						$sede = Sede::select('ID_Sede')->where('SedeSlug', $request->input('SedeCollect'))->first();
+						$direccioncollect = $sede->ID_Sede;
+						break;
+					case 97:
+						$direccioncollect = $request->input('AddressCollect');
+						$SolicitudServicio->FK_SolSerCollectMun = $request->input('FK_SolSerCollectMun');
+						break;
+				}
+				break;
+
+			default:
+				# code...
+				break;
 		}
-		$direccioncollect = 'No aplica';
-		switch ($request->input('SolSerTypeCollect')) {
-			case 99:
-				$direccioncollect = "Recolección en la sede de cada generador";
-				break;
-			case 98:
-				$sede = Sede::select('ID_Sede')->where('SedeSlug', $request->input('SedeCollect'))->first();
-				$direccioncollect = $sede->ID_Sede;
-				break;
-			case 97:
-				$direccioncollect = $request->input('AddressCollect');
-				$SolicitudServicio->FK_SolSerCollectMun = $request->input('FK_SolSerCollectMun');
-				break;
-		}
+
 		if(isset($request['SupportPay'])){
 			$fileSupport = $request['SupportPay'];
 			$nameSupport = hash('sha256', rand().time().$fileSupport->getClientOriginalName()).'.pdf';
@@ -372,7 +402,7 @@ class SolicitudServicioController extends Controller
 		$Observacion->ObsRol = Auth::user()->UsRol;
 		$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
 		$Observacion->save();
-		
+
 		// se verifica si el cliente tiene comercial asignado
 		$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
 		// se establece la lista de destinatarios
@@ -390,7 +420,7 @@ class SolicitudServicioController extends Controller
 								'asistentelogistica@prosarc.com.co',
 								'subgerencia@prosarc.com.co',
 								'recepcionpda@prosarc.com.co'
-							 ];	
+							 ];
 		}
 
 		$SolicitudServicio['comercial'] = $comercial;
@@ -437,7 +467,7 @@ class SolicitudServicioController extends Controller
 						$SolicitudResiduo->SolResCantiUnidadRecibida = 0;
 					}
 				}
-				
+
 				switch ($request['SolResEmbalaje'][$Generador][$y]) {
 					case 99:
 						$SolicitudResiduo->SolResEmbalaje = "Sacos/Bolsas";
@@ -527,7 +557,7 @@ class SolicitudServicioController extends Controller
                 	$nuevarango->save();
                 }
 
-                
+
                 $SolicitudResiduo->FK_SolResRequerimiento = $nuevorequerimiento->ID_Req;
                 $SolicitudResiduo->save();
 			}
@@ -572,15 +602,15 @@ class SolicitudServicioController extends Controller
 			}
 		}
 
-		
+
 		$SolSerCollectAddress = $SolicitudServicio->SolSerCollectAddress;
 		$SolSerConductor = $SolicitudServicio->SolSerConductor;
 		if($SolicitudServicio->SolSerTipo == 'Interno'){
 			$SolSerConductor = Personal::where('ID_Pers', $SolicitudServicio->SolSerConductor)->first();
 		}
 		if($SolicitudServicio->SolSerTypeCollect == 98){
-			$Address = Sede::select('SedeAddress')->where('ID_Sede',$SolicitudServicio->SolSerCollectAddress)->first();
-			$SolSerCollectAddress = $Address->SedeAddress;
+			$Address = Sede::select(['SedeAddress', 'SedeName'])->where('ID_Sede',$SolicitudServicio->SolSerCollectAddress)->first();
+			$SolSerCollectAddress = $Address->SedeName.' - '.$Address->SedeAddress;
 		}
 		if($SolicitudServicio->SolSerCityTrans <> null){
 			$Municipio1 = DB::table('municipios')
@@ -679,23 +709,52 @@ class SolicitudServicioController extends Controller
 			// ->where('requerimientos.ofertado', 1)
 	        // ->where('forevaluation', 0)
 			->get();
-		
+
 		$Residuos = $Residuosoriginal->map(function ($item) {
-		  $requerimientos = Requerimiento::with(['pretratamientosSelected', 'tarifa.rangos' => function($query){
-			$query->orderBy('TarifaDesde');
-		  }])
-	        ->where('ID_Req', $item->FK_SolResRequerimiento)
-	        // ->where('forevaluation', 0)
+			$requerimientos = Requerimiento::with(['pretratamientosSelected', 'tarifa.rangos' => function($query){
+				$query->orderBy('TarifaDesde');
+			}])
+			->where('ID_Req', $item->FK_SolResRequerimiento)
+			// ->where('forevaluation', 0)
 			->first();
-			
-			$rm = SolicitudResiduo::where('SolResSlug', $item->SolResSlug)->first('SolResRM');
-	        
+
+			$rm = SolicitudResiduo::with('SolicitudServicio')->where('SolResSlug', $item->SolResSlug)->first(['SolResRM', 'FK_SolResSolSer']);
+
 	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
 	        $item->tarifa = $requerimientos->tarifa;
+			if ($requerimientos->tarifa->TarifaSpecial === 1) {
+				switch ($item->SolResTypeUnidad) {
+					case 'Unidad':
+						$tarifatipo = 'Unid';
+						break;
+
+					case 'Litros':
+						$tarifatipo = 'Lt';
+						break;
+
+					default:
+						$tarifatipo = 'Kg';
+						break;
+				}
+
+				$tarifaResiduo = CTarifa::with('rangos')
+					->where('FK_Cliente', $rm->SolicitudServicio->FK_SolSerCliente)
+					->where('FK_Tratamiento', $requerimientos->FK_ReqTrata)
+					->where('Tarifatipo', $tarifatipo)
+					->first();
+
+				if ($tarifaResiduo === null) {
+					$item->ctarifa = null;
+				}else{
+					$item->ctarifa = $tarifaResiduo;
+				}
+			}else{
+				$item->ctarifa = null;
+			}
 	        $item->SolResRM2 = $rm->SolResRM;
 		  	return $item;
 		});
-		
+
 		$SolicitudServicio->Repetible = 0;
 
 		/* se convierte el tipo de dato a aray mediante la consulta en el modelo de la columna SolSerRMs usando eloquent*/
@@ -723,14 +782,14 @@ class SolicitudServicioController extends Controller
 			->where('ID_SolSer', $SolicitudServicio->ID_SolSer)
 			->orderBy('created_at', 'desc')
 			->get();
-		
+
 		/*se inicializan las variables para el calculo de totales */
-		$total['estimado'] = 0;		
-		$total['recibido'] = 0;		
-		$total['conciliado'] = 0;		
-		$total['tratado'] = 0;		
+		$total['estimado'] = 0;
+		$total['recibido'] = 0;
+		$total['conciliado'] = 0;
+		$total['tratado'] = 0;
 		$cantidadesXtratamiento = [];
-		
+
 
 		/* se itera sobre todos los residuos de las solicitudes de servicio */
 		foreach ($SolicitudesServicioscount as $servicio) {
@@ -798,7 +857,7 @@ class SolicitudServicioController extends Controller
 					}
 				}
 			}
-			
+
 			if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)){
 				switch ($request->input('solserstatus')) {
 					case 'Aprobada':
@@ -882,7 +941,7 @@ class SolicitudServicioController extends Controller
 		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
 		$log->save();
 
-		
+
 		/*se guarda la observacion de la modificacion del servicio*/
 		$Observacion = new Observacion();
 		$Observacion->ObsStatus = $Solicitud->SolSerStatus;
@@ -891,7 +950,7 @@ class SolicitudServicioController extends Controller
 			case 'Aprobado':
 				$Observacion->ObsTipo = 'cliente';
 				break;
-			
+
 			case 'Programado':
 				$Observacion->ObsTipo = 'prosarc';
 				break;
@@ -911,11 +970,11 @@ class SolicitudServicioController extends Controller
 					$Observacion->ObsTipo = 'cliente';
 				}
 				break;
-			
+
 			case 'No Conciliado':
 				$Observacion->ObsTipo = 'cliente';
 				break;
-			
+
 			case 'Tratado':
 				$Observacion->ObsTipo = 'prosarc';
 				break;
@@ -946,7 +1005,7 @@ class SolicitudServicioController extends Controller
 		$Observacion->ObsRol = Auth::user()->UsRol;
 		$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
 		$Observacion->save();
-		
+
 		switch($Solicitud->SolSerStatus){
 			case 'Tratado':
 			case 'Facturado':
@@ -1049,7 +1108,7 @@ class SolicitudServicioController extends Controller
 						->where('ofertado', '=', 1)
 						->where('forevaluation', '=', 1)
 						->first();
-						
+
 					if ($requerimientoOfertado == null) {
 						$SolicitudNew->delete();
 
@@ -1060,7 +1119,7 @@ class SolicitudServicioController extends Controller
 						$log->AuditUser=Auth::user()->email;
 						$log->Auditlog=$SolicitudNew;
 						$log->save();
-						
+
 						abort(404, 'el servicio no se puede repetir debido a que alguno de los residuos no posee tratamiento ofertado, Verifique con su asesor Comercial');
 					}
 					if ($requerimientoOfertado->ReqFotoDescargue==0) {
@@ -1104,7 +1163,7 @@ class SolicitudServicioController extends Controller
 					$SolResNew->SolResAuditoria = $SolResOld->SolResVideoTratamiento;
 					$SolResNew->SolResAuditoriaTipo = $SolResOld->SolResVideoTratamiento;
 					/*se verifica los requerimientos y pretratamientos seleccionados para copiarlos*/
-					
+
 					$nuevorequerimiento = $requerimientoOfertado->replicate();
 					$nuevorequerimiento->ReqSlug= hash('md5', rand().time().$respelgener->FK_Respel);
 					$nuevorequerimiento->forevaluation=0;
@@ -1127,7 +1186,7 @@ class SolicitudServicioController extends Controller
 					$SolResNew->FK_SolResRequerimiento = $nuevorequerimiento->ID_Req;
 					$SolResNew->save();
 				}
-			
+
 			$SolicitudServicio = $SolicitudNew;
 
 			if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
@@ -1142,7 +1201,7 @@ class SolicitudServicioController extends Controller
 				$Observacion->ObsRol = Auth::user()->UsRol;
 				$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
 				$Observacion->save();
-			
+
 			} else {
 
 				/* se incluye la primera observacion del cliente del servicio original */
@@ -1172,8 +1231,8 @@ class SolicitudServicioController extends Controller
 				$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
 				$Observacion->save();
 			}
-			
-			
+
+
 						// se verifica si el cliente tiene comercial asignado
 			$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudNew->FK_SolSerCliente)->first();
 			// se establece la lista de destinatarios
@@ -1191,7 +1250,7 @@ class SolicitudServicioController extends Controller
 									'logistica@prosarc.com.co',
 									'asistentelogistica@prosarc.com.co',
 									'subgerencia@prosarc.com.co'
-								];	
+								];
 			}
 
 			$SolicitudServicio['comercial'] = $comercial;
@@ -1217,7 +1276,7 @@ class SolicitudServicioController extends Controller
 			$log->Auditlog=json_encode($SolicitudNew->ID_SolSer);
 			$log->save();
 
-					
+
 			return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudNew->SolSerSlug]);
 		}
 		else{
@@ -1259,7 +1318,7 @@ class SolicitudServicioController extends Controller
 				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
 				->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerName')
+				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerName', 'generadors.GenerNit')
 				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
 				->get();
 			$Persona = Personal::where('ID_Pers', $Solicitud->FK_SolSerPersona)
@@ -1282,7 +1341,7 @@ class SolicitudServicioController extends Controller
 			foreach ($KGenviados as $KGenviado) {
 				$totalenviado = $totalenviado + $KGenviado->SolResKgEnviado;
 			}
-			return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado', 'Requerimientos'));
+			return view('solicitud-serv.edit', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado', 'Requerimientos', 'tipo'));
 		}
 		else{
 			abort(403);
@@ -1298,198 +1357,175 @@ class SolicitudServicioController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		// return $request;
 		$SolicitudServicio = SolicitudServicio::where('SolSerSlug', $id)->first();
 		if (!$SolicitudServicio) {
 			abort(404);
 		}
 		$SolicitudServicio->SolServMailCopia = json_encode($request->input('SolServMailCopia'));
 
-		if($SolicitudServicio->SolSerStatus === 'Programado'){
-			if($request->input('SolSerTransportador') <> null){
-				if($request->input('SolSerTransportador') <> 98){
+		if ($SolicitudServicio->SolSerStatus === "Aprobado"||(($SolicitudServicio->SolSerStatus === "Programado"||$SolicitudServicio->SolSerStatus === "Notificado")&&$SolicitudServicio->SolSerTipo !== 'Interno')) {
+			switch ($request->input('SolResAuditoriaTipo')) {
+				case 99:
+					$SolicitudServicio->SolSerAuditable = 1;
+					$SolicitudServicio->SolResAuditoriaTipo = "Presencial";
+					break;
+				case 98:
+					$SolicitudServicio->SolSerAuditable = 1;
+					$SolicitudServicio->SolResAuditoriaTipo = "Virtual";
+					break;
+				case 97:
+					$SolicitudServicio->SolSerAuditable = 0;
+					$SolicitudServicio->SolResAuditoriaTipo = "No Auditable";
+					break;
+			}
+			$collect = null;
+			$SolicitudServicio->FK_SolSerCollectMun = null;
+			$direccioncollect = 'No aplica';
+			switch ($request->input('SolSerTipo')) {
+				case '96':
+					$transportadorname = $request->input('SolSerNameTrans');
+					$transportadornit = $request->input('SolSerNitTrans');
+					$transportadoradress = $request->input('SolSerAdressTrans');
+					$transportadorcity = $request->input('SolSerCityTrans');
+					$tipo = "Externo";
+					$conductor = $request->input('SolSerConductor');
+					$vehiculo = $request->input('SolSerVehiculo');
+					break;
+
+				case '97':
+					$generador = DB::table('generadors')
+						->join('gener_sedes', 'generadors.ID_Gener', '=', 'gener_sedes.FK_GSede')
+						->join('municipios', 'gener_sedes.FK_GSedeMun', '=', 'municipios.ID_Mun')
+						->select('generadors.ID_Gener', 'generadors.GenerNit', 'generadors.GenerName', 'gener_sedes.GSedeAddress', 'municipios.ID_Mun')
+						->where('GSedeSlug', $request->input('SolSerTransportador'))
+						->first();
+					$transportadorname = $generador->GenerName;
+					$transportadornit = $generador->GenerNit;
+					$transportadoradress = $generador->GSedeAddress;
+					$transportadorcity = $generador->ID_Mun;
+					$tipo = "Generador";
+					$conductor = $request->input('SolSerConductor');
+					$vehiculo = $request->input('SolSerVehiculo');
+					break;
+
+				case '98':
 					$cliente = DB::table('clientes')
 						->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
 						->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-						->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.ID_Mun')
-						->where('ID_Cli', userController::IDClienteSegunUsuario())
+						->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'sedes.SedeSlug', 'municipios.ID_Mun')
+						->where('SedeSlug', $request->input('SolSerTransportador'))
 						->first();
 					$transportadorname = $cliente->CliName;
 					$transportadornit = $cliente->CliNit;
 					$transportadoradress = $cliente->SedeAddress;
 					$transportadorcity = $cliente->ID_Mun;
-				}
-				else{
-					$transportadorname = $request->input('SolSerNameTrans');
-					$transportadornit = $request->input('SolSerNitTrans');
-					$transportadoradress = $request->input('SolSerAdressTrans');
-					$transportadorcity = $request->input('SolSerCityTrans');
-				}
-				$SolicitudServicio->SolSerTipo = "Externo";
-				$SolicitudServicio->SolSerNameTrans = $transportadorname;
-				$SolicitudServicio->SolSerNitTrans = $transportadornit;
-				$SolicitudServicio->SolSerAdressTrans = $transportadoradress;
-				$SolicitudServicio->SolSerCityTrans = $transportadorcity;
-				$SolicitudServicio->SolSerConductor =  $request->input('SolSerConductor');
-				$SolicitudServicio->SolSerVehiculo = $request->input('SolSerVehiculo');
+					$tipo = "Cliente";
+					$conductor = $request->input('SolSerConductor');
+					$vehiculo = $request->input('SolSerVehiculo');
+					break;
+
+				case '99':
+					$cliente = DB::table('clientes')
+						->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
+						->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
+						->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.ID_Mun')
+						->where('ID_Cli', 1)
+						->first();
+					$tipo = "Interno";
+					$transportadorname = $cliente->CliName;
+					$transportadornit = $cliente->CliNit;
+					$transportadoradress = $cliente->SedeAddress;
+					$transportadorcity = $cliente->ID_Mun;
+					$conductor = null;
+					$vehiculo = null;
+					switch ($request->input('SolSerTypeCollect')) {
+						case 99:
+							$direccioncollect = "Recolección en la sede de cada generador";
+							$SolicitudServicio->FK_SolSerCollectMun = null;
+							break;
+						case 98:
+							$sede = Sede::select(['ID_Sede', 'FK_SedeMun'])->where('SedeSlug', $request->input('SedeCollect'))->first();
+							$direccioncollect = $sede->ID_Sede;
+							$SolicitudServicio->FK_SolSerCollectMun = $sede->FK_SedeMun;
+							break;
+						case 97:
+							$direccioncollect = $request->input('AddressCollect');
+							$SolicitudServicio->FK_SolSerCollectMun = $request->input('FK_SolSerCollectMun');
+							break;
+					}
+					$collect = $request->input('SolSerTypeCollect');
+					break;
+
+				default:
+					# code...
+					break;
 			}
-			$SolicitudServicio->FK_SolSerPersona = Personal::select('ID_Pers')->where('PersSlug',$request->input('FK_SolSerPersona'))->first()->ID_Pers;
-			$SolicitudServicio->save();
 
-			$log = new audit();
-			$log->AuditTabla="solicitud_servicios";
-			$log->AuditType="Modificado";
-			$log->AuditRegistro=$SolicitudServicio->ID_SolSer;
-			$log->AuditUser=Auth::user()->email;
-			$log->Auditlog=json_encode($request->all());
-			$log->save();
-
-			/*se guarda la observacion de la modificacion del servicio*/
-			$Observacion = new Observacion();
-			$Observacion->ObsStatus = $SolicitudServicio->SolSerStatus;
-			$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
-			$Observacion->ObsTipo = 'cliente';
-			$Observacion->ObsRepeat = 1;
-			$Observacion->ObsDate = now();
-			$Observacion->ObsUser = Auth::user()->email;
-			$Observacion->ObsRol = Auth::user()->UsRol;
-			$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
-			$Observacion->save();
-			
-			return redirect()->route('solicitud-servicio.show', ['id' => $SolicitudServicio->SolSerSlug]);
-		}
-		switch ($request->input('SolResAuditoriaTipo')) {
-			case 99:
-				$SolicitudServicio->SolSerAuditable = 1;
-				$SolicitudServicio->SolResAuditoriaTipo = "Virtual";
-				break;
-			case 98:
-				$SolicitudServicio->SolSerAuditable = 1;
-				$SolicitudServicio->SolResAuditoriaTipo = "Presencial";
-				break;
-			case 97:
-				$SolicitudServicio->SolSerAuditable = 0;
-				$SolicitudServicio->SolResAuditoriaTipo = "No Auditable";
-				break;
-		}
-		$collect = null;
-		if($request->input('SolSerTipo') == 99){
-			$cliente = DB::table('clientes')
-				->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-				->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-				->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.ID_Mun')
-				->where('ID_Cli', 1)
-				->first();
-			$tipo = "Interno";
-			$transportadorname = $cliente->CliName;
-			$transportadornit = $cliente->CliNit;
-			$transportadoradress = $cliente->SedeAddress;
-			$transportadorcity = $cliente->ID_Mun;
-			$conductor = null;
-			$vehiculo = null;
-			$collect = $request->input('SolSerTypeCollect');
-		}
-		else{
-			if($request->input('SolSerTransportador') <> 98){
-				$cliente = DB::table('clientes')
-					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
-					->join('municipios', 'sedes.FK_SedeMun', '=', 'municipios.ID_Mun')
-					->select('clientes.ID_Cli', 'clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'municipios.ID_Mun')
-					->where('ID_Cli', userController::IDClienteSegunUsuario())
-					->first();
-				$transportadorname = $cliente->CliName;
-				$transportadornit = $cliente->CliNit;
-				$transportadoradress = $cliente->SedeAddress;
-				$transportadorcity = $cliente->ID_Mun;
+			if(isset($request['SupportPay'])){
+				if($SolicitudServicio->SolSerSupport <> null && file_exists(public_path().'/img/SupportPay/'.$SolicitudServicio->SolSerSupport)){
+					unlink(public_path().'/img/SupportPay/'.$SolicitudServicio->SolSerSupport);
+				}
+				$fileSupport = $request['SupportPay'];
+				$nameSupport = hash('sha256', rand().time().$fileSupport->getClientOriginalName()).'.pdf';
+				$fileSupport->move(public_path().'\img\SupportPay/',$nameSupport);
+				$SolicitudServicio->SolSerSupport = $nameSupport;
+			}
+			$SolicitudServicio->SolSerTipo = $tipo;
+			$SolicitudServicio->SolSerNameTrans = $transportadorname;
+			$SolicitudServicio->SolSerNitTrans = $transportadornit;
+			$SolicitudServicio->SolSerAdressTrans = $transportadoradress;
+			$SolicitudServicio->SolSerCityTrans = $transportadorcity;
+			$SolicitudServicio->SolSerConductor = $conductor;
+			$SolicitudServicio->SolSerVehiculo = $vehiculo;
+			$SolicitudServicio->SolSerTypeCollect = $collect;
+			$SolicitudServicio->SolSerCollectAddress = $direccioncollect;
+			if($request->input('SolSerBascula')){
+				$SolicitudServicio->SolSerBascula = 1;
 			}
 			else{
-				$transportadorname = $request->input('SolSerNameTrans');
-				$transportadornit = $request->input('SolSerNitTrans');
-				$transportadoradress = $request->input('SolSerAdressTrans');
-				$transportadorcity = $request->input('SolSerCityTrans');
+				$SolicitudServicio->SolSerBascula = null;
 			}
-			$tipo = "Externo";
-			$conductor = $request->input('SolSerConductor');
-			$vehiculo = $request->input('SolSerVehiculo');
-		}
-		$direccioncollect = null;
-		switch ($request->input('SolSerTypeCollect')) {
-			case 99:
-				$direccioncollect = "Recolección en la sede de cada generador";
-				break;
-			case 98:
-				$sede = Sede::select('ID_Sede')->where('SedeSlug', $request->input('SedeCollect'))->first();
-				$direccioncollect = $sede->ID_Sede;
-				break;
-			case 97:
-				$direccioncollect = $request->input('AddressCollect');
-				$SolicitudServicio->FK_SolSerCollectMun = $request->input('FK_SolSerCollectMun');
-				break;
-		}
-		if(isset($request['SupportPay'])){
-			if($SolicitudServicio->SolSerSupport <> null && file_exists(public_path().'/img/SupportPay/'.$SolicitudServicio->SolSerSupport)){
-				unlink(public_path().'/img/SupportPay/'.$SolicitudServicio->SolSerSupport);
+			if($request->input('SolSerCapacitacion')){
+				$SolicitudServicio->SolSerCapacitacion = 1;
 			}
-			$fileSupport = $request['SupportPay'];
-			$nameSupport = hash('sha256', rand().time().$fileSupport->getClientOriginalName()).'.pdf';
-			$fileSupport->move(public_path().'\img\SupportPay/',$nameSupport);
-			$SolicitudServicio->SolSerSupport = $nameSupport;
+			else{
+				$SolicitudServicio->SolSerCapacitacion = null;
+			}
+			if($request->input('SolSerMasPerson')){
+				$SolicitudServicio->SolSerMasPerson = 1;
+			}
+			else{
+				$SolicitudServicio->SolSerMasPerson = null;
+			}
+			if($request->input('SolSerVehicExclusive')){
+				$SolicitudServicio->SolSerVehicExclusive = 1;
+			}
+			else{
+				$SolicitudServicio->SolSerVehicExclusive = null;
+			}
+			if($request->input('SolSerPlatform')){
+				$SolicitudServicio->SolSerPlatform = 1;
+			}
+			else{
+				$SolicitudServicio->SolSerPlatform = null;
+			}
+			if($request->input('SolSerDevolucion')){
+				$SolicitudServicio->SolSerDevolucion = 1;
+				$SolicitudServicio->SolSerDevolucionTipo = $request->input('SolSerDevolucionTipo');
+			}
+			else{
+				$SolicitudServicio->SolSerDevolucion = null;
+				$SolicitudServicio->SolSerDevolucionTipo = null;
+			}
+
+			if(!is_null($request->input('SGenerador'))){
+				$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
+			}
 		}
-		$SolicitudServicio->SolSerTipo = $tipo;
-		$SolicitudServicio->SolSerNameTrans = $transportadorname;
-		$SolicitudServicio->SolSerNitTrans = $transportadornit;
-		$SolicitudServicio->SolSerAdressTrans = $transportadoradress;
-		$SolicitudServicio->SolSerCityTrans = $transportadorcity;
-		$SolicitudServicio->SolSerConductor = $conductor;
-		$SolicitudServicio->SolSerVehiculo = $vehiculo;
-		$SolicitudServicio->SolSerTypeCollect = $collect;
-		$SolicitudServicio->SolSerCollectAddress = $direccioncollect;
-		if($request->input('SolSerBascula')){
-			$SolicitudServicio->SolSerBascula = 1;
-		}
-		else{
-			$SolicitudServicio->SolSerBascula = null;
-		}
-		if($request->input('SolSerCapacitacion')){
-			$SolicitudServicio->SolSerCapacitacion = 1;
-		}
-		else{
-			$SolicitudServicio->SolSerCapacitacion = null;
-		}
-		if($request->input('SolSerMasPerson')){
-			$SolicitudServicio->SolSerMasPerson = 1;
-		}
-		else{
-			$SolicitudServicio->SolSerMasPerson = null;
-		}
-		if($request->input('SolSerVehicExclusive')){
-			$SolicitudServicio->SolSerVehicExclusive = 1;
-		}
-		else{
-			$SolicitudServicio->SolSerVehicExclusive = null;
-		}
-		if($request->input('SolSerPlatform')){
-			$SolicitudServicio->SolSerPlatform = 1;
-		}
-		else{
-			$SolicitudServicio->SolSerPlatform = null;
-		}
-		if($request->input('SolSerDevolucion')){
-			$SolicitudServicio->SolSerDevolucion = 1;
-			$SolicitudServicio->SolSerDevolucionTipo = $request->input('SolSerDevolucionTipo');
-		}
-		else{
-			$SolicitudServicio->SolSerDevolucion = null;
-			$SolicitudServicio->SolSerDevolucionTipo = null;
-		}
+
 		$SolicitudServicio->FK_SolSerPersona = Personal::select('ID_Pers')->where('PersSlug',$request->input('FK_SolSerPersona'))->first()->ID_Pers;
-		$SolicitudServicio->FK_SolSerCliente = userController::IDClienteSegunUsuario();
 		$SolicitudServicio->SolSerDescript = $request->input('SolSerDescript');
 		$SolicitudServicio->save();
-
-		if(!is_null($request->input('SGenerador'))){
-			$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
-		}
 
 		$log = new audit();
 		$log->AuditTabla="solicitud_servicios";
@@ -1510,7 +1546,7 @@ class SolicitudServicioController extends Controller
 		$Observacion->ObsRol = Auth::user()->UsRol;
 		$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
 		$Observacion->save();
-		
+
 		return redirect()->route('solicitud-servicio.show', ['id' => $id]);
 	}
 
@@ -1534,9 +1570,9 @@ class SolicitudServicioController extends Controller
 			case 'Programado':
 			case 'Notificado':
 			case 'Aprobado':
-				
+
 				$documentos = Documento::where('FK_CertSolser', $SolicitudServicio->ID_SolSer)->get();
-				
+
 				foreach ($documentos as $key => $documento) {
 					$docdato = DocDato::where('FK_DatoDoc', $documento->ID_Doc)->get();
 
@@ -1545,16 +1581,16 @@ class SolicitudServicioController extends Controller
 					}
 					Documento::destroy($documento->ID_Doc);
 				}
-				
+
 				SolicitudServicio::destroy($SolicitudServicio->ID_SolSer);
 
 				break;
-			
+
 			default:
 				abort(503, 'el servicio no puede ser eliminado si ya fue recibido en Planta');
 				break;
 		}
-		
+
 
 		$log = new audit();
 		$log->AuditTabla="solicitud_servicios";
@@ -1575,7 +1611,7 @@ class SolicitudServicioController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function solservdocindex($id)
-	{	
+	{
 		if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
 			$SolicitudServicio = DB::table('solicitud_servicios')
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
@@ -1646,7 +1682,7 @@ class SolicitudServicioController extends Controller
 		if (!$Solicitud) {
 			abort(404);
 		}
-			
+
 		$Solicitud->SolServCertStatus=1;
 		$Solicitud->save();
 
@@ -1667,7 +1703,7 @@ class SolicitudServicioController extends Controller
 		if (!$Solicitud) {
 			abort(404);
 		}
-			
+
 		$Solicitud->SolSerRMs=$request->input('SolServRM');
 		$Solicitud->save();
 
@@ -1684,9 +1720,9 @@ class SolicitudServicioController extends Controller
 
 	public function solservdocstore($id)
 	{
-			
+
 		$SolicitudServicio = SolicitudServicio::with(['SolicitudResiduo.requerimiento.tarifa.rangos' => function ($query){
-			$query->orderBy('TarifaDesde');
+			$query->orderBy('TarifaDesde', 'desc');
 		}])->where('ID_SolSer', $id)->first();
 		$serviciovalidado = $id;
 		/*cuenta los diferentes generadores*/
@@ -1759,10 +1795,29 @@ class SolicitudServicioController extends Controller
 									$certificado->FK_CertGenerSede = $genersede->ID_GSede;
 									$certificado->FK_CertGestor = $key->requerimiento->tratamiento->gestor->FK_SedeCli;
 									$certificado->FK_CertTrat = $key->requerimiento->tratamiento->ID_Trat;
-									if ($SolicitudServicio->SolSerTipo == 'Externo') {
-										$certificado->FK_CertTransp = $cliente->ID_Cli;
-									}else{
-										$certificado->FK_CertTransp = 1;
+									switch ($SolicitudServicio->SolSerTipo) {
+										case 'Externo':
+											$certificado->FK_CertTransp = $cliente->ID_Cli;
+
+											break;
+
+										case 'Cliente':
+											$certificado->FK_CertTransp = $cliente->ID_Cli;
+
+											break;
+
+										case 'Generador':
+											$certificado->FK_CertTransp = $cliente->ID_Cli;
+
+											break;
+
+										case 'Interno':
+											$certificado->FK_CertTransp = 1;
+											break;
+
+										default:
+											$certificado->FK_CertTransp = 1;
+											break;
 									}
 
 									$certificado->SolicitudServicio->SolicitudResiduo = $certificado->SolicitudServicio->SolicitudResiduo->map(function ($item) {
@@ -1776,7 +1831,7 @@ class SolicitudServicioController extends Controller
 									$dato->FK_DatoCert = $certificado->ID_Cert;
 									$dato->FK_DatoCertSolRes = $key->ID_SolRes;
 									$dato->save();
-									
+
 								}
 
 								break;
@@ -1789,14 +1844,14 @@ class SolicitudServicioController extends Controller
 								->first();
 
 								if ((isset($manifiestoprevio))&&($manifiestoprevio->FK_ManifTrat == $key->requerimiento->tratamiento->ID_Trat)) {
-									
+
 									$dato = new Manifdato;
 									$dato->FK_DatoManif = $manifiestoprevio->ID_Manif;
 									$dato->FK_DatoManifSolRes = $key->ID_SolRes;
 									$dato->save();
 
 								}else{
-									
+
 									$manifiesto = new Manifiesto;
 									$manifiesto->ManifNumero = "";
 									$manifiesto->ManifiEspName = "";
@@ -1815,10 +1870,29 @@ class SolicitudServicioController extends Controller
 									$manifiesto->FK_ManifGenerSede = $genersede->ID_GSede;
 									$manifiesto->FK_ManifGestor = $key->requerimiento->tratamiento->gestor->FK_SedeCli;
 									$manifiesto->FK_ManifTrat = $key->requerimiento->tratamiento->ID_Trat;
-									if ($SolicitudServicio->SolSerTipo == 'Externo') {
-										$manifiesto->FK_ManifTransp = $cliente->ID_Cli;
-									}else{
-										$manifiesto->FK_ManifTransp = 1;
+									switch ($SolicitudServicio->SolSerTipo) {
+										case 'Externo':
+											$manifiesto->FK_ManifTransp = $cliente->ID_Cli;
+
+											break;
+
+										case 'Cliente':
+											$manifiesto->FK_ManifTransp = $cliente->ID_Cli;
+
+											break;
+
+										case 'Generador':
+											$manifiesto->FK_ManifTransp = $genersede->ID_GSede;
+
+											break;
+
+										case 'Interno':
+											$manifiesto->FK_ManifTransp = 1;
+											break;
+
+										default:
+											$manifiesto->FK_ManifTransp = 1;
+											break;
 									}
 									$manifiesto->save();
 
@@ -1842,26 +1916,80 @@ class SolicitudServicioController extends Controller
 		/*ajuste de los precios para facturacion en cada residuo de la solicitud segun los rangos de tarifas */
 
 		foreach ($SolicitudServicio->SolicitudResiduo as $key => $solres) {
-			// a partir de 1 kg se asigna el precio segun la cantidad conciliada
-			if ($solres->SolResKgConciliado >= 1) {
-				foreach ($solres->requerimiento->tarifa->rangos as $rango) {
-					if ($solres->SolResKgConciliado >= $rango->TarifaDesde) {
-						$solres->SolResPrecio = $rango->TarifaPrecio;
+			switch ($solres->SolResTypeUnidad) {
+				case 'Unidad':
+					$tarifatipo = 'Unid';
+					break;
+
+				case 'Litros':
+					$tarifatipo = 'Lt';
+					break;
+
+				default:
+					$tarifatipo = 'Kg';
+					break;
+			}
+
+			$tarifaCliente = CTarifa::with('rangos')
+			->where('FK_Cliente', $cliente->ID_Cli)
+			->where('FK_Tratamiento', $solres->requerimiento->FK_ReqTrata)
+			->where('Tarifatipo', $tarifatipo)
+			->first();
+
+			$tarifaResiduo = $solres->requerimiento->tarifa;
+
+
+			$residuoparaprecio = SolicitudResiduo::where('ID_SolRes', $solres->ID_SolRes)->first();
+
+			if ($tarifaResiduo === null || $solres->SolResKgConciliado <= 0) {
+				$residuoparaprecio->SolResPrecio = 0;
+			} else {
+				if ($tarifaResiduo->TarifaSpecial === 1) {
+					foreach ($tarifaResiduo->rangos as $rango) {
+						switch ($solres->SolResTypeUnidad) {
+							case 'Unidad':
+							case 'Litros':
+								if ($solres->SolResCantiUnidadConciliada >= $rango->TarifaDesde) {
+									$residuoparaprecio->SolResPrecio = $rango->TarifaPrecio;
+									$residuoparaprecio->SolResTypePrecio = 1;
+									break 2;
+								}
+								break;
+							default:
+								if ($solres->SolResKgConciliado >= $rango->TarifaDesde) {
+									$residuoparaprecio->SolResPrecio = $rango->TarifaPrecio;
+									$residuoparaprecio->SolResTypePrecio = 1;
+									break 2;
+								}
+								break;
+						}
 					}
+				}else{
+					if ($tarifaCliente !== null) {
+						foreach ($tarifaCliente->rangos as $rango) {
+							switch ($solres->SolResTypeUnidad) {
+								case 'Unidad':
+								case 'Litros':
+									if ($solres->SolResCantiUnidadConciliada > $rango->CTarifaDesde) {
+										$residuoparaprecio->SolResPrecio = $rango->CTarifaPrecio;
+										$residuoparaprecio->SolResTypePrecio = 2;
+										break 2;
+									}
+									break;
+								default:
+									if ($solres->SolResKgConciliado > $rango->CTarifaDesde) {
+										$residuoparaprecio->SolResPrecio = $rango->CTarifaPrecio;
+										$residuoparaprecio->SolResTypePrecio = 2;
+										break 2;
+									}
+									break;
+							}
+						}
+					}
+
 				}
 			}
-
-			/* entre 0 y 1 kilgramos se asigna el precion de la tarifa mas pequeña */
-			if (0 < $solres->SolResKgConciliado && $solres->SolResKgConciliado < 1) {
-				$solres->SolResPrecio = $solres->requerimiento->tarifa->rangos[0]->TarifaPrecio;
-			}
-
-			/* si el precio se mantiene en 0 y el peso es mayor a 0 se iguala el precio al primer rango */
-			if ($solres->SolResPrecio == 0 && $solres->SolResKgConciliado > 0) {
-				$solres->SolResPrecio = $solres->requerimiento->tarifa->rangos[0]->TarifaPrecio;
-			}
-
-			$solres->save();
+			$residuoparaprecio->save();
 		}
 	}
 
@@ -2071,13 +2199,13 @@ class SolicitudServicioController extends Controller
 		}
 
 		// return $Servicios;
-		
+
 		return view('solicitud-serv.indexrecordatorios', compact('Servicios', 'Residuos', 'Cliente'));
 	}
 
 	public function reversarStatus(Request $request)
 	{
-		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
+		$Solicitud = SolicitudServicio::with('SolicitudResiduo')->where('SolSerSlug', $request->input('solserslug'))->first();
 		if (!$Solicitud) {
 			abort(404);
 		}
@@ -2094,7 +2222,7 @@ class SolicitudServicioController extends Controller
 			case 'Programado':
 			case 'No Conciliado':
 			case 'Residuo Faltante':
-				if ($Solicitud->SolSerStatus == 'Conciliado'||$Solicitud->SolSerStatus == 'Tratado'||$Solicitud->SolSerStatus == 'Certificacion') {
+				if ($Solicitud->SolSerStatus == 'Conciliado'||$Solicitud->SolSerStatus == 'Tratado'||$Solicitud->SolSerStatus == 'Certificacion'||$Solicitud->SolSerStatus == 'Facturado') {
 					$certificadosDelete = Certificado::with('certdato')->where('FK_CertSolser', $Solicitud->ID_SolSer)->get();
 					foreach ($certificadosDelete as $key => $value) {
 						foreach ($value->certdato as $key2 => $value2) {
@@ -2102,10 +2230,39 @@ class SolicitudServicioController extends Controller
 						}
 						$value->delete();
 					}
+					foreach ($Solicitud->SolicitudResiduo as $key => $residuoparareversar) {
+						$residuoparareversar->SolResPrecio = 0;
+						$residuoparareversar->SolResTypePrecio = 0;
+						$residuoparareversar->save();
+					}
+					$prefaturaToDelete = Prefactura::with('prefacTratamiento.prefacresiduo')->where('FK_Servicio', $Solicitud->ID_SolSer)->get();
+					foreach ($prefaturaToDelete as $key => $value) {
+						foreach ($value->prefacTratamiento as $key2 => $value2) {
+							foreach ($value2->prefacresiduo as $key3 => $value3) {
+								$value3->delete();
+							}
+							$value2->delete();
+						}
+						$value->delete();
+					}
+				}
+				break;
+
+			case 'Conciliado':
+				if ($Solicitud->SolSerStatus == 'Tratado'||$Solicitud->SolSerStatus == 'Certificacion'||$Solicitud->SolSerStatus == 'Facturado') {
+					$prefaturaToDelete = Prefactura::with('prefacTratamiento.prefacresiduo')->where('FK_Servicio', $Solicitud->ID_SolSer)->get();
+					foreach ($prefaturaToDelete as $key => $value) {
+						foreach ($value->prefacTratamiento as $key2 => $value2) {
+							foreach ($value2->prefacresiduo as $key3 => $value3) {
+								$value3->delete();
+							}
+							$value2->delete();
+						}
+						$value->delete();
+					}
 				}
 				break;
 		}
-
 		$Solicitud->SolSerStatus = $request->input('solserstatus');
 		$Solicitud->SolSerDescript = $request->input('solserdescript');
 		$Solicitud->save();
@@ -2118,7 +2275,7 @@ class SolicitudServicioController extends Controller
 		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
 		$log->save();
 
-		
+
 		/*se guarda la observacion de la modificacion del servicio*/
 		$Observacion = new Observacion();
 		$Observacion->ObsStatus = 'Devuelto a status: '.$Solicitud->SolSerStatus;
@@ -2130,14 +2287,14 @@ class SolicitudServicioController extends Controller
 		$Observacion->ObsRol = Auth::user()->UsRol;
 		$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
 		$Observacion->save();
-		
+
 		return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
 
 	}
 
 	public function CancelarServicio(Request $request)
 	{
-		// return $request;	
+		// return $request;
 		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
 		if (!$Solicitud) {
 			abort(404);
@@ -2184,7 +2341,7 @@ class SolicitudServicioController extends Controller
 		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
 		$log->save();
 
-		
+
 		/*se guarda la observacion de la modificacion del servicio*/
 		$Observacion = new Observacion();
 		// cabiar el status de la observación

@@ -61,4 +61,10 @@ class Cliente extends Model
 	public function comercialAsignado(){
 		return $this->hasOne('App\Personal','ID_Pers', 'CliComercial');
     }
+
+	//lista las pretratamientos relacionados usando muchos a muchos
+	public function clientetarifa()
+	{
+		return $this->hasMany('App\CTarifa', 'FK_Cliente', 'ID_Cli');
+	}
 }

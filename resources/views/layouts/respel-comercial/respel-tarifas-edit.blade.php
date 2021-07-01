@@ -8,7 +8,12 @@
     	@endphp
 			@foreach($opcion->tarifas as $tarifa)
 				<div class=row>
-					<div class="col-md-4 col-sm-6" style="max-height: 58.1px;">
+					<div class="col-md-2 col-xs-6">
+						<label data-trigger="hover" data-toggle="popover" data-placement="bottom" title="<b>Tarifa especial</b>" data-content="<p> Activar este switch causara que se tomen en cuenta estas tarifas para definir el precio por unidad durante la conciliación de pesos</p>"> Tarifa Especial
+							<input {{$tarifa->TarifaSpecial === 1 ? "checked" : ""}} data-switch="Opcion[{{$contadorphp}}][TarifaSpecial]" id="main_Opcion`+contador+`TarifaSpecial" value="1" type="checkbox" class="testswitch" name="Opcion[{{$contadorphp}}][TarifaSpecial]" />
+						</label>
+					</div>
+					<div class="col-md-2 col-sm-6" style="max-height: 58.1px;">
 						<label for="expireRange{{$contadorphp}}" style="font-size: 0.9em; margin-bottom: 0px;">Vencimiento</label>
 						<input {{in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL) ? '' : 'disabled' }} id="expireRange{{$contadorphp}}" name="Opcion[{{$contadorphp}}][TarifaVencimiento]" type="date" class="form-control" value="{{$tarifa->TarifaVencimiento}}">
 						@if(in_array(Auth::user()->UsRol, Permisos::JefeOperaciones)||in_array(Auth::user()->UsRol2, Permisos::JefeOperaciones))
@@ -51,9 +56,9 @@
 				<div class="row" id="rango{{$contadorphp}}row">
 					@if(count($tarifa->rangos) > 0)
 						@foreach($tarifa->rangos as $rango)
-						<script type="text/javaScript">
+							<script type="text/javaScript">
 								contadorRango[{{$contadorphp}}][{{$last}}] = {{$last}};
-						</script>
+							</script>
 							@php
 							$last = $last+1;
 							@endphp
@@ -71,7 +76,7 @@
 									<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$rango->TarifaDesde}}">
 								@else
 									<div class="input-group">
-										<input disabled id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control  addon-inline" placeholder="Precio" min="0" value="{{$rango->TarifaPrecio}}">
+										<input id="rangopriceinput{{$contadorphp}}{{$last}}" name="Opcion[{{$contadorphp}}][TarifaPrecio][]" type="number" class="form-control  addon-inline" placeholder="Precio" min="0" value="{{$rango->TarifaPrecio}}">
 										<span class="input-group-addon addon-inline input-source-observer">$</span>
 									</div>
 									<input name="Opcion[{{$contadorphp}}][TarifaDesde][]" hidden value="{{$rango->TarifaDesde}}">

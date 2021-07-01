@@ -18,7 +18,7 @@
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="box box-info">
 				<div class="box-body box-profile">
 					<div class="col-md-12 col-xs-12">
@@ -32,7 +32,7 @@
 												<i class="fas fa-exclamation-triangle"></i>
 												<span style="font-size: 0.3em; color: black;"><p>¿Seguro quiere eliminar el cliente <b>{{$cliente->CliShortname}}</b>?</p></span>
 												<small><h5>NOTA: Los datos dependientes a este registro seran eliminados</h5></small>
-											</div> 
+											</div>
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-success pull-left" data-dismiss="modal">No, salir</button>
@@ -82,12 +82,12 @@
 					@endif
 					<ul>
 						<li class="list-group-item">
-							<b>{{ trans('adminlte_lang::message.clirazonsoc') }}</b> 
+							<b>{{ trans('adminlte_lang::message.clirazonsoc') }}</b>
 							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$cliente->CliName}}</p>">{{$cliente->CliName}}</a>
 						</li>
 						@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 						<li class="list-group-item">
-							<b>{{ trans('adminlte_lang::message.clientnombrecorto') }}</b> 
+							<b>{{ trans('adminlte_lang::message.clientnombrecorto') }}</b>
 							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clientcliente') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$cliente->CliShortname}}</p>">{{$cliente->CliShortname}}</a>
 						</li>
 						@endif
@@ -212,7 +212,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-8">
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs">
 					{{-- Barra de navegación --}}
@@ -220,15 +220,18 @@
 					@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
 						<li><a href="#requerimientos" data-toggle="tab">Requerimientos</a></li>
 					@endif
+					<li><a href="#tarifas_cliente" data-toggle="tab">Tarifa</a></li>
 					@if ((Route::currentRouteName() === 'cliente-show')&&(in_array(Auth::user()->UsRol, Permisos::CLIENTE)))
 						<a href="/sclientes/create" class="btn btn-primary pull-right" style="margin-top: 0.5em; margin-right: 0.5em;"><b>{{ trans('adminlte_lang::message.create') }} Sede</b></a>
 					@endif
+					<li class="navbar-right">
+						<button><a href="{{route('clientetarifas.create', ['cliente' => $cliente->CliSlug])}}" class="btn btn-primary" target="_blank" rel="noopener noreferrer"><b><i class="fas fa-plus"></i> Tarifa</b></a></button>
+					</li>
 				</ul>
-
 				<div class="tab-content">
 					{{-- sedes --}}
 					<div class="active tab-pane" id="sedes" style='overflow-y:auto; max-height:305px;'>
-						
+
 						@foreach ($Sedes as $Sede)
 						<div style="margin-bottom:30px;">
 							<div class="col-md-12 col-xs-12">
@@ -267,7 +270,7 @@
 								<b>{{ trans('adminlte_lang::message.phone') }} 2</b> <a class="pull-right">{{$Sede->SedePhone2}} - {{$Sede->SedeExt2}}</a>
 							</li>
 							<li class="list-group-item">
-								<b>{{ trans('adminlte_lang::message.emailaddress') }}</b> 
+								<b>{{ trans('adminlte_lang::message.emailaddress') }}</b>
 								<a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('{{ trans('adminlte_lang::message.emailaddress') }}')"><i class="far fa-copy"></i></a>
 								<a href="#" class="pull-right textpopover" id="{{ trans('adminlte_lang::message.emailaddress') }}" title="{{ trans('adminlte_lang::message.emailaddress') }}" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Sede->SedeEmail}}</p>">{{$Sede->SedeEmail}}</a>
 							</li>
@@ -369,6 +372,36 @@
 							</div>
 						</div>
 					@endif
+					<div class="tab-pane" id="tarifas_cliente" style='overflow-y:auto; max-height:305px;'>
+						<table id="TarifasClienteTable" class="table table-compact table-bordered table-striped">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Tratamiento</th>
+									<th>Rango</th>
+									<th>Frecuencia</th>
+									<th>Precio</th>
+									{{-- <th>Cliente</th> --}}
+									<th>Vence</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach ($cliente->clientetarifa as $tarifa)
+									@foreach ($tarifa->rangos as $rango)
+									<tr>
+										<td>{{$tarifa->ID_CTarifa}}</td>
+										<td>{{$tarifa->tratamiento->TratName}}</td>
+										<td>desde {{$rango->CTarifaDesde}} <b style="color: {{($tarifa->Tarifatipo == 'Kg' ? 'Black' : 'Green')}}">{{$tarifa->Tarifatipo}}</b></td>
+										<td>{{$tarifa->TarifaFrecuencia}}</td>
+										<td>{{$rango->CTarifaPrecio}}</td>
+										{{-- <td>{{$tarifa->cliente->CliShortname}}</td> --}}
+										<td>{{$tarifa->TarifaVencimiento}}</td>
+									</tr>
+									@endforeach
+								@endforeach
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -385,7 +418,7 @@
 						<div style="font-size: 5em; color: green; text-align: center; margin: auto;">
 							<i class="fas fa-plus-circle"></i>
 							<span style="font-size: 0.3em; color: black;"><p>Requerimientos a solicitar</p></span>
-						</div> 
+						</div>
 					</div>
 					<form action="/requeri-client" method="POST">
 						@csrf
@@ -475,7 +508,7 @@
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.add') }}</button>
 						</div>
-					</form> 
+					</form>
 				</div>
 			</div>
 		</div>
@@ -490,7 +523,7 @@
 						<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
 							<i class="fas fa-exclamation-triangle"></i>
 							<span style="font-size: 0.3em; color: black;"><p>Requerimientos a solicitar</p></span>
-						</div> 
+						</div>
 					</div>
 					@if(isset($Requerimientos))
 					<form action="/requeri-client/{{$Requerimientos->ID_RequeCli}}" method="POST">
@@ -609,7 +642,7 @@
 							la sede <b>`+name+`</b>
 						@endslot
 					@endcomponent
-					
+
 					<form action='{{Route::currentRouteName() === 'cliente-show' ? '/sedes/`+slug+`/destroy' : '/sclientes/`+slug+`'}}' method='POST'>
 						@method('DELETE')
 						@csrf

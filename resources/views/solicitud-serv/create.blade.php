@@ -30,130 +30,131 @@
 						@endif
 						<div class="box-body">
 							<div class="col-md-12">
-								<div class="form-group col-md-12">
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonal') }}</b>" data-content="{{ trans('adminlte_lang::message.solserpersonaldescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserpersonal') }}</label>
-									<small class="help-block with-errors">*</small>
-									<select id="FK_SolSerPersona" name="FK_SolSerPersona" class="form-control" required="">
-										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										@foreach ($Personals as $Personal)
-										<option value="{{$Personal->PersSlug}}">{{$Personal->PersFirstName.' '.$Personal->PersLastName}}</option>
-										@endforeach
-									</select>
+								<div class="row">
+									<div class="form-group col-md-12">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonal') }}</b>" data-content="{{ trans('adminlte_lang::message.solserpersonaldescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserpersonal') }}</label>
+										<small class="help-block with-errors">*</small>
+										<select id="FK_SolSerPersona" name="FK_SolSerPersona" class="form-control" required="">
+											@foreach ($Personals as $Personal)
+											<option value="{{$Personal->PersSlug}}">{{$Personal->PersFirstName.' '.$Personal->PersLastName}}</option>
+											@endforeach
+										</select>
+									</div>
+									<div class="form-group col-md-12 select-multiple-contenedor">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonalcopy') }}</b>" data-content="{{ trans('adminlte_lang::message.solsermailcopy') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserpersonalcopy') }}</label>
+										<small class="help-block with-errors"></small>
+										<select multiple id="SolServMailCopia" name="SolServMailCopia[]" class="form-control">
+											@foreach ($Personals as $Personal)
+											<option value="{{$Personal->PersEmail}}">{{$Personal->PersFirstName.' '.$Personal->PersLastName}}</option>
+											@endforeach
+										</select>
+									</div>
 								</div>
-								<div class="form-group col-md-12 select-multiple-contenedor">
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonalcopy') }}</b>" data-content="{{ trans('adminlte_lang::message.solsermailcopy') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserpersonalcopy') }}</label>
-									<small class="help-block with-errors"></small>
-									<select multiple id="SolServMailCopia" name="SolServMailCopia[]" class="form-control">
-										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										@foreach ($Personals as $Personal)
-										<option value="{{$Personal->PersEmail}}">{{$Personal->PersFirstName.' '.$Personal->PersLastName}}</option>
-										@endforeach
-									</select>
-								</div>
-								<div class="form-group col-md-6">
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertypetrans') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertypetransdescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertypetrans') }}</label>
-									<small class="help-block with-errors">*</small>
-									<select class="form-control" name="SolSerTipo" id="SolSerTipo" required="">
-										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										<option onclick="TransportadorProsarc()" value="99">{{ trans('adminlte_lang::message.solsertransprosarc') }}</option>
-										<option onclick="TransportadorExtr()" value="98">{{ trans('adminlte_lang::message.solsertranspro') }}</option>
-									</select>
-								</div>
-								<div id="transportador" class="form-group col-md-6" hidden="true">
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertranspro') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertransprodescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertranspro') }}</label>
-									<small class="help-block with-errors">*</small>
-									<select class="form-control" id="SolSerTransportador" name="SolSerTransportador">
-										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										<option onclick="TransportadorCliente()" value="99">{{$Cliente->CliName}}</option>
-										<option onclick="OtraTransportadora()" value="98">{{ trans('adminlte_lang::message.solsertransother') }}</option>
-									</select>
-								</div>
-								<div id="nametransportadora" class="form-group col-md-6" hidden="true">
-									<label for="SolSerNameTrans">{{ trans('adminlte_lang::message.solsertransname') }}</label>
-									<small class="help-block with-errors">*</small>
-									<input maxlength="255" type="text" class="form-control" id="SolSerNameTrans" name="SolSerNameTrans" value="{{old('SolSerNameTrans')}}">
-								</div>
-								<div id="nittransportadora" class="form-group col-md-6" hidden="true">
-									<label for="SolSerNitTrans">{{ trans('adminlte_lang::message.solsertransnit') }}</label>
-									<small class="help-block with-errors">*</small>
-									<input type="text" class="form-control nit" id="SolSerNitTrans" name="SolSerNitTrans" value="{{old('SolSerNitTrans')}}">
-								</div>
-								<div id="addresstransportadora" class="form-group col-md-12" hidden="true">
-									<label for="SolSerAdressTrans">{{ trans('adminlte_lang::message.solsertransaddress') }}</label>
-									<small class="help-block with-errors">*</small>
-									<input maxlength="255" type="text" class="form-control" id="SolSerAdressTrans" name="SolSerAdressTrans" value="{{old('SolSerAdressTrans')}}">
-								</div>
-								<div class="form-group col-md-6 citytransportadora" hidden>
-									<label for="departamento">{{ trans('adminlte_lang::message.solsertransdepart') }}</label>
-									<select class="form-control select" id="departamento">
-										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										@foreach ($Departamentos as $Departamento)
+								<div id="transportadorContainer" class="row" style="background-color: #d9edf7">
+									<div class="form-group col-md-6">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertypetrans') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertypetransdescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertypetrans') }}</label>
+										<small class="help-block with-errors">*</small>
+										<select class="form-control" name="SolSerTipo" id="SolSerTipo" required="">
+											<option onclick="TransportadorProsarc()" value="99">Prosarc S.A. ESP.</option>
+											<option onclick="TransportadorCliente()" value="98">{{$Cliente->CliName}}</option>
+											<option onclick="TransportadorGeneradores()" value="97">Generador</option>
+											<option onclick="OtraTransportadora()" value="96">Otra Empresa Transportadora</option>
+										</select>
+									</div>
+									<div id="transportador" class="form-group col-md-6" hidden="true">
+										<label id="transportadorLabel" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertranspro') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertransprodescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Sede del Transportador</label>
+										<small class="help-block with-errors">*</small>
+										<select class="form-control" id="SolSerTransportador" name="SolSerTransportador">
+											{{-- espacio para sedes del cliente o de los generadores --}}
+										</select>
+									</div>
+									<div id="nametransportadora" class="form-group col-md-6" hidden="true">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Razón Social de la Empresa Transportadora</b>" data-content="{{ 'Ingrese la razón social de la empresa que realizara el transporte de los residuos, <b>debe ser preciso en el ingreso de los datos de este transportador</b> ya que estos datos serán utilizados, para la recepción de los residuos en la Planta de tratamiento de <b>Prosarc S.A. ESP. y para la creacion de los respectivos certificados/manifiestos' }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Razon Social de la Transportadora</label>
+										<small class="help-block with-errors">*</small>
+										<input maxlength="255" type="text" class="form-control" id="SolSerNameTrans" name="SolSerNameTrans" value="{{old('SolSerNameTrans')}}">
+									</div>
+									<div id="nittransportadora" class="form-group col-md-6" hidden="true">
+										<label for="SolSerNitTrans">{{ trans('adminlte_lang::message.solsertransnit') }}</label>
+										<small class="help-block with-errors">*</small>
+										<input type="text" class="form-control nit" id="SolSerNitTrans" name="SolSerNitTrans" value="{{old('SolSerNitTrans')}}">
+									</div>
+									<div id="addresstransportadora" class="form-group col-md-6" hidden="true">
+										<label for="SolSerAdressTrans">{{ trans('adminlte_lang::message.solsertransaddress') }}</label>
+										<small class="help-block with-errors">*</small>
+										<input maxlength="255" type="text" class="form-control" id="SolSerAdressTrans" name="SolSerAdressTrans" value="{{old('SolSerAdressTrans')}}">
+									</div>
+									<div class="form-group col-md-6 citytransportadora" hidden>
+										<label for="departamento">{{ trans('adminlte_lang::message.solsertransdepart') }}</label>
+										<select class="form-control select" id="departamento">
+											<option value="">Seleccione...</option>
+											@foreach ($Departamentos as $Departamento)
 											<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
-										@endforeach
-									</select>
-								</div>
-								<div class="form-group col-md-6 citytransportadora" hidden>
-									<label for="municipio">{{ trans('adminlte_lang::message.solsertransmuni') }}</label><a class="load"></a>
-									<small class="help-block with-errors">*</small>
-									<select name="SolSerCityTrans" class="form-control select" id="municipio"></select>
-								</div>
-								<div id="Conductor" class="form-group col-md-6" hidden="true">
-									<label for="SolSerConductor">{{ trans('adminlte_lang::message.solserconduc') }}</label>
-									<input maxlength="255" type="text" class="form-control" id="SolSerConductor" name="SolSerConductor" value="{{old('SolSerConductor')}}">
-								</div>
-								<div id="Vehiculo" class="form-group col-md-6" hidden="true">
-									<label for="SolSerVehiculo">{{ trans('adminlte_lang::message.solservehic') }}</label>
-									<input type="text" class="form-control placa" id="SolSerVehiculo" name="SolSerVehiculo" value="{{old('SolSerVehiculo')}}">
-								</div>
-								<div id="typeaditable" class="form-group col-md-6">
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solseraudi') }}</b>" data-content="{{ trans('adminlte_lang::message.solseraudidescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solseraudi') }}</label>
-									<small class="help-block with-errors">*</small>
-									<select class="form-control" id="SolResAuditoriaTipo" name="SolResAuditoriaTipo" required="">
-										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										<option value="99">{{ trans('adminlte_lang::message.solseraudiprese') }}</option>
-										<option value="98">{{ trans('adminlte_lang::message.solseraudivirt') }}</option>
-										<option value="97">{{ trans('adminlte_lang::message.solsernoaudi') }}</option>
-									</select>
-								</div>
-								<div id="typecollect" class="form-group col-md-12" hidden="">
-									<label>{{ trans('adminlte_lang::message.solsertypecollect') }}</label>
-									<small class="help-block with-errors">*</small>
-									<select class="form-control" id="SolSerTypeCollect" name="SolSerTypeCollect" required="">
-										<option onclick="HiddenTypeCollect()" value="">{{ trans('adminlte_lang::message.select') }}</option>
-										<option onclick="HiddenTypeCollect()" value="99" >{{ trans('adminlte_lang::message.solsertypecollect1') }}</option>
-										<option onclick="TypeCollectSede()" value="98" >{{ trans('adminlte_lang::message.solsertypecollect2') }}</option>
-										<option onclick="TypeCollectOther()" value="97" >{{ trans('adminlte_lang::message.solsertypecollect3') }}</option>
-									</select>
-								</div>
-								<div id="sedecollect" class="form-group col-md-6" hidden="">
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsersedecollect') }}</b>" data-content="{{ trans('adminlte_lang::message.solsersedecollectdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsersedecollect') }}</label>
-									<small class="help-block with-errors">*</small>
-									<select class="form-control select" id="SedeCollect" name="SedeCollect">
-										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										@foreach($Sedes as $Sede)
+											@endforeach
+										</select>
+									</div>
+									<div class="form-group col-md-6 citytransportadora" hidden>
+										<label for="municipio">{{ trans('adminlte_lang::message.solsertransmuni') }}</label><a class="load"></a>
+										<small class="help-block with-errors">*</small>
+										<select name="SolSerCityTrans" class="form-control select" id="municipio"></select>
+									</div>
+									<div id="Conductor" class="form-group col-md-6" hidden="true">
+										<label for="SolSerConductor">{{ trans('adminlte_lang::message.solserconduc') }}</label>
+										<input maxlength="255" type="text" class="form-control" id="SolSerConductor" name="SolSerConductor" value="{{old('SolSerConductor')}}">
+									</div>
+									<div id="Vehiculo" class="form-group col-md-6" hidden="true">
+										<label for="SolSerVehiculo">{{ trans('adminlte_lang::message.solservehic') }}</label>
+										<input type="text" class="form-control placa" id="SolSerVehiculo" name="SolSerVehiculo" value="{{old('SolSerVehiculo')}}">
+									</div>
+									<div id="typeaditable" class="form-group col-md-6">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solseraudi') }}</b>" data-content="{{ trans('adminlte_lang::message.solseraudidescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solseraudi') }}</label>
+										<small class="help-block with-errors">*</small>
+										<select class="form-control" id="SolResAuditoriaTipo" name="SolResAuditoriaTipo" required="">
+											<option value="97">{{ trans('adminlte_lang::message.solsernoaudi') }}</option>
+											<option value="99">{{ trans('adminlte_lang::message.solseraudiprese') }}</option>
+											<option value="98">{{ trans('adminlte_lang::message.solseraudivirt') }}</option>
+										</select>
+									</div>
+									<div id="typecollect" class="form-group col-md-12">
+										<label>{{ trans('adminlte_lang::message.solsertypecollect') }}</label>
+										<small class="help-block with-errors">*</small>
+										<select class="form-control" id="SolSerTypeCollect" name="SolSerTypeCollect" required="">
+											<option onclick="HiddenTypeCollect()" value="">{{ trans('adminlte_lang::message.select') }}</option>
+											<option onclick="TypeCollectSede()" value="98">{{ trans('adminlte_lang::message.solsertypecollect2') }}</option>
+											<option onclick="HiddenTypeCollect()" value="99">{{ trans('adminlte_lang::message.solsertypecollect1') }}</option>
+											<option onclick="TypeCollectOther()" value="97">{{ trans('adminlte_lang::message.solsertypecollect3') }}</option>
+										</select>
+									</div>
+									<div id="sedecollect" class="form-group col-md-6" hidden="">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsersedecollect') }}</b>" data-content="{{ trans('adminlte_lang::message.solsersedecollectdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsersedecollect') }}</label>
+										<small class="help-block with-errors">*</small>
+										<select class="form-control select" id="SedeCollect" name="SedeCollect">
+											<option value="">Seleccione...</option>
+											@foreach($Sedes as $Sede)
 											<option value="{{$Sede->SedeSlug}}">{{$Sede->SedeName}}</option>
-										@endforeach
-									</select>
-								</div>
-								<div class="form-group col-md-6 addresscollect" hidden="">
-									<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solseraddrescollect') }}</b>" data-content="{{ trans('adminlte_lang::message.solseraddrescollectdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solseraddrescollect') }}</label>
-									<small class="help-block with-errors">*</small>
-									<input maxlength="255" type="text" class="form-control" id="AddressCollect" name="AddressCollect">
-								</div>
-								<div class="form-group col-md-6 addresscollect" hidden="">
-									<label for="departamento2">{{ trans('adminlte_lang::message.solseraddrescollectdepa') }}</label>
-									<select class="form-control select" id="departamento2">
-										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										@foreach ($Departamentos as $Departamento)
+											@endforeach
+										</select>
+									</div>
+									<div class="form-group col-md-6 addresscollect" hidden="">
+										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solseraddrescollect') }}</b>" data-content="{{ trans('adminlte_lang::message.solseraddrescollectdescrit') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solseraddrescollect') }}</label>
+										<small class="help-block with-errors">*</small>
+										<input maxlength="255" type="text" class="form-control" id="AddressCollect" name="AddressCollect">
+									</div>
+									<div class="form-group col-md-6 addresscollect" hidden="">
+										<label for="departamento2">{{ trans('adminlte_lang::message.solseraddrescollectdepa') }}</label>
+										<select class="form-control select" id="departamento2">
+											<option value="">Seleccione...</option>
+											@foreach ($Departamentos as $Departamento)
 											<option value="{{$Departamento->ID_Depart}}">{{$Departamento->DepartName}}</option>
-										@endforeach
-									</select>
+											@endforeach
+										</select>
+									</div>
+									<div class="form-group col-md-6 addresscollect" hidden="">
+										<label for="municipio2">{{ trans('adminlte_lang::message.solseraddrescollectmuni') }}</label><a class="load"></a>
+										<small class="help-block with-errors">*</small>
+										<select name="FK_SolSerCollectMun" class="form-control select" id="municipio2"></select>
+									</div>
 								</div>
-								<div class="form-group col-md-6 addresscollect" hidden="">
-									<label for="municipio2">{{ trans('adminlte_lang::message.solseraddrescollectmuni') }}</label><a class="load"></a>
-									<small class="help-block with-errors">*</small>
-									<select name="FK_SolSerCollectMun" class="form-control select" id="municipio2"></select>
-								</div>
+
 								<div class="col-md-12">
 									<center>
 										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Observaciones <b>Opcional</b>" data-content="En este campo puede redactar sus observaciones con relación a esta solicitud de servicio"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones</label>

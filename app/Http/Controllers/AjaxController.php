@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 use App\Http\Controllers\userController;
 use App\ProgramacionVehiculo;
 use App\Http\Requests\CambiodefechaStoreRequest;
@@ -21,9 +22,13 @@ use App\Personal;
 use App\Permisos;
 use App\audit;
 use App\Observacion;
+use App\Prefactura;
+use App\PrefacturaTratamiento;
+use App\PrefacturaResiduo;
 use App\Mail\SolSerEmail;
 use App\Mail\ConcilacionRecordatorio;
 use App\Mail\CertUpdatedComercial;
+
 
 
 class AjaxController extends Controller
@@ -374,9 +379,33 @@ class AjaxController extends Controller
 	/*Funcion para certtificacion de servicios via ajax*/
 	public function facturarServicio(Request $request, $servicio)
 	{
+		$request->validate([
+			'ordenCompra' => 'required|max:20',
+			'costoTransporte' => 'required|numeric|min:0',
+		], [
+			'*.required' => 'debe especificar un valor en el campo :attribute',
+			'costoTransporte.min' => 'ingrese un valor mayor a 0 en el campo :attribute',
+			'costoTransporte.numeric' => 'ingrese un valor mayor a 0 en el campo :attribute',
+		], [
+			'ordenCompra' => 'Orden De Compra',
+			'costoTransporte' => 'Costo de transporte',
+		]);
+		
+		// $data = [];
+		// if ($request->ajax()) {
+		// 	$data['slug'] = $servicio;
+		// 	$data['new_token'] = csrf_token();
+		// 	$data['peticionType'] = 'ajax';
+		// 	$data['request'] = $request;
+		// }else{
+		// 	$data['peticionType'] = 'NO ajax';
+		// }
+		// return response()->json($data);
+
+		// return $servicio;
 		if ($request->ajax()) {
 			if (in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES)) {
-				$Solicitud = SolicitudServicio::where('SolSerSlug', $servicio)->first();
+				$Solicitud = SolicitudServicio::with('SolicitudResiduo')->where('SolSerSlug', $servicio)->first();
 				if (!$Solicitud) {
 					abort(404);
 				}
@@ -398,6 +427,133 @@ class AjaxController extends Controller
 
 						$resCode = 200;
 						$res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' del cliente facturada con exito';
+
+						/* validacion para encontrar la fecha de recepción en planta del servicio */
+						$fechaRecepcion = $Solicitud->programacionesrecibidas()->first();
+						if($fechaRecepcion){
+							$Solicitud->recepcion = $fechaRecepcion->ProgVehSalida;
+						}else{
+							$Solicitud->recepcion = now()->format('Y-m-d');
+						}
+
+						$prefactura = new Prefactura();
+						$prefactura->FK_Comercial = $Solicitud->cliente->comercialAsignado->ID_Pers;
+						$prefactura->FK_Cliente = $Solicitud->FK_SolSerCliente;
+						$prefactura->FK_Servicio = $Solicitud->ID_SolSer;
+						$prefactura->Costo_transporte = $request->input('costoTransporte');
+						$prefactura->Subtotal_procesos = 0; /**sin incluir el costo por transportes */
+						$prefactura->Total_prefactura = $prefactura->Costo_transporte; /** total servicios mas costo de transportes */
+						$prefactura->status_prefactura = 'Abierta';
+						$prefactura->orden_compra = $request->input('ordenCompra');
+						$prefactura->Fecha_Servicio = $Solicitud->recepcion;
+						$prefactura->save();
+
+						
+						$rms_list = array();
+
+						foreach ($Solicitud->SolicitudResiduo as $key => $residuo) {
+							/**validar el peso segun el tipo de unidad */
+							$pesoConciliado = 0;
+							switch ($residuo->SolResTypeUnidad) {
+								case 'Unidad':
+								case 'Litros':
+									$pesoConciliado = $residuo->SolResCantiUnidadConciliada;
+									$unidadpesaje = $residuo->SolResTypeUnidad;
+									break;
+								
+								default:
+									$pesoConciliado = $residuo->SolResKgConciliado;
+									$unidadpesaje = 'Kg';
+									break;
+							}
+							// saltar si no hay cantidad conciliada
+							if ($pesoConciliado <= 0) {
+								continue;
+							}
+							// consltar el tipo de tratamiento
+							$prefacturaTratamiento = PrefacturaTratamiento::with('prefacresiduo')
+							->where('FK_Prefactura', $prefactura->ID_Prefactura)
+							->where('FK_Tratamiento', $residuo->requerimiento->FK_ReqTrata)
+							->where('unidad_tratamiento', $unidadpesaje)
+							->first();
+
+							/**validar si existe la prefac_tratamiento */
+							if ($prefacturaTratamiento === null) {
+								// en caso de que no esxista se crea una nuevo registro de prefactura tratamiento
+								$prefacturaTratamiento = new prefacturaTratamiento();
+								$prefacturaTratamiento->FK_Prefactura = $prefactura->ID_Prefactura;
+								$prefacturaTratamiento->FK_Tratamiento = $residuo->requerimiento->FK_ReqTrata;
+								$prefacturaTratamiento->unidad_tratamiento = $unidadpesaje;
+								$prefacturaTratamiento->cantidad_tratamiento = 0;
+								$prefacturaTratamiento->Subtotal_tarifa_trat = 0;
+								$prefacturaTratamiento->Total_prefactratamiento = 0;
+								
+								if (Arr::accessible($residuo->SolResRM)) {
+									if (Arr::isAssoc($residuo->SolResRM)) {
+										$prefacturaTratamiento->RMs = '{"a":array asociativo}';
+									}else{
+										$prefacturaTratamiento->RMs = json_encode($residuo->SolResRM);
+									}
+									// $prefacturaTratamiento->RMs = $residuo->SolResRM;
+								}else{
+									$prefacturaTratamiento->RMs = '{"a":no array}';
+								}
+								$prefacturaTratamiento->save();
+							}
+
+							$prefacturaResiduo = new PrefacturaResiduo();
+							$prefacturaResiduo->FK_Prefactura = $prefactura->ID_Prefactura;
+							$prefacturaResiduo->FK_PreFacTratamiento = $prefacturaTratamiento->ID_PrefacTratamiento;
+							$prefacturaResiduo->precio_tarifa = $residuo->SolResPrecio;
+							switch ($residuo->SolResTypeUnidad) {
+								case 'Unidad':
+								case 'Litros':
+									$prefacturaResiduo->subtotal_respel = $residuo->SolResPrecio * $residuo->SolResCantiUnidadConciliada;
+									$prefacturaResiduo->cantidad_respel = $residuo->SolResCantiUnidadConciliada;
+									$prefacturaResiduo->unidad_respel = $residuo->SolResTypeUnidad;
+									break;
+								
+								default:
+									$prefacturaResiduo->subtotal_respel = $residuo->SolResPrecio * $residuo->SolResKgConciliado;
+									$prefacturaResiduo->cantidad_respel = $residuo->SolResKgConciliado;
+									$prefacturaResiduo->unidad_respel = 'Kg';
+									break;
+							}
+							if (Arr::accessible($residuo->SolResRM)) {
+								if (Arr::isAssoc($residuo->SolResRM)) {
+									$prefacturaResiduo->RMs = '{"a":array asociativo}';
+								}else{
+									$prefacturaResiduo->RMs = $residuo->SolResRM;
+								}
+								// $prefacturaResiduo->RMs = $residuo->SolResRM;
+							}else{
+								$prefacturaResiduo->RMs = '{"a":no array}';
+							}
+							$prefacturaResiduo->FK_SolRespel = $residuo->ID_SolRes;
+							$prefacturaResiduo->save();
+
+							$prefacturaTratamiento->cantidad_tratamiento += $prefacturaResiduo->cantidad_respel;
+							$prefacturaTratamiento->Subtotal_tarifa_trat = $prefacturaResiduo->precio_tarifa;
+							$prefacturaTratamiento->Total_prefactratamiento += $prefacturaResiduo->subtotal_respel;
+							/* falta agrupar los numeros de los recibos de materiales ya que estan en formato string y puede dar error */
+							if (Arr::accessible($residuo->SolResRM)) {
+								if (Arr::isAssoc($residuo->SolResRM)) {
+									$prefacturaTratamiento->RMs = '{"a":array asociativo}';
+								}else{
+									$rmsprevios = json_decode($prefacturaTratamiento->RMs, true) ;
+									$prefacturaTratamiento->RMs = json_encode(array_unique(Arr::collapse([$rmsprevios, $residuo->SolResRM])));
+								}
+							}else{
+								$prefacturaTratamiento->RMs = '{"a":no array}';
+							}
+							$prefacturaTratamiento->save();
+							/**actualizar los totales de la factura */
+							$prefactura->Subtotal_procesos += $prefacturaResiduo->subtotal_respel;
+							$prefactura->Total_prefactura += $prefacturaResiduo->subtotal_respel;
+							$prefactura->save();
+							
+						}
+
 						break;
 						
 					case 'Facturado':
@@ -435,7 +591,7 @@ class AjaxController extends Controller
 
 					// $email = DB::table('solicitud_servicios')
 					// 	->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-                	// 	->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+					// 	->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
 					// 	->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.CliName', 'clientes.CliComercial')
 					// 	->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
 					// 	->first();
@@ -451,19 +607,23 @@ class AjaxController extends Controller
 
 					// $destinatarios = [$comercial->PersEmail];
 					// if ($Solicitud->SolServMailCopia == "null") {
-                    //     Mail::to($email->PersEmail)
-                    //     ->cc($destinatarios)
-                    //     ->send(new SolSerEmail($email));
-                    // }else{
-                    //     foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
-                    //         array_push($destinatarios, $value);
-                    //     }
-                    //     Mail::to($email->PersEmail)
-                    //     ->cc($destinatarios)
-                    //     ->send(new SolSerEmail($email));
-                    // }
+					//     Mail::to($email->PersEmail)
+					//     ->cc($destinatarios)
+					//     ->send(new SolSerEmail($email));
+					// }else{
+					//     foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
+					//         array_push($destinatarios, $value);
+					//     }
+					//     Mail::to($email->PersEmail)
+					//     ->cc($destinatarios)
+					//     ->send(new SolSerEmail($email));
+					// }
 				}
-				return response()->json(['message' => $res, 'code' => $resCode], $resCode);
+				return response()->json([
+					'message' => $res, 
+					'code' => $resCode,
+					'new_token' => csrf_token()],
+					$resCode);
 
 			}else{
 				return response()->json(['error' => 'Usuario no autorizado'], 401);
@@ -839,5 +999,14 @@ class AjaxController extends Controller
 			}
 				return response()->json($Respels);
 		}
+	}
+	/*Funcion para ver por medio de Ajax los Municipios que le competen a un Departamento*/
+	public function renewTokenAfterError(Request $request)
+	{
+		$response = "";
+		if ($request->ajax()) {
+			$response = csrf_token();
+		}
+		return response()->json($response);
 	}
 }
