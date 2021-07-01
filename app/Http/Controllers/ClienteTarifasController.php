@@ -72,7 +72,7 @@ class ClienteTarifasController extends Controller
             'CTarifaDesde' => 'required|numeric|min:0',
             'Tarifatipo' => 'required|in:Kg,Unid,Lt',
             'CTarifaPrecio' => 'required|numeric|min:0',
-            // 'TarifaFrecuencia' => 'required|in:Servicio,Mensual',
+            'CTarifaFrecuencia' => 'required|in:Servicio,Mensual',
             'TarifaVencimiento' => 'required|date',
         ], [
             '*.required' => 'debe especificar un valor en el campo :attribute',
@@ -84,7 +84,7 @@ class ClienteTarifasController extends Controller
             'CTarifaDesde' => 'Rango',
             'Tarifatipo' => 'Unidad',
             'CTarifaPrecio' => 'Precio',
-            // 'TarifaFrecuencia' => 'Frecuencia',
+            'CTarifaFrecuencia' => 'Frecuencia',
             'TarifaVencimiento' => 'Vencimiento',
         ]);
 
@@ -102,7 +102,7 @@ class ClienteTarifasController extends Controller
             $Tarifanueva->TarifaDelete = 0;
             $Tarifanueva->TarifaVencimiento = $request->input('TarifaVencimiento');
             $Tarifanueva->TarifaFrecuencia = 'Servicio';
-            // $Tarifanueva->TarifaFrecuencia = $request->input('TarifaFrecuencia');
+            $Tarifanueva->TarifaFrecuencia = $request->input('CTarifaFrecuencia');
             $Tarifanueva->Tarifatipo = $request->input('Tarifatipo');
             $Tarifanueva->FK_Cliente = $cliente->ID_Cli;
             $Tarifanueva->FK_Tratamiento = $request->input('FK_Tratamiento');
@@ -136,6 +136,9 @@ class ClienteTarifasController extends Controller
             $log->AuditUser=Auth::user()->email;
             $log->Auditlog=$Rangonuevo;
             $log->save();
+
+            $tarifaPrevia->TarifaFrecuencia = $request->input('CTarifaFrecuencia');
+            $tarifaPrevia->save();
         }
 
 
