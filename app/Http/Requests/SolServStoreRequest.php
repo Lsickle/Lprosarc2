@@ -45,7 +45,7 @@ class SolServStoreRequest extends FormRequest
                     $query->where('personals.FK_PersCargo', null);
                 }
             })],
-            'SolSerTipo'        => 'required|numeric|between:98,99',
+            'SolSerTipo'        => 'required|numeric|between:96,99',
             'SolResAuditoriaTipo' => 'required|numeric|between:97,99',
         ];
         if($request->input('SolSerDevolucion') == 'on'){
@@ -53,13 +53,8 @@ class SolServStoreRequest extends FormRequest
                 'SolSerDevolucionTipo'  => 'required',
             ];
         }
-        if($request->input('SolSerTipo') == 98){
-            $rules = [
-                'SolSerTransportador' => 'required|numeric|between:98,99',
-                'SolSerConductor'     => 'max:255',
-                'SolSerVehiculo'      => 'max:7',
-            ];
-            if($request->input('SolSerTransportador') == 98){
+        switch ($request->input('SolSerTipo')) {
+            case 96:
                 $rules = [
                     'SolSerNameTrans'    => 'required|max:255',
                     'SolSerNitTrans'     => 'required|max:20',
@@ -68,25 +63,37 @@ class SolServStoreRequest extends FormRequest
                     'SolSerConductor'     => 'max:255',
                     'SolSerVehiculo'      => 'max:7',
                 ];
-            }
-        }
-        else{
-            $rules = [
-                'SolSerTypeCollect'     => 'required|numeric|between:97,99',
-            ];
-            if($request->input('SolSerTypeCollect') <> 99){
-                if($request->input('SolSerTypeCollect') == 98){
-                    $rules = [
-                        'SedeCollect'     => 'required',
-                    ];
+                break;
+            case 97:
+            case 98:
+                $rules = [
+                    'SolSerTransportador' => 'required',
+                    'SolSerConductor'     => 'max:255',
+                    'SolSerVehiculo'      => 'max:7',
+                ];
+                break;
+            case 99:
+                $rules = [
+                    'SolSerTypeCollect'     => 'required|numeric|between:97,99',
+                ];
+                if($request->input('SolSerTypeCollect') <> 99){
+                    if($request->input('SolSerTypeCollect') == 98){
+                        $rules = [
+                            'SedeCollect'     => 'required',
+                        ];
+                    }
+                    if($request->input('SolSerTypeCollect') == 97){
+                        $rule = [
+                            'AddressCollect'           => 'required|max:255',
+                            'municipio2'               => ['required',Rule::exists('municipios', 'ID_Mun')],
+                        ];
+                    }
                 }
-                if($request->input('SolSerTypeCollect') == 97){
-                    $rule = [
-                        'AddressCollect'           => 'required|max:255',
-                        'municipio2'               => ['required',Rule::exists('municipios', 'ID_Mun')],
-                    ];
-                }
-            }
+                break;
+            
+            default:
+                # code...
+                break;
         }
         foreach ($request->input('SGenerador') as $Generador => $value) {
             $rules['SGenerador.'.$Generador] = ['required', Rule::exists('gener_sedes', 'GSedeSlug')->where(function ($query) use ($request ,$Generador){
@@ -153,13 +160,8 @@ class SolServStoreRequest extends FormRequest
                 'SolSerDevolucionTipo' => '"Nombre elementos"',
             ];
         }
-        if($this->request->get('SolSerTipo') == 98){
-            $attributes = [
-                'SolSerTransportador' => '"Transportador"',
-                'SolSerConductor'     => '"Conductor"',
-                'SolSerVehiculo'      => '"Placa del Vehiculo"',
-            ];
-            if($this->request->get('SolSerTransportador') == 98){
+        switch ($this->request->get('SolSerTipo')) {
+            case 96:
                 $attributes = [
                     'SolSerNameTrans'    => '"Nombre de la transaportadora"',
                     'SolSerNitTrans'     => '"Nit de la transportadora"',
@@ -168,7 +170,26 @@ class SolServStoreRequest extends FormRequest
                     'SolSerConductor'     => '"Conductor"',
                     'SolSerVehiculo'      => '"Placa del Vehiculo"',
                 ];
-            }
+                break;
+            case 97:
+            case 98:
+                $attributes = [
+                    'SolSerTransportador' => '"Transportador"',
+                    'SolSerConductor'     => '"Conductor"',
+                    'SolSerVehiculo'      => '"Placa del Vehiculo"',
+                ];
+                break;
+            case 99:
+                $attributes = [
+                    'SolSerTypeCollect' => '"¿Dónde sera la recolección?"',
+                    'SedeCollect'     => '"Sede de recolección"',
+                    'AddressCollect'      => '"Dirección de recolección"',
+                    'municipio2'      => '"Municipio de Recolección "',
+                ];
+                break;
+            default:
+                # code...
+                break;
         }
         foreach ($this->request->get('SGenerador') as $Generador => $value) {
             $attributes['SGenerador.'.$Generador] = '"Seleccione el generador (N° '.($Generador+1).')"';
@@ -199,7 +220,6 @@ class SolServStoreRequest extends FormRequest
         $messages = [
             'SolSerTipo.numeric' => 'el tipo de solicitud de servicio no coincide con los permitidos en la aplicación o no esta definido',
             'SolResAuditoriaTipo.numeric' => 'el tipo de auditoria no coincide con los permitidos en la aplicación o no esta definido',
-            'SolSerTransportador.numeric' => 'el tipo de transportador no coincide con los permitidos en la aplicación o no esta definido',
             'SolResTypeUnidad.numeric' => 'el tipo de unidad no coincide con los permitidos en la aplicación o no esta definido',
             'SolResEmbalaje.numeric' => 'el embalaje no coincide con los permitidos en la aplicación o no esta definido',
             'between' => 'Solo se permiten valores between',

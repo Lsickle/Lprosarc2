@@ -376,7 +376,9 @@ class RespelController extends Controller
 
         // se incorporan las tarifas al array                
         foreach ($requerimientos as $requerimiento) {
-            $tarifas = Tarifa::with(['rangos'])
+            $tarifas = Tarifa::with(['rangos' => function ($query) {
+                return $query->orderBy('TarifaDesde','ASC');
+            }])
             ->where('FK_TarifaReq', '=', $requerimiento->ID_Req)
             ->get();
             $requerimiento['tarifas'] = $tarifas;
@@ -473,7 +475,9 @@ class RespelController extends Controller
                 // se incorporan las tarifas al array                
                 foreach ($requerimientos as $requerimiento) {
                     // adjuntar tarifas relacionadas
-                    $requerimiento['tarifas'] = Tarifa::with(['rangos'])
+                    $requerimiento['tarifas'] = Tarifa::with(['rangos' => function ($query) {
+                        return $query->orderBy('TarifaDesde','ASC');
+                    }])
                     ->where('FK_TarifaReq', '=', $requerimiento->ID_Req)
                     ->get();
                     
@@ -783,12 +787,24 @@ class RespelController extends Controller
                                 /*se verifica que las tarifas no esten disabled en la vista*/
                                 if (isset($opciones[$key]['TarifaFrecuencia'])) {
                                     // $tarifa = new Tarifa();
+                                    
                                     $tarifa = Tarifa::where('FK_TarifaReq', $requerimientoparaActualizar->ID_Req)->first();
                                     $tarifa->TarifaFrecuencia=$opciones[$key]['TarifaFrecuencia'];
-                                    $tarifa->TarifaVencimiento=$opciones[$key]['TarifaVencimiento'];   
+                                    $tarifa->TarifaVencimiento=$opciones[$key]['TarifaVencimiento'];
                                     $tarifa->Tarifatipo=$opciones[$key]['Tarifatipo'];
                                     $tarifa->TarifaDelete=0;
                                     $tarifa->FK_TarifaReq=$requerimientoparaActualizar->ID_Req;
+                                    if (isset($opciones[$key]['TarifaSpecial'])) {
+                                        $tarifa->TarifaSpecial=$opciones[$key]['TarifaSpecial'];
+
+                                        $log = new audit();
+                                        $log->AuditTabla="tarifas y rangos";
+                                        $log->AuditType="rangos Updated";
+                                        $log->AuditRegistro=$respel->ID_Respel;
+                                        $log->AuditUser=Auth::user()->email;
+                                        $log->Auditlog=$opciones[$key];
+                                        $log->save();
+                                    }
                                     $tarifa->save();
 
                                     foreach ($opciones[$key]['TarifaDesde'] as $key2 => $value2) {
@@ -886,6 +902,17 @@ class RespelController extends Controller
                                     $tarifa->Tarifatipo=$opciones[$key]['Tarifatipo'];
                                     $tarifa->TarifaDelete=0;
                                     $tarifa->FK_TarifaReq=$requerimiento->ID_Req;
+                                    if (isset($opciones[$key]['TarifaSpecial'])) {
+                                        $tarifa->TarifaSpecial=$opciones[$key]['TarifaSpecial'];
+
+                                        $log = new audit();
+                                        $log->AuditTabla="tarifas y rangos";
+                                        $log->AuditType="rangos Updated";
+                                        $log->AuditRegistro=$respel->ID_Respel;
+                                        $log->AuditUser=Auth::user()->email;
+                                        $log->Auditlog=$opciones[$key];
+                                        $log->save();
+                                    }
                                     $tarifa->save();
 
                                     foreach ($opciones[$key]['TarifaDesde'] as $key2 => $value2) {
@@ -932,7 +959,7 @@ class RespelController extends Controller
         $log->AuditType="Evaluacion Updated";
         $log->AuditRegistro=$respel->ID_Respel;
         $log->AuditUser=Auth::user()->email;
-        $log->Auditlog=json_encode($request->all());
+        $log->Auditlog=$request->all();
         $log->save();
 
         if($respel->RespelPublic === 0){

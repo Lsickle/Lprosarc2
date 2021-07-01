@@ -89,6 +89,9 @@
 									if (!isset($ayudante)) {
 										$ayudante = 'No definido';
 									}
+									if (!isset($conductor)) {
+										$conductor = 'No definido';
+									}
 								@endphp
 								<tr style="{{$programacion->ProgVehDelete === 1 ? 'color: red' : ''}}">
 									<td>{{$programacion->CliName}}</td>

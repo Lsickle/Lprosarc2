@@ -1223,7 +1223,7 @@ class VehicProgController extends Controller
 						];
 		if ($cantidadDeResiduosControlados > 0) {
 			//enviar notificacion de servicion con sustancia controladas
-			Mail::to('dirtecnica@prosarc.com.co')->cc(['sistemas@prosarc.com.co', 'logistica@prosarc.com.co'])->send(new SustanciaControladaProgramada($email, $SolicitudServicio));
+			Mail::to('dirtecnica@prosarc.com.co')->cc(['sistemas@prosarc.com.co', 'logistica@prosarc.com.co', 'recepcionpda@prosarc.com.co', 'auxiliarpda@prosarc.com.co'])->send(new SustanciaControladaProgramada($email, $SolicitudServicio));
 		}else{
 			array_push($destinatarios, 'dirtecnica@prosarc.com.co');
 		}

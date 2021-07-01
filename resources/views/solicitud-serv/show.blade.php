@@ -483,7 +483,30 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 															<a style="color: black">
 														@endif
 														<i class="fas fa-marker"></i></a>
-														{{$Residuo->SolResPrecio}} Pesos
+														{{$Residuo->SolResPrecio}} <br> 
+
+														@switch($Residuo->SolResTypePrecio)
+															@case(1)
+																<b style="color:blue">
+																
+																@break
+															@case(2)
+																<b style="color:green">
+																
+																@break
+
+															@case(3)
+																<b style="color:red">
+																@break
+															@default
+																<b style="color:black">
+														@endswitch
+															
+														@if ($Residuo->tarifa->TarifaSpecial === 1)
+															(T_Residuo)</b>
+														@else
+															(T_Cliente)</b>
+														@endif
 													</td>
 												@endif
 												<td style="text-align: center;">{{number_format($Residuo->SolResKgEnviado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}} Kilogramos</td>
@@ -1744,7 +1767,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		@break
 		@case('Programado')
 			$('#titulo').empty();
-			@if((in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) && ($SolicitudServicio->SolSerTipo == 'Externo'))
+			@if((in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) && ($SolicitudServicio->SolSerTipo !== 'Interno'))
 				$('#titulo').append(`
 					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 				`);
@@ -1793,7 +1816,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		@break
 		@case('Notificado')
 			$('#titulo').empty();
-			@if((in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) && ($SolicitudServicio->SolSerTipo == 'Externo'))
+			@if((in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) && ($SolicitudServicio->SolSerTipo !== 'Interno'))
 				$('#titulo').append(`
 					<a href="/solicitud-servicio/{{$SolicitudServicio->SolSerSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{trans('adminlte_lang::message.edit')}}</b></a>
 				`);

@@ -83,6 +83,12 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::post('/Soy-Gener/{id}', 'genercontroller@storeSoyGenerador');
 	Route::resource('/sgeneradores', 'sgenercontroller');
 	Route::resource('/respels', 'RespelController');
+
+	//Cliente tarifas routes
+
+	// Route::get('/cliente/{cliente}/tarifascliente_create', 'ClienteTarifasController@create');
+	// Route::post('/cliente/{cliente}/tarifascliente_store', 'ClienteTarifasController@store')->name('cliente-tarifas-store');
+	Route::resource('/cliente/{slug}/clientetarifas', 'ClienteTarifasController');
 	/*Route::resource('/vencidos', 'RespelController');*/
 
 
@@ -223,10 +229,12 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::get('/SubcategoriaDinamico/{id}', 'AjaxController@SubcategoriaDinamico');
 	Route::get('/verificarduplicado/{numero}/{type}', 'AjaxController@verificarDuplicado');
 	Route::get('/certificarservicio/{servicio}', 'AjaxController@certificarServicio');
-	Route::get('/facturarservicio/{servicio}', 'AjaxController@facturarServicio');
+	Route::post('/facturarservicio/{servicio}', 'AjaxController@facturarServicio');
 	Route::post('/recordatorioAjax', 'AjaxController@sendRecordatorio');
+	Route::get('/renewtokenaftererror', 'AjaxController@renewTokenAfterError');
 	Route::put('/firmarCertificado/{slug}', 'AjaxController@firmarCertificado')->name('certificados.ajaxfirmar');
 	Route::get('/ClienteExpress-Residuos/{id}', 'AjaxController@clienteExpressResiduos');
+	Route::resource('/prefacturas', 'PrefacturaController');
 	
 	/*Rutas de generacion de PDF*/
 	Route::get('/PdfManiCarg/{id}','PdfController@PdfManiCarg');

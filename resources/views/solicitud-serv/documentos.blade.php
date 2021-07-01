@@ -108,27 +108,27 @@
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Director de Planta</p>
 													@break
-												
+
 												@case(2)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Jefe de Logística</p>
 													@break
-												
+
 												@case(3)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Jefe de Operaciones</p>
 													@break
-												
+
 												@case(4)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Supervisor de Turno</p>
 													@break
-												
+
 												@case(5)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Ingeniero HSEQ</p>
 													@break
-													
+
 												@case(6)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Asistente de Logística</p>
@@ -153,27 +153,27 @@
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Director de Planta</p>
 													@break
-												
+
 												@case(2)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Jefe de Logística</p>
 													@break
-												
+
 												@case(3)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Jefe de Operaciones</p>
 													@break
-												
+
 												@case(4)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Supervisor de Turno</p>
 													@break
-												
+
 												@case(5)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Ingeniero HSEQ</p>
 													@break
-													
+
 												@case(6)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Asistente de Logística</p>
@@ -198,27 +198,27 @@
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Director de Planta</p>
 													@break
-												
+
 												@case(2)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Jefe de Logística</p>
 													@break
-												
+
 												@case(3)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Jefe de Operaciones</p>
 													@break
-												
+
 												@case(4)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Supervisor de Turno</p>
 													@break
-												
+
 												@case(5)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Ingeniero HSEQ</p>
 													@break
-													
+
 												@case(6)
 													<i class='fas fa-signature fa-lg'></i>
 													<p>Asistente de Logística</p>
@@ -245,10 +245,10 @@
 											<button id="{{'buttonfirmarDoc'.$certificado->CertSlug}}" class='btn fixed_widthbtn btn-warning' onclick="firmarDocumento('{{$certificado->CertSlug}}')"><i class='fas fa-lg fa-file-signature'></i></button>
 										</td>
 									@else
-										@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
-										<td class="text-center">
-											<button id="{{'buttonfirmarDoc'.$certificado->CertSlug}}" class='btn fixed_widthbtn btn-default' disabled><i class='fas fa-lg fa-file-signature'></i></button>
-										</td>
+										@if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+											<td class="text-center">
+												<button id="{{'buttonfirmarDoc'.$certificado->CertSlug}}" class='btn fixed_widthbtn btn-default' disabled><i class='fas fa-lg fa-file-signature'></i></button>
+											</td>
 										@endif
 									@endif
 									@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
@@ -290,7 +290,7 @@
 										<input type="text" name="solserslug" value="`+slug+`" style="display: none;">
 										<input type="text" name="solserstatus" value="`+value+`" style="display: none;">
 									</form>
-								</div> 
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
@@ -364,42 +364,42 @@ function firmarDocumento(CertSlug){
 				case 0:
 				ADfirmaCorrespondiente = `<p>Pendiente</p>`;
 					break;
-				
+
 				case 1:
 				ADfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
 				<p>Director de Planta</p>`;
 					break;
-				
+
 				case 2:
 				ADfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
 				<p>Jefe de Logística</p>`;
 					break;
-				
+
 				case 3:
 				ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Jefe de Operaciones</p>`;
 					break;
-				
+
 				case 4:
 				ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Supervisor de Turno</p>`;
 					break;
-				
+
 				case 5:
 				ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Ingeniero HSEQ</p>`;
 					break;
-				
+
 				case 6:
 				ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Asistente de Logística</p>`;
 					break;
-				
+
 				case 7:
 				ADfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Programador</p>`;
 					break;
-				
+
 				default:
 				ADfirmaCorrespondiente = `<p>Error en Firma Digital</p>`;
 					break;
@@ -409,42 +409,42 @@ function firmarDocumento(CertSlug){
 				case 0:
 				ALfirmaCorrespondiente = `<p>Pendiente</p>`;
 					break;
-				
+
 				case 1:
 				ALfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
 				<p>Director de Planta</p>`;
 					break;
-				
+
 				case 2:
 				ALfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
 				<p>Jefe de Logística</p>`;
 					break;
-				
+
 				case 3:
 				ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Jefe de Operaciones</p>`;
 					break;
-				
+
 				case 4:
 				ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Supervisor de Turno</p>`;
 					break;
-				
+
 				case 5:
 				ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Ingeniero HSEQ</p>`;
 					break;
-				
+
 				case 6:
 				ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Asistente de Logística</p>`;
 					break;
-				
+
 				case 7:
 				ALfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Programador</p>`;
 					break;
-				
+
 				default:
 				ALfirmaCorrespondiente = `<p>Error en Firma Digital</p>`;
 					break;
@@ -454,42 +454,42 @@ function firmarDocumento(CertSlug){
 				case 0:
 				AOfirmaCorrespondiente = `<p>Pendiente</p>`;
 					break;
-				
+
 				case 1:
 				AOfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
 				<p>Director de Planta</p>`;
 					break;
-				
+
 				case 2:
 				AOfirmaCorrespondiente =`<i class='fas fa-signature fa-lg'></i>
 				<p>Jefe de Logística</p>`;
 					break;
-				
+
 				case 3:
 				AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Jefe de Operaciones</p>`;
 					break;
-				
+
 				case 4:
 				AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Supervisor de Turno</p>`;
 					break;
-				
+
 				case 5:
 				AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Ingeniero HSEQ</p>`;
 					break;
-				
+
 				case 6:
 				AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Asistente de Logística</p>`;
 					break;
-				
+
 				case 7:
 				AOfirmaCorrespondiente = `<i class='fas fa-signature fa-lg'></i>
 				<p>Programador</p>`;
 					break;
-				
+
 				default:
 				AOfirmaCorrespondiente = `<p>Error en Firma Digital</p>`;
 					break;
@@ -534,7 +534,7 @@ function firmarDocumento(CertSlug){
 					buttonsubmit.empty();
 					buttonsubmit.append(`<i class="fas fa-lg fa-file-signature"></i>`);
 					break;
-			
+
 				default:
 					buttonsubmit.each(function() {
 						$(this).on('click', function(event) {
