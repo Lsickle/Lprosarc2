@@ -66,7 +66,7 @@ class ClienteTarifasController extends Controller
      */
     public function store(Request $request, $CliSlug)
     {
-        
+
         $request->validate([
             'FK_Tratamiento' => 'required|exists:tratamientos,ID_Trat',
             'CTarifaDesde' => 'required|numeric|min:0',
@@ -138,9 +138,9 @@ class ClienteTarifasController extends Controller
             $log->save();
         }
 
-        
-        
-        
+
+
+
 
         return redirect()->route('clientetarifas.create', ['cliente' => $cliente->CliSlug]);
     }
@@ -190,14 +190,14 @@ class ClienteTarifasController extends Controller
     {
         $Rangoparaborrar = TRangos::find($ID_CRango);
         $Rangoparaborrar->delete();
-        
+
         // cuenta de rangos de la tarifa
         $tarifaparaborrar = CTarifa::where('ID_CTarifa', $Rangoparaborrar->FK_RangoCTarifa)->with('rangos')->first();
 
         $log = new audit();
         $log->AuditTabla="TRangos";
         $log->AuditType="TRangos Eliminado";
-        $log->AuditRegistro=$tarifaparaborrar->ID_CRango;
+        $log->AuditRegistro=$Rangoparaborrar->ID_CRango;
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=$Rangoparaborrar;
         $log->save();
@@ -205,7 +205,7 @@ class ClienteTarifasController extends Controller
         if ($tarifaparaborrar->rangos->Count() < 1) {
             $tarifaparaborrar->delete();
 
-            
+
             $log = new audit();
             $log->AuditTabla="CTarifa";
             $log->AuditType="CTarifa Eliminada";
