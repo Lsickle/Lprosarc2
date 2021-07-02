@@ -109,6 +109,7 @@ Tarifas del cliente
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if ($cliente->clientetarifa)
                                     @foreach ($cliente->clientetarifa as $tarifa)
                                     @foreach ($tarifa->rangos as $rango)
                                     <tr>
@@ -129,6 +130,7 @@ Tarifas del cliente
                                     </tr>
                                     @endforeach
                                     @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
