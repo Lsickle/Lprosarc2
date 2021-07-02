@@ -13,7 +13,7 @@ class CTarifa extends Model
     protected $primaryKey = 'ID_CTarifa';
 
     public function cliente(){
-    	return $this->belongsTo('App\cliente', 'FK_Cliente', 'ID_Cli');
+    	return $this->belongsTo('App\Cliente', 'FK_Cliente', 'ID_Cli');
     }
 
     public function tratamiento(){
