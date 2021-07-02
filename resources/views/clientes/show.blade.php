@@ -386,7 +386,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach ($cliente->clientetarifa as $tarifa)
+                                @if ($cliente->clientetarifa)
+                                @foreach ($cliente->clientetarifa as $tarifa)
 									@foreach ($tarifa->rangos as $rango)
 									<tr>
 										<td>{{$tarifa->ID_CTarifa}}</td>
@@ -399,6 +400,7 @@
 									</tr>
 									@endforeach
 								@endforeach
+                                @endif
 							</tbody>
 						</table>
 					</div>
