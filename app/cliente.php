@@ -9,7 +9,7 @@ class Cliente extends Model
 	protected $table = 'clientes';
 
 	protected $fillable = ['CliNit', 'CliName', 'CliShortname', 'CliCode','CliType', 'CliCategoria','CliAuditable', 'CliSlug' ,'CliDelete', 'ID_Cli', 'TipoFacturacion'];
-	
+
 	protected $primaryKey = 'ID_Cli';
 	/**
 	 * Get the route key for the model.
@@ -41,7 +41,7 @@ class Cliente extends Model
     public function manifiestosdegestor(){
 		return $this->hasMany('App\Manifiesto','FK_ManifTransp', 'ID_Cli');
     }
-    
+
     public function manifiestosdetransportador(){
 		return $this->hasMany('App\Manifiesto','FK_ManifGestor', 'ID_Cli');
     }
@@ -53,7 +53,7 @@ class Cliente extends Model
     public function certificadosdegestor(){
 		return $this->hasMany('App\Manifiesto','FK_CertTransp', 'ID_Cli');
     }
-    
+
     public function certificadosdetransportador(){
 		return $this->hasMany('App\Manifiesto','FK_CertGestor', 'ID_Cli');
     }
@@ -62,9 +62,7 @@ class Cliente extends Model
 		return $this->hasOne('App\Personal','ID_Pers', 'CliComercial');
     }
 
-	//lista las pretratamientos relacionados usando muchos a muchos
-	public function clientetarifa()
-	{
-		return $this->hasMany('App\CTarifa', 'FK_Cliente', 'ID_Cli');
+	public function clientetarifa(){
+		return $this->hasMany('App\CTarifa','FK_Cliente', 'ID_Cli');
 	}
 }
