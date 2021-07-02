@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Prefactura;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class PrefacturaController extends Controller
 {
@@ -14,7 +16,13 @@ class PrefacturaController extends Controller
      */
     public function index()
     {
-        $prefacturas = Prefactura::with(['cliente', 'comercial', 'servicio.programacionesrecibidas', 'prefacTratamiento.prefacresiduo'])->get();
+        if (Auth::User()->UsRol == 'Comercial') {
+            $prefacturas = Prefactura::with(['cliente', 'comercial', 'servicio.programacionesrecibidas', 'prefacTratamiento.prefacresiduo'])->where('FK_Comercial', Auth::User()->id)->get();
+        }else{
+            $prefacturas = Prefactura::with(['cliente', 'comercial', 'servicio.programacionesrecibidas', 'prefacTratamiento.prefacresiduo'])->get();
+        }
+
+        // $prefacturas = Prefactura::with(['cliente', 'comercial', 'servicio.programacionesrecibidas', 'prefacTratamiento.prefacresiduo'])->get();
 
         return view('prefacturas.index', compact('prefacturas'));
     }
