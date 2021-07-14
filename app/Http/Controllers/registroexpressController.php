@@ -239,7 +239,7 @@ class registroexpressController extends Controller
                 }
             }
 
-            $log = new Audit();
+            $log = new audit();
             $log->AuditTabla="respel";
             $log->AuditType="Copiado en Cliente Express";
             $log->AuditRegistro=$newRespel->ID_Respel;
