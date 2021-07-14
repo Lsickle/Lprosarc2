@@ -32,7 +32,7 @@ Route::get('/preguntas-frecuentes', function () {
     return view('preguntas.index');
 });
 
-Route::get('qr-code', function () 
+Route::get('qr-code', function ()
 {
 
 	$qrCode = new Endroid\QrCode\QrCode('https://sispro.prosarc.com');
@@ -47,6 +47,11 @@ Route::middleware(['web'])->group(function () {
 	Route::get('/registroexpress', 'registroexpressController@create')->name('registroexpress');
 	Route::post('/sendregisterexpress', 'registroexpressController@store');
 	Route::get('/pdftest', 'serviceexpresscontroller@pdftest');
+    Route::get('testprefactura', function () {
+        $prefacturas = App\Prefactura::with(['cliente', 'comercial', 'servicio.programacionesrecibidas', 'prefacTratamiento.prefacresiduo'])->where('ID_Prefactura', 3)->get();
+
+        return new App\Mail\ServicioFacturado($prefacturas);
+    });
 });
 
 
@@ -57,7 +62,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	//    });
 	// Route::get('/', function () {
 	// Only verified users may enter...
-	
+
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
 	#adminlte_routes
 	Route::post('/changeRol/{id}', 'userController@changeRol');
@@ -109,11 +114,11 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::post('/respelSGener', 'RespelSedeGenerController@storeSGener');
 	Route::delete('/respelSGener/{id}', 'RespelSedeGenerController@destroySGener');
 	Route::resource('/permisos', 'PermisoUsuarioController');
-	Route::get('/permisos/{id}/editpassword','PermisoUsuarioController@editpassword')->name('permisos-edit'); 
+	Route::get('/permisos/{id}/editpassword','PermisoUsuarioController@editpassword')->name('permisos-edit');
 	Route::put('/permiso/{id}','PermisoUsuarioController@updatepassword');
 	Route::resource('/UsuariosCliente', 'PermisoClienteController');
 	Route::get('/UsersClientes', 'PermisoClienteController@usersclientes')->name('users-clientes');
-	Route::get('/UsuariosCliente/{id}/editpassword','PermisoClienteController@editpassword')->name('permisos-edit'); 
+	Route::get('/UsuariosCliente/{id}/editpassword','PermisoClienteController@editpassword')->name('permisos-edit');
 	Route::put('/UsuarioCliente/{id}','PermisoClienteController@updatepassword');
 	Route::resource('/audits', 'auditController');
 	Route::resource('/place/departament', 'DepartamentoController');
@@ -210,7 +215,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/logout', 'Auth\LoginController@logout');
 	Route::get('/sclientes/{id}', 'sclientcontroller@getMunicipio');
-	Route::get('/ClasificacionA', function(){return view('layouts.RespelPartials.ClasificacionA');})->name('ClasificacionA'); 
+	Route::get('/ClasificacionA', function(){return view('layouts.RespelPartials.ClasificacionA');})->name('ClasificacionA');
 	Route::get('/ClasificacionY', function(){return view('layouts.RespelPartials.ClasificacionY');})->name('ClasificacionY');
 	Route::resource('/contratos', 'ContratoController');
 	Route::resource('/requeri-client', 'RequerimientosClienteController');
@@ -235,7 +240,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::put('/firmarCertificado/{slug}', 'AjaxController@firmarCertificado')->name('certificados.ajaxfirmar');
 	Route::get('/ClienteExpress-Residuos/{id}', 'AjaxController@clienteExpressResiduos');
 	Route::resource('/prefacturas', 'PrefacturaController');
-	
+
 	/*Rutas de generacion de PDF*/
 	Route::get('/PdfManiCarg/{id}','PdfController@PdfManiCarg');
 	/*Rutas de envio de e-mail */

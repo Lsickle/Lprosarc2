@@ -7,18 +7,20 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ServicioFacturado extends Mailable
+class ServicioFacturado extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+
+    public $prefacturas;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($prefacturas)
     {
-        //
+        $this->prefacturas = $prefacturas;
     }
 
     /**
