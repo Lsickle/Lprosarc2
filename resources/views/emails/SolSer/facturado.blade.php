@@ -1,7 +1,11 @@
 @component('mail::message')
-# Introduction
+# Prefactura emitida
 
-The body of your message.
+@foreach ($prefacturas as $prefactura)
+@if ($loop->first)
+El Comercial {{$prefactura->comercial->PersFirstName}} {{$prefactura->comercial->PersLastName}} ha emitido {{$prefacturas->count()}} prefactura
+@endif
+@endforeach
 
 {{-- @component('mail::table')
 
@@ -30,10 +34,9 @@ array_push($certificadosdeTratamiento, "M-".$residuo->SolicitudResiduo->certdato
 @endforeach
 @endcomponent --}}
 
-<table class="table table-hover" style="word-wrap: break-word">
+<table class="table table-hover" style="word-wrap: break-word; margin-left: auto; margin-right: auto;">
     <thead style="background-color:#212529; color:#fff; font-weight: bold;">
         <tr>
-            <td>Comercial</td>
             <td>Servicio</td>
             <td>Certificado</td>
             <td>RM</td>
@@ -47,21 +50,8 @@ array_push($certificadosdeTratamiento, "M-".$residuo->SolicitudResiduo->certdato
     </thead>
     <tbody>
         @foreach ($prefacturas as $prefactura)
-        <tr style="background-color:#212529; color:#fff">
-            <td>{{$prefactura->comercial->PersFirstName}} {{$prefactura->comercial->PersLastName}}</td>
-            <td>{{$prefactura->FK_Servicio}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
         @foreach ($prefactura->prefacTratamiento as $tratamiento)
         <tr>
-            <td>{{$prefactura->comercial->PersFirstName}} {{$prefactura->comercial->PersLastName}}</td>
             <td>{{$prefactura->FK_Servicio}}</td>
             <td>
                 @php
@@ -97,36 +87,33 @@ array_push($certificadosdeTratamiento, "M-".$residuo->SolicitudResiduo->certdato
         </tr>
         @endforeach
         <tr>
-            <td>{{$prefactura->comercial->PersFirstName}} {{$prefactura->comercial->PersLastName}}</td>
-            <td>{{$prefactura->FK_Servicio}}</td>
             <td></td>
             <td></td>
-            <td>{{$prefactura->Fecha_Servicio}}</td>
-            <td>{{$prefactura->cliente->CliName}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td></td>
             <td>Transporte</td>
             <td>{{$prefactura->Costo_transporte}}</td>
             <td></td>
         </tr>
         <tr style="background-color:#eaeaea;">
-            <td>{{$prefactura->comercial->PersFirstName}} {{$prefactura->comercial->PersLastName}}</td>
-            <td>{{$prefactura->FK_Servicio}}</td>
             <td></td>
             <td></td>
-            <td>{{$prefactura->Fecha_Servicio}}</td>
-            <td>{{$prefactura->cliente->CliName}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td></td>
             <td>Total</td>
             <td>{{$prefactura->Total_prefactura}}</td>
-            <td><a method='get' href='{{route('prefacturas.show', ['prefactura' => $prefactura])}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></td>
+            <td style="height: fit-content">
+                <a href="{{route('prefacturas.show', ['prefactura' => $prefactura])}}" class="button button-primary" target="_blank" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box; border-radius: 3px; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16); color: #fff; display: inline-block; text-decoration: none; -webkit-text-size-adjust: none; background-color: #3490dc; border-top: 10px solid #3490dc; border-right: 18px solid #3490dc; border-bottom: 10px solid #3490dc; border-left: 18px solid #3490dc;">Ver detalles</a>
+            </td>
         </tr>
         @endforeach
     </tbody>
 </table>
-@component('mail::button', ['url' => ''])
-Button Text
-@endcomponent
 
-Thanks,<br>
+Para Cualquier detalle adicional comunicarse con el asesor comercial Correspondiente,<br>
 {{ config('app.name') }}
 @endcomponent

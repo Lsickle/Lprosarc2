@@ -13,7 +13,7 @@ class ServicioFacturado extends Mailable implements ShouldQueue
 
     public $prefacturas;
 
-    // protected $theme = 'express-theme';
+    protected $theme = 'express';
 
     /**
      * Create a new message instance.
