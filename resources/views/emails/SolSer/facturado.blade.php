@@ -3,15 +3,47 @@
 
 The body of your message.
 
-|Comercial|Servicio|Certificado|RM|FECHA|EMPRESA|CANTIDAD|PROCESO|SUBTOTAL|OrdenCompra|
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| | | | | | | | | | | | |
-| | | | | | | | | | | | |
-| | | | | | | | | | | | |
-{{-- <table class="table table-hover">
+{{-- @component('mail::table')
+
+@foreach ($prefacturas as $prefactura)
+|*Servicio*|*Certificado*|*RM*|*FECHA*|*EMPRESA*|*CANTIDAD*|*PROCESO*|*SUBTOTAL*|*OrdenCompra*|
+|---|---|---|---|---|---|---|---|---|
+@foreach ($prefactura->prefacTratamiento as $tratamiento)
+@php
+$certificadosdeTratamiento = [];
+@endphp
+@foreach ($tratamiento->prefacresiduo as $residuo)
+@if ($residuo->SolicitudResiduo->certdato->certificado->CertType == 0)
+@php
+array_push($certificadosdeTratamiento, $residuo->SolicitudResiduo->certdato->certificado->CertNumero);
+@endphp
+@else
+@php
+array_push($certificadosdeTratamiento, "M-".$residuo->SolicitudResiduo->certdato->certificado->CertManifNumero);
+@endphp
+@endif
+@endforeach
+|{{$prefactura->FK_Servicio}}|@foreach (array_unique($certificadosdeTratamiento) as $certnumber){{$certnumber}}<br>@endforeach|@foreach (json_decode($tratamiento->RMs) as $rm => $value){{$value}}<br>@endforeach|{{$prefactura->Fecha_Servicio}}|{{$prefactura->cliente->CliName}}|{{$tratamiento->cantidad_tratamiento}}|{{$tratamiento->tratamiento->TratName}}|{{$tratamiento->Total_prefactratamiento}}|{{$prefactura->orden_compra}}</tr>
+@endforeach
+|{{$prefactura->FK_Servicio}}| | | |{{$prefactura->Fecha_Servicio}}|{{$prefactura->cliente->CliName}}| |Transporte|{{$prefactura->Costo_transporte}}|</tr>
+|{{$prefactura->FK_Servicio}}| | | |{{$prefactura->Fecha_Servicio}}|{{$prefactura->cliente->CliName}}| |Total|{{$prefactura->Total_prefactura}}|<a method='get' href='{{route('prefacturas.show', ['prefactura' => $prefactura])}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a></tr>
+@endforeach
+@endcomponent --}}
+
+<table class="table table-hover" style="word-wrap: break-word">
     <thead style="background-color:#212529; color:#fff; font-weight: bold;">
         <tr>
-            </tr>
+            <td>Comercial</td>
+            <td>Servicio</td>
+            <td>Certificado</td>
+            <td>RM</td>
+            <td>FECHA</td>
+            <td>EMPRESA</td>
+            <td>CANTIDAD</td>
+            <td>PROCESO</td>
+            <td>SUBTOTAL</td>
+            <td>OrdenCompra</td>
+        </tr>
     </thead>
     <tbody>
         @foreach ($prefacturas as $prefactura)
@@ -90,7 +122,7 @@ The body of your message.
         </tr>
         @endforeach
     </tbody>
-</table> --}}
+</table>
 @component('mail::button', ['url' => ''])
 Button Text
 @endcomponent
