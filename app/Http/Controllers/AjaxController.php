@@ -635,7 +635,9 @@ class AjaxController extends Controller
 									];
 				}
 
-                Mail::to($destinatarios)->send(new ServicioFacturado($SolicitudServicio));
+                $prefacturas = App\Prefactura::with(['cliente', 'comercial', 'servicio.programacionesrecibidas', 'prefacTratamiento.prefacresiduo'])->whereIn('ID_Prefactura', $prefactura->ID_Prefactura)->get();
+
+                Mail::to($destinatarios)->send(new ServicioFacturado($prefacturas));
 				return response()->json([
 					'message' => $res,
 					'code' => $resCode,
