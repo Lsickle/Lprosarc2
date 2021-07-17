@@ -1,5 +1,6 @@
 @component('mail::message')
-# Prefactura emitida
+# PRUEBA NOTIFICACION DE PREFACTURA
+{{-- # Prefactura emitida --}}
 
 @foreach ($prefacturas as $prefactura)
 @if ($loop->first)
@@ -34,37 +35,25 @@ array_push($certificadosdeTratamiento, "M-".$residuo->SolicitudResiduo->certdato
 @endforeach
 @endcomponent --}}
 
-<table class="table table-hover" style="word-wrap: break-word; margin-left: auto; margin-right: auto;">
-    <thead style="background-color:#212529; color:#fff; font-weight: bold; text-align: center;">
+@foreach ($prefacturas as $prefactura)
+<table class="table">
         <tr>
-            <td>Servicio</td>
-            <td>Certificado</td>
-            <td>RM</td>
-            <td>FECHA</td>
-            <td>EMPRESA</td>
-            <td>CANTIDAD</td>
-            <td>PROCESO</td>
-            <td>SUBTOTAL</td>
-            <td>OrdenCompra</td>
+            <th>Servicio</th>
+            <th>Certificado</th>
+            <th>RM</th>
+            <th>FECHA</th>
+            <th>EMPRESA</th>
+            <th>CANTIDAD</th>
+            <th>PROCESO</th>
+            <th>SUBTOTAL</th>
+            <th>OrdenCompra</th>
         </tr>
-    </thead>
-    <tbody>
-        @foreach ($prefacturas as $prefactura)
-        @if (!$loop->first)
-        <tr style="background-color:#212529; color:#fff; font-weight: bold; text-align: center;">
-            <td>Servicio</td>
-            <td>Certificado</td>
-            <td>RM</td>
-            <td>FECHA</td>
-            <td>EMPRESA</td>
-            <td>CANTIDAD</td>
-            <td>PROCESO</td>
-            <td>SUBTOTAL</td>
-            <td>OrdenCompra</td>
-        </tr>
-        @endif
         @foreach ($prefactura->prefacTratamiento as $tratamiento)
+        @if ($loop->odd)
         <tr>
+        @else
+        <tr style="background-color: #ecedf5">
+        @endif
             <td>{{$prefactura->FK_Servicio}}</td>
             <td>
                 @php
@@ -97,7 +86,6 @@ array_push($certificadosdeTratamiento, "M-".$residuo->SolicitudResiduo->certdato
             <td>{{$tratamiento->tratamiento->TratName}}</td>
             <td style="text-align: right;">{{$tratamiento->Total_prefactratamiento}}</td>
             <td style="text-align: center;">{{$prefactura->orden_compra}}</td>
-        </tr>
         @endforeach
         <tr>
             <td></td>
@@ -106,26 +94,25 @@ array_push($certificadosdeTratamiento, "M-".$residuo->SolicitudResiduo->certdato
             <td></td>
             <td></td>
             <td></td>
-            <td>Transporte</td>
+            <td style="font-weight: bold;">Transporte</td>
             <td style="text-align: right;">{{$prefactura->Costo_transporte}}</td>
             <td></td>
         </tr>
-        <tr style="background-color:#eaeaea;">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>Total</td>
-            <td style="text-align: right;">{{$prefactura->Total_prefactura}}</td>
-            <td style="height: fit-content">
+        <tr>
+            <td style="border-top:2px solid #212529; margin-bottom: 10px;"></td>
+            <td style="border-top:2px solid #212529; margin-bottom: 10px;"></td>
+            <td style="border-top:2px solid #212529; margin-bottom: 10px;"></td>
+            <td style="border-top:2px solid #212529; margin-bottom: 10px;"></td>
+            <td style="border-top:2px solid #212529; margin-bottom: 10px;"></td>
+            <td style="border-top:2px solid #212529; margin-bottom: 10px;"></td>
+            <td style="border-top:2px solid #212529; margin-bottom: 10px;font-weight: bold;">Total</td>
+            <td style="border-top:2px solid #212529; margin-bottom: 10px;font-weight: bold; text-align: right;">{{$prefactura->Total_prefactura}}</td>
+            <td style="border-top:2px solid #212529; margin-bottom: 10px; height: fit-content">
                 <a href="{{route('prefacturas.show', ['prefactura' => $prefactura])}}" class="button button-primary" target="_blank" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box; border-radius: 3px; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16); color: #fff; display: inline-block; text-decoration: none; -webkit-text-size-adjust: none; background-color: #3490dc; border-top: 10px solid #3490dc; border-right: 18px solid #3490dc; border-bottom: 10px solid #3490dc; border-left: 18px solid #3490dc;">Ver detalles</a>
             </td>
         </tr>
-        @endforeach
-    </tbody>
-</table>
+    </table>
+@endforeach
 
 Para Cualquier detalle adicional comunicarse con el asesor comercial Correspondiente,<br>
 {{ config('app.name') }}

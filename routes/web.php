@@ -48,7 +48,7 @@ Route::middleware(['web'])->group(function () {
 	Route::post('/sendregisterexpress', 'registroexpressController@store');
 	Route::get('/pdftest', 'serviceexpresscontroller@pdftest');
     Route::get('testprefactura', function () {
-        $prefacturas = App\Prefactura::with(['cliente', 'comercial', 'servicio.programacionesrecibidas', 'prefacTratamiento.prefacresiduo'])->whereIn('ID_Prefactura', [3, 5])->get();
+        $prefacturas = App\Prefactura::with(['cliente', 'comercial', 'servicio.programacionesrecibidas', 'prefacTratamiento.prefacresiduo'])->whereIn('ID_Prefactura', [3, 5, 20])->get();
 
         return new App\Mail\ServicioFacturado($prefacturas);
     });

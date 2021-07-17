@@ -28,6 +28,8 @@ use App\PrefacturaResiduo;
 use App\Mail\SolSerEmail;
 use App\Mail\ConcilacionRecordatorio;
 use App\Mail\CertUpdatedComercial;
+use App\Mail\ServicioFacturado;
+
 
 
 
@@ -379,16 +381,27 @@ class AjaxController extends Controller
 	/*Funcion para certtificacion de servicios via ajax*/
 	public function facturarServicio(Request $request, $servicio)
 	{
+        // return $request;
 		$request->validate([
-			'ordenCompra' => 'required|max:20',
-			'costoTransporte' => 'required|numeric|min:0',
+			'FacturacionTipo' => 'required|in:Mensual,Servicio',
+			'ordenCompra' => 'sometimes|max:20',
+			'costoTransporte' => 'sometimes|numeric|min:0',
+			'FechaInicial' => 'required_if:FacturacionTipo,Mensual|date|before_or_equal:FechaFinal|date_format:d/m/Y',
+			'FechaFinal' => 'required_if:FacturacionTipo,Mensual|date|after_or_equal:FechaInicial|date_format:d/m/Y',
 		], [
 			'*.required' => 'debe especificar un valor en el campo :attribute',
 			'costoTransporte.min' => 'ingrese un valor mayor a 0 en el campo :attribute',
 			'costoTransporte.numeric' => 'ingrese un valor mayor a 0 en el campo :attribute',
+			'FechaInicial.date' => 'la :attribute debe ser una fecha valida en formato DD/MM/YYYY',
+			'FechaInicial.before_or_equal' => 'la :attribute debe ser anterior a la Fecha FINAL',
+			'FechaFinal.date' => 'la :attribute debe ser una fecha valida en formato DD/MM/YYYY',
+			'FechaFinal.after_or_equal' => 'la :attribute debe ser posterior a la Fecha INICIAL',
 		], [
+			'FacturacionTipo' => 'Tipo de facturación',
 			'ordenCompra' => 'Orden De Compra',
 			'costoTransporte' => 'Costo de transporte',
+			'FechaInicial' => 'Fecha inicial',
+			'FechaFinal' => 'Fecha final',
 		]);
 
 		// $data = [];
@@ -621,11 +634,12 @@ class AjaxController extends Controller
 				}
 				if ($Solicitud->cliente->comercialAsignado->ID_Pers <> null) {
 					$comercial = Personal::where('ID_Pers', $Solicitud->cliente->comercialAsignado->ID_Pers)->first();
-					$destinatarios = ['gestion@prosarc.com.co',
-										'sistemas@prosarc.com.co',
-										'subgerencia@prosarc.com.co',
-										$comercial->PersEmail
-									];
+					// $destinatarios = ['gestion@prosarc.com.co',
+					// 					'sistemas@prosarc.com.co',
+					// 					'subgerencia@prosarc.com.co',
+					// 					$comercial->PersEmail
+					// 				];
+                    $destinatarios = ['sistemas@prosarc.com.co'];
 				}else{
 					$comercial = "";
 					$destinatarios = ['logistica@prosarc.com.co',
@@ -635,7 +649,7 @@ class AjaxController extends Controller
 									];
 				}
 
-                $prefacturas = App\Prefactura::with(['cliente', 'comercial', 'servicio.programacionesrecibidas', 'prefacTratamiento.prefacresiduo'])->whereIn('ID_Prefactura', $prefactura->ID_Prefactura)->get();
+                $prefacturas = Prefactura::with(['cliente', 'comercial', 'servicio.programacionesrecibidas', 'prefacTratamiento.prefacresiduo'])->where('ID_Prefactura', $prefactura->ID_Prefactura)->get();
 
                 Mail::to($destinatarios)->send(new ServicioFacturado($prefacturas));
 				return response()->json([
