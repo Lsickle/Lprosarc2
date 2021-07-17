@@ -13,10 +13,10 @@
 
 	body{
 		background-image: url('{{asset("img/LogoFondo3x.png")}}');
-		-webkit-background-size: contain; 
-		-moz-background-size: contain; 
-		-o-background-size: contain; 
-		background-size: 600px; 
+		-webkit-background-size: contain;
+		-moz-background-size: contain;
+		-o-background-size: contain;
+		background-size: 600px;
 		background-repeat: no-repeat;
 		background-position: center;
 	}
@@ -35,11 +35,11 @@
 	}
 
 	footer {
-		position: fixed; 
-		bottom: -60px; 
-		left: 0px; 
+		position: fixed;
+		bottom: -60px;
+		left: 0px;
 		right: 0px;
-		height: auto; 
+		height: auto;
 
 		/** Extra personal styles **/
 		background-color: #ffffff00;
@@ -156,7 +156,7 @@
 								<td class="title">
 									<img src="{{asset('img/logocompletosinbordes.png')}}" style="width:100%; max-width:300px;">
 								</td>
-		
+
 								<td style="font-size: 16px; text-align: right;">
 									<b>N°:</b> <b style="color:red;">E-{{sprintf("%07s", $certificado->ID_Cert)}}</b><br>
 									Fecha: {{date('Y-m-d', strtotime(today()))}}<br>
@@ -168,7 +168,7 @@
 			</table>
 		</div>
 	</header>
-	
+
 	<footer>
 		<div class="invoice-box header-footer">
 			<table cellpadding="0" cellspacing="0">
@@ -206,13 +206,13 @@
 						{{$certificado->CertSlug}}<br>
 						Certificado generado y firmado digitalmente desde la aplicación <b>SisPRO</b> &copy; <?php echo date("Y");?> <br>
 						¡Protejamos el medio ambiente; así aseguramos la vida y bienestar de nuestros hijos, nietos y generaciones futuras!
-					
+
 					</td>
 				</tr>
 			</table>
 		</div>
 	</footer>
-	
+
 	<!-- Wrap the content of your PDF inside a main tag -->
 	<main>
 		<p style="page-break-after: never;">
@@ -241,7 +241,7 @@
 								<tr>
 									<td></td>
 								</tr>
-								
+
 								<tr>
 									<td>
 										<b> Certificado de Termodestrucción </b>
@@ -249,9 +249,9 @@
 								</tr>
 							</table>
 						</td>
-			
+
 					</tr>
-			
+
 					<tr class="information">
 						<td colspan="4">
 							<table>
@@ -277,7 +277,7 @@
 							</table>
 						</td>
 					</tr>
-			
+
 					<tr class="information">
 						<td colspan="4">
 							<table>
@@ -289,14 +289,14 @@
 							</table>
 						</td>
 					</tr>
-			
-			
-			
+
+
+
 					<tr class="heading">
 						<td colspan="2">
 							RESIDUO
 						</td>
-			
+
 						<td style="text-align: center;">
 							CORRIENTE
 						</td>
@@ -319,7 +319,7 @@
 						<td colspan="2">
 							{{$Residuo->generespel->respels->RespelName}}
 						</td>
-					
+
 						<td style="text-align: center;">
 							@if($Residuo->generespel->respels->RespelIgrosidad == 'No peligroso')
 							N/A
@@ -327,7 +327,7 @@
 							{{$Residuo->generespel->respels->YRespelClasf4741}}{{$Residuo->generespel->respels->ARespelClasf4741}}
 							@endif
 						</td>
-					
+
 						<td>
 							{{$Residuo->SolResKgConciliado === null ? 'N/A' : $Residuo->SolResKgConciliado }} Kg.
 						</td>
@@ -345,7 +345,7 @@
 						<td></td>
 						<td></td>
 						<td></td>
-			
+
 						<td>
 							Total: {{$totalKg}} Kg.
 						</td>
@@ -353,7 +353,7 @@
 					<tr class="total">
 						<td><b>Observaciones:</b></td>
 						<td colspan="3">
-							{{$Solicitud->SolSerDescript}}	
+							{{$Solicitud->SolSerDescript}}
 						</td>
 					</tr>
 					<tr class="details">
@@ -393,7 +393,7 @@
 			</div>
 		</p>
 	</main>
-  
+
 </body>
 
 </html>
