@@ -35,7 +35,7 @@
                                     <th>{{trans('adminlte_lang::message.clientcliente')}}</th>
                                     <th>Contacto</th>
                                     <th>Dirección</th>
-                                    <th>Cantidad</th>
+                                    {{-- <th>Cantidad</th> --}}
                                     <th>{{trans('adminlte_lang::message.seemore')}}</th>
                                     @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
                                         <th>{{trans('adminlte_lang::message.solserstatuscertifi')}}</th>
@@ -161,7 +161,7 @@
                                         Localidad: <b>{{$Servicio->SedeMapLocalidad}}</b>
                                         @endif
                                     </td>
-                                    <td>{{$Servicio->totalrerspel}} Kg</td>
+                                    {{-- <td>{{$Servicio->totalrerspel}} Kg</td> --}}
                                     <td style="text-align: center;"><a
                                             href='/serviciosexpress/{{$Servicio->SolSerSlug}}' class="btn btn-info"
                                             title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i
@@ -207,7 +207,7 @@
 @endsection
 @section('NewScript')
     @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
-        <script>    
+        <script>
             function ModalCertificacion(slug, id, boolean, value, text){
                 if(boolean == 1){
                     $('#ModalStatus').empty();
@@ -220,7 +220,7 @@
                                         <div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
                                             <i class="fas fa-exclamation-triangle"></i>
                                             <span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere `+text+` la solicitud <b>N° `+id+`</b>?</p></span>
-                                        </div> 
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
@@ -271,7 +271,7 @@
 
                                     toastr.success(res['message']);
                                     break;
-                            
+
                                 default:
                                     buttonsubmit.each(function() {
                                         $(this).on('click', function(event) {
@@ -302,9 +302,9 @@
                                     buttonsubmit.prop('class', 'btn btn-default');
                                     buttonsubmit.empty();
                                     buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificado`);
-                                    
+
                                     break;
-                            
+
                                 default:
                                     buttonsubmit.each(function() {
                                         $(this).on('click', function(event) {
@@ -344,7 +344,7 @@
                                             <div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
                                                 <i class="fas fa-exclamation-triangle"></i>
                                                 <span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere `+text+` la solicitud <b>N° `+id+`</b>?</p></span>
-                                            </div> 
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
@@ -392,10 +392,10 @@
                                         buttonsubmit.prop('class', 'btn btn-default');
                                         buttonsubmit.empty();
                                         buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturaado`);
-    
+
                                         toastr.success(res['message']);
                                         break;
-                                
+
                                     default:
                                         buttonsubmit.each(function() {
                                             $(this).on('click', function(event) {
@@ -407,7 +407,7 @@
                                         buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
                                         buttonsubmit.empty();
                                         buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
-    
+
                                         toastr.error(res['error']);
                                         break;
                                 }
@@ -426,9 +426,9 @@
                                         buttonsubmit.prop('class', 'btn btn-default');
                                         buttonsubmit.empty();
                                         buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturado`);
-                                        
+
                                         break;
-                                
+
                                     default:
                                         buttonsubmit.each(function() {
                                             $(this).on('click', function(event) {
@@ -440,7 +440,7 @@
                                         buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
                                         buttonsubmit.empty();
                                         buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
-    
+
                                         break;
                                 }
                                 toastr.error(error['responseJSON']['message']);
