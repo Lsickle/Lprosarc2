@@ -361,8 +361,8 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
     <script type="text/javascript">
-        var inicio = '';
-        var fin = '';
+        var inicio = "{{date('Y-m-d')}}";
+        var fin = "{{date('Y-m-d')}}";
         function checkFacturacionTipo() {
             var tipo = document.getElementById("selectTipoFact");
             if (tipo.value == 'Mensual') {
@@ -416,20 +416,22 @@
                     ],
                     "firstDay": 1
                     },
+                    "startDate": "{{date('Y-m-d')}}",
+                    "endDate": "21/07/2021",
                     "drops": "auto"
                 },
                     function(start, end, label) {
-                        console.log('New date range selected: ' + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY') + ' (predefined range: ' + label + ')');
-                        inicio = start.format('DD-MM-YYYY');
-                        fin = end.format('DD-MM-YYYY');
+                        console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+                        inicio = start.format('YYYY-MM-DD');
+                        fin = end.format('YYYY-MM-DD');
                 });
             }else{
                 $('#rangoContainer').empty();
                 $('#tipoFactContainer').addClass('col-md-12');
                 $('#tipoFactContainer').removeClass('col-md-6');
                 console.log('rango de fechas eliminado');
-                inicio = '';
-                fin = '';
+                inicio = "{{date('d/m/Y')}}";
+                fin = "{{date('d/m/Y')}}";
             }
         }
     </script>
@@ -459,11 +461,15 @@
                                         <div id="rangoContainer"></div>
                                         <div class="form-group col-md-6">
                                             <label for="Costo_transporte">Costo Transporte</label>
-                                            <input type="number" name="Costo_transporte" id="Costo_transporte" class="form-control" min="0" step="0.01">
+                                            <input required type="number" name="Costo_transporte" id="Costo_transporte" class="form-control" min="0" step="0.01">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="orden_compra">Orden de Compra</label>
                                             <input type="text" name="orden_compra" id="orden_compra" class="form-control" min="0" maxlength="20">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="datetest">date test</label>
+                                            <input type="date" name="datetest" id="datetest" class="form-control">
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Observaciones" data-content="En este campo puede redactar sus observaciones con relación a esta solicitud de servicio"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones</label>
@@ -553,7 +559,8 @@
                             ordenCompra:$('#orden_compra').val(),
                             costoTransporte:$('#Costo_transporte').val(),
                             FechaInicial:inicio,
-                            FechaFinal:fin
+                            FechaFinal:fin,
+                            DateTest:$('#datetest').val()
                         },
                         beforeSend: function(){
                             let buttonsubmit = $('.classFacturarStatus'+slug);

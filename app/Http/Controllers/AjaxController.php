@@ -384,17 +384,19 @@ class AjaxController extends Controller
         // return $request;
 		$request->validate([
 			'FacturacionTipo' => 'required|in:Mensual,Servicio',
-			'ordenCompra' => 'sometimes|max:20',
-			'costoTransporte' => 'sometimes|numeric|min:0',
-			'FechaInicial' => 'required_if:FacturacionTipo,Mensual|date|before_or_equal:FechaFinal|date_format:d/m/Y',
-			'FechaFinal' => 'required_if:FacturacionTipo,Mensual|date|after_or_equal:FechaInicial|date_format:d/m/Y',
+			'ordenCompra' => 'nullable|max:20',
+			'costoTransporte' => 'required|numeric|min:0',
+			'FechaInicial' => 'required_if:FacturacionTipo,Mensual|before_or_equal:FechaFinal|date_format:d/m/Y',
+			'FechaFinal' => 'required_if:FacturacionTipo,Mensual|after_or_equal:FechaInicial|date_format:d/m/Y',
 		], [
 			'*.required' => 'debe especificar un valor en el campo :attribute',
 			'costoTransporte.min' => 'ingrese un valor mayor a 0 en el campo :attribute',
 			'costoTransporte.numeric' => 'ingrese un valor mayor a 0 en el campo :attribute',
-			'FechaInicial.date' => 'la :attribute debe ser una fecha valida en formato DD/MM/YYYY',
+			'FechaInicial.date' => 'la :attribute debe ser una fecha valida ',
+			'FechaInicial.date_format' => 'el formato de :attribute debe ser DD/MM/YYYY',
 			'FechaInicial.before_or_equal' => 'la :attribute debe ser anterior a la Fecha FINAL',
-			'FechaFinal.date' => 'la :attribute debe ser una fecha valida en formato DD/MM/YYYY',
+			'FechaFinal.date' => 'la :attribute debe ser una fecha valida',
+			'FechaFinal.date_format' => 'el formato de :attribute debe ser DD/MM/YYYY',
 			'FechaFinal.after_or_equal' => 'la :attribute debe ser posterior a la Fecha INICIAL',
 		], [
 			'FacturacionTipo' => 'Tipo de facturación',
@@ -416,6 +418,7 @@ class AjaxController extends Controller
 		// return response()->json($data);
 
 		// return $servicio;
+        return $request;
 		if ($request->ajax()) {
 			if (in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES)) {
 				$Solicitud = SolicitudServicio::with('SolicitudResiduo')->where('SolSerSlug', $servicio)->first();
