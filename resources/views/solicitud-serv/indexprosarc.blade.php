@@ -416,8 +416,9 @@
                     ],
                     "firstDay": 1
                     },
-                    "startDate": "{{date('Y-m-d')}}",
-                    "endDate": "21/07/2021",
+                    "minDate": "{{date('d-m-Y', strtotime('1 year ago'))}}",
+                    "startDate": "{{date('d-m-Y', strtotime('-1 day'))}}",
+                    "endDate": "{{date('d-m-Y', strtotime('today'))}}",
                     "drops": "auto"
                 },
                     function(start, end, label) {
@@ -430,8 +431,8 @@
                 $('#tipoFactContainer').addClass('col-md-12');
                 $('#tipoFactContainer').removeClass('col-md-6');
                 console.log('rango de fechas eliminado');
-                inicio = "{{date('d/m/Y')}}";
-                fin = "{{date('d/m/Y')}}";
+                inicio = "{{date('Y/m/d')}}";
+                fin = "{{date('Y/m/d')}}";
             }
         }
     </script>
@@ -465,7 +466,7 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="orden_compra">Orden de Compra</label>
-                                            <input type="text" name="orden_compra" id="orden_compra" class="form-control" min="0" maxlength="20">
+                                            <input type="text" name="orden_compra" id="orden_compra" class="form-control" maxlength="20">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="datetest">date test</label>
