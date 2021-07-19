@@ -40,15 +40,56 @@
 									@endforeach
 								</select>
 							</div>
-                            <div class="form-group col-md-6">
+                            {{-- <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">{{'comprobante de pago'}}</label>
                                 <small class="help-block with-errors">*</small>
                                 <input type="file" class="form-control" id="pagoComprobante" name="pagoComprobante" type="file" data-validate="true" required data-filesize="2048" class="form-control" data-accept="jpg, jpe, png, jpeg, pdf" accept=".jpg,.jpe,.peg,.jpeg,.png,.pdf">
+                            </div> --}}
+                            <div class="form-group col-md-6">
+                                <!-- image-preview-filename input [CUT FROM HERE]-->
+                                <label for="exampleInputEmail1">{{'comprobante de pago'}}</label>
+                                <div class="input-group image-preview">
+                                    <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                                    <span class="input-group-btn">
+                                        <!-- image-preview-clear button -->
+                                        <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                                            <i class="far fa-trash-alt"></i> Borrar
+                                        </button>
+                                        <!-- image-preview-input -->
+                                        <div class="btn btn-default image-preview-input">
+                                            <i class="fas fa-folder-open"></i>
+                                            <span class="image-preview-input-title">Buscar</span>
+                                            <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview" /> <!-- rename it -->
+                                        </div>
+                                    </span>
+                                </div><!-- /input-group image-preview [TO HERE]-->
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="fechadepago">{{'fecha de pago'}}</label>
                                 <small class="help-block with-errors">*</small>
-                                <input type="date" class="form-control" id="fechadepago" name="fechadepago">
+                                <input type="date" class="form-control" id="fechadepago" name="fechadepago" required value="{{date('Y-m-d')}}">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="montodepago">{{'monto de pago'}}</label>
+                                <small class="help-block with-errors">*</small>
+                                <input type="number" class="form-control" id="montodepago" name="montodepago" step=".1" min="0" value="35000" required>
+                            </div>
+                            <div id="mediodepagoDiv" class="form-group col-md-6">
+                                <label>medio de pago</label>
+                                <small class="help-block with-errors">*</small>
+                                <select class="form-control" id="mediodepago" name="mediodepago" required="">
+                                    <option value="app nequi">app nequi</option>
+                                    <option value="app davivienda">app davivienda</option>
+                                    <option value="app daviplata">app daviplata</option>
+                                    <option value="transferencia davivienda">transferencia davivienda</option>
+                                    <option value="transferencia bancolombia">transferencia bancolombia</option>
+                                    <option value="transferencia avvillas">transferencia avvillas</option>
+                                    <option value="transferencia occidente">transferencia occidente</option>
+                                    <option value="deposito davivienda">deposito davivienda</option>
+                                    <option value="deposito bancolombia">deposito bancolombia</option>
+                                    <option value="deposito avvillas">deposito avvillas</option>
+                                    <option value="deposito occidente">deposito occidente</option>
+                                </select>
                             </div>
 							<div id="SolServCantidadDiv" class="form-group col-md-6">
 								<label>N° de Servicios</label>
@@ -63,9 +104,11 @@
 								</select>
 							</div>
 							<div id="SolServFrecuenciaDiv" class="form-group col-md-6">
-								<label>Frecuencia</label>
+								<label>Frecuencia de recolección</label>
 								<small class="help-block with-errors">*</small>
 								<select class="form-control" id="SolServFrecuencia" name="SolServFrecuencia" required="">
+									<option value="semanal">semanal</option>
+									<option value="quincenal">quincenal</option>
 									<option value="mensual">mensual</option>
 									<option value="bimensual">bimensual</option>
 									<option value="trimestral">trimestral</option>
@@ -178,6 +221,67 @@ $(document).ready(function(){
 		message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
 	});
 })
+
+// funcion para previsualizar la fotografia del soporte
+
+$(document).on('click', '#close-preview', function(){
+    $('.image-preview').popover('hide');
+    // Hover befor close the preview
+    $('.image-preview').hover(
+        function () {
+           $('.image-preview').popover('show');
+        },
+         function () {
+           $('.image-preview').popover('hide');
+        }
+    );
+});
+
+$(function() {
+    // Create the close button
+    var closebtn = $('<button/>', {
+        type:"button",
+        text: 'x',
+        id: 'close-preview',
+        style: 'font-size: initial;',
+    });
+    closebtn.attr("class","close pull-right");
+    // Set the popover default content
+    $('.image-preview').popover({
+        trigger:'manual',
+        html:true,
+        title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
+        content: "There's no image",
+        placement:'bottom'
+    });
+    // Clear event
+    $('.image-preview-clear').click(function(){
+        $('.image-preview').attr("data-content","").popover('hide');
+        $('.image-preview-filename').val("");
+        $('.image-preview-clear').hide();
+        $('.image-preview-input input:file').val("");
+        $(".image-preview-input-title").text("Buscar");
+    });
+    // Create the preview image
+    $(".image-preview-input input:file").change(function (){
+        var img = $('<img/>', {
+            id: 'dynamic',
+            width:200,
+            height:'auto'
+        });
+        var file = this.files[0];
+        var reader = new FileReader();
+        // Set preview image into the popover data-content
+        reader.onload = function (e) {
+            $(".image-preview-input-title").text("Cambiar");
+            $(".image-preview-clear").show();
+            $(".image-preview-filename").val(file.name);
+            img.attr('src', e.target.result);
+            $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
+        }
+        reader.readAsDataURL(file);
+    });
+});
 </script>
 @include('serviciosexpress.layaoutsSolSer.functionsSolSerExpress')
 @endsection
