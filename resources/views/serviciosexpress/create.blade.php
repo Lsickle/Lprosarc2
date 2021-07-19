@@ -16,7 +16,7 @@
 				<div class="box-header with-border">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.solsertitlecreate') }}</h3>
 				</div>
-				
+
 				<form role="form" id="CreateSolSer" action="/serviciosexpress" method="POST" enctype="multipart/form-data" data-toggle="validator">
 					@csrf
 					@if ($errors->any())
@@ -30,7 +30,7 @@
 					@endif
 					<div class="box-body">
 						<div class="col-md-12">
-							<div class="form-group col-md-12">
+							<div class="form-group col-md-6">
 								<label>Cliente</label>
 								<small class="help-block with-errors">*</small>
 								<select id="FK_SolSerCliente" name="FK_SolSerCliente" class="form-control" required="">
@@ -40,6 +40,16 @@
 									@endforeach
 								</select>
 							</div>
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputEmail1">{{'comprobante de pago'}}</label>
+                                <small class="help-block with-errors">*</small>
+                                <input type="file" class="form-control" id="pagoComprobante" name="pagoComprobante" type="file" data-validate="true" required data-filesize="2048" class="form-control" data-accept="jpg, jpe, png, jpeg, pdf" accept=".jpg,.jpe,.peg,.jpeg,.png,.pdf">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="fechadepago">{{'fecha de pago'}}</label>
+                                <small class="help-block with-errors">*</small>
+                                <input type="date" class="form-control" id="fechadepago" name="fechadepago">
+                            </div>
 							<div id="SolServCantidadDiv" class="form-group col-md-6">
 								<label>N° de Servicios</label>
 								<small class="help-block with-errors">*</small>
@@ -90,7 +100,7 @@
 					</div>
 					<div id="ModalSupport"></div>
 				</form>
-					
+
 			</div>
 		</div>
 	</div>
@@ -144,7 +154,7 @@ function submitverify(){
 									<small class="help-block with-errors"></small>
 									<input name="SupportPay" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
 								</div>
-							</div> 
+							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
 								<label for="Submit" class='btn btn-success'>Enviar</label>

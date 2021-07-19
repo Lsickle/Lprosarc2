@@ -45,6 +45,7 @@ use App\Docdato;
 use App\ProgramacionVehiculo;
 use App\RequerimientosCliente;
 use App\Observacion;
+use App\ReciboDePago;
 use Permisos;
 use PDF;
 use Endroid\QrCode\ErrorCorrectionLevel;
@@ -158,9 +159,29 @@ class ServiceExpressController extends Controller
      */
     public function store(Request $request)
     {
-		// return $request;
+		return $request;
 
 		$Cliente = Cliente::where('CliSlug', $request->input('FK_SolSerCliente'))->first();
+
+        /*guardar e comprobante */
+        $data_uri = $request->input('solserFirma');
+		$encoded_image = explode(",", $data_uri)[1];
+		$decoded_image = base64_decode($encoded_image);
+		$nombreDeFirma = $request->input('solserslug');
+		Storage::put('firmasClientes/'.$nombreDeFirma.'.png', $decoded_image, 'public');
+
+
+        /**crear el pdf de recibo */
+
+        $recibo = new ReciboDePago();
+        $recibo->fecha_de_pago = $Cliente->ID_Cli;
+        $recibo->monto = $Cliente->ID_Cli;
+        $recibo->medio_de_pago = $Cliente->ID_Cli;
+        $recibo->url_comprobante = $Cliente->ID_Cli;
+        $recibo->url_recibo = $Cliente->ID_Cli;
+        $recibo->ReciboSlug = $Cliente->ID_Cli;
+        $recibo->save();
+
 
 		$Persona = DB::table('personals')
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
