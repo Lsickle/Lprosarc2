@@ -33,7 +33,7 @@
 							<div class="form-group col-md-6">
 								<label>Cliente</label>
 								<small class="help-block with-errors">*</small>
-								<select id="FK_SolSerCliente" name="FK_SolSerCliente" class="form-control" required="">
+								<select id="FK_SolSerCliente" name="FK_SolSerCliente" class="form-control" required="" data-validate="true">
 									<option value="">{{ trans('adminlte_lang::message.select') }}</option>
 									@foreach ($Clientes as $Cliente)
 									<option value="{{$Cliente->CliSlug}}">{{$Cliente->CliName.' ('.$Cliente->CliNit}})</option>
@@ -59,7 +59,7 @@
                                         <div class="btn btn-default image-preview-input">
                                             <i class="fas fa-folder-open"></i>
                                             <span class="image-preview-input-title">Buscar</span>
-                                            <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview" /> <!-- rename it -->
+                                            <input id="pagoComprobante" type="file" name="pagoComprobante" data-validate="true" required data-filesize="2048" class="form-control" data-accept="jpg, jpe, png, jpeg, pdf" accept=".jpg,.jpe,.peg,.jpeg,.png,.pdf"/> <!-- rename it -->
                                         </div>
                                     </span>
                                 </div><!-- /input-group image-preview [TO HERE]-->
@@ -139,7 +139,7 @@
 					</div>
 					<div class="box-footer">
 						<a onclick="$('#Submit').hasClass('disabled') ? $('#Submit').click() : submitverify()" id="Submit2" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.applyfor') }}</a>
-						<button type="submit" id="Submit" style="display: none;"></button>
+						<button type="submit" id="Submit" style="display: block;">vamos</button>
 					</div>
 					<div id="ModalSupport"></div>
 				</form>
@@ -171,7 +171,7 @@ function submitverify(){
 		}
 	}
 	if(CantidadTotalkg != 0){
-		if((CantidadTotalkg >= 500)||(tipoFacturacion=='Credito')){
+		if((CantidadTotalkg >= 0.5)||(tipoFacturacion=='Credito')){
 			$("#Submit2").empty();
 			$("#Submit2").append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
 			$("#Submit2").attr('disabled', true);
@@ -251,7 +251,7 @@ $(function() {
         trigger:'manual',
         html:true,
         title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
-        content: "There's no image",
+        content: "Debe cargar el comprobante en formato pdf, png o jpg",
         placement:'bottom'
     });
     // Clear event
@@ -264,9 +264,9 @@ $(function() {
     });
     // Create the preview image
     $(".image-preview-input input:file").change(function (){
-        var img = $('<img/>', {
+        var img = $('<embed/>', {
             id: 'dynamic',
-            width:200,
+            width:'100%',
             height:'auto'
         });
         var file = this.files[0];

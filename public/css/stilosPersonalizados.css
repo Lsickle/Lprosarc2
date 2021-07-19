@@ -588,9 +588,9 @@ canvas {
 		margin-right: 15%;
 	}
 }
-.container{
+/* .container{
     margin-top:20px;
-}
+} */
 .image-preview-input {
     position: relative;
 	overflow: hidden;
@@ -613,3 +613,5 @@ canvas {
 .image-preview-input-title {
     margin-left:2px;
 }
+
+
