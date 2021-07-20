@@ -178,6 +178,7 @@ class ServiceExpressController extends Controller
         $recibo->fecha_de_pago = $Cliente->ID_Cli;
         $recibo->monto = $Cliente->ID_Cli;
         $recibo->medio_de_pago = $Cliente->ID_Cli;
+        $recibo->referencia = $Cliente->ID_Cli;
         $recibo->url_comprobante = $Cliente->ID_Cli;
         $recibo->url_recibo = $Cliente->ID_Cli;
         $recibo->ReciboSlug = $Cliente->ID_Cli;

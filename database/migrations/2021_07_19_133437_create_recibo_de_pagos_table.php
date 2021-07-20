@@ -17,6 +17,7 @@ class CreateReciboDePagosTable extends Migration
             $table->bigIncrements('ID_Recibo');
             $table->date('fecha_de_pago')->nullable();
             $table->unsignedDecimal('monto', 8, 2)->default(0); //max 999999,99
+            $table->string('referencia')->nullable(); //numero de referencia de la transaccion a validar
             $table->string('medio_de_pago')->default('nequi');
             $table->string('url_comprobante')->nullable();
             $table->string('url_recibo')->nullable();

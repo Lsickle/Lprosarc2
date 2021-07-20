@@ -40,12 +40,12 @@
 									@endforeach
 								</select>
 							</div>
-                            <div class="form-group col-md-6">
+                            {{-- <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">{{'comprobante de pago'}}</label>
                                 <small class="help-block with-errors">*</small>
                                 <input type="file" class="form-control" id="pagoComprobante" name="pagoComprobante" type="file" data-validate="true" required data-filesize="2048" class="form-control" data-accept="jpg,jpe,png,jpeg,pdf" accept=".jpg,.jpe,.peg,.jpeg,.png,.pdf">
-                            </div>
-                            {{-- <div class="form-group col-md-6">
+                            </div> --}}
+                            <div class="form-group col-md-6">
                                 <!-- image-preview-filename input [CUT FROM HERE]-->
                                 <label for="exampleInputEmail1">{{'comprobante de pago'}}</label>
 								<small class="help-blockwith-errors">*</small>
@@ -60,20 +60,20 @@
                                         <div class="btn btn-default image-preview-input">
                                             <i class="fas fa-folder-open"></i>
                                             <span class="image-preview-input-title">Buscar</span>
-                                            <input id="pagoComprobante" type="file" name="pagoComprobante" data-validate="true" required data-filesize="2048" class="form-control" data-accept="jpg, jpe, png, jpeg, pdf" accept=".jpg,.jpe,.peg,.jpeg,.png,.pdf"/> <!-- rename it -->
+                                            <input id="pagoComprobante" type="file" name="pagoComprobante" data-validate="true" required data-filesize="2048" class="form-control" data-accept="jpg,jpe,png,jpeg,pdf" accept=".jpg,.jpe,.peg,.jpeg,.png,.pdf"/> <!-- rename it -->
                                         </div>
                                     </span>
                                 </div><!-- /input-group image-preview [TO HERE]-->
-                            </div> --}}
+                            </div>
                             <div class="form-group col-md-6">
                                 <label for="fechadepago">{{'fecha de pago'}}</label>
                                 <small class="help-block with-errors">*</small>
                                 <input type="date" class="form-control" id="fechadepago" name="fechadepago" required >
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="montodepago">{{'monto de pago'}}</label>
+                                <label for="Referencia">{{'Referencia de la Tranasacción'}}</label>
                                 <small class="help-block with-errors">*</small>
-                                <input type="number" class="form-control" id="montodepago" name="montodepago" step=".1" min="0" required>
+                                <input type="text" class="form-control" id="Referencia" name="Referencia" maxlength="30" required>
                             </div>
                             <div id="mediodepagoDiv" class="form-group col-md-6">
                                 <label>medio de pago</label>
@@ -92,6 +92,11 @@
                                     <option value="deposito avvillas">deposito avvillas</option>
                                     <option value="deposito occidente">deposito occidente</option>
                                 </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="montodepago">{{'monto de pago'}}</label>
+                                <small class="help-block with-errors">*</small>
+                                <input type="number" class="form-control" id="montodepago" name="montodepago" step=".1" min="0" required>
                             </div>
 							<div id="SolServCantidadDiv" class="form-group col-md-6">
 								<label>N° de Servicios</label>
@@ -164,69 +169,6 @@ function Switch(){
 	$("#SolSerDevolucion").bootstrapSwitch();
 }
 Switch();
-function submitverify(){
-	// var tipoFacturacion = 'Credito';
-	var CantidadTotalkg = 0;
-	for (var i = 0; i < contadorGenerador; i++) {
-		for (var y = 0; y <= contadorRespel[i]; y++) {
-			if($("#SolResKgEnviado"+i+y).val() != null){
-				CantidadTotalkg = parseInt(CantidadTotalkg)+parseInt($("#SolResKgEnviado"+i+y).val());
-			}
-		}
-	}
-
-	// if(CantidadTotalkg > 0){
-    //     console.log(CantidadTotalkg);
-	// 	if((CantidadTotalkg >= 500)||(tipoFacturacion=='Credito')){
-	// 		$("#Submit2").empty();
-	// 		$("#Submit2").append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
-	// 		$("#Submit2").attr('disabled', true);
-	// 		$('#Submit').click();
-	// 	}
-	// 	else{
-	// 		$('#ModalSupport').empty();
-	// 		$('#ModalSupport').append(`
-	// 			<div class="modal modal-default fade in" id="SupportPay" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	// 				<div class="modal-dialog" role="document">
-	// 					<div class="modal-content">
-	// 						<div class="modal-header">
-	// 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	// 							<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
-	// 								<i class="fas fa-exclamation-triangle"></i>
-	// 								<span style="font-size: 0.3em; color: black;"><p>Su solicitud es inferior a 500kg adjunte el soporte de pago</p></span>
-	// 								<span style="font-size: 0.3em; color: black;"><p>Su solicitud es de <b>`+CantidadTotalkg+` kg</b></p></span>
-	// 							</div>
-	// 						</div>
-	// 						<div class="modal-header">
-	// 							<div class="form-group col-md-12">
-	// 								<label style="color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsersupportpay') }}</b>" data-content="{{ trans('adminlte_lang::message.solsersupportpaydescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solsersupportpay')}}</label>
-	// 								<small class="help-block with-errors"></small>
-	// 								<input name="SupportPay" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
-	// 							</div>
-	// 						</div>
-	// 						<div class="modal-footer">
-	// 							<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
-	// 							<label for="Submit" class='btn btn-success'>Enviar</label>
-	// 						</div>
-	// 					</div>
-	// 				</div>
-	// 			</div>
-	// 		`);
-	// 		popover();
-	// 		$('#CreateSolSer').validator('update');
-	// 		envsubmit();
-	// 		$('#SupportPay').modal();
-	// 	}
-    //     $("#Submit2").empty();
-    //     $("#Submit2").append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
-    //     $("#Submit2").attr('disabled', true);
-    //     $('#Submit').click();
-	// }
-    $("#Submit2").empty();
-    $("#Submit2").append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
-    $("#Submit2").attr('disabled', true);
-    $('#Submit').click();
-}
 $(document).ready(function(){
 	var area = document.getElementById("textDescription");
 	var message = document.getElementById("caracteresrestantes");
@@ -272,15 +214,25 @@ $(document).ready(function(){
             },
         }
     });
-    $("#Submit2").on('click', function(e){
-        formulario= $("#CreateSolSer");
-        submitbutton = $(this);
-        e.preventDefault();
+    // $("#Submit2").on('click', function(event){
+    //     event.preventDefault();
+    //     formulario= $("#CreateSolSer");
+    //     submitbutton = $(this);
+    //     if (submitbutton.hasClass('disabled')) {
+    //         formulario.validator('validate');
+    //         return false;
+    //     }else{
+    //         $("#CreateSolSer").submit();
+    //     }
+    // });
+    $("#CreateSolSer").on('submit', function(event){
+        event.preventDefault();
+        submitbutton = $("#Submit2");
         if (submitbutton.hasClass('disabled')) {
-            formulario.validator('validate');
+            $(this).validator('validate');
             return false;
         }else{
-            $("#CreateSolSer").submit();
+            envsubmit();
         }
     });
 })
@@ -299,74 +251,51 @@ $(document).on('click', '#close-preview', function(){
     );
 });
 
-// $(function() {
-//     // Create the close button
-//     var closebtn = $('<button/>', {
-//         type:"button",
-//         text: 'x',
-//         id: 'close-preview',
-//         style: 'font-size: initial;',
-//     });
-//     closebtn.attr("class","close pull-right");
-//     // Set the popover default content
-//     $('.image-preview').popover({
-//         trigger:'manual',
-//         html:true,
-//         title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
-//         content: "Debe cargar el comprobante en formato pdf, png o jpg",
-//         placement:'bottom'
-//     });
-//     // Clear event
-//     $('.image-preview-clear').click(function(){
-//         $('.image-preview').attr("data-content","").popover('hide');
-//         $('.image-preview-filename').val("");
-//         $('.image-preview-clear').hide();
-//         $('.image-preview-input input:file').val("");
-//         $(".image-preview-input-title").text("Buscar");
-//     });
-//     // Create the preview image
-//     $(".image-preview-input input:file").change(function (){
-//         var img = $('<embed/>', {
-//             id: 'dynamic',
-//             width:'100%',
-//             height:'auto'
-//         });
-//         var file = this.files[0];
-//         var reader = new FileReader();
-//         // Set preview image into the popover data-content
-//         reader.onload = function (e) {
-//             $(".image-preview-input-title").text("Cambiar");
-//             $(".image-preview-clear").show();
-//             $(".image-preview-filename").val(file.name);
-//             img.attr('src', e.target.result);
-//             $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
-//         }
-//         reader.readAsDataURL(file);
-//     });
-// });
-
-// function mySubmit(e) {
-//     e.preventDefault();
-//     if (e.isDefaultPrevented()) {
-//         console.log('Form is invalid for button');
-//     } else {
-//         // everything looks good!
-//         console.log('Form is invalid for button');
-//     }
-//   return false;
-// }
-$('#CreateSolSer').submit(function (event) {
-    e.preventDefault();
-    if (event.isIncomplete() || event.hasErrors()) {
-    console.log('is invalid for form');
-    return false;
-    } else {
-    // everything looks good!
-    console.log('is invalid for form');
-    }
+$(function() {
+    // Create the close button
+    var closebtn = $('<button/>', {
+        type:"button",
+        text: 'x',
+        id: 'close-preview',
+        style: 'font-size: initial;',
+    });
+    closebtn.attr("class","close pull-right");
+    // Set the popover default content
+    $('.image-preview').popover({
+        trigger:'manual',
+        html:true,
+        title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
+        content: "Debe cargar el comprobante en formato pdf, png o jpg",
+        placement:'bottom'
+    });
+    // Clear event
+    $('.image-preview-clear').click(function(){
+        $('.image-preview').attr("data-content","").popover('hide');
+        $('.image-preview-filename').val("");
+        $('.image-preview-clear').hide();
+        $('.image-preview-input input:file').val("");
+        $(".image-preview-input-title").text("Buscar");
+    });
+    // Create the preview image
+    $(".image-preview-input input:file").change(function (){
+        var img = $('<embed/>', {
+            id: 'dynamic',
+            width:'100%',
+            height:'auto'
+        });
+        var file = this.files[0];
+        var reader = new FileReader();
+        // Set preview image into the popover data-content
+        reader.onload = function (e) {
+            $(".image-preview-input-title").text("Cambiar");
+            $(".image-preview-clear").show();
+            $(".image-preview-filename").val(file.name);
+            img.attr('src', e.target.result);
+            $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
+        }
+        reader.readAsDataURL(file);
+    });
 });
 </script>
 @include('serviciosexpress.layaoutsSolSer.functionsSolSerExpress')
-
-
 @endsection
