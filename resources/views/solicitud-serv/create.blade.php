@@ -310,7 +310,7 @@ function submitverify(){
 									<small class="help-block with-errors"></small>
 									<input name="SupportPay" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
 								</div>
-							</div> 
+							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
 								<label for="Submit" class='btn btn-success'>Enviar</label>
