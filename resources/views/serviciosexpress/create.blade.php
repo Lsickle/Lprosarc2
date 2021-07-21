@@ -4,163 +4,163 @@
 @endsection
 @section('contentheader_title')
 <span style="background-image: linear-gradient(40deg, #d4fc79, #00C851); padding-right:30vw; position:relative; overflow:hidden;">
-	Solicitudes Express
-  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+    Solicitudes Express
+    <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
-	<div class="row">
-		<div class="col-md-16 col-md-offset-0">
-			<div class="box">
-				<div class="box-header with-border">
-					<h3 class="box-title">{{ trans('adminlte_lang::message.solsertitlecreate') }}</h3>
-				</div>
+    <div class="row">
+        <div class="col-md-16 col-md-offset-0">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ trans('adminlte_lang::message.solsertitlecreate') }}</h3>
+                </div>
 
-				<form role="form" id="CreateSolSer" action="/serviciosexpress" method="POST" enctype="multipart/form-data">
-					@csrf
-					@if ($errors->any())
-						<div class="alert alert-danger" role="alert">
-							<ul>
-								@foreach ($errors->all() as $error)
-									<p>{{$error}}</p>
-								@endforeach
-							</ul>
-						</div>
-					@endif
-					<div class="box-body">
-						<div class="col-md-12">
-							<div class="form-group col-md-6">
-								<label>Cliente</label>
-								<small class="help-block with-errors">*</small>
-								<select id="FK_SolSerCliente" name="FK_SolSerCliente" class="form-control" required data-validate="true">
-									<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-									@foreach ($Clientes as $Cliente)
-									<option value="{{$Cliente->CliSlug}}">{{$Cliente->CliName.' ('.$Cliente->CliNit}})</option>
-									@endforeach
-								</select>
-							</div>
-                            {{-- <div class="form-group col-md-6">
-                                <label for="exampleInputEmail1">{{'comprobante de pago'}}</label>
-                                <small class="help-block with-errors">*</small>
-                                <input type="file" class="form-control" id="pagoComprobante" name="pagoComprobante" type="file" data-validate="true" required data-filesize="2048" class="form-control" data-accept="jpg,jpe,png,jpeg,pdf" accept=".jpg,.jpe,.peg,.jpeg,.png,.pdf">
-                            </div> --}}
+                <form role="form" id="CreateSolSer" action="/serviciosexpress" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @if ($errors->any())
+                    <div class="alert alert-danger" role="alert">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <p>{{$error}}</p>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                    <div class="box-body">
+                        <div class="col-md-12">
                             <div class="form-group col-md-6">
-                                <!-- image-preview-filename input [CUT FROM HERE]-->
-                                <label for="exampleInputEmail1">{{'comprobante de pago'}}</label>
-								<small class="help-blockwith-errors">*</small>
-                                <div class="input-group image-preview">
-                                    <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
-                                    <span class="input-group-btn">
-                                        <!-- image-preview-clear button -->
-                                        <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
-                                            <i class="far fa-trash-alt"></i> Borrar
-                                        </button>
-                                        <!-- image-preview-input -->
-                                        <div class="btn btn-default image-preview-input">
-                                            <i class="fas fa-folder-open"></i>
-                                            <span class="image-preview-input-title">Buscar</span>
-                                            <input id="pagoComprobante" type="file" name="pagoComprobante" data-validate="true" required data-filesize="2048" class="form-control" data-accept="jpg,jpe,png,jpeg,pdf" accept=".jpg,.jpe,.peg,.jpeg,.png,.pdf"/> <!-- rename it -->
-                                        </div>
-                                    </span>
-                                </div><!-- /input-group image-preview [TO HERE]-->
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="fechadepago">{{'fecha de pago'}}</label>
+                                <label>Cliente</label>
                                 <small class="help-block with-errors">*</small>
-                                <input type="date" class="form-control" id="fechadepago" name="fechadepago" required >
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="Referencia">{{'Referencia de la Tranasacción'}}</label>
-                                <small class="help-block with-errors">*</small>
-                                <input type="text" class="form-control" id="Referencia" name="Referencia" maxlength="30" required>
-                            </div>
-                            <div id="mediodepagoDiv" class="form-group col-md-6">
-                                <label>medio de pago</label>
-                                <small class="help-block with-errors">*</small>
-                                <select class="form-control" id="mediodepago" name="mediodepago" required>
-                                    <option value="">seleccione...</option>
-                                    <option value="app nequi">app nequi</option>
-                                    <option value="app davivienda">app davivienda</option>
-                                    <option value="app daviplata">app daviplata</option>
-                                    <option value="transferencia davivienda">transferencia davivienda</option>
-                                    <option value="transferencia bancolombia">transferencia bancolombia</option>
-                                    <option value="transferencia avvillas">transferencia avvillas</option>
-                                    <option value="transferencia occidente">transferencia occidente</option>
-                                    <option value="deposito davivienda">deposito davivienda</option>
-                                    <option value="deposito bancolombia">deposito bancolombia</option>
-                                    <option value="deposito avvillas">deposito avvillas</option>
-                                    <option value="deposito occidente">deposito occidente</option>
+                                <select id="FK_SolSerCliente" name="FK_SolSerCliente" class="form-control" required data-validate="true">
+                                    <option value="">{{ trans('adminlte_lang::message.select') }}</option>
+                                    @foreach ($Clientes as $Cliente)
+                                    <option value="{{$Cliente->CliSlug}}">{{$Cliente->CliName.' ('.$Cliente->CliNit}})</option>
+                                    @endforeach
                                 </select>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="montodepago">{{'monto de pago'}}</label>
-                                <small class="help-block with-errors">*</small>
-                                <input type="number" class="form-control" id="montodepago" name="montodepago" step=".1" min="0" required>
+                            {{-- <div class="form-group col-md-6">
+                                <label for="exampleInputEmail1">{{'comprobante de pago'}}</label>
+                            <small class="help-block with-errors">*</small>
+                            <input type="file" class="form-control" id="pagoComprobante" name="pagoComprobante" type="file" data-validate="true" required data-filesize="2048" class="form-control" data-accept="jpg,jpe,png,jpeg,pdf" accept=".jpg,.jpe,.peg,.jpeg,.png,.pdf">
+                        </div> --}}
+                        <div class="form-group col-md-6">
+                            <!-- image-preview-filename input [CUT FROM HERE]-->
+                            <label for="exampleInputEmail1">{{'comprobante de pago'}}</label>
+                            <small class="help-blockwith-errors">*</small>
+                            <div class="input-group image-preview">
+                                <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                                <span class="input-group-btn">
+                                    <!-- image-preview-clear button -->
+                                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                                        <i class="far fa-trash-alt"></i> Borrar
+                                    </button>
+                                    <!-- image-preview-input -->
+                                    <div class="btn btn-default image-preview-input">
+                                        <i class="fas fa-folder-open"></i>
+                                        <span class="image-preview-input-title">Buscar</span>
+                                        <input id="pagoComprobante" type="file" name="pagoComprobante" data-validate="true" required data-filesize="2048" class="form-control" data-accept="jpg,jpe,png,jpeg,pdf" accept=".jpg,.jpe,.peg,.jpeg,.png,.pdf" /> <!-- rename it -->
+                                    </div>
+                                </span>
+                            </div><!-- /input-group image-preview [TO HERE]-->
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="fechadepago">{{'fecha de pago'}}</label>
+                            <small class="help-block with-errors">*</small>
+                            <input type="date" class="form-control" id="fechadepago" name="fechadepago" required value="{{date('Y-m-d')}}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="Referencia">{{'Referencia de la Transacción'}}</label>
+                            <small class="help-block with-errors">*</small>
+                            <input type="text" class="form-control" id="Referencia" name="Referencia" maxlength="30" required value="P-5000">
+                        </div>
+                        <div id="mediodepagoDiv" class="form-group col-md-6">
+                            <label>medio de pago</label>
+                            <small class="help-block with-errors">*</small>
+                            <select class="form-control" id="mediodepago" name="mediodepago" required>
+                                <option value="">seleccione...</option>
+                                <option selected value="app nequi">app nequi</option>
+                                <option value="app davivienda">app davivienda</option>
+                                <option value="app daviplata">app daviplata</option>
+                                <option value="transferencia davivienda">transferencia davivienda</option>
+                                <option value="transferencia bancolombia">transferencia bancolombia</option>
+                                <option value="transferencia avvillas">transferencia avvillas</option>
+                                <option value="transferencia occidente">transferencia occidente</option>
+                                <option value="deposito davivienda">deposito davivienda</option>
+                                <option value="deposito bancolombia">deposito bancolombia</option>
+                                <option value="deposito avvillas">deposito avvillas</option>
+                                <option value="deposito occidente">deposito occidente</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="montodepago">{{'monto de pago'}}</label>
+                            <small class="help-block with-errors">*</small>
+                            <input type="number" class="form-control" id="montodepago" name="montodepago" step=".1" min="0" required value="35000">
+                        </div>
+                        <div id="SolServCantidadDiv" class="form-group col-md-6">
+                            <label>N° de Servicios</label>
+                            <small class="help-block with-errors">*</small>
+                            <select class="form-control" id="SolServCantidad" name="SolServCantidad" required>
+                                <option value="">seleccione...</option>
+                                <option selected value="12">12</option>
+                                <option value="6">6</option>
+                                <option value="4">4</option>
+                                <option value="3">3</option>
+                                <option value="2">2</option>
+                                <option value="1">1</option>
+                            </select>
+                        </div>
+                        <div id="SolServFrecuenciaDiv" class="form-group col-md-6">
+                            <label>Frecuencia de recolección</label>
+                            <small class="help-block with-errors">*</small>
+                            <select class="form-control" id="SolServFrecuencia" name="SolServFrecuencia" required>
+                                <option value="">seleccione...</option>
+                                <option selected value="semanal">semanal</option>
+                                <option value="quincenal">quincenal</option>
+                                <option value="mensual">mensual</option>
+                                <option value="bimensual">bimensual</option>
+                                <option value="trimestral">trimestral</option>
+                                <option value="semestral">semestral</option>
+                                <option value="anual">anual</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <center>
+                                <label>Observaciones</label>
+                                <button type="button" class="btn btn-box-tool boton" style="color: black;" data-toggle="collapse" data-target=".Observaciones" onclick="AnimationMenusForm('.Observaciones')" title="Reducir/Ampliar"><i class="fa fa-plus"></i></button>
+                            </center>
+                            <div class="form-group col-md-12 collapse Observaciones" style="margin-bottom: 1em; padding-left:0; padding-right:0;">
+                                <small id="caracteresrestantes" class="help-block with-errors"></small>
+                                <textarea onchange="updatecaracteres()" id="textDescription" rows="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" name="SolSerDescript"></textarea>
                             </div>
-							<div id="SolServCantidadDiv" class="form-group col-md-6">
-								<label>N° de Servicios</label>
-								<small class="help-block with-errors">*</small>
-								<select class="form-control" id="SolServCantidad" name="SolServCantidad" required>
-                                    <option value="">seleccione...</option>
-									<option value="12">12</option>
-									<option value="6">6</option>
-									<option value="4">4</option>
-									<option value="3">3</option>
-									<option value="2">2</option>
-									<option value="1">1</option>
-								</select>
-							</div>
-							<div id="SolServFrecuenciaDiv" class="form-group col-md-6">
-								<label>Frecuencia de recolección</label>
-								<small class="help-block with-errors">*</small>
-								<select class="form-control" id="SolServFrecuencia" name="SolServFrecuencia" required>
-                                    <option value="">seleccione...</option>
-									<option value="semanal">semanal</option>
-									<option value="quincenal">quincenal</option>
-									<option value="mensual">mensual</option>
-									<option value="bimensual">bimensual</option>
-									<option value="trimestral">trimestral</option>
-									<option value="semestral">semestral</option>
-									<option value="anual">anual</option>
-								</select>
-							</div>
-							<div class="col-md-12">
-								<center>
-									<label>Observaciones</label>
-									<button type="button" class="btn btn-box-tool boton" style="color: black;" data-toggle="collapse" data-target=".Observaciones" onclick="AnimationMenusForm('.Observaciones')" title="Reducir/Ampliar"><i class="fa fa-plus"></i></button>
-								</center>
-								<div class="form-group col-md-12 collapse Observaciones" style="margin-bottom: 1em; padding-left:0; padding-right:0;">
-									<small id="caracteresrestantes" class="help-block with-errors"></small>
-									<textarea onchange="updatecaracteres()" id="textDescription" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" name="SolSerDescript"></textarea>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-12" style="text-align: center;">
-							<hr style="border-color: green; border-width:2px;">
-							<b><a class="load"></a>{{ trans('adminlte_lang::message.solserrespelsend') }}<a class="load"></a></b>
-						</div>
-						<div id="Respels" class="col-md-12">
-							<input type="text" hidden name="SGenerador[0]" id="SGenerador">
-							<div id="DivRepel0" class="form-group col-md-16">
-							</div>
-						</div>
-					</div>
-					<div class="box-footer">
-                        <button type="submit" form="CreateSolSer" id="Submit2" class="btn btn-success pull-right">vamos</button>
-                        {{-- <button type="submit" form="CreateSolSer" id="Submit" class="btn btn-success pull-right" style="display: none;">vamos</button> --}}
-					</div>
-                </form>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="text-align: center;">
+                        <hr style="border-color: green; border-width:2px;">
+                        <b><a class="load"></a>{{ trans('adminlte_lang::message.solserrespelsend') }}<a class="load"></a></b>
+                    </div>
+                    <div id="Respels" class="col-md-12">
+                        <input type="text" hidden name="SGenerador[0]" id="SGenerador">
+                        <div id="DivRepel0" class="form-group col-md-16">
+                        </div>
+                    </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" id="Submit2" class="btn btn-success pull-right">vamos</button>
+                {{-- <button type="submit" form="CreateSolSer" id="Submit" class="btn btn-success pull-right" style="display: none;">vamos</button> --}}
+            </div>
+            </form>
 
 
-			</div>
-		</div>
-	</div>
+        </div>
+    </div>
+</div>
 </div>
 @endsection
 @section('NewScript')
 <script>
-function Switch(){
+    function Switch(){
 	$("#SolSerBascula").bootstrapSwitch();
 	$("#SolSerCapacitacion").bootstrapSwitch();
 	$("#SolSerMasPerson").bootstrapSwitch();
@@ -212,27 +212,6 @@ $(document).ready(function(){
                     return "Las extensiones permitidas son: "+permitido;
                 }
             },
-        }
-    });
-    // $("#Submit2").on('click', function(event){
-    //     event.preventDefault();
-    //     formulario= $("#CreateSolSer");
-    //     submitbutton = $(this);
-    //     if (submitbutton.hasClass('disabled')) {
-    //         formulario.validator('validate');
-    //         return false;
-    //     }else{
-    //         $("#CreateSolSer").submit();
-    //     }
-    // });
-    $("#CreateSolSer").on('submit', function(event){
-        event.preventDefault();
-        submitbutton = $("#Submit2");
-        if (submitbutton.hasClass('disabled')) {
-            $(this).validator('validate');
-            return false;
-        }else{
-            envsubmit();
         }
     });
 })
