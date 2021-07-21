@@ -103,12 +103,12 @@
                             <small class="help-block with-errors">*</small>
                             <select class="form-control" id="SolServCantidad" name="SolServCantidad" required>
                                 <option value="">seleccione...</option>
-                                <option selected value="12">12</option>
+                                <option value="12">12</option>
                                 <option value="6">6</option>
                                 <option value="4">4</option>
                                 <option value="3">3</option>
                                 <option value="2">2</option>
-                                <option value="1">1</option>
+                                <option selected value="1">1</option>
                             </select>
                         </div>
                         <div id="SolServFrecuenciaDiv" class="form-group col-md-6">
@@ -116,9 +116,9 @@
                             <small class="help-block with-errors">*</small>
                             <select class="form-control" id="SolServFrecuencia" name="SolServFrecuencia" required>
                                 <option value="">seleccione...</option>
-                                <option selected value="semanal">semanal</option>
+                                <option value="semanal">semanal</option>
                                 <option value="quincenal">quincenal</option>
-                                <option value="mensual">mensual</option>
+                                <option selected value="mensual">mensual</option>
                                 <option value="bimensual">bimensual</option>
                                 <option value="trimestral">trimestral</option>
                                 <option value="semestral">semestral</option>

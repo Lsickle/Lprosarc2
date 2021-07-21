@@ -19,6 +19,7 @@ use App\Mail\NewSolServProsarcEmail;
 use App\Mail\SolSerExpressEmail;
 use App\Mail\CertExpressRetenidoEmail;
 use App\Mail\SolSerExpressConciliado;
+use App\Mail\SolSerExpressRecibo;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
 use App\audit;
@@ -162,7 +163,7 @@ class ServiceExpressController extends Controller
     {
 		// return $request;
 
-		$Cliente = Cliente::with('sedes')->where('CliSlug', $request->input('FK_SolSerCliente'))->first();
+		$Cliente = Cliente::where('CliSlug', $request->input('FK_SolSerCliente'))->first();
 
         $file = $request->file('pagoComprobante');
 
@@ -227,7 +228,7 @@ class ServiceExpressController extends Controller
         $recibo->url_recibo = 'recibosdepago/'.$foldername.'/RP-'.sprintf("%07s", $recibo->ID_Recibo).'.pdf';
         $recibo->save();
 
-        return $request;
+        // return $request;
 
 
 		$Persona = DB::table('personals')
@@ -298,9 +299,9 @@ class ServiceExpressController extends Controller
 		$SolicitudServicio['comercial'] = $comercial;
 		$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudServicio->FK_SolSerPersona)->first();
 		// se envia un correo por personal interesado
-		Mail::to($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
+		// Mail::to($sede->SedeEmail)->cc($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
         // se envia correo al cliente con el recibo de pado
-		Mail::to($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
+        Mail::to($sede->SedeEmail)->cc($destinatarios)->send(new SolSerExpressRecibo($pdf, $recibo, $comercial, $Cliente, $sede));
 		return redirect()->route('serviciosexpress.show', ['id' => $SolicitudServicio->SolSerSlug]);
     }
 
@@ -2571,5 +2572,16 @@ class ServiceExpressController extends Controller
 		$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact('certificado'));
 
 		return $pdf->stream();
+	}
+
+    public function recibotest()
+	{
+        $recibo = ReciboDePago::find(7);
+        $pdf = '';
+        $asesor = Personal::find(1);
+        $cliente = Cliente::find(276);
+        $sede = Sede::find(470);
+
+        return new SolSerExpressRecibo($pdf, $recibo, $asesor, $cliente, $sede);
 	}
 }

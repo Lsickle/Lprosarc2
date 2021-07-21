@@ -47,6 +47,7 @@ Route::middleware(['web'])->group(function () {
 	Route::get('/registroexpress', 'registroexpressController@create')->name('registroexpress');
 	Route::post('/sendregisterexpress', 'registroexpressController@store');
 	Route::get('/pdftest', 'serviceexpresscontroller@pdftest');
+	Route::get('/recibotest', 'serviceexpresscontroller@recibotest');
 });
 
 

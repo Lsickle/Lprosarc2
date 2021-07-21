@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
   {{-- <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'> --}}
-  <title>Recibo RP-{{sprintf("%07s", $recibo->ID_Recibo)}}</title>
+  <title>Comprobante RP-{{sprintf("%07s", $recibo->ID_Recibo)}}</title>
 
   <style>
 	@page {
@@ -204,7 +204,7 @@
 				<tr>
 					<td colspan="4" style="text-align: center; font-size: 10px;">
 						{{$recibo->ReciboSlug}}<br>
-						Recibo de pago generado y firmado digitalmente desde la aplicación <b>SisPRO</b> &copy; <?php echo date("Y");?> <br>
+						Comprobante de pago generado y firmado digitalmente desde la aplicación <b>SisPRO</b> &copy; <?php echo date("Y");?> <br>
 						¡Protejamos el medio ambiente; así aseguramos la vida y bienestar de nuestros hijos, nietos y generaciones futuras!
 					</td>
 				</tr>
@@ -243,7 +243,7 @@
 
 								<tr>
 									<td>
-										<b> Recibo de Pago </b>
+										<b> Comprobante de Pago </b>
 									</td>
 								</tr>
 							</table>
