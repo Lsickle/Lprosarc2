@@ -27,6 +27,16 @@ class StoreServExpressRequest extends FormRequest
      */
     public function rules(Request $request)
     {
+        $rules = [
+            'fechadepago' => 'required|date',
+            'Referencia' => 'required|max:30',
+            'mediodepago' => 'required',
+            'montodepago' => 'required|numeric',
+            'SolServCantidad' => 'required|numeric',
+            'SolServFrecuencia' => 'required|in:semanal,quincenal,mensual,bimensual,trimestral,semestral,anual',
+            'SolSerDescript' => 'required|max:4000',
+            'pagoComprobante' => 'required|max:2048|mimes:jpg,jpeg,png,jpe,pdf'
+        ];
         foreach ($request->input('SGenerador') as $Generador => $value) {
             $rules['SGenerador.'.$Generador] = ['required', Rule::exists('gener_sedes', 'GSedeSlug')->where(function ($query) use ($request ,$Generador){
                 $SGeneradors = DB::table('gener_sedes')

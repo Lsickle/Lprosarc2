@@ -160,16 +160,45 @@ class ServiceExpressController extends Controller
      */
     public function store(StoreServExpressRequest $request)
     {
-		return $request;
+		// return $request;
 
 		$Cliente = Cliente::where('CliSlug', $request->input('FK_SolSerCliente'))->first();
 
-        /*guardar e comprobante */
-        $data_uri = $request->input('pagoComprobante');
-		$encoded_image = explode(",", $data_uri)[1];
-		$decoded_image = base64_decode($encoded_image);
-		$comprobante =  $Cliente->CliName.$request->input('Referencia');
-		Storage::put('comprobantes/'.$comprobante.'.png', $decoded_image, 'public');
+        $file = $request->file('pagoComprobante');
+
+        switch ($file->getClientOriginalExtension()) {
+            case 'pdf':
+            case 'png':
+            case 'jpg':
+            case 'jpeg':
+            case 'jpe':
+                $foldername = $Cliente->CliNit;
+                $foldername = str_replace('.', '', $foldername);
+                $foldername = str_replace(' ', '_', $foldername);
+                $foldername = str_replace('(', '_', $foldername);
+                $foldername = str_replace(')', '_', $foldername);
+                $foldername = str_replace('__', '_', $foldername);
+
+
+                $fileName = $request->input('Referencia');
+                $fileName = str_replace('.', '', $fileName);
+                $fileName = str_replace(' ', '_', $fileName);
+                $fileName = str_replace('(', '_', $fileName);
+                $fileName = str_replace(')', '_', $fileName);
+                $fileName = str_replace('__', '_', $fileName);
+
+                // Storage::put('comprobantes/'.$fileName.$file->getClientOriginalExtension(), $file, 'public');
+                $filePath = $file->storeAs('comprobantes/'.$foldername.'/', $fileName.$file->getClientOriginalExtension(), 'public');
+                break;
+
+            default:
+                abort(422, 'El archivo debe estar de un formato permitido png, jpg o pdf');
+                break;
+        }
+
+        return $filePath;
+
+
 
 
         /**crear el pdf de recibo */
@@ -202,13 +231,7 @@ class ServiceExpressController extends Controller
 			$SolicitudServicio->SolSerAuditable = 0;
 			$SolicitudServicio->SolResAuditoriaTipo = "No Auditable";
 			$SolicitudServicio->SolSerDescript = $request->input('SolServCantidad');
-			// $SolicitudServicio->SolServMailCopia = json_encode($request->input('SolServMailCopia'));
-			if(isset($request['SupportPay'])){
-				$fileSupport = $request['SupportPay'];
-				$nameSupport = hash('sha256', rand().time().$fileSupport->getClientOriginalName()).'.pdf';
-				$fileSupport->move(public_path().'\img\SupportPay/',$nameSupport);
-				$SolicitudServicio->SolSerSupport = $nameSupport;
-			}
+            $SolicitudServicio->SolSerSupport = $filePath;
 			$SolicitudServicio->SolSerTipo = "Interno";
 			$SolicitudServicio->SolSerNameTrans = 'Prosarc S.A. ESP.';
 			$SolicitudServicio->SolSerNitTrans = '900.079.188-0';
@@ -231,6 +254,7 @@ class ServiceExpressController extends Controller
 
 			$SolicitudServicio->FK_SolSerPersona = $Persona->ID_Pers;
 			$SolicitudServicio->FK_SolSerCliente = $Cliente->ID_Cli;
+			$SolicitudServicio->FK_ReciboSolserv = $recibo->ID_Recibo;
 			$SolicitudServicio->save();
 			$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
 
