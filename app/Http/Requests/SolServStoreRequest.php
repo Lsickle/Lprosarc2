@@ -28,6 +28,16 @@ class SolServStoreRequest extends FormRequest
     public function rules(Request $request)
     {
         $rules = [
+            'fechadepago' => 'required|date',
+            'Referencia' => 'required|max:30',
+            'mediodepago' => 'required',
+            'montodepago' => 'required|numeric',
+            'SolServCantidad' => 'required|numeric',
+            'SolServFrecuencia' => 'required|in:semanal,quincenal,mensual,bimensual,trimestral,semestral,anual',
+            'SolSerDescript' => 'required|max:4000',
+            'pagoComprobante' => 'required|max:2048|mimes:jpg,jpeg,png,jpe,pdf'
+        ];
+        $rules = [
             'FK_SolSerPersona'  => ['required',Rule::exists('personals', 'PersSlug')->where(function ($query) use ($request){
                 $Personal = DB::table('personals')
                     ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
@@ -90,7 +100,7 @@ class SolServStoreRequest extends FormRequest
                     }
                 }
                 break;
-            
+
             default:
                 # code...
                 break;
