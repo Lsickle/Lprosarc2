@@ -13976,7 +13976,7 @@
 
   Validator.INPUT_SELECTOR = ':input:not([type="hidden"], [type="submit"], [type="reset"], button)'
 
-  Validator.FOCUS_OFFSET = 20
+  Validator.FOCUS_OFFSET = 70
 
   Validator.DEFAULTS = {
     delay: 500,
@@ -14225,6 +14225,7 @@
   Validator.prototype.toggleSubmit = function () {
     if (!this.options.disable) return
     this.$btn.toggleClass('disabled', this.isIncomplete() || this.hasErrors())
+    // this.$btn.prop('disabled', this.isIncomplete() || this.hasErrors());
   }
 
   Validator.prototype.defer = function ($el, callback) {

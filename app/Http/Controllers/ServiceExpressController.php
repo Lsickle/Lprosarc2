@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\SolServStoreRequest;
+use App\Http\Requests\StoreServExpressRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -17,6 +18,7 @@ use App\Mail\SolSerLeftRespel;
 use App\Mail\NewSolServProsarcEmail;
 use App\Mail\SolSerExpressEmail;
 use App\Mail\CertExpressRetenidoEmail;
+use App\Mail\SolSerExpressConciliado;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
 use App\audit;
@@ -44,6 +46,7 @@ use App\Docdato;
 use App\ProgramacionVehiculo;
 use App\RequerimientosCliente;
 use App\Observacion;
+use App\ReciboDePago;
 use Permisos;
 use PDF;
 use Endroid\QrCode\ErrorCorrectionLevel;
@@ -115,7 +118,7 @@ class ServiceExpressController extends Controller
 			$servicio->SedeMapLocalidad = $sedeExpress->SedeMapLocalidad;
 			$servicio->SedeMapLat = $sedeExpress->SedeMapLat;
 			$servicio->SedeMapLong = $sedeExpress->SedeMapLong;
-				
+
 
 			/* validacion para encontrar la fecha de recepción en planta del servicio */
 			$fechaRecepcion = SolicitudServicio::find($servicio->ID_SolSer)->programacionesrecibidas()->first();
@@ -138,7 +141,7 @@ class ServiceExpressController extends Controller
      */
     public function create()
     {
-        if(in_array(Auth::user()->UsRol, Permisos::COMERCIALEXPRESS) || in_array(Auth::user()->UsRol, Permisos::COMERCIALEXPRESS)){			
+        if(in_array(Auth::user()->UsRol, Permisos::COMERCIALEXPRESS) || in_array(Auth::user()->UsRol, Permisos::COMERCIALEXPRESS)){
 
 			$Clientes = Cliente::with('sedes')->where('CliCategoria', 'ClientePrepago')->orderBy('created_at', 'desc')->get();
 
@@ -155,11 +158,32 @@ class ServiceExpressController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreServExpressRequest $request)
     {
-		// return $request;
+		return $request;
 
 		$Cliente = Cliente::where('CliSlug', $request->input('FK_SolSerCliente'))->first();
+
+        /*guardar e comprobante */
+        $data_uri = $request->input('solserFirma');
+		$encoded_image = explode(",", $data_uri)[1];
+		$decoded_image = base64_decode($encoded_image);
+		$nombreDeFirma = $request->input('solserslug');
+		Storage::put('firmasClientes/'.$nombreDeFirma.'.png', $decoded_image, 'public');
+
+
+        /**crear el pdf de recibo */
+
+        $recibo = new ReciboDePago();
+        $recibo->fecha_de_pago = $Cliente->ID_Cli;
+        $recibo->monto = $Cliente->ID_Cli;
+        $recibo->medio_de_pago = $Cliente->ID_Cli;
+        $recibo->referencia = $Cliente->ID_Cli;
+        $recibo->url_comprobante = $Cliente->ID_Cli;
+        $recibo->url_recibo = $Cliente->ID_Cli;
+        $recibo->ReciboSlug = $Cliente->ID_Cli;
+        $recibo->save();
+
 
 		$Persona = DB::table('personals')
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
@@ -172,7 +196,7 @@ class ServiceExpressController extends Controller
 				->first();
 		$direccionderecoleccion = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first('SedeAddress');
 
-		for ($i=0; $i < $request->input('SolServCantidad'); $i++) { 
+		for ($i=0; $i < $request->input('SolServCantidad'); $i++) {
 			$SolicitudServicio = new SolicitudServicio();
 			$SolicitudServicio->SolSerStatus = 'Aprobado';
 			$SolicitudServicio->SolSerAuditable = 0;
@@ -221,7 +245,7 @@ class ServiceExpressController extends Controller
 			$Observacion->ObsRol = Auth::user()->UsRol;
 			$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
 			$Observacion->save();
-			
+
 		}
 		// se establece la lista de destinatarios
 		if ($Cliente->CliComercial <> null) {
@@ -240,7 +264,7 @@ class ServiceExpressController extends Controller
 								'gerenteplanta@prosarc.com.co',
 								'subgerencia@prosarc.com.co',
 								'recepcionpda@prosarc.com.co'
-							];	
+							];
 		}
 		$SolicitudServicio['comercial'] = $comercial;
 		$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudServicio->FK_SolSerPersona)->first();
@@ -286,7 +310,7 @@ class ServiceExpressController extends Controller
 			}
 		}
 
-		
+
 		$SolSerCollectAddress = $SolicitudServicio->SolSerCollectAddress;
 		$SolSerConductor = $SolicitudServicio->SolSerConductor;
 		if($SolicitudServicio->SolSerTipo == 'Interno'){
@@ -397,20 +421,20 @@ class ServiceExpressController extends Controller
 			// ->where('requerimientos.ofertado', 1)
 	        // ->where('forevaluation', 0)
 			->get();
-		
+
 		$Residuos = $Residuosoriginal->map(function ($item) {
 		  $requerimientos = Requerimiento::with(['pretratamientosSelected'])
 	        ->where('ID_Req', $item->FK_SolResRequerimiento)
 	        // ->where('forevaluation', 0)
 			->first();
-			
+
 			$rm = SolicitudResiduo::where('SolResSlug', $item->SolResSlug)->first('SolResRM');
-	        
+
 	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
 	        $item->SolResRM2 = $rm->SolResRM;
 		  	return $item;
 		});
-		
+
 		$SolicitudServicio->Repetible = 0;
 
 		/* se convierte el tipo de dato a aray mediante la consulta en el modelo de la columna SolSerRMs usando eloquent*/
@@ -438,14 +462,14 @@ class ServiceExpressController extends Controller
 			->where('ID_SolSer', $SolicitudServicio->ID_SolSer)
 			->orderBy('created_at', 'desc')
 			->get();
-		
+
 		/*se inicializan las variables para el calculo de totales */
-		$total['estimado'] = 0;		
-		$total['recibido'] = 0;		
-		$total['conciliado'] = 0;		
-		$total['tratado'] = 0;		
+		$total['estimado'] = 0;
+		$total['recibido'] = 0;
+		$total['conciliado'] = 0;
+		$total['tratado'] = 0;
 		$cantidadesXtratamiento = [];
-		
+
 
 		/* se itera sobre todos los residuos de las solicitudes de servicio */
 		foreach ($SolicitudesServicioscount as $servicio) {
@@ -487,7 +511,7 @@ class ServiceExpressController extends Controller
 		}else{
 			$SolicitudServicio->recepcion = null;
 		}
-		
+
 		return view('serviciosexpress.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento', 'tratamientos', 'Observaciones', 'ultimoRecordatorio'));
 
     }
@@ -513,7 +537,7 @@ class ServiceExpressController extends Controller
 					}
 				}
 			}
-			
+
 			if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)){
 				switch ($request->input('solserstatus')) {
 					case 'Aprobada':
@@ -600,7 +624,7 @@ class ServiceExpressController extends Controller
 		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
 		$log->save();
 
-		
+
 		/*se guarda la observacion de la modificacion del servicio*/
 		$Observacion = new Observacion();
 		$Observacion->ObsStatus = $Solicitud->SolSerStatus;
@@ -609,7 +633,7 @@ class ServiceExpressController extends Controller
 			case 'Aprobado':
 				$Observacion->ObsTipo = 'cliente';
 				break;
-			
+
 			case 'Programado':
 				$Observacion->ObsTipo = 'prosarc';
 				break;
@@ -629,11 +653,11 @@ class ServiceExpressController extends Controller
 					$Observacion->ObsTipo = 'cliente';
 				}
 				break;
-			
+
 			case 'No Conciliado':
 				$Observacion->ObsTipo = 'cliente';
 				break;
-			
+
 			case 'Tratado':
 				$Observacion->ObsTipo = 'prosarc';
 				break;
@@ -664,7 +688,7 @@ class ServiceExpressController extends Controller
 		$Observacion->ObsRol = Auth::user()->UsRol;
 		$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
 		$Observacion->save();
-		
+
 		switch($Solicitud->SolSerStatus){
 			case 'Tratado':
 			case 'Facturado':
@@ -767,7 +791,7 @@ class ServiceExpressController extends Controller
 						->where('ofertado', '=', 1)
 						->where('forevaluation', '=', 1)
 						->first();
-						
+
 					if ($requerimientoOfertado == null) {
 						$SolicitudNew->delete();
 
@@ -778,7 +802,7 @@ class ServiceExpressController extends Controller
 						$log->AuditUser=Auth::user()->email;
 						$log->Auditlog=$SolicitudNew;
 						$log->save();
-						
+
 						abort(404, 'el servicio no se puede repetir debido a que alguno de los residuos no posee tratamiento ofertado, Verifique con su asesor Comercial');
 					}
 					if ($requerimientoOfertado->ReqFotoDescargue==0) {
@@ -822,7 +846,7 @@ class ServiceExpressController extends Controller
 					$SolResNew->SolResAuditoria = $SolResOld->SolResVideoTratamiento;
 					$SolResNew->SolResAuditoriaTipo = $SolResOld->SolResVideoTratamiento;
 					/*se verifica los requerimientos y pretratamientos seleccionados para copiarlos*/
-					
+
 					$nuevorequerimiento = $requerimientoOfertado->replicate();
 					$nuevorequerimiento->ReqSlug= hash('md5', rand().time().$respelgener->FK_Respel);
 					$nuevorequerimiento->forevaluation=0;
@@ -845,7 +869,7 @@ class ServiceExpressController extends Controller
 					$SolResNew->FK_SolResRequerimiento = $nuevorequerimiento->ID_Req;
 					$SolResNew->save();
 				}
-			
+
 			$SolicitudServicio = $SolicitudNew;
 
 			if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
@@ -860,7 +884,7 @@ class ServiceExpressController extends Controller
 				$Observacion->ObsRol = Auth::user()->UsRol;
 				$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
 				$Observacion->save();
-			
+
 			} else {
 
 				/* se incluye la primera observacion del cliente del servicio original */
@@ -890,8 +914,8 @@ class ServiceExpressController extends Controller
 				$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
 				$Observacion->save();
 			}
-			
-			
+
+
 						// se verifica si el cliente tiene comercial asignado
 			$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudNew->FK_SolSerCliente)->first();
 			// se establece la lista de destinatarios
@@ -913,7 +937,7 @@ class ServiceExpressController extends Controller
 									'auxiliarlogistico@prosarc.com.co',
 									'gerenteplanta@prosarc.com.co',
 									'subgerencia@prosarc.com.co'
-								];	
+								];
 			}
 
 			$SolicitudServicio['comercial'] = $comercial;
@@ -930,7 +954,7 @@ class ServiceExpressController extends Controller
 			}else{
 				Mail::to($SolicitudServicio['personalcliente']->PersEmail)->cc($destinatarios)->send(new NewSolServProsarcEmail($SolicitudServicio));
 			}
-					
+
 			return redirect()->route('serviciosexpress.show', ['id' => $SolicitudNew->SolSerSlug]);
 		}
 		else{
@@ -1067,7 +1091,7 @@ class ServiceExpressController extends Controller
 			$Observacion->ObsRol = Auth::user()->UsRol;
 			$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
 			$Observacion->save();
-			
+
 			return redirect()->route('serviciosexpress.show', ['id' => $SolicitudServicio->SolSerSlug]);
 		}
 		switch ($request->input('SolResAuditoriaTipo')) {
@@ -1222,7 +1246,7 @@ class ServiceExpressController extends Controller
 		$Observacion->ObsRol = Auth::user()->UsRol;
 		$Observacion->FK_ObsSolSer = $SolicitudServicio->ID_SolSer;
 		$Observacion->save();
-		
+
 		return redirect()->route('serviciosexpress.show', ['id' => $id]);
     }
 
@@ -1246,9 +1270,9 @@ class ServiceExpressController extends Controller
 			case 'Programado':
 			case 'Notificado':
 			case 'Aprobado':
-				
+
 				$documentos = Documento::where('FK_CertSolser', $SolicitudServicio->ID_SolSer)->get();
-				
+
 				foreach ($documentos as $key => $documento) {
 					$docdato = DocDato::where('FK_DatoDoc', $documento->ID_Doc)->get();
 
@@ -1257,16 +1281,16 @@ class ServiceExpressController extends Controller
 					}
 					Documento::destroy($documento->ID_Doc);
 				}
-				
+
 				SolicitudServicio::destroy($SolicitudServicio->ID_SolSer);
 
 				break;
-			
+
 			default:
 				abort(503, 'el servicio no puede ser eliminado si ya fue recibido en Planta');
 				break;
 		}
-		
+
 
 		$log = new audit();
 		$log->AuditTabla="solicitud_servicios";
@@ -1279,7 +1303,7 @@ class ServiceExpressController extends Controller
 
 		return redirect()->route('serviciosexpress.index');
 	}
-	
+
 	/*
 	*
 	* Create from solicitud de residuo
@@ -1314,7 +1338,7 @@ class ServiceExpressController extends Controller
 						$SolicitudResiduo->SolResCantiUnidadRecibida = 0;
 					}
 				}
-				
+
 				switch ($request['SolResEmbalaje'][$Generador][$y]) {
 					case 99:
 						$SolicitudResiduo->SolResEmbalaje = "Sacos/Bolsas";
@@ -1394,7 +1418,7 @@ class ServiceExpressController extends Controller
                 	$nuevarango->save();
                 }
 
-                
+
                 $SolicitudResiduo->FK_SolResRequerimiento = $nuevorequerimiento->ID_Req;
                 $SolicitudResiduo->save();
 			}
@@ -1408,7 +1432,7 @@ class ServiceExpressController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function solservdocindex($id)
-	{	
+	{
 		if (in_array(Auth::user()->UsRol, Permisos::CLIENTE)) {
 			$SolicitudServicio = DB::table('solicitud_servicios')
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
@@ -1479,7 +1503,7 @@ class ServiceExpressController extends Controller
 		if (!$Solicitud) {
 			abort(404);
 		}
-			
+
 		$Solicitud->SolServCertStatus=1;
 		$Solicitud->save();
 
@@ -1500,7 +1524,7 @@ class ServiceExpressController extends Controller
 		if (!$Solicitud) {
 			abort(404);
 		}
-			
+
 		$Solicitud->SolSerRMs=$request->input('SolServRM');
 		$Solicitud->save();
 
@@ -1517,7 +1541,7 @@ class ServiceExpressController extends Controller
 
 	public function solservdocstore($id)
 	{
-			
+
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $id)->first();
 		$serviciovalidado = $id;
 		/*cuenta los diferentes generadores*/
@@ -1607,7 +1631,7 @@ class ServiceExpressController extends Controller
 									$dato->FK_DatoCert = $certificado->ID_Cert;
 									$dato->FK_DatoCertSolRes = $key->ID_SolRes;
 									$dato->save();
-									
+
 								}
 
 								break;
@@ -1620,14 +1644,14 @@ class ServiceExpressController extends Controller
 								->first();
 
 								if ((isset($manifiestoprevio))&&($manifiestoprevio->FK_ManifTrat == $key->requerimiento->tratamiento->ID_Trat)) {
-									
+
 									$dato = new Manifdato;
 									$dato->FK_DatoManif = $manifiestoprevio->ID_Manif;
 									$dato->FK_DatoManifSolRes = $key->ID_SolRes;
 									$dato->save();
 
 								}else{
-									
+
 									$manifiesto = new Manifiesto;
 									$manifiesto->ManifNumero = "";
 									$manifiesto->ManifiEspName = "";
@@ -1877,7 +1901,7 @@ class ServiceExpressController extends Controller
 		}
 
 		// return $Servicios;
-		
+
 		return view('solicitud-serv.indexrecordatorios', compact('Servicios', 'Residuos', 'Cliente'));
 	}
 
@@ -1924,7 +1948,7 @@ class ServiceExpressController extends Controller
 		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
 		$log->save();
 
-		
+
 		/*se guarda la observacion de la modificacion del servicio*/
 		$Observacion = new Observacion();
 		$Observacion->ObsStatus = 'Devuelto a status: '.$Solicitud->SolSerStatus;
@@ -1936,14 +1960,14 @@ class ServiceExpressController extends Controller
 		$Observacion->ObsRol = Auth::user()->UsRol;
 		$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
 		$Observacion->save();
-		
+
 		return redirect()->route('serviciosexpress.show', ['id' => $Solicitud->SolSerSlug]);
 
 	}
 
 	public function CancelarServicio(Request $request)
 	{
-		// return $request;	
+		// return $request;
 		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
 		if (!$Solicitud) {
 			abort(404);
@@ -1990,7 +2014,7 @@ class ServiceExpressController extends Controller
 		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
 		$log->save();
 
-		
+
 		/*se guarda la observacion de la modificacion del servicio*/
 		$Observacion = new Observacion();
 		// cabiar el status de la observación
@@ -2075,7 +2099,7 @@ class ServiceExpressController extends Controller
 			$servicio->SedeMapLocalidad = $sedeExpress->SedeMapLocalidad;
 			$servicio->SedeMapLat = $sedeExpress->SedeMapLat;
 			$servicio->SedeMapLong = $sedeExpress->SedeMapLong;
-				
+
 
 			/* validacion para encontrar la fecha de recepción en planta del servicio */
 			$fechaRecepcion = SolicitudServicio::find($servicio->ID_SolSer)->programacionesrecibidas()->first();
@@ -2095,7 +2119,7 @@ class ServiceExpressController extends Controller
 	public function certificarExpress(Request $request)
 	{
 		// return $request;
-		
+
 		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
 		if (!$Solicitud) {
 			abort(404);
@@ -2145,7 +2169,7 @@ class ServiceExpressController extends Controller
 		$log->AuditUser=Auth::user()->email;
 		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
 		$log->save();
-		
+
 		/*se guarda la observacion de la modificacion del servicio*/
 		$Observacion = new Observacion();
 		$Observacion->ObsStatus = $Solicitud->SolSerStatus;
@@ -2173,7 +2197,7 @@ class ServiceExpressController extends Controller
                 $query->with('generespel.respels');
                 $query->with('requerimiento');
             }]);
-            
+
         }, 'cliente.sedes.Municipios.Departamento', 'sedegenerador.generadors', 'sedegenerador.municipio.Departamento', 'gestor.sedes.Municipios.Departamento', 'tratamiento', 'transportador.sedes.Municipios.Departamento','certdato.solres'])
         ->where('CertSlug', $certificados[0]->CertSlug)
         ->first();
@@ -2196,7 +2220,7 @@ class ServiceExpressController extends Controller
 
         switch ($certificado->tratamiento->TratName) {
             case 'TermoDestrucción':
-			$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact(['certificado','Solicitud', 'qrCode']));
+			$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact(['certificado','Solicitud','qrCode']));
 			Storage::put('certificadoExpress'.'/E-'.sprintf("%07s", $certificado->ID_Cert).'.pdf', $pdf->output(), 'public');
 
                 break;
@@ -2223,9 +2247,9 @@ class ServiceExpressController extends Controller
 			->where('progvehiculos.FK_ProgServi', '=', $Solicitud->ID_SolSer)
 			->where('progvehiculos.ProgVehDelete', 0)
 			->first();
-			
+
 		$comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
-		
+
 		if ($comercial) {
 			$destinatarios = [$comercial->PersEmail];
 		} else {
@@ -2262,14 +2286,98 @@ class ServiceExpressController extends Controller
 				}
 			}
 		}
-		
+
+		return redirect()->route('serviciosexpress.show', ['id' => $Solicitud->SolSerSlug]);
+
+	}
+
+    public function conciliarExpress(Request $request)
+	{
+		// return $request;
+
+		$Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first();
+		if (!$Solicitud) {
+			abort(404);
+		}
+
+		$totalrerspel = $Solicitud->SolicitudResiduo()->get('SolResKgConciliado')->sum('SolResKgConciliado');
+
+
+		if ($totalrerspel <= 0) {
+			abort(403, 'debe indicar las cantidades de los residuos antes de poder continuar');
+		}
+
+		/* se guarda la firma del cliente */
+		$data_uri = $request->input('solserFirma');
+		$encoded_image = explode(",", $data_uri)[1];
+		$decoded_image = base64_decode($encoded_image);
+		$nombreDeFirma = $request->input('solserslug');
+		Storage::put('firmasClientes/'.$nombreDeFirma.'.png', $decoded_image, 'public');
+		// return Storage::download('firmasClientes/'.$nombreDeFirma.'.png');
+
+		/**se cambia el status del servicio a conciliado */
+
+		$Solicitud->SolSerStatus = 'Conciliado';
+		$Solicitud->SolServCertStatus = 1;
+		$Solicitud->SolSerDescript = $request->input('solserdescript');
+		$Solicitud->save();
+
+		/** se guarda log en la tabla de auditoria */
+
+		$log = new audit();
+		$log->AuditTabla="solicitud_servicios";
+		$log->AuditType="conciliado Express";
+		$log->AuditRegistro=$Solicitud->ID_SolSer;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=[$Solicitud->SolSerStatus, $Solicitud->SolSerDescript];
+		$log->save();
+
+		/*se guarda la observacion de la modificacion del servicio*/
+		$Observacion = new Observacion();
+		$Observacion->ObsStatus = $Solicitud->SolSerStatus;
+		$Observacion->ObsMensaje = $Solicitud->SolSerDescript;
+		$Observacion->ObsTipo = 'prosarc';
+		$Observacion->ObsRepeat = 1;
+		$Observacion->ObsDate = now();
+		$Observacion->ObsUser = Auth::user()->email;
+		$Observacion->ObsRol = Auth::user()->UsRol;
+		$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
+		$Observacion->save();
+
+		/* se generan los pdf con los certificados correspondientes */
+		/*
+			espacio para el codigo de generacion de los pdf de los certificados / manifiestos
+		*/
+
+		/**se envia notificacion con los archivos en formato pdf de los certificados */
+		$emailData = DB::table('solicitud_servicios')
+			->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
+			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+			->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+			->select('personals.PersEmail', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida', 'clientes.CliName', 'clientes.CliComercial')
+			->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
+			->where('progvehiculos.FK_ProgServi', '=', $Solicitud->ID_SolSer)
+			->where('progvehiculos.ProgVehDelete', 0)
+			->first();
+
+		$comercial = Personal::where('ID_Pers', $emailData->CliComercial)->first();
+
+		if ($comercial) {
+			$comercialaddress = [$comercial->PersEmail];
+		} else {
+			$comercialaddress = [];
+		}
+
+        Mail::to('coordinadorse@prosarc.com.co')->cc($comercialaddress)->send(new SolSerExpressConciliado($emailData));
+
+
 		return redirect()->route('serviciosexpress.show', ['id' => $Solicitud->SolSerSlug]);
 
 	}
 
 	public function solservdocstoreExpress($id)
 	{
-			
+
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $id)->first();
 		$serviciovalidado = $id;
 		/*cuenta los diferentes generadores*/
@@ -2359,7 +2467,7 @@ class ServiceExpressController extends Controller
 									$dato->FK_DatoCert = $certificado->ID_Cert;
 									$dato->FK_DatoCertSolRes = $key->ID_SolRes;
 									$dato->save();
-									
+
 								}
 
 								break;
@@ -2372,14 +2480,14 @@ class ServiceExpressController extends Controller
 								->first();
 
 								if ((isset($manifiestoprevio))&&($manifiestoprevio->FK_ManifTrat == $key->requerimiento->tratamiento->ID_Trat)) {
-									
+
 									$dato = new Manifdato;
 									$dato->FK_DatoManif = $manifiestoprevio->ID_Manif;
 									$dato->FK_DatoManifSolRes = $key->ID_SolRes;
 									$dato->save();
 
 								}else{
-									
+
 									$manifiesto = new Manifiesto;
 									$manifiesto->ManifNumero = "";
 									$manifiesto->ManifiEspName = "";
@@ -2427,7 +2535,7 @@ class ServiceExpressController extends Controller
 	public function pdftest()
 	{
 
-		// return view('certificadosExpress.topdf', compact('certificado'));	
+		// return view('certificadosExpress.topdf', compact('certificado'));
 		// return $certificado;
 		$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact('certificado'));
 
