@@ -186,9 +186,11 @@ class ServiceExpressController extends Controller
                 $fileName = str_replace('(', '_', $fileName);
                 $fileName = str_replace(')', '_', $fileName);
                 $fileName = str_replace('__', '_', $fileName);
+                $fileName = time().$fileName;
+
 
                 // Storage::put('comprobantes/'.$fileName.$file->getClientOriginalExtension(), $file, 'public');
-                $filePath = $file->storeAs('comprobantes/'.$foldername.'/', $fileName.$file->getClientOriginalExtension(), 'public');
+                $filePath = $file->storeAs('comprobantes/'.$foldername.'/', $fileName.'.'.$file->getClientOriginalExtension(), 'public');
                 break;
 
             default:

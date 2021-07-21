@@ -147,7 +147,7 @@
                     </div>
             </div>
             <div class="box-footer">
-                <button type="submit" id="Submit2" class="btn btn-success pull-right">vamos</button>
+                <button type="submit" id="Submit2" class="btn btn-success pull-right">Solicitar</button>
                 {{-- <button type="submit" form="CreateSolSer" id="Submit" class="btn btn-success pull-right" style="display: none;">vamos</button> --}}
             </div>
             </form>

@@ -34,7 +34,7 @@ class StoreServExpressRequest extends FormRequest
             'montodepago' => 'required|numeric',
             'SolServCantidad' => 'required|numeric',
             'SolServFrecuencia' => 'required|in:semanal,quincenal,mensual,bimensual,trimestral,semestral,anual',
-            'SolSerDescript' => 'required|max:4000',
+            'SolSerDescript' => 'max:4000',
             'pagoComprobante' => 'required|max:2048|mimes:jpg,jpeg,png,jpe,pdf'
         ];
         foreach ($request->input('SGenerador') as $Generador => $value) {
