@@ -162,7 +162,7 @@ class ServiceExpressController extends Controller
     {
 		// return $request;
 
-		$Cliente = Cliente::where('CliSlug', $request->input('FK_SolSerCliente'))->first();
+		$Cliente = Cliente::with('sedes')->where('CliSlug', $request->input('FK_SolSerCliente'))->first();
 
         $file = $request->file('pagoComprobante');
 
@@ -195,25 +195,39 @@ class ServiceExpressController extends Controller
                 abort(422, 'El archivo debe estar de un formato permitido png, jpg o pdf');
                 break;
         }
-
         // return $filePath;
 
-
-
-
-        /**crear el pdf de recibo */
-
+        // generar el registro para el recibo de pago
         $recibo = new ReciboDePago();
         $recibo->fecha_de_pago = $request->input('fechadepago');
         $recibo->monto = $request->input('montodepago');
         $recibo->referencia = $request->input('Referencia');
         $recibo->medio_de_pago = $request->input('mediodepago');
+        $recibo->observacion = $request->input('SolSerDescript');
         $recibo->url_comprobante = $filePath;
         $recibo->url_recibo = '';
+        $recibo->FK_ReciboCliente = $Cliente->ID_Cli;
         $recibo->ReciboSlug = hash('md5', rand().time().$recibo->Referencia);
         $recibo->save();
 
-        return $recibo;
+        /**crear el pdf de recibo */
+
+        $qrCode = new QrCode(route('recibosdepago.show', ['reciboDePago' => $recibo->ReciboSlug]));
+		$qrCode->setLogoPath(asset('img/LogoQR.png'));
+		$qrCode->setLogoSize(60, 60);
+		$qrCode->setSize(300);
+		$qrCode->setMargin(0);
+		$qrCode->setRoundBlockSize(true, QrCode::ROUND_BLOCK_SIZE_MODE_SHRINK);
+
+        $sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
+
+        $pdf = PDF::setPaper('letter', 'portrait')->loadView('recibos.recibotopdf', compact(['recibo','Cliente','qrCode','sede']));
+        Storage::put('recibosdepago/'.$foldername.'/RP-'.sprintf("%07s", $recibo->ID_Recibo).'.pdf', $pdf->output(), 'public');
+
+        $recibo->url_recibo = 'recibosdepago/'.$foldername.'/RP-'.sprintf("%07s", $recibo->ID_Recibo).'.pdf';
+        $recibo->save();
+
+        return $request;
 
 
 		$Persona = DB::table('personals')
@@ -225,15 +239,13 @@ class ServiceExpressController extends Controller
 				->where('clientes.ID_Cli', $Cliente->ID_Cli)
 				->where('personals.PersDelete', 0)
 				->first();
-		$direccionderecoleccion = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first('SedeAddress');
 
 		for ($i=0; $i < $request->input('SolServCantidad'); $i++) {
 			$SolicitudServicio = new SolicitudServicio();
 			$SolicitudServicio->SolSerStatus = 'Aprobado';
 			$SolicitudServicio->SolSerAuditable = 0;
 			$SolicitudServicio->SolResAuditoriaTipo = "No Auditable";
-			$SolicitudServicio->SolSerDescript = $request->input('SolServCantidad');
-            $SolicitudServicio->SolSerSupport = $filePath;
+            $SolicitudServicio->SolSerSupport = 'comprobantes/'.$foldername.'/'.$fileName.'.'.$file->getClientOriginalExtension();
 			$SolicitudServicio->SolSerTipo = "Interno";
 			$SolicitudServicio->SolSerNameTrans = 'Prosarc S.A. ESP.';
 			$SolicitudServicio->SolSerNitTrans = '900.079.188-0';
@@ -243,7 +255,7 @@ class ServiceExpressController extends Controller
 			$SolicitudServicio->SolSerVehiculo = null;
 			$SolicitudServicio->SolSerDescript = 'Frecuencia:'.$request->input('SolServFrecuencia').'  '.$request->input('SolSerDescript');
 			$SolicitudServicio->SolSerTypeCollect = 99;
-			$SolicitudServicio->SolSerCollectAddress = $direccionderecoleccion->SedeAddress;
+			$SolicitudServicio->SolSerCollectAddress = $sede->SedeAddress;
 			$SolicitudServicio->SolSerBascula = 0;
 			$SolicitudServicio->SolSerCapacitacion = 0;
 			$SolicitudServicio->SolSerMasPerson = 0;
@@ -263,7 +275,7 @@ class ServiceExpressController extends Controller
 			/*se guarda la observacion inicial de la creación del servicio*/
 			$Observacion = new Observacion();
 			$Observacion->ObsStatus = $SolicitudServicio->SolSerStatus;
-			$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
+			$Observacion->ObsMensaje = 'Recibo:'.$recibo->ID_Recibo.' '.$SolicitudServicio->SolSerDescript;
 			$Observacion->ObsTipo = 'prosarc';
 			$Observacion->ObsRepeat = 1;
 			$Observacion->ObsDate = now();
@@ -276,25 +288,18 @@ class ServiceExpressController extends Controller
 		// se establece la lista de destinatarios
 		if ($Cliente->CliComercial <> null) {
 			$comercial = Personal::where('ID_Pers', $Cliente->CliComercial)->first();
-			$destinatarios = ['logistica@prosarc.com.co',
-								'asistentelogistica@prosarc.com.co',
-								'gerenteplanta@prosarc.com.co',
-								'subgerencia@prosarc.com.co',
-								'recepcionpda@prosarc.com.co',
+			$destinatarios = ['coordinadorse@prosarc.com.co',
 								$comercial->PersEmail
 							];
 		}else{
 			$comercial = "";
-			$destinatarios = ['logistica@prosarc.com.co',
-								'asistentelogistica@prosarc.com.co',
-								'gerenteplanta@prosarc.com.co',
-								'subgerencia@prosarc.com.co',
-								'recepcionpda@prosarc.com.co'
-							];
+			$destinatarios = ['coordinadorse@prosarc.com.co'];
 		}
 		$SolicitudServicio['comercial'] = $comercial;
 		$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudServicio->FK_SolSerPersona)->first();
-		// se envia un correo por cada residuo registrado
+		// se envia un correo por personal interesado
+		Mail::to($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
+        // se envia correo al cliente con el recibo de pado
 		Mail::to($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
 		return redirect()->route('serviciosexpress.show', ['id' => $SolicitudServicio->SolSerSlug]);
     }

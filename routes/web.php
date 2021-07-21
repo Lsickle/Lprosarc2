@@ -177,6 +177,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::post('/serviciosexpress/conciliarExpress', 'ServiceExpressController@conciliarExpress');
 	Route::get('/serviciosexpress/{id}/documentos', 'ServiceExpressController@solservdocindex')->name('solicitud-servicio.documentos');
 	Route::resource('/observacion', 'ObservacionController');
+	Route::resource('/recibosdepago', 'ReciboDePagoController');
 	Route::post('/recepcionerrada', 'ObservacionController@recepcionErrada');
 	Route::post('/recordatorio', 'ObservacionController@sendRecordatorio');
 	Route::get('/servicioscompletados', 'SolicitudServicioController@serviciosCompletados');
