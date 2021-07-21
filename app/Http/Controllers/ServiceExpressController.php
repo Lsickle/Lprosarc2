@@ -165,23 +165,23 @@ class ServiceExpressController extends Controller
 		$Cliente = Cliente::where('CliSlug', $request->input('FK_SolSerCliente'))->first();
 
         /*guardar e comprobante */
-        $data_uri = $request->input('solserFirma');
+        $data_uri = $request->input('pagoComprobante');
 		$encoded_image = explode(",", $data_uri)[1];
 		$decoded_image = base64_decode($encoded_image);
-		$nombreDeFirma = $request->input('solserslug');
-		Storage::put('firmasClientes/'.$nombreDeFirma.'.png', $decoded_image, 'public');
+		$comprobante =  $Cliente->CliName.$request->input('Referencia');
+		Storage::put('comprobantes/'.$comprobante.'.png', $decoded_image, 'public');
 
 
         /**crear el pdf de recibo */
 
         $recibo = new ReciboDePago();
-        $recibo->fecha_de_pago = $Cliente->ID_Cli;
-        $recibo->monto = $Cliente->ID_Cli;
-        $recibo->medio_de_pago = $Cliente->ID_Cli;
-        $recibo->referencia = $Cliente->ID_Cli;
-        $recibo->url_comprobante = $Cliente->ID_Cli;
-        $recibo->url_recibo = $Cliente->ID_Cli;
-        $recibo->ReciboSlug = $Cliente->ID_Cli;
+        $recibo->fecha_de_pago = $request->input('fechadepago');
+        $recibo->monto = $request->input('montodepago');
+        $recibo->Referencia = $request->input('Referencia');
+        $recibo->medio_de_pago = $request->input('mediodepago');
+        $recibo->url_comprobante = 'comprobantes/'.$comprobante.'.png';
+        $recibo->url_recibo = 'recibos/'.$recibo.'.pdf';
+        $recibo->ReciboSlug = hash('md5', rand().time().$recibo->Referencia); $request->input('pagoComprobante');
         $recibo->save();
 
 
