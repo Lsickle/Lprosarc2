@@ -179,7 +179,6 @@ class ServiceExpressController extends Controller
                 $foldername = str_replace(')', '_', $foldername);
                 $foldername = str_replace('__', '_', $foldername);
 
-
                 $fileName = $request->input('Referencia');
                 $fileName = str_replace('.', '', $fileName);
                 $fileName = str_replace(' ', '_', $fileName);
@@ -187,7 +186,6 @@ class ServiceExpressController extends Controller
                 $fileName = str_replace(')', '_', $fileName);
                 $fileName = str_replace('__', '_', $fileName);
                 $fileName = time().$fileName;
-
 
                 // Storage::put('comprobantes/'.$fileName.$file->getClientOriginalExtension(), $file, 'public');
                 $filePath = $file->storeAs('comprobantes/'.$foldername.'/', $fileName.'.'.$file->getClientOriginalExtension(), 'public');
@@ -198,7 +196,7 @@ class ServiceExpressController extends Controller
                 break;
         }
 
-        return $filePath;
+        // return $filePath;
 
 
 
@@ -208,12 +206,14 @@ class ServiceExpressController extends Controller
         $recibo = new ReciboDePago();
         $recibo->fecha_de_pago = $request->input('fechadepago');
         $recibo->monto = $request->input('montodepago');
-        $recibo->Referencia = $request->input('Referencia');
+        $recibo->referencia = $request->input('Referencia');
         $recibo->medio_de_pago = $request->input('mediodepago');
-        $recibo->url_comprobante = 'comprobantes/'.$comprobante.'.png';
-        $recibo->url_recibo = 'recibos/'.$recibo.'.pdf';
-        $recibo->ReciboSlug = hash('md5', rand().time().$recibo->Referencia); $request->input('pagoComprobante');
+        $recibo->url_comprobante = $filePath;
+        $recibo->url_recibo = '';
+        $recibo->ReciboSlug = hash('md5', rand().time().$recibo->Referencia);
         $recibo->save();
+
+        return $recibo;
 
 
 		$Persona = DB::table('personals')

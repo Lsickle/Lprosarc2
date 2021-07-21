@@ -22,6 +22,8 @@ class CreateReciboDePagosTable extends Migration
             $table->string('url_comprobante')->nullable();
             $table->string('url_recibo')->nullable();
             $table->string('ReciboSlug')->unique();
+            $table->unsignedInteger('FK_ReciboCliente')->nullable();
+            $table->foreign('FK_ReciboCliente')->references('ID_Cli')->on('clientes')->onDelete('set null');
             $table->timestamps();
             $table->softDeletes();
         });
