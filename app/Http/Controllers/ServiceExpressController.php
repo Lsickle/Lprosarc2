@@ -2298,24 +2298,34 @@ class ServiceExpressController extends Controller
 			}
 		}
 
-		if ($totalrerspel > 5) {
-			//enviar correo avisando que excede la cantidad de 5 kg
-			if ($comercial) {
-				Mail::to($comercial->PersEmail)->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
-			} else {
-				Mail::to('subgerencia@prosarc.com.co')->cc($destinatarios)->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
-			}
+		// if ($totalrerspel > 5) {
+		// 	//enviar correo avisando que excede la cantidad de 5 kg
+		// 	if ($comercial) {
+		// 		Mail::to($comercial->PersEmail)->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
+		// 	} else {
+		// 		Mail::to('subgerencia@prosarc.com.co')->cc($destinatarios)->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
+		// 	}
+		// }else{
+		// 	if ($totalrerspel > 0) {
+		// 		//enviar certificado al cliente con copia a los destinatarios
+		// 		Mail::to($email->PersEmail)->cc($destinatarios)->send(new SolSerExpressEmail($email, $pdf, $certificado));
+		// 	}else{
+		// 		//enviar correo avisando que la cantidad total es inferior o igual a 0 kg
+		// 		if ($comercial) {
+		// 			Mail::to($comercial->PersEmail)->send(new CertExpressSinSaldoEmail($email, $pdf, $certificado));
+		// 		} else {
+		// 			Mail::to('subgerencia@prosarc.com.co')->send(new CertExpressSinSaldoEmail($email, $pdf, $certificado));
+		// 		}
+		// 	}
+		// }
+
+        if ($totalrerspel > 5) {
+            Mail::to('coordinadorse@prosarc.com.co')->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
 		}else{
 			if ($totalrerspel > 0) {
-				//enviar certificado al cliente con copia a los destinatarios
-				Mail::to($email->PersEmail)->cc($destinatarios)->send(new SolSerExpressEmail($email, $pdf, $certificado));
+				Mail::to('coordinadorse@prosarc.com.co')->send(new SolSerExpressEmail($email, $pdf, $certificado));
 			}else{
-				//enviar correo avisando que la cantidad total es inferior o igual a 0 kg
-				if ($comercial) {
-					Mail::to($comercial->PersEmail)->send(new CertExpressSinSaldoEmail($email, $pdf, $certificado));
-				} else {
-					Mail::to('subgerencia@prosarc.com.co')->send(new CertExpressSinSaldoEmail($email, $pdf, $certificado));
-				}
+                Mail::to('coordinadorse@prosarc.com.co')->send(new CertExpressSinSaldoEmail($email, $pdf, $certificado));
 			}
 		}
 
