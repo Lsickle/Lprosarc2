@@ -12,7 +12,7 @@
 	}
 
 	body{
-		background-image: url('{{asset("img/LogoFondo3x.png")}}');
+		background-image: url('{{asset("img/WATERMARKV4.png")}}');
 		-webkit-background-size: contain;
 		-moz-background-size: contain;
 		-o-background-size: contain;
@@ -373,8 +373,8 @@
 							<table>
 								<tr>
 									<td style="text-align: center; vertical-align: bottom; padding: 0px !important;">
-										<img src="{{asset('img/JhonGonzales2.png')}}" style="width: 100px;"><br>
-										<b>Jefe de Logística</b>
+										<img src="{{asset('img/coordinadorSEv3.png')}}" style="width: 100px;"><br>
+										<b>Coordinador <br> Servicios Express</b>
 									</td>
 									<td style="text-align: center; vertical-align: bottom; dding: 0px !important;">
 										<img src="{{asset('img/DavidPizza2.png')}}" style="width: 100px;"><br>
