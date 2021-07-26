@@ -301,7 +301,7 @@ class ServiceExpressController extends Controller
 		// se envia un correo por personal interesado
 		// Mail::to($sede->SedeEmail)->cc($destinatarios)->send(new NewSolServEmail($SolicitudServicio));
         // se envia correo al cliente con el recibo de pado
-        Mail::to('sistemas2@prosarc.com.co')->send(new SolSerExpressRecibo($pdf, $recibo, $comercial, $Cliente, $sede));
+        Mail::to($sede->SedeEmail)->cc($destinatarios)->send(new SolSerExpressRecibo($pdf, $recibo, $comercial, $Cliente, $sede));
 		return redirect()->route('serviciosexpress.show', ['id' => $SolicitudServicio->SolSerSlug]);
     }
 
