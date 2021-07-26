@@ -3,7 +3,7 @@
 
 Saludos Sres de <b>{{$cliente->CliName}}</b>
 
-Hemos recibido su pago con referencia N° {{$recibo->referencia}} con éxito. en breve se realizara la programación de los servicios y se emitirá la factura correspondiente.
+Hemos recibido su pago con referencia N° {{$recibo->referencia}} con éxito. en breve se realizará la programación de los servicios y se emitirá la factura correspondiente.
 
 # Observaciones
 
