@@ -67,7 +67,7 @@
                                                 <div class="col-md-6 form-group" id="SedeMapLocalidadContainer" hidden>
                                                     <label for="SedeMapLocalidad">Localidad</label><small class="help-block with-errors">*</small>
                                                     <select class="form-control select" id="SedeMapLocalidad" name="SedeMapLocalidad" required>
-                                                            <option value="">Seleccione...</option> 
+                                                            <option value="">Seleccione...</option>
                                                             <option value="Engativá" {{ old('SedeMapLocalidad') == 'Engativá'? 'selected' : '' }}>Engativá</option>
                                                             <option value="Kennedy" {{ old('SedeMapLocalidad') == 'Kennedy'? 'selected' : '' }}>Kennedy</option>
                                                             <option value="Suba" {{ old('SedeMapLocalidad') == 'Suba'? 'selected' : '' }}>Suba</option>
@@ -106,10 +106,10 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <!-- display google map -->
                                                 <div id="geomap" style="width: 100%;height: 400px;" ></div>
-                                                
+
                                                 <!-- display selected location information -->
                                                 <div class="col-md-12 form-group">
                                                     <label for="sedeinputaddress">Detalles de la dirección</label><small class="help-block with-errors">*</small>
@@ -135,7 +135,7 @@
                                                 <div class="form-group col-md-6">
                                                     <label for="CliComercial">Correo electrónico</label><small class="help-block with-errors">*</small>
                                                     <input type="email" class="form-control" id="PersEmail" name="PersEmail" maxlength="255" required value="{{ old('PersEmail') }}" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}">
-                                                    
+
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label for="PersCellphone">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
@@ -144,7 +144,7 @@
                                                         <input type="text" class="form-control mobile" id="PersCellphone" name="PersCellphone" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-minlength="12"  maxlength="12" value="{{ old('PersCellphone') }}" required>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div class="col-md-6 form-group">
                                                     <label for="sedeinputphone1">{{ trans('adminlte_lang::message.phone') }}</label><small class="help-block with-errors"></small>
                                                     <input type="text" class="form-control phone tel" id="sedeinputphone1" name="SedePhone1" placeholder="{{ trans('adminlte_lang::message.phoneplaceholder') }}" data-minlength="11" value="{{ old('SedePhone1') }}">
@@ -159,9 +159,9 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                
+
                                             </div>
-                                            
+
                                             <div class="box-footer">
                                                 <button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.register') }}</button>
                                             </div>
@@ -180,7 +180,7 @@
 @section('NewScript')
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_API_KEY', 'API_KEY_NOT_PROVIDED')}}"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_API_KEY', 'AIzaSyANsGmT7rlQ3wx1GX9DLofyxp0417ygxqs')}}"></script>
 <script>
 var geocoder;
 var map;
@@ -231,7 +231,7 @@ function initialize() {
 $(document).ready(function () {
     //load google map
     initialize();
-    
+
     /*
      * autocomplete location search
      */
@@ -262,7 +262,7 @@ $(document).ready(function () {
             }
         });
     });
-    
+
     /*
      * Point location on google map
      */
@@ -300,7 +300,7 @@ $(document).ready(function () {
     $(document).ready(function(){
 		$("#departamentoExpress").change(function(e){
             id=$("#departamentoExpress").val();
-            
+
 			e.preventDefault();
 			$.ajaxSetup({
 			  headers: {

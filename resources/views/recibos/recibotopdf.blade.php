@@ -12,7 +12,7 @@
 	}
 
 	body{
-		background-image: url('{{asset("img/WATERMARKV4.png")}}');
+		background-image: url('{{asset("img/WATERMARKV5.png")}}');
 		-webkit-background-size: contain;
 		-moz-background-size: contain;
 		-o-background-size: contain;
@@ -154,7 +154,7 @@
 						<table>
 							<tr>
 								<td class="title">
-									<img src="{{asset('img/logocompletosinbordes.png')}}" style="width:100%; max-width:300px;">
+									<img src="{{asset('img/logoheaderTinyVersion.png')}}" style="width:100%; max-width:300px;">
 								</td>
 
 								<td style="font-size: 16px; text-align: right;">
