@@ -180,7 +180,7 @@
 @section('NewScript')
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_API_KEY', 'AIzaSyANsGmT7rlQ3wx1GX9DLofyxp0417ygxqs')}}"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_API_KEY', 'API_KEY_NOT_PROVIDED')}}"></script>
 <script>
 var geocoder;
 var map;
