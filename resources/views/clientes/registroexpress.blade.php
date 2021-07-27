@@ -305,17 +305,27 @@ $(document).ready(function () {
         if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
-            const pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-            };
-            infoWindow.setPosition(pos);
-            infoWindow.setContent("Location found.");
-            infoWindow.open(map);
-            map.setCenter(pos);
+                const pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                infoWindow.setPosition(pos);
+                infoWindow.setContent("Ubicación Aprox.");
+                infoWindow.open(map);
+                map.setCenter(pos);
+                marker.setPosition(pos);
+                geocoder.geocode({'latLng': marker.getPosition()}, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        if (results[0]) {
+                            $('.search_addr').val(results[0].formatted_address);
+                            $('.search_latitude').val(marker.getPosition().lat());
+                            $('.search_longitude').val(marker.getPosition().lng());
+                        }
+                    }
+                });
             },
             () => {
-            handleLocationError(true, infoWindow, map.getCenter());
+                handleLocationError(true, infoWindow, map.getCenter());
             }
         );
         } else {
