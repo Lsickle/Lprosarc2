@@ -52,7 +52,7 @@ class RespelStoreRequest extends FormRequest
         }
 
     public function attributes()
-    {   
+    {
         $request = $this->instance()->all();
         $attributes = [
                 'RespelIgrosidad.*'     => 'Peligrosidad',

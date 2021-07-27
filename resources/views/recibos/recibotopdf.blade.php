@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
   {{-- <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'> --}}
-  <title>Certificado E-{{sprintf("%07s", $certificado->ID_Cert)}}</title>
+  <title>Comprobante RP-{{sprintf("%07s", $recibo->ID_Recibo)}}</title>
 
   <style>
 	@page {
@@ -158,8 +158,8 @@
 								</td>
 
 								<td style="font-size: 16px; text-align: right;">
-									<b>N°:</b> <b style="color:red;">E-{{sprintf("%07s", $certificado->ID_Cert)}}</b><br>
-									Fecha: {{date('Y-m-d', strtotime(today()))}}<br>
+									<b>N°:</b> <b style="color:red;">RP-{{sprintf("%07s", $recibo->ID_Recibo)}}</b><br>
+									Fecha: {{date('d-m-Y', strtotime($recibo->created_at))}}<br>
 								</td>
 							</tr>
 						</table>
@@ -203,10 +203,9 @@
 				</tr>
 				<tr>
 					<td colspan="4" style="text-align: center; font-size: 10px;">
-						{{$certificado->CertSlug}}<br>
-						Certificado generado y firmado digitalmente desde la aplicación <b>SisPRO</b> &copy; <?php echo date("Y");?> <br>
+						{{$recibo->ReciboSlug}}<br>
+						Comprobante de pago generado y firmado digitalmente desde la aplicación <b>SisPRO</b> &copy; <?php echo date("Y");?> <br>
 						¡Protejamos el medio ambiente; así aseguramos la vida y bienestar de nuestros hijos, nietos y generaciones futuras!
-
 					</td>
 				</tr>
 			</table>
@@ -220,7 +219,7 @@
 				<table cellpadding="0">
 					<tr class="details">
 						<td colspan="4">
-							<table style="text-align: center; font-size: 16px; line-height: 16px;"">
+							<table style="text-align: center; font-size: 20px; line-height: 20px;"">
 								<tr><td></td></tr>
 								<tr>
 									<td></td>
@@ -244,7 +243,7 @@
 
 								<tr>
 									<td>
-										<b> Certificado de Termodestrucción </b>
+										<b> Comprobante de Pago </b>
 									</td>
 								</tr>
 							</table>
@@ -257,13 +256,13 @@
 							<table>
 								<tr>
 									<td style="text-align: left; line-height: 14px;">
-										<b style="color: grey;">GENERADOR:</b><br>
-										<b>{{$certificado->sedegenerador->generadors->GenerName}}</b><br>
-										{{$certificado->sedegenerador->generadors->GenerNit}}<br>
-										{{$certificado->sedegenerador->GSedeAddress}}<b> {{ $certificado->sedegenerador->GSedeMapLocalidad != null ? $certificado->sedegenerador->GSedeMapLocalidad : ''  }}</b><br>
-										<b style="color: grey;">CONTACTO:</b><br>
-										{{$certificado->sedegenerador->GSedeEmail}}<br>
-										{{$certificado->sedegenerador->GSedeCelular}}<br>
+										<b style="color: grey;">Cliente:</b><br>
+                                        <b>{{$Cliente->CliName}}</b><br>
+                                        Nit:{{$Cliente->CliNit}}<br>
+                                        Dirección:{{$sede->SedeAddress}}<b> {{ $sede->SedeMapLocalidad }}</b><br>
+                                        <b style="color: grey;">CONTACTO:</b><br>
+                                        Correo:{{$sede->SedeEmail}}<br>
+                                        Tlf:{{$sede->SedeCelular}}<br>
 									</td>
 									<td style="text-align: right; line-height: 14px;">
 										<b style="color: grey;">TRANSPORTADOR:</b><br>
@@ -282,8 +281,8 @@
 						<td colspan="4">
 							<table>
 								<tr>
-									<td style="text-align: justify; font-size: 12px; line-height: 14px;">
-										El <b><i>GENERADOR</i></b> entregó su(s) residuo(s) y/o desecho(s) a <b>Prosarc S.A. ESP.</b> para tratamiento de <b>TermoDestrucción</b> durante el dia <b>{{date('Y-m-d', strtotime($certificado->created_at))}}</b>, de acuerdo con la información del servicio <b>#{{$certificado->FK_CertSolser}}</b>:
+									<td style="text-align: justify; font-size: 14px; line-height: 14px;">
+										El <b><i>Cliente</i></b> pagó a <b>Prosarc S.A. ESP.</b> por su servicio de recoleccion y tratamiento de <b>TermoDestrucción</b> durante el dia <b>{{date('d-m-Y', strtotime($recibo->fecha_de_pago))}}</b>, de acuerdo con la siguiente información:
 									</td>
 								</tr>
 							</table>
@@ -294,52 +293,30 @@
 
 					<tr class="heading">
 						<td colspan="2">
-							RESIDUO
+                            Medio de Pago
 						</td>
 
 						<td style="text-align: center;">
-							CORRIENTE
+							Referencia
 						</td>
 						<td>
-							PESO
+							Monto
 						</td>
 					</tr>
-					@php
-					$totalKg = 0;
-					@endphp
-					@foreach($certificado->SolicitudServicio->SolicitudResiduo as $Residuo)
-					@foreach ($certificado->certdato as $certdato)
 
-					@if($Residuo->ID_SolRes == $certdato->FK_DatoCertSolRes)
-					@if ($loop->parent->last)
 					<tr class="item last">
-					@else
-					<tr class="item">
-					@endif
-						<td colspan="2">
-							{{$Residuo->generespel->respels->RespelName}}
-						</td>
+                        <td colspan="2">
+                            {{$recibo->medio_de_pago}}
+                        </td>
 
-						<td style="text-align: center;">
-							@if($Residuo->generespel->respels->RespelIgrosidad == 'No peligroso')
-							N/A
-							@else
-							{{$Residuo->generespel->respels->YRespelClasf4741}}{{$Residuo->generespel->respels->ARespelClasf4741}}
-							@endif
-						</td>
+                        <td style="text-align: center;">
+                            {{$recibo->referencia}}
+                        </td>
 
-						<td>
-							{{$Residuo->SolResKgConciliado === null ? 'N/A' : $Residuo->SolResKgConciliado }} Kg.
-						</td>
-					</tr>
-					@if($Residuo->SolResKgConciliado !== null)
-					@php
-					$totalKg = $totalKg+$Residuo->SolResKgConciliado;
-					@endphp
-					@endif
-					@endif
-					@endforeach
-					@endforeach
+                        <td>
+                            {{$recibo->monto}} $
+                        </td>
+                    </tr>
 
 					<tr class="total">
 						<td></td>
@@ -347,22 +324,21 @@
 						<td></td>
 
 						<td>
-							Total: {{$totalKg}} Kg.
+							Total: {{$recibo->monto}} $
 						</td>
 					</tr>
 					<tr class="total">
 						<td><b>Observaciones:</b></td>
 						<td colspan="3">
-							{{$Solicitud->SolSerDescript}}
+							{{$recibo->observacion}}
 						</td>
 					</tr>
 					<tr class="details">
 						<td colspan="4">
 							<table>
 								<tr>
-									<td style="text-align: justify; font-size: 10px; line-height: 10px;">
-										Para este proceso se registraron temperaturas no menores a 850°C en la Cámara de combustión y 1.200°C en la cámara de post-combustión. Se utilizaron los sistemas de enfriamiento y Depuración de Gases, con los cuales se presentaron emisiones atmosféricas dentro de los estándares permisibles, quedando un residuo consistente en cenizas calcinadas y dispuestas en un relleno industrial autorizado y legalizado. <br><br>
-										Todos los procesos anteriores se realizaron, ajustados al cumplimiento de las Resoluciones 058 de enero 21 de 2002, 0886 de julio 27 de 2004 y la 909 del 06 de junio de 2008 del MAVDT y a nuestra Licencia Ambiental, según Resolución No. 3077 de noviembre 7 de 2006, expedida por la CAR.
+									<td style="text-align: justify; font-size: 14px; line-height: 14px;">
+										Este documento se emite únicamente como constancia de la recepción del dinero, correspondiente al pago por servicios de recolección y tratamiento y es verificable con la lectura del Código que contiene en la parte inferior. <br><br> <b>Este documento no tiene validez como factura ni como certificación del servicio prestado.</b>
 									</td>
 								</tr>
 							</table>
@@ -376,14 +352,11 @@
 										<img src="{{asset('img/coordinadorSEv3.png')}}" style="width: 100px;"><br>
 										<b>Coordinador <br> Servicios Express</b>
 									</td>
+                                    <td style="text-align: center; vertical-align: bottom; dding: 0px !important;">
+                                    </td>
 									<td style="text-align: center; vertical-align: bottom; dding: 0px !important;">
 										<img src="{{asset('img/DavidPizza2.png')}}" style="width: 100px;"><br>
-										<b>Director de Planta</b>
-									</td>
-									<td style="text-align: center; vertical-align: bottom; dding: 0px !important;">
-										<img src="{{asset('storage/firmasClientes/'.$Solicitud->SolSerSlug.'.png')}}" style="width: 100px;"><br>
-										{{-- <img src="{{asset($Solicitud->nombreDeFirma)}}" style="width: 100px;"><br> --}}
-										<b>Cliente</b>
+										<b>Asesor <br> Servicios Express</b>
 									</td>
 								</tr>
 							</table>

@@ -104,7 +104,7 @@ eval("/**\r\n * First we will load all of this project's JavaScript dependencies
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\laragon\www\Lprosarc2\resources\assets\js\app-landing.js */"./resources/assets/js/app-landing.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Lprosarc\resources\assets\js\app-landing.js */"./resources/assets/js/app-landing.js");
 
 
 /***/ })
