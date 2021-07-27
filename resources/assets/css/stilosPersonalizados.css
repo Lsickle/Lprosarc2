@@ -35,17 +35,17 @@
 	width:100% !important;
 }
 a.textpopover{
-	width: 45%; 
+	width: 45%;
 	white-space: nowrap;
 	overflow: hidden;
-	text-overflow: ellipsis; 
+	text-overflow: ellipsis;
 	text-align: right;
 }
 p.textpopoveraddress{
-	width: 45%; 
+	width: 45%;
 	white-space: nowrap;
 	overflow: hidden;
-	text-overflow: ellipsis; 
+	text-overflow: ellipsis;
 	text-align: right;
 	color: #3c8dbc;
 }
@@ -89,7 +89,7 @@ select.form-control{
 	line-height: 28px;
 }
 .size-img{
-	width:120px; 
+	width:120px;
 	height:120px;
 }
 .border-gray{
@@ -278,3 +278,41 @@ canvas {
 .pre-x-scrollable {
     overflow: auto;
 }
+.image-preview-input {
+    position: relative;
+	overflow: hidden;
+	margin: 0px;
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+.image-preview-input input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+.image-preview-input-title {
+    margin-left:2px;
+}
+.custom-map-control-button {
+  background-color: #fff;
+  border: 0;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+  padding: 0 0.5em;
+  font: 400 18px Roboto, Arial, sans-serif;
+  overflow: hidden;
+  height: 40px;
+  cursor: pointer;
+}
+.custom-map-control-button:hover {
+  background: #ebebeb;
+}
+

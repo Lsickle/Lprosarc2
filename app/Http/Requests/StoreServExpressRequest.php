@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\userController;
 
-class SolServStoreRequest extends FormRequest
+class StoreServExpressRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,73 +28,15 @@ class SolServStoreRequest extends FormRequest
     public function rules(Request $request)
     {
         $rules = [
-            'FK_SolSerPersona'  => ['required',Rule::exists('personals', 'PersSlug')->where(function ($query) use ($request){
-                $Personal = DB::table('personals')
-                    ->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-                    ->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-                    ->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-                    ->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-                    ->select('cargos.ID_Carg')
-                    ->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-                    ->where('personals.PersSlug', $request->input('FK_SolSerPersona'))
-                    ->first();
-                if(isset($Personal->ID_Carg)){
-                    $query->where('personals.FK_PersCargo', $Personal->ID_Carg);
-                }
-                else{
-                    $query->where('personals.FK_PersCargo', null);
-                }
-            })],
-            'SolSerTipo'        => 'required|numeric|between:96,99',
-            'SolResAuditoriaTipo' => 'required|numeric|between:97,99',
+            'fechadepago' => 'required|date',
+            'Referencia' => 'required|max:30',
+            'mediodepago' => 'required',
+            'montodepago' => 'required|numeric',
+            'SolServCantidad' => 'required|numeric',
+            'SolServFrecuencia' => 'required|in:semanal,quincenal,mensual,bimensual,trimestral,semestral,anual',
+            'SolSerDescript' => 'max:4000',
+            'pagoComprobante' => 'required|max:2048|mimes:jpg,jpeg,png,jpe,pdf'
         ];
-        if($request->input('SolSerDevolucion') == 'on'){
-            $rules = [
-                'SolSerDevolucionTipo'  => 'required',
-            ];
-        }
-        switch ($request->input('SolSerTipo')) {
-            case 96:
-                $rules = [
-                    'SolSerNameTrans'    => 'required|max:255',
-                    'SolSerNitTrans'     => 'required|max:20',
-                    'SolSerAdressTrans'  => 'required|max:255',
-                    'SolSerCityTrans'    => ['required',Rule::exists('municipios', 'ID_Mun')],
-                    'SolSerConductor'     => 'max:255',
-                    'SolSerVehiculo'      => 'max:7',
-                ];
-                break;
-            case 97:
-            case 98:
-                $rules = [
-                    'SolSerTransportador' => 'required',
-                    'SolSerConductor'     => 'max:255',
-                    'SolSerVehiculo'      => 'max:7',
-                ];
-                break;
-            case 99:
-                $rules = [
-                    'SolSerTypeCollect'     => 'required|numeric|between:97,99',
-                ];
-                if($request->input('SolSerTypeCollect') <> 99){
-                    if($request->input('SolSerTypeCollect') == 98){
-                        $rules = [
-                            'SedeCollect'     => 'required',
-                        ];
-                    }
-                    if($request->input('SolSerTypeCollect') == 97){
-                        $rule = [
-                            'AddressCollect'           => 'required|max:255',
-                            'municipio2'               => ['required',Rule::exists('municipios', 'ID_Mun')],
-                        ];
-                    }
-                }
-                break;
-
-            default:
-                # code...
-                break;
-        }
         foreach ($request->input('SGenerador') as $Generador => $value) {
             $rules['SGenerador.'.$Generador] = ['required', Rule::exists('gener_sedes', 'GSedeSlug')->where(function ($query) use ($request ,$Generador){
                 $SGeneradors = DB::table('gener_sedes')
@@ -150,47 +92,6 @@ class SolServStoreRequest extends FormRequest
      */
     public function attributes()
     {
-        $attributes = [
-            'FK_SolSerPersona' => '"Persona de Contacto"',
-            'SolSerTipo'       => '"Tipo de transportador"',
-            'SolResAuditoriaTipo' => '"Auditable"',
-        ];
-        if($this->request->get('SolSerDevolucion') == 'on'){
-            $attributes = [
-                'SolSerDevolucionTipo' => '"Nombre elementos"',
-            ];
-        }
-        switch ($this->request->get('SolSerTipo')) {
-            case 96:
-                $attributes = [
-                    'SolSerNameTrans'    => '"Nombre de la transaportadora"',
-                    'SolSerNitTrans'     => '"Nit de la transportadora"',
-                    'SolSerAdressTrans'  => '"Dirección de la transportadora"',
-                    'SolSerCityTrans'    => '"Municipio de la transportadora"',
-                    'SolSerConductor'     => '"Conductor"',
-                    'SolSerVehiculo'      => '"Placa del Vehiculo"',
-                ];
-                break;
-            case 97:
-            case 98:
-                $attributes = [
-                    'SolSerTransportador' => '"Transportador"',
-                    'SolSerConductor'     => '"Conductor"',
-                    'SolSerVehiculo'      => '"Placa del Vehiculo"',
-                ];
-                break;
-            case 99:
-                $attributes = [
-                    'SolSerTypeCollect' => '"¿Dónde sera la recolección?"',
-                    'SedeCollect'     => '"Sede de recolección"',
-                    'AddressCollect'      => '"Dirección de recolección"',
-                    'municipio2'      => '"Municipio de Recolección "',
-                ];
-                break;
-            default:
-                # code...
-                break;
-        }
         foreach ($this->request->get('SGenerador') as $Generador => $value) {
             $attributes['SGenerador.'.$Generador] = '"Seleccione el generador (N° '.($Generador+1).')"';
             $attributes['FK_SolResRg.'.$Generador.'.0'] = '"Residuo (N° 1)" del generador (N° '.($Generador+1).')';
@@ -218,8 +119,6 @@ class SolServStoreRequest extends FormRequest
     public function messages()
     {
         $messages = [
-            'SolSerTipo.numeric' => 'el tipo de solicitud de servicio no coincide con los permitidos en la aplicación o no esta definido',
-            'SolResAuditoriaTipo.numeric' => 'el tipo de auditoria no coincide con los permitidos en la aplicación o no esta definido',
             'SolResTypeUnidad.numeric' => 'el tipo de unidad no coincide con los permitidos en la aplicación o no esta definido',
             'SolResEmbalaje.numeric' => 'el embalaje no coincide con los permitidos en la aplicación o no esta definido',
             'between' => 'Solo se permiten valores between',
