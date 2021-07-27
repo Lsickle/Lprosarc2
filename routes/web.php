@@ -52,6 +52,7 @@ Route::middleware(['web'])->group(function () {
 
         return new App\Mail\ServicioFacturado($prefacturas);
     });
+	Route::get('/recibotest', 'serviceexpresscontroller@recibotest');
 });
 
 
@@ -179,8 +180,10 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::put('/serviciosexpress/{id}/update-respel', 'ServiceExpressController@updateRespel');
 	Route::put('/serviciosexpress/repeat/{id}', 'ServiceExpressController@repeat');
 	Route::post('/serviciosexpress/certificarExpress', 'ServiceExpressController@certificarExpress');
+	Route::post('/serviciosexpress/conciliarExpress', 'ServiceExpressController@conciliarExpress');
 	Route::get('/serviciosexpress/{id}/documentos', 'ServiceExpressController@solservdocindex')->name('solicitud-servicio.documentos');
 	Route::resource('/observacion', 'ObservacionController');
+	Route::resource('/recibosdepago', 'ReciboDePagoController');
 	Route::post('/recepcionerrada', 'ObservacionController@recepcionErrada');
 	Route::post('/recordatorio', 'ObservacionController@sendRecordatorio');
 	Route::get('/servicioscompletados', 'SolicitudServicioController@serviciosCompletados');

@@ -97,6 +97,11 @@ class SolicitudServicio extends Model
 		return $this->Observaciones()->where('ObsStatus', 'Completado')->orderBy('ObsDate', 'desc')->first();
 	}
 
+    public function recibosdepago()
+	{
+        return $this->belongsTo('App\ReciboDePago', 'FK_ReciboSolserv', 'ID_Recibo');
+	}
+
 	protected $casts = [
         'SolSerRMs' => 'array',
     ];

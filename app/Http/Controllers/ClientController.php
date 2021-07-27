@@ -58,12 +58,12 @@ class ClientController extends Controller
                         ->get();
                 return view('clientes.index', compact('clientes', 'personals'));
                 break;
-            
-            case (in_array(Auth::user()->UsRol, Permisos::CLIENTE)): 
+
+            case (in_array(Auth::user()->UsRol, Permisos::CLIENTE)):
                 return redirect()->route('home');
                 break;
             case (in_array(Auth::user()->UsRol, Permisos::COMERCIAL)):
-                $clientes = Cliente::where('CliDelete', 0)->where('CliCategoria', 'Cliente')->where('CliComercial', Auth::user()->FK_UserPers)->get();
+                $clientes = Cliente::where('CliDelete', 0)->whereIn('CliCategoria', ['Cliente', 'ClientePrepago'])->where('CliComercial', Auth::user()->FK_UserPers)->get();
                 return view('clientes.index', compact('clientes'));
                 break;
             case (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)):
@@ -225,25 +225,25 @@ class ClientController extends Controller
             $Area->AreaDelete = 0;
             $Area->AreaSlug = hash('sha256', rand().time().$Area->AreaName);
             $Area->save();
-            
+
             $Cargo = new Cargo();
             $Cargo->CargName = $request->input("CargName");
             $Cargo->CargArea =  $Area->ID_Area;
             $Cargo->CargDelete =  0;
             $Cargo->CargSlug = hash('sha256', rand().time().$Cargo->CargName);
             $Cargo->save();
-            
+
             $Personal = new Personal();
-            $Personal->PersFirstName = $request->input("PersFirstName"); 
-            $Personal->PersLastName = $request->input("PersLastName"); 
-            $Personal->PersEmail = $request->input("PersEmail"); 
-            $Personal->PersSecondName = $request->input("PersSecondName"); 
+            $Personal->PersFirstName = $request->input("PersFirstName");
+            $Personal->PersLastName = $request->input("PersLastName");
+            $Personal->PersEmail = $request->input("PersEmail");
+            $Personal->PersSecondName = $request->input("PersSecondName");
             $Personal->PersDocType = $request->input("PersDocType");
             $Personal->PersDocNumber = $request->input("PersDocNumber");
             $Personal->PersCellphone = $request->input("PersCellphone");
             $Personal->PersType = 1;
             $Personal->PersSlug = hash('sha256', rand().time().$Personal->PersFirstName);
-            $Personal->PersDelete = 0; 
+            $Personal->PersDelete = 0;
             $Personal->PersFactura = 1;
             $Personal->PersAdmin = 1;
             $Personal->FK_PersCargo = $Cargo->ID_Carg;
@@ -318,7 +318,7 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Cliente $cliente)
-    {   
+    {
         $validate = $request->validate([
             'CliNit' => ['required','min:13','max:13',Rule::unique('clientes')->where(function ($query) use ($request, $cliente){
             $Cliente = DB::table('clientes')
@@ -343,7 +343,7 @@ class ClientController extends Controller
             'CliCertificaionComercial'  => 'mimes:pdf|max:5120|sometimes',
             'CliCertificaionComercial2' => 'mimes:pdf|max:5120|sometimes',
         ]);
-            
+
         $cliente = Cliente::where('CliSlug', $cliente->CliSlug)->first();
         $cliente->fill($request->except('CliRut', 'CliCamaraComercio', 'CliRepresentanteLegal', 'CliCertificaionComercial', 'CliCertificaionBancaria'));
         $Folder = $cliente->CliShortname;
@@ -394,7 +394,7 @@ class ClientController extends Controller
             $CertificacionBancaria = 'Certificacion Bancaria - '.date('j-m-y').hash('sha256', rand().time().$request->CliCertificaionBancaria->getClientOriginalName()).'.'.$request->CliCertificaionBancaria->extension();
             $request->CliCertificaionBancaria->move(public_path('/img/DatosClientes/').$Folder,$CertificacionBancaria);
             $cliente->CliCertificaionBancaria = $Folder.'/'.$CertificacionBancaria;
-        }           
+        }
         $cliente->save();
 
         AuditRequest::auditUpdate($this->table, $cliente->ID_Cli, json_encode($request->all()));
@@ -428,7 +428,7 @@ class ClientController extends Controller
         //                     'clientes.CliDelete' => $ValueOnCascade,
         //                 ]);
         //             }
-        //         }); 
+        //         });
         //     }
 
         //     if ($Cliente->CliDelete == 0) {
@@ -450,7 +450,7 @@ class ClientController extends Controller
         //     $log->AuditUser=Auth::user()->email;
         //     $log->Auditlog = $Cliente->CliDelete;
         //     $log->save();
-    
+
         //     return redirect()->route('clientes.index');
         // }else{
         //     abort(403);
@@ -482,8 +482,8 @@ class ClientController extends Controller
                         ->get();
                 return view('clientes.indexExpress', compact('clientes', 'personals'));
                 break;
-            
-            case (in_array(Auth::user()->UsRol, Permisos::CLIENTE)): 
+
+            case (in_array(Auth::user()->UsRol, Permisos::CLIENTE)):
                 return redirect()->route('home');
                 break;
             case (in_array(Auth::user()->UsRol, Permisos::COMERCIAL)):
