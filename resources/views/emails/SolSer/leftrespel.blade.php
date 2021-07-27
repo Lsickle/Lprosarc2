@@ -6,7 +6,7 @@
 # Solicitud de Servicio N° {{$SolicitudServicio->ID_SolSer}}
 
 @php
-$text = "ha sido modificada por el cliente ".$SolicitudServicio['cliente']->CliName."para añadir los residuos faltantes, el área de recepcionPDA estara revisando las cantidades correspondiente para ingresarlas como recibidas en la aplicación SisPRO";
+$text = "ha sido modificada por el cliente ".$SolicitudServicio['cliente']->CliName." para añadir los residuos faltantes, nuestra área logística estará revisando las cantidades correspondiente para ingresarlas como recibidas en la aplicación SisPRO";
 @endphp
 
 En estos momentos la Solicitud de Servicio N° {{$SolicitudServicio->ID_SolSer}} {{$text}}.<br>
@@ -29,7 +29,7 @@ Ver Solicitud
 @endcomponent
 
 @php
-$end = 'Por favor dar click en el botón para ver más detalles.';
+$end = 'Click en el botón para más detalles.';
 @endphp
 
 {{$end}}

@@ -69,6 +69,7 @@ $('form[data-toggle="validator"]').validator({
 	}
 });
 </script>
+@if(Route::currentRouteName()!=='solicitud-residuos.reportes')
 <script type="text/javascript">
 	function Selects(){
 		$('select').select2({
@@ -84,6 +85,7 @@ $(document).ready(function() {
 	Selects();
 });
 </script>
+@endif
 <script type="text/javascript">
 function SelectsMultiple(){
 	$('.select-multiple').select2({
@@ -419,35 +421,37 @@ $(document).ready(function() {
 	$(document).ready(function(){
 		$("#departamento").change(function(e){
 			id=$("#departamento").val();
-			e.preventDefault();
-			$.ajaxSetup({
-			  headers: {
-				  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-			  }
-			});
-			$.ajax({
-				url: "{{url('/muni-depart')}}/"+id,
-				method: 'GET',
-				data:{},
-				beforeSend: function(){
-					$(".load").append('<i class="fas fa-sync-alt fa-spin"></i>');
-					$("#municipio").prop('disabled', true);
-				},
-				success: function(res){
-					$("#municipio").empty();
-					var municipio = new Array();
-					for(var i = res.length -1; i >= 0; i--){
-						if ($.inArray(res[i].ID_Mun, municipio) < 0) {
-							$("#municipio").append(`<option value="${res[i].ID_Mun}">${res[i].MunName}</option>`);
-							municipio.push(res[i].ID_Mun);
-						}
-					}
-				},
-				complete: function(){
-					$(".load").empty();
-					$("#municipio").prop('disabled', false);
+			if (id) {
+				e.preventDefault();
+				$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
 				}
-			})
+				});
+				$.ajax({
+					url: "{{url('/muni-depart')}}/"+id,
+					method: 'GET',
+					data:{},
+					beforeSend: function(){
+						$(".load").append('<i class="fas fa-sync-alt fa-spin"></i>');
+						$("#municipio").prop('disabled', true);
+					},
+					success: function(res){
+						$("#municipio").empty();
+						var municipio = new Array();
+						for(var i = res.length -1; i >= 0; i--){
+							if ($.inArray(res[i].ID_Mun, municipio) < 0) {
+								$("#municipio").append(`<option value="${res[i].ID_Mun}">${res[i].MunName}</option>`);
+								municipio.push(res[i].ID_Mun);
+							}
+						}
+					},
+					complete: function(){
+						$(".load").empty();
+						$("#municipio").prop('disabled', false);
+					}
+				})
+			}
 		});
 	});
 </script>

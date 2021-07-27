@@ -53,8 +53,18 @@
 				@endif	
 				</td>
 				<td><a title="Ver Residuo" href="/respels/{{$Residuo->generespel->respels->RespelSlug}}" target="_blank" ><i class="fas fa-external-link-alt"></i></a>{{$Residuo->SolResEmbalaje}}</td>
-				<td>
-					 {{$Residuo->generespel->respels->RespelName}}</td>
+				<td>{{$Residuo->generespel->respels->RespelName}}</td>
+				@if ($Residuo->generespel->respels->RespelIgrosidad!= 'No peligroso')
+					@if ($Residuo->generespel->respels->YRespelClasf4741 <> null )
+						<td>{{$Residuo->generespel->respels->YRespelClasf4741}}</td>
+					@elseif($Residuo->generespel->respels->ARespelClasf4741 <> null)
+						<td>{{$Residuo->generespel->respels->ARespelClasf4741}}</td>
+					@else
+						<td>N/D</td>
+					@endif
+				@else
+					<td>N/A</td>
+				@endif
 				<td>{{$Residuo->generespel->respels->YRespelClasf4741}}{{$Residuo->generespel->respels->ARespelClasf4741}}</td>
 				@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
 					<td style="text-align: center;">

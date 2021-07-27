@@ -27,7 +27,6 @@ $("#FK_SolSerCliente").change(function(e){
 			$("#SGenerador").val(ID_Gener);
 			$("#DivRepel"+id_div).empty();
 			$("#DivRepel"+id_div).append(`@include('serviciosexpress.layaoutsSolSer.OneRespel')`);
-			$('form[data-toggle="validator"]').validator('update');
 			numeroKg();
 			popover();
 			ChangeSelect();
@@ -36,7 +35,7 @@ $("#FK_SolSerCliente").change(function(e){
 			icon = $('button[data-target=".Respel'+id_div+'"]').find('svg');
 			$(icon).removeClass('fa-plus');
 			$(icon).addClass('fa-minus');
-			
+
 			var residuos = new Array();
 			// $("#FK_SolResRg"+id_div+contadorRespel[id_div]).empty();
 			$("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="HiddenRequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="">{{ trans('adminlte_lang::message.select') }}</option>`);
@@ -50,6 +49,8 @@ $("#FK_SolSerCliente").change(function(e){
 		complete: function(){
 			$(".load").empty();
 			$("#municipio2").prop('disabled', false);
+			// $("#CreateSolSer").validator('destroy');
+            $("#CreateSolSer").validator('update');
 		}
 	})
 });
@@ -67,7 +68,6 @@ function ResiduosGener(id_div, ID_Gener){
 	contadorRespel[id_div] = 0;
 	$("#DivRepel"+id_div).empty();
 	$("#DivRepel"+id_div).append(`@include('serviciosexpress.layaoutsSolSer.OneRespel')`);
-	$('form[data-toggle="validator"]').validator('update');
 	Switch2();
 	Switch3();
 	Checkboxs();
@@ -113,6 +113,8 @@ function ResiduosGener(id_div, ID_Gener){
 		complete: function(){
 			$(".loadrespelone"+id_div+contadorRespel[id_div]).empty();
 			$("#FK_SolResRg"+id_div+contadorRespel[id_div]).prop('disabled', false);
+	        // $("#CreateSolSer").validator('destroy');
+            $("#CreateSolSer").validator('update');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			NotifiFalse("No se pudo conectar a la base de datos");
@@ -134,7 +136,7 @@ function RequeRespel(id_div, contador, Id_Respel){
 		},
 		success: function(res){
 			if(res != ''){
-				switch (res.Tarifatipo) { 
+				switch (res.Tarifatipo) {
 					case 'Kg':
 						$('#SolResTypeUnidad'+id_div+contador).prop('required',false);
 						$('#SolResTypeUnidad'+id_div+contador).val('');
@@ -191,7 +193,8 @@ function AgregarGenerador() {
 	popover();
 	ChangeSelect();
 	Selects();
-	$('form[data-toggle="validator"]').validator('update');
+	// $("#CreateSolSer").validator('destroy');
+    $("#CreateSolSer").validator('update');
 	contadorGenerador = contadorGenerador + 1;
 }
 
@@ -246,18 +249,21 @@ function AgregarResPel(id_div,ID_Gener) {
 			NotifiFalse("No se pudo conectar a la base de datos");
 		}
 	})
-	$('form[data-toggle="validator"]').validator('update');
+	// $("#CreateSolSer").validator('destroy');
+            $("#CreateSolSer").validator('update');
 }
 function RemoveRespel(id_div, contador) {
 	$("#Repel"+id_div+contador).prev().remove();
 	$("#Repel"+id_div+contador).remove();
-	$('form[data-toggle="validator"]').validator('update');
+	// $("#CreateSolSer").validator('destroy');
+            $("#CreateSolSer").validator('update');
 }
 
 function RemoveGenerador(id) {
 	$("#Generador"+id).prev().remove();
 	$("#Generador"+id).remove();
-	$('form[data-toggle="validator"]').validator('update');
+	// $("#CreateSolSer").validator('destroy');
+            $("#CreateSolSer").validator('update');
 }
 
 $("#departamento2").change(function(e){

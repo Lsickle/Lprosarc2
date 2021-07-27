@@ -67,6 +67,6 @@ class SolSerExpressEmail extends Mailable
         return $this->from('notificaciones@prosarc.com.co', 'Prosarc S.A. ESP')
                     ->subject($asuntoStatus)
                     ->attachData($this->pdf->output(), 'E-'.sprintf("%07s", $this->certificado->ID_Cert).'.pdf', ['mime' => 'application/pdf'])
-                    ->markdown('emails.SolSer.email');
+                    ->markdown('emails.Express.sendCertificadoExpress');
     }
 }

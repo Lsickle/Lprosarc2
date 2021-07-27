@@ -237,6 +237,12 @@
 					<li style="height: 100%;">
 						<a href="/preguntas-frecuentes" style="height: 100%;" title="Preguntas Frecuentes"><i class="fas x2 fa-question-circle" style="font-size: 1.5em"></i></a>
 					</li>
+					@if ((in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)))
+					<li style="height: 100%;">
+						<a href="{{ url('/reportes') }}" style="height: 100%; font-size: 1.2em;" title="Reportes"><i style="font-size: 1.2em;" class="fas x2 fa-chart-bar"></i><b> Reporte</b></a>
+					</li>
+					@endif
+					
 					<li style="height: 100%;">
 						<a href="{{ url('/logout') }}" id="logout"
 						   onclick="event.preventDefault();

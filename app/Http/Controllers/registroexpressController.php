@@ -17,7 +17,7 @@ use App\Departamento;
 use App\Municipio;
 use App\Cliente;
 use App\Generador;
-use App\Audit;
+use App\audit;
 use App\Sede;
 use App\Area;
 use App\Cargo;
@@ -121,22 +121,22 @@ class registroexpressController extends Controller
         $Area->AreaDelete = 0;
         $Area->AreaSlug = hash('sha256', rand().time().$Area->AreaName);
         $Area->save();
-        
+
         $Cargo = new Cargo();
         $Cargo->CargName = 'Encargado';
         $Cargo->CargArea =  $Area->ID_Area;
         $Cargo->CargDelete =  0;
         $Cargo->CargSlug = hash('sha256', rand().time().$Cargo->CargName);
         $Cargo->save();
-        
+
         $Personal = new Personal();
-        $Personal->PersFirstName = $request->input("PersFirstName"); 
-        $Personal->PersLastName = $request->input("PersLastName"); 
-        $Personal->PersEmail = $request->input("PersEmail"); 
+        $Personal->PersFirstName = $request->input("PersFirstName");
+        $Personal->PersLastName = $request->input("PersLastName");
+        $Personal->PersEmail = $request->input("PersEmail");
         $Personal->PersCellphone = $request->input("PersCellphone");
         $Personal->PersType = 1;
         $Personal->PersSlug = hash('sha256', rand().time().$Personal->PersFirstName);
-        $Personal->PersDelete = 0; 
+        $Personal->PersDelete = 0;
         $Personal->PersFactura = 1;
         $Personal->PersAdmin = 1;
         $Personal->FK_PersCargo = $Cargo->ID_Carg;
@@ -239,7 +239,7 @@ class registroexpressController extends Controller
                 }
             }
 
-            $log = new Audit();
+            $log = new audit();
             $log->AuditTabla="respel";
             $log->AuditType="Copiado en Cliente Express";
             $log->AuditRegistro=$newRespel->ID_Respel;
@@ -250,7 +250,7 @@ class registroexpressController extends Controller
 
         /* relacionar los residuos con la sede del generador */
         $residuosdelcliente = Respel::select('ID_Respel')->where('FK_RespelCoti', $Cotizacion->ID_Coti)->get();
-        foreach($residuosdelcliente as $Respel1){ 
+        foreach($residuosdelcliente as $Respel1){
             $ResiduoSedeGener = new ResiduosGener();
             $ResiduoSedeGener->FK_SGener = $SGener->ID_GSede;
             $ResiduoSedeGener->FK_Respel = $Respel1->ID_Respel;

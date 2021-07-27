@@ -13,7 +13,7 @@ use App\Cliente;
 use App\Personal;
 use App\Generador;
 use App\Tratamiento;
-use App\Audit;
+use App\audit;
 use App\Certdato;
 use App\Permisos;
 use App\SolicitudServicio;
@@ -197,7 +197,20 @@ class CertificadoController extends Controller
                 return $item;
             });
 
-            $qrCode = new QrCode(route('certificados.show', ['certificado' => $certificado->CertSlug]));
+            switch ($certificado->CertType) {
+                case '0':
+                $qrCode = new QrCode('https://sispro.prosarc.com/img/Certificados/'.$certificado->CertSlug.'.pdf');
+                    break;
+
+                case '1':
+                $qrCode = new QrCode('https://sispro.prosarc.com/img/Manifiestos/'.$certificado->CertSlug.'.pdf');
+                    break;
+                
+                default:
+                $qrCode = new QrCode('https://sispro.prosarc.com/img/Certificados/'.$certificado->CertSlug.'.pdf');
+                    break;
+            }
+            // $qrCode = new QrCode(route('certificados.show', ['certificado' => $certificado->CertSlug]));
             $qrCode->setLogoPath(asset('img/LogoQR.png'));
             $qrCode->setLogoSize(30, 30);
             $qrCode->setSize(150);
@@ -815,7 +828,7 @@ class CertificadoController extends Controller
 
         $certificado->save();
 
-        $log = new Audit();
+        $log = new audit();
         $log->AuditTabla="certificado";
         $log->AuditType="firmado";
         $log->AuditRegistro=$certificado->ID_Cert;
@@ -890,8 +903,10 @@ class CertificadoController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
             'CertNumero' => 0,
-            'CertObservacion' => 'certificado con observacion generica',
+            'CertManifNumero' => 0,
+            'CertObservacion' => 'Documento para residuos independientes',
             'CertSrc' => 'CertificadoDefault.pdf',
+            'CertSrcManif' => 'CertificadoDefault.pdf',
             'CertAuthHseq' => 0,
             'CertAuthJo' => 0,
             'CertAuthJl' => 0,

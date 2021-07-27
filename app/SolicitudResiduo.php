@@ -8,7 +8,7 @@ class SolicitudResiduo extends Model{
 
     protected $table = 'solicitud_residuos';
 
-    protected $fillable = ['SolResKgEnviado', 'SolResKgRecibido', 'SolResKgConciliado', 'SolResKgTratado', 'SolResDelete', 'SolResSlug', 'FK_SolResSolSer', 'SolResTypeUnidad', 'SolResCantiUnidad', 'SolResEmbalaje', 'SolResAlto', 'SolResAncho', 'SolResProfundo', 'SolResFotoDescargue_Pesaje', 'SolResFotoTratamiento', 'SolResVideoDescargue_Pesaje', 'SolResVideoTratamiento', 'SolResDevolucion', 'SolResDevolCantidad', 'FK_SolResRequerimiento', 'FK_SolResRg', 'SolResAuditoria', 'SolResAuditoriaTipo', 'SolResRM'];
+    protected $fillable = ['SolResKgEnviado', 'SolResKgRecibido', 'SolResKgConciliado', 'SolResKgTratado', 'SolResDelete', 'SolResSlug', 'FK_SolResSolSer', 'SolResTypeUnidad', 'SolResCantiUnidad', 'SolResEmbalaje', 'SolResAlto', 'SolResAncho', 'SolResProfundo', 'SolResFotoDescargue_Pesaje', 'SolResFotoTratamiento', 'SolResVideoDescargue_Pesaje', 'SolResVideoTratamiento', 'SolResDevolucion', 'SolResDevolCantidad', 'FK_SolResRequerimiento', 'FK_SolResRg', 'SolResAuditoria', 'SolResAuditoriaTipo', 'SolResRM', 'SolResTypePrecio'];
    
     protected $primaryKey = 'ID_SolRes';
 
@@ -32,6 +32,11 @@ class SolicitudResiduo extends Model{
     public function requerimiento()
     {
     	return $this->belongsTo('App\Requerimiento', 'FK_SolResRequerimiento', 'ID_Req');
+    }
+
+    public function certdato()
+    {
+    	return $this->hasOne('App\Certdato', 'FK_DatoCertSolRes', 'ID_SolRes');
     }
 
      /**
