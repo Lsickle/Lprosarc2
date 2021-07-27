@@ -27,6 +27,9 @@ class CreateReciboDePagosTable extends Migration
             $table->foreign('FK_ReciboCliente')->references('ID_Cli')->on('clientes')->onDelete('set null');
             $table->timestamps();
             $table->softDeletes();
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 
