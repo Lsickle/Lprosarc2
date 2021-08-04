@@ -2298,7 +2298,7 @@ class ServiceExpressController extends Controller
 			}
 		}
 
-		// if ($totalrerspel > 5) {
+		// if ($totalrerspel > 10) {
 		// 	//enviar correo avisando que excede la cantidad de 5 kg
 		// 	if ($comercial) {
 		// 		Mail::to($comercial->PersEmail)->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
@@ -2319,7 +2319,7 @@ class ServiceExpressController extends Controller
 		// 	}
 		// }
 
-        if ($totalrerspel > 5) {
+        if ($totalrerspel > 10) {
             Mail::to('coordinadorse@prosarc.com.co')->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
 		}else{
 			if ($totalrerspel > 0) {
