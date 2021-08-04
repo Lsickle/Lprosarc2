@@ -355,7 +355,7 @@
                                     <td style="text-align: center; vertical-align: bottom; dding: 0px !important;">
                                     </td>
 									<td style="text-align: center; vertical-align: bottom; dding: 0px !important;">
-										<img src="{{asset('img/DavidPizza2.png')}}" style="width: 100px;"><br>
+										<img src="{{asset('img/asesorse1.png')}}" style="width: 100px;"><br>
 										<b>Asesor <br> Servicios Express</b>
 									</td>
 								</tr>
