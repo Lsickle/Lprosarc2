@@ -32,7 +32,7 @@ Solicitud de servicio N° {{$Solicitud->ID_SolSer}}
 											@endforeach
 										</select>
 									</div>
-									
+
 									<div class="form-group col-md-6">
 										<label style="color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsersupportpay') }}</b>" data-content="En este campo puede adjuntar un archivo PDF del Soporte de Pago como constancia de haber cancelado el costo de la solicitud de servicio... <br><b>Tamaño maximo del archivo: 5 Mb.</b> <br><br> Para mas detalles comuníquese con su <b>Asesor Comercial</b>"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solsersupportpay')}}</label>
 										<small class="help-block with-errors"></small>
@@ -47,7 +47,7 @@ Solicitud de servicio N° {{$Solicitud->ID_SolSer}}
 											</div>
 										</div>
 									</div>
-									
+
 									<div class="form-group col-md-12">
 										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserpersonalcopy') }}</b>" data-content="{{ trans('adminlte_lang::message.solsermailcopy') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solserpersonalcopy') }}</label>
 										<small class="help-block with-errors"></small>
@@ -62,17 +62,17 @@ Solicitud de servicio N° {{$Solicitud->ID_SolSer}}
 												@endif
 												value="{{$Personal->PersEmail}}">{{$Personal->PersFirstName.' '.$Personal->PersLastName}}</option>
 											@endforeach
-									
+
 										</select>
 									</div>
 								</div>
-								
+
 								<div id="transportadorContainer" class="row" style="background-color: #d9edf7">
 									<div class="form-group col-md-6">
 										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solsertypetrans') }}</b>" data-content="{{ trans('adminlte_lang::message.solsertypetransdescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.solsertypetrans') }}</label>
 										<small class="help-block with-errors">*</small>
 										<select class="form-control" name="SolSerTipo" id="SolSerTipo" required="">
-											@if ($Solicitud->SolSerTipo == 'Aprobado')
+											@if ($Solicitud->SolSerStatus == 'Aprobado')
 												<option onclick="TransportadorProsarc()" {{$Solicitud->SolSerTipo == 'Interno' ? 'selected' : ''}} value="99">Prosarc S.A. ESP.</option>
 											@endif
 											<option onclick="TransportadorCliente()" {{$Solicitud->SolSerTipo == 'Cliente' ? 'selected' : ''}} value="98">{{$Cliente->CliName}}</option>
@@ -191,7 +191,7 @@ Solicitud de servicio N° {{$Solicitud->ID_SolSer}}
 										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Observaciones <b>Opcional</b>" data-content="En este campo puede redactar sus observaciones con relación a esta solicitud de servicio"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones</label>
 										<button type="button" class="btn btn-box-tool boton" style="color: black;" data-toggle="collapse" data-target=".Observaciones" onclick="AnimationMenusForm('.Observaciones')" title="Reducir/Ampliar"><i class="fa fa-plus"></i></button>
 										<label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.requirements') }}</b>" data-content="{{ trans('adminlte_lang::message.requirementsdescript') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::message.requirements') }}</label>
-										<button type="button" class="btn btn-box-tool boton" style="color: black;" data-toggle="collapse" data-target=".Requerimientos" onclick="AnimationMenusForm('.Requerimientos')" title="Reducir/Ampliar"><i class="fa fa-plus"></i></button>	
+										<button type="button" class="btn btn-box-tool boton" style="color: black;" data-toggle="collapse" data-target=".Requerimientos" onclick="AnimationMenusForm('.Requerimientos')" title="Reducir/Ampliar"><i class="fa fa-plus"></i></button>
 									</center>
 									<div class="form-group col-md-12 collapse Observaciones" style="margin-bottom: 1em;">
 										<small id="caracteresrestantes" class="help-block with-errors"></small>
@@ -257,7 +257,7 @@ Solicitud de servicio N° {{$Solicitud->ID_SolSer}}
 										</div>
 									</div>
 								</div>
-								
+
 							</div>
 							<div id="AddGenerador" class="col-md-16">
 								<a onclick="AgregarGenerador()" id="Agregar" class="btn btn-primary" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b> {{ trans('adminlte_lang::message.solseraddgener') }}</b>" data-content="{{ trans('adminlte_lang::message.solseraddgenerdescrit2') }}"><i class="fas fa-plus-circle"></i> {{ trans('adminlte_lang::message.solseraddgener') }}</a>
@@ -379,7 +379,7 @@ $(document).ready(function(){
 	var SolSerMasPerson = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliMasPerson'] === 1) ? "true" : "false"}};
 	var SolSerVehicExclusive = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliVehicExclusive'] === 1) ? "true" : "false"}};
 	var SolSerPlatform = {{(isset($Requerimientos[0]))&&($Requerimientos[0]['RequeCliPlatform'] === 1) ? "true" : "false"}};
-	
+
 	if (SolSerBascula) {
 		$("#SolSerBascula").bootstrapSwitch('disabled',false);
 	}else{
@@ -415,7 +415,7 @@ $(document).ready(function(){
 		@break
 
 	@default
-		
+
 @endswitch
 function submitverify(){
 	var CantidadTotalkg = {{$totalenviado}};
@@ -454,7 +454,7 @@ function submitverify(){
 									<small class="help-block with-errors"></small>
 									<input name="SupportPay" type="file" data-filesize="5120" class="form-control" data-accept="pdf" accept=".pdf">
 								</div>
-							</div> 
+							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
 								<label for="Submit" class='btn btn-success'>Enviar</label>
@@ -497,7 +497,7 @@ $(document).ready(function(){
 			case 'Externo':
 				echo ('OtraTransportadora();');
 			break;
-		
+
 			default:
 			break;
 		}
