@@ -361,8 +361,8 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
     <script type="text/javascript">
-        var inicio = "{{date('Y-m-d')}}";
-        var fin = "{{date('Y-m-d')}}";
+        var inicio = "{{date('d/m/Y')}}";
+        var fin = "{{date('d/m/Y')}}";
         function checkFacturacionTipo() {
             var tipo = document.getElementById("selectTipoFact");
             if (tipo.value == 'Mensual') {
@@ -416,15 +416,15 @@
                     ],
                     "firstDay": 1
                     },
-                    "minDate": "{{date('d-m-Y', strtotime('1 year ago'))}}",
-                    "startDate": "{{date('d-m-Y', strtotime('-1 day'))}}",
-                    "endDate": "{{date('d-m-Y', strtotime('today'))}}",
+                    "minDate": "{{date('d/m/Y', strtotime('1 year ago'))}}",
+                    "startDate": "{{date('d/m/Y', strtotime('-1 day'))}}",
+                    "endDate": "{{date('d/m/Y', strtotime('today'))}}",
                     "drops": "auto"
                 },
                     function(start, end, label) {
-                        console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-                        inicio = start.format('YYYY-MM-DD');
-                        fin = end.format('YYYY-MM-DD');
+                        console.log('New date range selected: ' + start.format('DD/MM/YYYY') + ' to ' + end.format('DD/MM/YYYY') + ' (predefined range: ' + label + ')');
+                        inicio = start.format('DD/MM/YYYY');
+                        fin = end.format('DD/MM/YYYY');
                 });
             }else{
                 $('#rangoContainer').empty();
@@ -467,10 +467,6 @@
                                         <div class="form-group col-md-6">
                                             <label for="orden_compra">Orden de Compra</label>
                                             <input type="text" name="orden_compra" id="orden_compra" class="form-control" maxlength="20">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="datetest">date test</label>
-                                            <input type="date" name="datetest" id="datetest" class="form-control">
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Observaciones" data-content="En este campo puede redactar sus observaciones con relación a esta solicitud de servicio"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones</label>
