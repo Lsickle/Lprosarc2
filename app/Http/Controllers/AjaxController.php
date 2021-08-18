@@ -28,6 +28,8 @@ use App\PrefacturaResiduo;
 use App\Mail\SolSerEmail;
 use App\Mail\ConcilacionRecordatorio;
 use App\Mail\CertUpdatedComercial;
+use App\Mail\ServicioFacturado;
+
 
 
 
@@ -62,7 +64,7 @@ class AjaxController extends Controller
 				case '2':
 					$proximoNumero = '';
 				break;
-				
+
 				default:
 					abort(404, 'tipo de documento no encontrado');
 					break;
@@ -111,7 +113,7 @@ class AjaxController extends Controller
 			return trans('adminlte_lang::message.progvehceditsuccess');
 		}
 	}
-	
+
 	/*Funcion para ver por medio de Ajax los Respels que le competen a una SGenerador*/
 	public function SGenerRespel(Request $request, $id)
 	{
@@ -151,7 +153,7 @@ class AjaxController extends Controller
 					if(Auth::user()->UsRol === 'Programador'){
 						$query->where('clientes.ID_Cli', $Cliente->ID_Cli);
 					}
-					if(Auth::user()->UsRol === 'Cliente'){ 
+					if(Auth::user()->UsRol === 'Cliente'){
 						$query->where('clientes.ID_Cli', $ID_Cli);
 					}
 				})
@@ -192,7 +194,7 @@ class AjaxController extends Controller
 				return response()->json($Respels);
 		}
 	}
-	
+
 	/*Funcion para ver los requerimientos de un residuo sengun su tratamiento*/
 	public function RequeRespel(Request $request, $slug){
 		if($request->ajax()){
@@ -260,11 +262,11 @@ class AjaxController extends Controller
 				case '0':
 			$documentos = Certificado::where('CertNumero', $numero)->get();
 					break;
-				
+
 				case '1':
 			$documentos = Certificado::where('CertManifNumero', $numero)->get();
 					break;
-				
+
 				default:
 					# code...
 					break;
@@ -307,12 +309,12 @@ class AjaxController extends Controller
 						$resCode = 200;
 						$res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' del cliente xxx certificada con exito';
 						break;
-						
+
 					case 'Certificacion':
 						$resCode = 400;
 						$res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' ya se encuentra certificada';
 						break;
-					
+
 					default:
 						$resCode = 403;
 						$res = 'La solicitud de servicio #'.$Solicitud->ID_SolSer.', aun no se puede certificar, ya que se encuentra en status de '.$Solicitud->SolSerStatus;
@@ -342,15 +344,15 @@ class AjaxController extends Controller
 						->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.CliName', 'clientes.CliComercial')
 						->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
 						->first();
-					
+
 					$comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
-					
+
 					if ($comercial) {
 						$destinatarios = [$comercial->PersEmail];
 					} else {
 						$destinatarios = [];
 					}
-					
+
 
 					$destinatarios = [$comercial->PersEmail];
 					if ($Solicitud->SolServMailCopia == "null") {
@@ -371,7 +373,7 @@ class AjaxController extends Controller
 			}else{
 				return response()->json(['error' => 'Usuario no autorizado'], 401);
 			}
-			
+
 
 		}
 	}
@@ -379,18 +381,31 @@ class AjaxController extends Controller
 	/*Funcion para certtificacion de servicios via ajax*/
 	public function facturarServicio(Request $request, $servicio)
 	{
+        // return $request;
 		$request->validate([
-			'ordenCompra' => 'required|max:20',
+			'FacturacionTipo' => 'required|in:Mensual,Servicio',
+			'ordenCompra' => 'nullable|max:20',
 			'costoTransporte' => 'required|numeric|min:0',
+			'FechaInicial' => 'required_if:FacturacionTipo,Mensual|before_or_equal:FechaFinal|date_format:d/m/Y',
+			'FechaFinal' => 'required_if:FacturacionTipo,Mensual|after_or_equal:FechaInicial|date_format:d/m/Y',
 		], [
 			'*.required' => 'debe especificar un valor en el campo :attribute',
 			'costoTransporte.min' => 'ingrese un valor mayor a 0 en el campo :attribute',
 			'costoTransporte.numeric' => 'ingrese un valor mayor a 0 en el campo :attribute',
+			'FechaInicial.date' => 'la :attribute debe ser una fecha valida ',
+			'FechaInicial.date_format' => 'el formato de :attribute debe ser DD/MM/YYYY',
+			'FechaInicial.before_or_equal' => 'la :attribute debe ser anterior a la Fecha FINAL',
+			'FechaFinal.date' => 'la :attribute debe ser una fecha valida',
+			'FechaFinal.date_format' => 'el formato de :attribute debe ser DD/MM/YYYY',
+			'FechaFinal.after_or_equal' => 'la :attribute debe ser posterior a la Fecha INICIAL',
 		], [
+			'FacturacionTipo' => 'Tipo de facturación',
 			'ordenCompra' => 'Orden De Compra',
 			'costoTransporte' => 'Costo de transporte',
+			'FechaInicial' => 'Fecha inicial',
+			'FechaFinal' => 'Fecha final',
 		]);
-		
+
 		// $data = [];
 		// if ($request->ajax()) {
 		// 	$data['slug'] = $servicio;
@@ -403,6 +418,7 @@ class AjaxController extends Controller
 		// return response()->json($data);
 
 		// return $servicio;
+        return $request;
 		if ($request->ajax()) {
 			if (in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES)) {
 				$Solicitud = SolicitudServicio::with('SolicitudResiduo')->where('SolSerSlug', $servicio)->first();
@@ -448,7 +464,7 @@ class AjaxController extends Controller
 						$prefactura->Fecha_Servicio = $Solicitud->recepcion;
 						$prefactura->save();
 
-						
+
 						$rms_list = array();
 
 						foreach ($Solicitud->SolicitudResiduo as $key => $residuo) {
@@ -460,7 +476,7 @@ class AjaxController extends Controller
 									$pesoConciliado = $residuo->SolResCantiUnidadConciliada;
 									$unidadpesaje = $residuo->SolResTypeUnidad;
 									break;
-								
+
 								default:
 									$pesoConciliado = $residuo->SolResKgConciliado;
 									$unidadpesaje = 'Kg';
@@ -487,7 +503,7 @@ class AjaxController extends Controller
 								$prefacturaTratamiento->cantidad_tratamiento = 0;
 								$prefacturaTratamiento->Subtotal_tarifa_trat = 0;
 								$prefacturaTratamiento->Total_prefactratamiento = 0;
-								
+
 								if (Arr::accessible($residuo->SolResRM)) {
 									if (Arr::isAssoc($residuo->SolResRM)) {
 										$prefacturaTratamiento->RMs = '{"a":array asociativo}';
@@ -512,7 +528,7 @@ class AjaxController extends Controller
 									$prefacturaResiduo->cantidad_respel = $residuo->SolResCantiUnidadConciliada;
 									$prefacturaResiduo->unidad_respel = $residuo->SolResTypeUnidad;
 									break;
-								
+
 								default:
 									$prefacturaResiduo->subtotal_respel = $residuo->SolResPrecio * $residuo->SolResKgConciliado;
 									$prefacturaResiduo->cantidad_respel = $residuo->SolResKgConciliado;
@@ -551,11 +567,11 @@ class AjaxController extends Controller
 							$prefactura->Subtotal_procesos += $prefacturaResiduo->subtotal_respel;
 							$prefactura->Total_prefactura += $prefacturaResiduo->subtotal_respel;
 							$prefactura->save();
-							
+
 						}
 
 						break;
-						
+
 					case 'Facturado':
 						$resCode = 400;
 						$res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' ya se encuentra Facturada';
@@ -565,7 +581,7 @@ class AjaxController extends Controller
 						$resCode = 400;
 						$res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' ya se encuentra certificada y no admite cambios de status';
 						break;
-					
+
 					default:
 						$resCode = 403;
 						$res = 'La solicitud de servicio #'.$Solicitud->ID_SolSer.', aun no se puede facturar, ya que se encuentra en status de '.$Solicitud->SolSerStatus;
@@ -595,15 +611,15 @@ class AjaxController extends Controller
 					// 	->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.CliName', 'clientes.CliComercial')
 					// 	->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
 					// 	->first();
-					
+
 					// $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
-					
+
 					// if ($comercial) {
 					// 	$destinatarios = [$comercial->PersEmail];
 					// } else {
 					// 	$destinatarios = [];
 					// }
-					
+
 
 					// $destinatarios = [$comercial->PersEmail];
 					// if ($Solicitud->SolServMailCopia == "null") {
@@ -619,8 +635,28 @@ class AjaxController extends Controller
 					//     ->send(new SolSerEmail($email));
 					// }
 				}
+				if ($Solicitud->cliente->comercialAsignado->ID_Pers <> null) {
+					$comercial = Personal::where('ID_Pers', $Solicitud->cliente->comercialAsignado->ID_Pers)->first();
+					// $destinatarios = ['gestion@prosarc.com.co',
+					// 					'sistemas@prosarc.com.co',
+					// 					'subgerencia@prosarc.com.co',
+					// 					$comercial->PersEmail
+					// 				];
+                    $destinatarios = ['sistemas@prosarc.com.co'];
+				}else{
+					$comercial = "";
+					$destinatarios = ['logistica@prosarc.com.co',
+										'asistentelogistica@prosarc.com.co',
+										'subgerencia@prosarc.com.co',
+										'recepcionpda@prosarc.com.co'
+									];
+				}
+
+                $prefacturas = Prefactura::with(['cliente', 'comercial', 'servicio.programacionesrecibidas', 'prefacTratamiento.prefacresiduo'])->where('ID_Prefactura', $prefactura->ID_Prefactura)->get();
+
+                Mail::to($destinatarios)->send(new ServicioFacturado($prefacturas));
 				return response()->json([
-					'message' => $res, 
+					'message' => $res,
 					'code' => $resCode,
 					'new_token' => csrf_token()],
 					$resCode);
@@ -628,7 +664,7 @@ class AjaxController extends Controller
 			}else{
 				return response()->json(['error' => 'Usuario no autorizado'], 401);
 			}
-			
+
 
 		}
 	}
@@ -637,7 +673,7 @@ class AjaxController extends Controller
     public function sendRecordatorio(Request $request)
     {
 		session()->regenerate();
-		
+
         $Solicitud = SolicitudServicio::where('SolSerSlug', $request->input('solserslug'))->first(['ID_SolSer', 'SolSerStatus', 'SolSerDescript', 'SolSerSlug', 'SolServMailCopia']);
 		if (!$Solicitud) {
 			abort(404, 'No se encuentra el servicio');
@@ -688,7 +724,7 @@ class AjaxController extends Controller
                         ->first();
 
         $comercial = Personal::where('ID_Pers', $email->CliComercial)->first('PersEmail');
-        
+
         if ($comercial == null) {
             $comercial->PersEmail = 'subgerencia@prosarc.com.co';
         }
@@ -707,7 +743,7 @@ class AjaxController extends Controller
         }
 
 		Mail::to($recipient)->cc($copy)->send(new ConcilacionRecordatorio($email, $Observacion));
-		
+
 		$Response['newtoken'] = csrf_token();
 		$Response['Observacion'] = $Observacion;
 		$Response['Solicitud'] = $Solicitud;
@@ -717,7 +753,7 @@ class AjaxController extends Controller
 		return response()->json($Response);
 
 	}
-	
+
 		/*Funcion para certtificacion de servicios via ajax*/
 	public function firmarCertificado(Request $request, $slug)
 	{
@@ -775,7 +811,7 @@ class AjaxController extends Controller
 								$c=$c+1;
 							}
 						}
-						
+
 						break;
 
 					case 'AsistenteLogistica':
@@ -800,10 +836,10 @@ class AjaxController extends Controller
 								$c=$c+1;
 							}
 						}
-						
+
 						break;
 
-						
+
 					case 'Programador':
 						if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
 							# code...
@@ -826,9 +862,9 @@ class AjaxController extends Controller
 								$c=$c+1;
 							}
 						}
-						
+
 						break;
-					
+
 					default:
 						# code...
 						break;
@@ -873,7 +909,7 @@ class AjaxController extends Controller
 								$c=$c+1;
 							}
 						}
-						
+
 						break;
 
 					case 'AsistenteLogistica':
@@ -898,10 +934,10 @@ class AjaxController extends Controller
 								$c=$c+1;
 							}
 						}
-						
+
 						break;
 
-						
+
 					case 'Programador':
 						if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
 							# code...
@@ -924,9 +960,9 @@ class AjaxController extends Controller
 								$c=$c+1;
 							}
 						}
-						
+
 						break;
-					
+
 					default:
 						# code...
 						break;

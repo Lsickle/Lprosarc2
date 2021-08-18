@@ -195,7 +195,42 @@
             },
         });
     }
+    function updatecaracteresObs() {
+        var area = document.getElementById("textDescriptionObs");
+        var message = document.getElementById("caracteresrestantesObs");
+        var maxLength = 4000;
+        message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+        observacion = area.value;
+    }
+
+    $(document).ready(function(){
+        var area = document.getElementById("textDescriptionObs");
+        var message = document.getElementById("caracteresrestantesObs");
+        var maxLength = 4000;
+        $('#textDescriptionObs').keyup(function updatecaracteresrepetirObs() {
+            message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+        });
+    })
+
+    function updatecaracteresSR() {
+        var area = document.getElementById("textDescriptionSR");
+        var message = document.getElementById("caracteresrestantesSR");
+        var maxLength = 4000;
+        message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+        observacion = area.value;
+
+    }
+
+    $(document).ready(function(){
+        var area = document.getElementById("textDescriptionrepetirSR");
+        var message = document.getElementById("caracteresrestantesrepetirSR");
+        var maxLength = 4000;
+        $('#textDescriptionrepetirSR').keyup(function updatecaracteresrepetirObs() {
+            message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+        });
+    })
 </script>
+
     @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
         <script>
             function ModalCertificacion(slug, id, boolean, value, text){
@@ -321,106 +356,321 @@
         </script>
     @endif
     @if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES))
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        var inicio = "{{date('d/m/Y')}}";
+        var fin = "{{date('d/m/Y')}}";
+        function checkFacturacionTipo() {
+            var tipo = document.getElementById("selectTipoFact");
+            if (tipo.value == 'Mensual') {
+                $('#rangoContainer').append(`
+                    <div class="form-group col-md-6">
+                        <label class="control-label" for="RangoFechas">Fecha Inicial</label>
+                        <input type="text" name="RangoFechas" id="RangoFechas" class="form-control" required minlength="23">
+                    </div>
+                `);
+                $('#tipoFactContainer').addClass('col-md-6');
+                $('#tipoFactContainer').removeClass('col-md-12');
+                $('input[name="RangoFechas"]').daterangepicker({
+                    "autoApply": true,
+                    ranges: {
+                        'Ultimos 30 Dias': [moment().subtract(29, 'days'), moment()],
+                        'Este Mes': [moment().startOf('month'), moment().endOf('month')],
+                        'Ultimo mes': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                        'Penultimo mes': [moment().subtract(2, 'month').startOf('month'), moment().subtract(2, 'month').endOf('month')],
+                    },
+                    "locale": {
+                        "format": "DD/MM/YYYY",
+                        "separator": " - ",
+                        "applyLabel": "Aplicar",
+                        "cancelLabel": "Cancelar",
+                        "fromLabel": "Desde",
+                        "toLabel": "Hasta",
+                        "customRangeLabel": "Rango Especifico",
+                        "weekLabel": "Sem",
+                        "daysOfWeek": [
+                        "Do",
+                        "Lu",
+                        "Ma",
+                        "Mi",
+                        "Ju",
+                        "Vi",
+                        "Sa"
+                    ],
+                    "monthNames": [
+                        "Enero",
+                        "Febrero",
+                        "Marzo",
+                        "Abril",
+                        "Mayo",
+                        "Junio",
+                        "Julio",
+                        "Agosto",
+                        "Septiembre",
+                        "Octubre",
+                        "Noviembre",
+                        "Diciembre"
+                    ],
+                    "firstDay": 1
+                    },
+                    "minDate": "{{date('d/m/Y', strtotime('1 year ago'))}}",
+                    "startDate": "{{date('d/m/Y', strtotime('-1 day'))}}",
+                    "endDate": "{{date('d/m/Y', strtotime('today'))}}",
+                    "drops": "auto"
+                },
+                    function(start, end, label) {
+                        console.log('New date range selected: ' + start.format('DD/MM/YYYY') + ' to ' + end.format('DD/MM/YYYY') + ' (predefined range: ' + label + ')');
+                        inicio = start.format('DD/MM/YYYY');
+                        fin = end.format('DD/MM/YYYY');
+                });
+            }else{
+                $('#rangoContainer').empty();
+                $('#tipoFactContainer').addClass('col-md-12');
+                $('#tipoFactContainer').removeClass('col-md-6');
+                console.log('rango de fechas eliminado');
+                inicio = "{{date('Y/m/d')}}";
+                fin = "{{date('Y/m/d')}}";
+            }
+        }
+    </script>
     <script>
         function ModalFacturacion(slug, id, boolean, value, text){
-                    if(boolean == 1){
-                        $('#ModalFacturar').empty();
-                        $('#ModalFacturar').append(`
-                            <div class="modal modal-default fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
-                                                <i class="fas fa-exclamation-triangle"></i>
-                                                <span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere `+text+` la solicitud <b>N° `+id+`</b>?</p></span>
-                                            </div>
-
-                                            <form action="/facturarservicio/`+slug+`" class="row" id="facturarservicio`+slug+`">
-                                                <div class="form-group col-md-6">
-                                                    <label for="Costo_transporte">Costo Transporte</label>
-                                                    <input type="number" name="Costo_transporte" id="Costo_transporte" class="form-control" min="0" step="0.01">
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label for="orden_compra">Orden de Compra</label>
-                                                    <input type="text" name="orden_compra" id="orden_compra" class="form-control" min="0" maxlength="20">
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
-                                            <button type="submit" form="facturarservicio`+slug+`" id="buttonFacturarStatusOK`+slug+`" data-dismiss="modal" class='btn btn-success'>Si, acepto</button>
-                                        </div>
+            if(boolean == 1){
+                $('#ModalFacturar').empty();
+                $('#ModalFacturar').append(`
+                    <div class="modal modal-default fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        <span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere `+text+` la solicitud <b>N° `+id+`</b>?</p></span>
                                     </div>
+
+                                    <form action="/facturarservicio/`+slug+`" class="row" id="facturarservicio`+slug+`">
+                                        <div class="form-group col-md-12" id="tipoFactContainer">
+                                            <label class="control-label" for="FacturacionTipo">Tipo de Facturacion</label><small class="help-block with-errors">*</small>
+                                            <select onchange="checkFacturacionTipo()" id="selectTipoFact" name="FacturacionTipo" class="form-control" required>
+                                                <option selected value="Servicio">Servicio</option>
+                                                <option value="Mensual">Rango de fechas</option>
+                                            </select>
+                                        </div>
+                                        <div id="rangoContainer"></div>
+                                        <div class="form-group col-md-6">
+                                            <label for="Costo_transporte">Costo Transporte</label>
+                                            <input required type="number" name="Costo_transporte" id="Costo_transporte" class="form-control" min="0" step="0.01">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="orden_compra">Orden de Compra</label>
+                                            <input type="text" name="orden_compra" id="orden_compra" class="form-control" maxlength="20">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="Observaciones" data-content="En este campo puede redactar sus observaciones con relación a esta solicitud de servicio"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>Observaciones</label>
+                                            <small id="caracteresrestantesObs" class="help-block with-errors"></small>
+                                            <textarea onchange="updatecaracteresObs()" id="textDescriptionObs" rows="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" name="solserdescript"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
+                                    <button type="submit" form="facturarservicio`+slug+`" id="buttonFacturarStatusOK`+slug+`" data-dismiss="modal" class='btn btn-success'>Si, acepto</button>
                                 </div>
                             </div>
-                        `);
-                        envsubmit();
-                        $('#myModal').modal();
-                        $('#buttonFacturarStatusOK'+slug).on( "click", function() {
-                            $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                            });
-                            $.ajax({
-                            url: "{{url('/facturarservicio')}}/"+slug,
-                            method: 'POST',
-                            data:{
-                                ordenCompra:$('#orden_compra').val(),
-                                costoTransporte:$('#Costo_transporte').val()
-                            },
-                            beforeSend: function(){
-                                let buttonsubmit = $('.classFacturarStatus'+slug);
-                                buttonsubmit.each(function() {
-                                            $(this).on('click', function(event) {
-                                                event.preventDefault();
-                                            });
-                                            $(this).disabled = true;
-                                            $(this).prop('disabled', true);
-                                        });
-                                buttonsubmit.empty();
-                                buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Actualizando...`);
-                            },
-                            success: function(res){
-                                console.log(res);
-                                let buttonsubmit = $('.classFacturarStatus'+slug);
-                                switch (res['code']) {
-                                    case 200:
-                                        buttonsubmit.each(function() {
-                                            $(this).on('click', function(event) {
-                                                event.preventDefault();
-                                            });
-                                            $(this).disabled = true;
-                                            $(this).prop('disabled', true);
-                                        });
-                                        buttonsubmit.prop('class', 'btn btn-default');
-                                        buttonsubmit.empty();
-                                        buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturaado`);
-
-                                        toastr.success(res['message']);
-                                        break;
-                                    case 400:
-                                        buttonsubmit.each(function() {
-                                            $(this).on('click', function(event) {
-                                                event.preventDefault();
-                                            });
-                                            $(this).disabled = false;
-                                            $(this).prop('disabled', false);
-                                        });
-                                        buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
-                                        buttonsubmit.empty();
-                                        buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
-                                        console.log('error 400');
-                                        if (res['message']) {
-                                            toastr.error(res['message']);
+                        </div>
+                    </div>
+                `);
+                var area = document.getElementById("textDescriptionObs");
+                var message = document.getElementById("caracteresrestantesObs");
+                var maxLength = 4000;
+                $('#textDescriptionObs').keyup(function updatecaracteresrepetirObs() {
+                message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+                });
+                envsubmit();
+                $('#myModal').modal();
+                $('#buttonFacturarStatusOK'+slug).on( "click", function() {
+                    $("#facturarservicio"+slug).validate({
+                        rules: {
+                            FacturacionTipo: "required",
+                            RangoFechas: {
+                                required: {
+                                    depends: function(element) {
+                                        if ($("#selectTipoFact").val() == "Mensual") {
+                                            return true;
                                         }else{
-                                            toastr.error('Error 400:Petición o Solicitud Incorrecta');
+                                            return false;
                                         }
-                                        break;
+                                    }
+                                },
+                                minlength: 23
+                            }
+                        },
+                        messages: {
+                            FacturacionTipo: {
+                                required: "Debe seleccionar el tipo de facturación",
+                            },
+                            RangoFechas: {
+                                required: "Favor ingrese un rango de fechas",
+                                minlength: "el rango de fechas no debe exceder de 23 caracteres",
+                            }
+                        },
+                        errorElement: "em",
+                        errorPlacement: function ( error, element ) {
+                            // Add the `help-block` class to the error element
+                            error.addClass( "help-block" );
 
-                                    default:
-                                        buttonsubmit.each(function() {
+                            if ( element.prop( "type" ) === "checkbox" ) {
+                                error.insertAfter( element.parent( "label" ) );
+                            } else {
+                                error.insertAfter( element );
+                            }
+                        },
+                        highlight: function ( element, errorClass, validClass ) {
+                            $( element ).parents( ".col-md-6" ).addClass( "has-error" ).removeClass( "has-success" );
+                        },
+                        unhighlight: function (element, errorClass, validClass) {
+                            $( element ).parents( ".col-md-6" ).addClass( "has-success" ).removeClass( "has-error" );
+                        },
+                        submitHandler: function(form) {
+                        // do other things for a valid form
+                            console.log('form send');
+                        }
+                    });
+                    if (!$("#facturarservicio"+slug).valid()) {
+                        toastr.error('verifique que todos los campos estan correctamente diligenciados');
+                    }
+                    if (!$("#facturarservicio"+slug).valid()) return false;
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{url('/facturarservicio')}}/"+slug,
+                        method: 'POST',
+                        data:{
+                            FacturacionTipo:$('#selectTipoFact').val(),
+                            ordenCompra:$('#orden_compra').val(),
+                            costoTransporte:$('#Costo_transporte').val(),
+                            FechaInicial:inicio,
+                            FechaFinal:fin,
+                            DateTest:$('#datetest').val()
+                        },
+                        beforeSend: function(){
+                            let buttonsubmit = $('.classFacturarStatus'+slug);
+                            buttonsubmit.each(function() {
+                                        $(this).on('click', function(event) {
+                                            event.preventDefault();
+                                        });
+                                        $(this).disabled = true;
+                                        $(this).prop('disabled', true);
+                                    });
+                            buttonsubmit.empty();
+                            buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Actualizando...`);
+                        },
+                        success: function(res){
+                            console.log(res);
+                            let buttonsubmit = $('.classFacturarStatus'+slug);
+                            switch (res['code']) {
+                                case 200:
+                                    buttonsubmit.each(function() {
+                                        $(this).on('click', function(event) {
+                                            event.preventDefault();
+                                        });
+                                        $(this).disabled = true;
+                                        $(this).prop('disabled', true);
+                                    });
+                                    buttonsubmit.prop('class', 'btn btn-default');
+                                    buttonsubmit.empty();
+                                    buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturaado`);
+
+                                    toastr.success(res['message']);
+                                    break;
+                                case 400:
+                                    buttonsubmit.each(function() {
+                                        $(this).on('click', function(event) {
+                                            event.preventDefault();
+                                        });
+                                        $(this).disabled = false;
+                                        $(this).prop('disabled', false);
+                                    });
+                                    buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
+                                    buttonsubmit.empty();
+                                    buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
+                                    console.log('error 400');
+                                    if (res['message']) {
+                                        toastr.error(res['message']);
+                                    }else{
+                                        toastr.error('Error 400:Petición o Solicitud Incorrecta');
+                                    }
+                                    break;
+
+                                default:
+                                    buttonsubmit.each(function() {
+                                        $(this).on('click', function(event) {
+                                            event.preventDefault();
+                                        });
+                                        $(this).disabled = false;
+                                        $(this).prop('disabled', false);
+                                    });
+                                    buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
+                                    buttonsubmit.empty();
+                                    buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
+
+                                    toastr.error(res['error']);
+                                    break;
+                            }
+                            renewtoken(res['new_token']);
+                        },
+                        error: function(xhr, status, error){
+                            let buttonsubmit = $('.classFacturarStatus'+slug);
+                            switch (xhr.status) {
+                                case 400:
+                                    console.log('error 400');
+                                    toastr.error('Error 400:Petición o Solicitud Incorrecta');
+                                    break;
+
+                                case 401:
+                                    console.log('error 401');
+                                    toastr.error('Error 401: usuario no autorizado, inicie sesion e intente de nuevo');
+                                    break;
+
+                                case 419:
+                                    console.log('error 419');
+                                    toastr.error('token CSRF no coincide... Recargue la pagina e intente de nuevo');
+
+                                    break;
+
+                                case 422:
+                                    console.log('error 422');
+                                    toastr.error('datos invalidos, verifique que esta ingresando la información correctamente');
+                                    break;
+
+                                default:
+                                    console.log('error default');
+                                    toastr.error('error no definido');
+                                    break;
+                            }
+                            switch (error['responseJSON']['code']) {
+                                case 400:
+                                    buttonsubmit.each(function() {
+                                        $(this).on('click', function(event) {
+                                            event.preventDefault();
+                                        });
+                                        $(this).disabled = true;
+                                        $(this).prop('disabled', true);
+                                    });
+                                    buttonsubmit.prop('class', 'btn btn-default');
+                                    buttonsubmit.empty();
+                                    buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturado`);
+
+                                    break;
+
+                                default:
+                                    buttonsubmit.each(function() {
                                             $(this).on('click', function(event) {
                                                 event.preventDefault();
                                             });
@@ -430,80 +680,19 @@
                                         buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
                                         buttonsubmit.empty();
                                         buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
-
-                                        toastr.error(res['error']);
-                                        break;
-                                }
-                                renewtoken(res['new_token']);
-                            },
-                            error: function(xhr, status, error){
-                                let buttonsubmit = $('.classFacturarStatus'+slug);
-                                switch (xhr.status) {
-                                    case 400:
-                                        console.log('error 400');
-                                        toastr.error('Error 400:Petición o Solicitud Incorrecta');
-                                        break;
-
-                                    case 401:
-                                        console.log('error 401');
-                                        toastr.error('Error 401: usuario no autorizado, inicie sesion e intente de nuevo');
-                                        break;
-
-                                    case 419:
-                                        console.log('error 419');
-                                        toastr.error('token CSRF no coincide... Recargue la pagina e intente de nuevo');
-
-                                        break;
-
-                                    case 422:
-                                        console.log('error 422');
-                                        toastr.error('datos invalidos, verifique que esta ingresando la información correctamente');
-                                        break;
-
-                                    default:
-                                        console.log('error default');
-                                        toastr.error('error no definido');
-                                        break;
-                                }
-                               switch (error['responseJSON']['code']) {
-                                    case 400:
-                                        buttonsubmit.each(function() {
-                                            $(this).on('click', function(event) {
-                                                event.preventDefault();
-                                            });
-                                            $(this).disabled = true;
-                                            $(this).prop('disabled', true);
+                                        $.each(xhr.responseJSON.errors, function(key,value) {
+                                            toastr.error(value);
                                         });
-                                        buttonsubmit.prop('class', 'btn btn-default');
-                                        buttonsubmit.empty();
-                                        buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturado`);
-
-                                        break;
-
-                                    default:
-                                        buttonsubmit.each(function() {
-                                                $(this).on('click', function(event) {
-                                                    event.preventDefault();
-                                                });
-                                                $(this).disabled = false;
-                                                $(this).prop('disabled', false);
-                                            });
-                                            buttonsubmit.prop('class', 'btn btn-info classFacturarStatus'+slug);
-                                            buttonsubmit.empty();
-                                            buttonsubmit.append(`<i class="fas fa-receipt"></i> Facturar`);
-                                            $.each(xhr.responseJSON.errors, function(key,value) {
-                                                toastr.error(value);
-                                            });
-                                }
-                                renewTokenAfterError();
-                            },
-                            complete: function(){
-                                //
                             }
-                            })
-                        });;
-                    }
-                }
+                            renewTokenAfterError();
+                        },
+                        complete: function(){
+                            //
+                        }
+                    });
+                });
+            }
+        }
     </script>
     @endif
 @endsection
