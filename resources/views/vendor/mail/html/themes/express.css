@@ -15,11 +15,11 @@ body {
     line-height: 1.4;
     margin: 0;
     -moz-hyphens: auto;
-    -ms-word-break: break-all;
+    -ms-word-break: break-word;
     width: 100% !important;
     -webkit-hyphens: auto;
     -webkit-text-size-adjust: none;
-    word-break: break-all;
+    word-break: break-word;
     word-break: break-word;
 }
 
@@ -136,10 +136,10 @@ img {
     background-color: #ffffff;
     margin: 0 auto;
     padding: 0;
-    width: 570px;
+    width: 1140px;
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
-    -premailer-width: 570px;
+    -premailer-width: 1140px;
 }
 
 /* Subcopy */
@@ -174,26 +174,35 @@ img {
 
 /* Tables */
 
-.table table {
+.table {
     margin: 30px auto;
     width: 100%;
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
+    word-wrap: break-word;
 }
 
-.table th {
+.table tr>th {
     border-bottom: 1px solid #edeff2;
-    padding-bottom: 8px;
+    border-left: 1px solid #212529;
+    border-right: 1px solid #212529;
     margin: 0;
+    background-color:#212529;
+    color: #eaeaea;
+    font-weight: bold;
+    text-align: center;
+    padding: 4px 8px;
+
 }
 
-.table td {
-    color: #74787e;
-    font-size: 15px;
+.table tr>td {
+    color: #575757;
+    font-size: 13px;
     line-height: 18px;
-    padding: 10px 0;
+    padding: 4px 8px;
     margin: 0;
+
 }
 
 .content-cell {

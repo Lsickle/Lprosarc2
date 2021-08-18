@@ -110,6 +110,7 @@ class SolicitudServicioController extends Controller
 				}
 			})
 			->where('CliCategoria', 'Cliente')
+			// ->where('ID_SolSer', 37455)
 			->orderBy('created_at', 'desc')
 			->get();
 		$Cliente = Cliente::select('CliName','ID_Cli', 'CliStatus')->where('ID_Cli',userController::IDClienteSegunUsuario())->first();
