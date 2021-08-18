@@ -386,17 +386,17 @@ class AjaxController extends Controller
 			'FacturacionTipo' => 'required|in:Mensual,Servicio',
 			'ordenCompra' => 'nullable|max:20',
 			'costoTransporte' => 'required|numeric|min:0',
-			'FechaInicial' => 'required_if:FacturacionTipo,Mensual|before_or_equal:FechaFinal|date_format:d/m/Y',
-			'FechaFinal' => 'required_if:FacturacionTipo,Mensual|after_or_equal:FechaInicial|date_format:d/m/Y',
+			'FechaInicial' => 'required_if:FacturacionTipo,Mensual|before_or_equal:FechaFinal|date_format:Y/m/d',
+			'FechaFinal' => 'required_if:FacturacionTipo,Mensual|after_or_equal:FechaInicial|date_format:Y/m/d',
 		], [
 			'*.required' => 'debe especificar un valor en el campo :attribute',
 			'costoTransporte.min' => 'ingrese un valor mayor a 0 en el campo :attribute',
 			'costoTransporte.numeric' => 'ingrese un valor mayor a 0 en el campo :attribute',
 			'FechaInicial.date' => 'la :attribute debe ser una fecha valida ',
-			'FechaInicial.date_format' => 'el formato de :attribute debe ser DD/MM/YYYY',
+			'FechaInicial.date_format' => 'el formato de :attribute debe ser YYYY/MM/DD',
 			'FechaInicial.before_or_equal' => 'la :attribute debe ser anterior a la Fecha FINAL',
 			'FechaFinal.date' => 'la :attribute debe ser una fecha valida',
-			'FechaFinal.date_format' => 'el formato de :attribute debe ser DD/MM/YYYY',
+			'FechaFinal.date_format' => 'el formato de :attribute debe ser YYYY/MM/DD',
 			'FechaFinal.after_or_equal' => 'la :attribute debe ser posterior a la Fecha INICIAL',
 		], [
 			'FacturacionTipo' => 'Tipo de facturación',
@@ -426,15 +426,16 @@ class AjaxController extends Controller
                 // CHECK TYPE OF FACTURATION
                 if ($request->FacturacionTipo == 'Mensual') {
                     // query services of clients with programacion de servicios
-                    $from = $request->FechaInicial;
-                    $to = $request->FechaFinal;
-                    $serviciosPorFacturar = SolicitudServicio::with(['SolicitudResiduo'
-                    // 'programacionDefinitiva' => function ($query) use ($from, $to) {
-                    //     return $query->whereBetween('ProgVehSalida', [$from, $to]);
-                    ])
-                    // ->whereHas('programacionDefinitiva', function ($query) use ($from, $to) {
-                    //     return $query->whereBetween('ProgVehSalida', [$from, $to]);
-                    // })
+                    // formar fecha inicial y final
+                    $from = $request->input('FechaInicial');
+                    $to = $request->input('FechaFinal');
+                    // return $from;
+                    $serviciosPorFacturar = SolicitudServicio::with(['SolicitudResiduo', 'programacionesrecibidas'])
+                    ->whereHas('programacionesrecibidas', function ($query) use ($from, $to) {
+                        $query->whereBetween('ProgVehFecha', [$from, $to]);
+                        // $query->where('ProgVehFecha', '>=', $from);
+                        // $query->where('ProgVehFecha', '<=', $to);
+                    })
                     ->where('FK_SolSerCliente', $Solicitud->FK_SolSerCliente)
                     ->where('SolSerStatus', '=', 'Conciliado')
                     ->get();

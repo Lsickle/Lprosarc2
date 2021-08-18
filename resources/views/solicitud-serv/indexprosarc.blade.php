@@ -3,11 +3,9 @@
 {{ trans('adminlte_lang::message.solsertitle') }}
 @endsection
 @section('contentheader_title')
-<span
-    style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
+<span style="background-image: linear-gradient(40deg, #fbc2eb, #aa66cc); padding-right:30vw; position:relative; overflow:hidden;">
     Servicios-Solicitudes
-    <div
-        style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;">
+    <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;">
     </div>
 </span>
 @endsection
@@ -37,10 +35,10 @@
                                     <th>{{trans('adminlte_lang::message.solseraddrescollect')}}</th>
                                     <th>{{trans('adminlte_lang::message.seemore')}}</th>
                                     @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
-                                        <th>{{trans('adminlte_lang::message.solserstatuscertifi')}}</th>
+                                    <th>{{trans('adminlte_lang::message.solserstatuscertifi')}}</th>
                                     @endif
                                     @if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES))
-                                        <th>{{'Facturar'}}</th>
+                                    <th>{{'Facturar'}}</th>
                                     @endif
                                 </tr>
                             </thead>
@@ -58,60 +56,60 @@
                                     </td>
                                     <td style="text-align: center;">#{{$Servicio->ID_SolSer}}</td>
                                     @switch($Servicio->SolSerStatus)
-                                        @case('Pendiente')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-default'><i class='fas fa-lg fa-hourglass-start'></i></a><br>{{$Servicio->SolSerStatus}}
-                                        </td>
-                                        @break
-                                        @case('Aceptado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-info'><i class='fas fa-lg fa-thumbs-up'></i></a><br>{{$Servicio->SolSerStatus}}
-                                        </td>
-                                        @break
-                                        @case('Aprobado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-info'><i class='fas fa-lg fa-tasks'></i></a><br>{{$Servicio->SolSerStatus}}</td>
-                                        @break
-                                        @case('Programado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-calendar-alt'></i></a><br>{{$Servicio->SolSerStatus}}
-                                        </td>
-                                        @break
-                                        @case('Notificado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-primary'><i class='far fa-lg fa-envelope'></i></a><br>{{$Servicio->SolSerStatus}}
-                                        </td>
-                                        @break
-                                        @case('Cancelado')
-                                        @case('Recibido')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-calendar-times'></i></a><br>{{$Servicio->SolSerStatus}}
-                                        </td>
-                                        @break
-                                        @case('Completado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-truck-loading'></i></a><br>{{$Servicio->SolSerStatus}}
-                                        </td>
-                                        @break
-                                        @case('Conciliado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-balance-scale'></i></a><br>{{$Servicio->SolSerStatus}}
-                                        </td>
-                                        @break
-                                        @case('No Conciliado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-balance-scale-right'></i></a><br>{{$Servicio->SolSerStatus}}
-                                        </td>
-                                        @break
-                                        @case('Corregido')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-weight'></i></a><br>{{$Servicio->SolSerStatus}}</td>
-                                        @break
-                                        @case('Tratado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-dumpster-fire'></i></a><br>{{$Servicio->SolSerStatus}}
-                                        </td>
-                                        @break
-                                        @case('Facturado')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-default'><i class='fas fas fa-lg fa-receipt'></i></a><br>{{$Servicio->SolSerStatus}}
-                                        </td>
-                                        @break
-                                        @case('Certificacion')
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fas fa-lg fa-certificate'></i></a><br>{{$Servicio->SolSerStatus}}
-                                        </td>
-                                        @break
-                                        <b></b>
-                                        @default
-                                        <td class="text-center"><a class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-ban'></i></a><br>{{$Servicio->SolSerStatus}}</td>
+                                    @case('Pendiente')
+                                    <td class="text-center"><a class='btn fixed_widthbtn btn-default'><i class='fas fa-lg fa-hourglass-start'></i></a><br>{{$Servicio->SolSerStatus}}
+                                    </td>
+                                    @break
+                                    @case('Aceptado')
+                                    <td class="text-center"><a class='btn fixed_widthbtn btn-info'><i class='fas fa-lg fa-thumbs-up'></i></a><br>{{$Servicio->SolSerStatus}}
+                                    </td>
+                                    @break
+                                    @case('Aprobado')
+                                    <td class="text-center"><a class='btn fixed_widthbtn btn-info'><i class='fas fa-lg fa-tasks'></i></a><br>{{$Servicio->SolSerStatus}}</td>
+                                    @break
+                                    @case('Programado')
+                                    <td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-calendar-alt'></i></a><br>{{$Servicio->SolSerStatus}}
+                                    </td>
+                                    @break
+                                    @case('Notificado')
+                                    <td class="text-center"><a class='btn fixed_widthbtn btn-primary'><i class='far fa-lg fa-envelope'></i></a><br>{{$Servicio->SolSerStatus}}
+                                    </td>
+                                    @break
+                                    @case('Cancelado')
+                                    @case('Recibido')
+                                    <td class="text-center"><a class='btn fixed_widthbtn btn-danger'><i class='fas fa-lg fa-calendar-times'></i></a><br>{{$Servicio->SolSerStatus}}
+                                    </td>
+                                    @break
+                                    @case('Completado')
+                                    <td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-truck-loading'></i></a><br>{{$Servicio->SolSerStatus}}
+                                    </td>
+                                    @break
+                                    @case('Conciliado')
+                                    <td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-balance-scale'></i></a><br>{{$Servicio->SolSerStatus}}
+                                    </td>
+                                    @break
+                                    @case('No Conciliado')
+                                    <td class="text-center"><a class='btn fixed_widthbtn btn-warning'><i class='fas fa-lg fa-balance-scale-right'></i></a><br>{{$Servicio->SolSerStatus}}
+                                    </td>
+                                    @break
+                                    @case('Corregido')
+                                    <td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fa-lg fa-weight'></i></a><br>{{$Servicio->SolSerStatus}}</td>
+                                    @break
+                                    @case('Tratado')
+                                    <td class="text-center"><a class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-dumpster-fire'></i></a><br>{{$Servicio->SolSerStatus}}
+                                    </td>
+                                    @break
+                                    @case('Facturado')
+                                    <td class="text-center"><a class='btn fixed_widthbtn btn-default'><i class='fas fas fa-lg fa-receipt'></i></a><br>{{$Servicio->SolSerStatus}}
+                                    </td>
+                                    @break
+                                    @case('Certificacion')
+                                    <td class="text-center"><a class='btn fixed_widthbtn btn-success'><i class='fas fas fa-lg fa-certificate'></i></a><br>{{$Servicio->SolSerStatus}}
+                                    </td>
+                                    @break
+                                    <b></b>
+                                    @default
+                                    <td class="text-center"><a class='btn fixed_widthbtn btn-primary'><i class='fas fa-lg fa-ban'></i></a><br>{{$Servicio->SolSerStatus}}</td>
                                     @endswitch
                                     <td>{{$Servicio->CliName}}</td>
                                     <td>
@@ -125,22 +123,14 @@
                                     <td>{{$Servicio->SolSerNameTrans}}</td>
                                     <td>{{$Servicio->SolSerCollectAddress == null ? 'N/A' : $Servicio->SolSerCollectAddress}}
                                     </td>
-                                    <td style="text-align: center;"><a
-                                            href='/solicitud-servicio/{{$Servicio->SolSerSlug}}' class="btn btn-info"
-                                            title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i
-                                                class="fas fa-search"></i></a>
+                                    <td style="text-align: center;"><a href='/solicitud-servicio/{{$Servicio->SolSerSlug}}' class="btn btn-info" title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a>
                                     </td>
                                     @if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES))
                                     @php
                                     $Status = ['Conciliado', 'Tratado'];
                                     @endphp
                                     <td>
-                                        <button id="{{'buttonCertStatus'.$Servicio->SolSerSlug}}"
-                                            onclick="ModalFacturacion('{{$Servicio->SolSerSlug}}', '{{$Servicio->ID_SolSer}}', '{{in_array($Servicio->SolSerStatus, $Status)}}', 'Facturada', 'facturar')"
-                                            {{in_array($Servicio->SolSerStatus, $Status) ? '' :  'disabled'}}
-                                            style="text-align: center;"
-                                            class="{{'classFacturarStatus'.$Servicio->SolSerSlug}} btn btn-{{$Servicio->SolSerStatus == 'Facturado' ? 'default' : 'info'}}"><i
-                                                class="fas fa-certificate"></i>
+                                        <button id="{{'buttonCertStatus'.$Servicio->SolSerSlug}}" onclick="ModalFacturacion('{{$Servicio->SolSerSlug}}', '{{$Servicio->ID_SolSer}}', '{{in_array($Servicio->SolSerStatus, $Status)}}', 'Facturada', 'facturar')" {{in_array($Servicio->SolSerStatus, $Status) ? '' :  'disabled'}} style="text-align: center;" class="{{'classFacturarStatus'.$Servicio->SolSerSlug}} btn btn-{{$Servicio->SolSerStatus == 'Facturado' ? 'default' : 'info'}}"><i class="fas fa-certificate"></i>
                                             {{'Facturar'}}</button>
                                     </td>
                                     @endif
@@ -149,12 +139,7 @@
                                     $Status = ['Conciliado', 'Tratado', 'Facturado'];
                                     @endphp
                                     <td>
-                                        <button id="{{'buttonCertStatus'.$Servicio->SolSerSlug}}"
-                                            onclick="ModalCertificacion('{{$Servicio->SolSerSlug}}', '{{$Servicio->ID_SolSer}}', '{{in_array($Servicio->SolSerStatus, $Status)}}', 'Certificada', 'certificar')"
-                                            {{in_array($Servicio->SolSerStatus, $Status) ? '' :  'disabled'}}
-                                            style="text-align: center;"
-                                            class="{{'classCertStatus'.$Servicio->SolSerSlug}} btn btn-{{$Servicio->SolSerStatus == 'Certificacion' ? 'default' : 'success'}}"><i
-                                                class="fas fa-certificate"></i>
+                                        <button id="{{'buttonCertStatus'.$Servicio->SolSerSlug}}" onclick="ModalCertificacion('{{$Servicio->SolSerSlug}}', '{{$Servicio->ID_SolSer}}', '{{in_array($Servicio->SolSerStatus, $Status)}}', 'Certificada', 'certificar')" {{in_array($Servicio->SolSerStatus, $Status) ? '' :  'disabled'}} style="text-align: center;" class="{{'classCertStatus'.$Servicio->SolSerSlug}} btn btn-{{$Servicio->SolSerStatus == 'Certificacion' ? 'default' : 'success'}}"><i class="fas fa-certificate"></i>
                                             {{trans('adminlte_lang::message.solserstatuscertifi')}}</button>
                                     </td>
                                     @endif
@@ -231,9 +216,9 @@
     })
 </script>
 
-    @if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
-        <script>
-            function ModalCertificacion(slug, id, boolean, value, text){
+@if(in_array(Auth::user()->UsRol, Permisos::SolSerCertifi) || in_array(Auth::user()->UsRol2, Permisos::SolSerCertifi))
+<script>
+    function ModalCertificacion(slug, id, boolean, value, text){
                 if(boolean == 1){
                     $('#ModalStatus').empty();
                     $('#ModalStatus').append(`
@@ -353,16 +338,16 @@
                     });;
                 }
             }
-        </script>
-    @endif
-    @if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES))
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
-    <script type="text/javascript">
-        var inicio = "{{date('d/m/Y')}}";
-        var fin = "{{date('d/m/Y')}}";
+</script>
+@endif
+@if(in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES))
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+<script type="text/javascript">
+    var inicio = "{{date('Y/m/d')}}";
+        var fin = "{{date('Y/m/d')}}";
         function checkFacturacionTipo() {
             var tipo = document.getElementById("selectTipoFact");
             if (tipo.value == 'Mensual') {
@@ -383,7 +368,7 @@
                         'Penultimo mes': [moment().subtract(2, 'month').startOf('month'), moment().subtract(2, 'month').endOf('month')],
                     },
                     "locale": {
-                        "format": "DD/MM/YYYY",
+                        "format": "YYYY/MM/DD",
                         "separator": " - ",
                         "applyLabel": "Aplicar",
                         "cancelLabel": "Cancelar",
@@ -416,15 +401,15 @@
                     ],
                     "firstDay": 1
                     },
-                    "minDate": "{{date('d/m/Y', strtotime('1 year ago'))}}",
-                    "startDate": "{{date('d/m/Y', strtotime('-1 day'))}}",
-                    "endDate": "{{date('d/m/Y', strtotime('today'))}}",
+                    "minDate": "{{date('Y/m/d', strtotime('1 year ago'))}}",
+                    "startDate": "{{date('Y/m/d', strtotime('-1 day'))}}",
+                    "endDate": "{{date('Y/m/d', strtotime('today'))}}",
                     "drops": "auto"
                 },
                     function(start, end, label) {
-                        console.log('New date range selected: ' + start.format('DD/MM/YYYY') + ' to ' + end.format('DD/MM/YYYY') + ' (predefined range: ' + label + ')');
-                        inicio = start.format('DD/MM/YYYY');
-                        fin = end.format('DD/MM/YYYY');
+                        console.log('New date range selected: ' + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD') + ' (predefined range: ' + label + ')');
+                        inicio = start.format('YYYY/MM/DD');
+                        fin = end.format('YYYY/MM/DD');
                 });
             }else{
                 $('#rangoContainer').empty();
@@ -435,9 +420,9 @@
                 fin = "{{date('Y/m/d')}}";
             }
         }
-    </script>
-    <script>
-        function ModalFacturacion(slug, id, boolean, value, text){
+</script>
+<script>
+    function ModalFacturacion(slug, id, boolean, value, text){
             if(boolean == 1){
                 $('#ModalFacturar').empty();
                 $('#ModalFacturar').append(`
@@ -693,6 +678,6 @@
                 });
             }
         }
-    </script>
-    @endif
+</script>
+@endif
 @endsection
