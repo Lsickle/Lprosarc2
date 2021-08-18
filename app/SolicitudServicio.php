@@ -102,6 +102,11 @@ class SolicitudServicio extends Model
         return $this->belongsTo('App\ReciboDePago', 'FK_ReciboSolserv', 'ID_Recibo');
 	}
 
+    public function programacionesdefinitivas()
+	{
+		return $this->programaciones()->whereNotNull('ProgVehEntrada')->where('ProgVehDelete', 0)->first();
+	}
+
 	protected $casts = [
         'SolSerRMs' => 'array',
     ];

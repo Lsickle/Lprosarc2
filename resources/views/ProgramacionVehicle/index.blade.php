@@ -111,10 +111,23 @@
 										    @endforeach
 										</ul></td>
 										<td>{{$programacion->ProgVehEntrada <> null ? date('h:i A', strtotime($programacion->ProgVehEntrada)) : ''}}</td>
-										<td>{{$programacion->ProgVehtipo == 1 ? 'Interno' : ($programacion->ProgVehtipo == 2 ? 'Alquilado': 'Externo')}}</td>
+										<td>
+                                            @if ($programacion->ProgVehtipo == 1)
+                                                Interno<br>
+                                                @if ($programacion->ProgVehExclusive == 1)
+                                                (Exclusivo)
+                                                @else
+                                                (Recorrido)
+                                                @endif
+                                            @elseif($programacion->ProgVehtipo == 2)
+                                                Alquilado
+                                            @else
+                                                Externo
+                                            @endif
+                                        </td>
 										<td>{{$programacion->ProgVehStatus}}</td>
 									{{-- @endif --}}
-									
+
 									@if(in_array(Auth::user()->UsRol, Permisos::CONDUCTOR) || in_array(Auth::user()->UsRol2, Permisos::CONDUCTOR))
 										<td><a method='get' href='/vehicle-programacion/{{$programacion->ID_ProgVeh}}' class='btn btn-info btn-block'><i class="fas fa-search"></i> <b>Datos</b></a></td>
 									@endif
@@ -152,7 +165,7 @@
 		var maxLength = 4000;
 		message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
 		observacion = area.value;
-		
+
 	}
 	function ModalStatus(slug, idServicio, boolean, value, text){
 		if(boolean == 1){
@@ -177,7 +190,7 @@
 										<input type="text" name="solserslug" value="`+slug+`" style="display: none;">
 										<input type="text" name="solserstatus" value="`+value+`" style="display: none;">
 									</form>
-								</div> 
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
