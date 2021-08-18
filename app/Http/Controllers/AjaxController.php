@@ -427,259 +427,259 @@ class AjaxController extends Controller
                 if ($request->FacturacionTipo == 'Mensual') {
                     // query services of clients with programacion de servicios
                     // formar fecha inicial y final
-                    $from = $request->input('FechaInicial');
-                    $to = $request->input('FechaFinal');
-                    // return $from;
-                    $serviciosPorFacturar = SolicitudServicio::with(['SolicitudResiduo', 'programacionesrecibidas'])
-                    ->whereHas('programacionesrecibidas', function ($query) use ($from, $to) {
-                        $query->whereBetween('ProgVehFecha', [$from, $to]);
-                        // $query->where('ProgVehFecha', '>=', $from);
-                        // $query->where('ProgVehFecha', '<=', $to);
-                    })
-                    ->where('FK_SolSerCliente', $Solicitudorigin->FK_SolSerCliente)
-                    ->where('SolSerStatus', '=', 'Conciliado')
-                    ->get();
+                    // $from = $request->input('FechaInicial');
+                    // $to = $request->input('FechaFinal');
+                    // // return $from;
+                    // $serviciosPorFacturar = SolicitudServicio::with(['SolicitudResiduo', 'programacionesrecibidas'])
+                    // ->whereHas('programacionesrecibidas', function ($query) use ($from, $to) {
+                    //     $query->whereBetween('ProgVehFecha', [$from, $to]);
+                    //     // $query->where('ProgVehFecha', '>=', $from);
+                    //     // $query->where('ProgVehFecha', '<=', $to);
+                    // })
+                    // ->where('FK_SolSerCliente', $Solicitudorigin->FK_SolSerCliente)
+                    // ->where('SolSerStatus', '=', 'Conciliado')
+                    // ->get();
 
-                    foreach ($serviciosPorFacturar as $Solicitud) {
-                        if (!$Solicitud) {
-                            abort(404);
-                        }
-                        switch ($Solicitud->SolSerStatus) {
-                            case 'Conciliado':
-                            case 'Tratado':
-                                $Solicitud->SolSerStatus = 'Facturado';
-                                $Solicitud->SolServCertStatus = 1;
-                                $Solicitud->SolSerDescript = $request->input('solserdescript');
-                                $Solicitud->save();
+                    // foreach ($serviciosPorFacturar as $Solicitud) {
+                    //     if (!$Solicitud) {
+                    //         abort(404);
+                    //     }
+                    //     switch ($Solicitud->SolSerStatus) {
+                    //         case 'Conciliado':
+                    //         case 'Tratado':
+                    //             $Solicitud->SolSerStatus = 'Facturado';
+                    //             $Solicitud->SolServCertStatus = 1;
+                    //             $Solicitud->SolSerDescript = $request->input('solserdescript');
+                    //             $Solicitud->save();
 
-                                $log = new audit();
-                                $log->AuditTabla="solicitud_servicios";
-                                $log->AuditType="Modificado Status";
-                                $log->AuditRegistro=$Solicitud->ID_SolSer;
-                                $log->AuditUser=Auth::user()->email;
-                                $log->Auditlog=$Solicitud->SolSerStatus;
-                                $log->save();
+                    //             $log = new audit();
+                    //             $log->AuditTabla="solicitud_servicios";
+                    //             $log->AuditType="Modificado Status";
+                    //             $log->AuditRegistro=$Solicitud->ID_SolSer;
+                    //             $log->AuditUser=Auth::user()->email;
+                    //             $log->Auditlog=$Solicitud->SolSerStatus;
+                    //             $log->save();
 
-                                $resCode = 200;
-                                $res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' del cliente facturada con exito';
+                    //             $resCode = 200;
+                    //             $res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' del cliente facturada con exito';
 
-                                /* validacion para encontrar la fecha de recepción en planta del servicio */
-                                $fechaRecepcion = $Solicitud->programacionesrecibidas()->first();
-                                if($fechaRecepcion){
-                                    $Solicitud->recepcion = $fechaRecepcion->ProgVehSalida;
-                                }else{
-                                    $Solicitud->recepcion = now()->format('Y-m-d');
-                                }
+                    //             /* validacion para encontrar la fecha de recepción en planta del servicio */
+                    //             $fechaRecepcion = $Solicitud->programacionesrecibidas()->first();
+                    //             if($fechaRecepcion){
+                    //                 $Solicitud->recepcion = $fechaRecepcion->ProgVehSalida;
+                    //             }else{
+                    //                 $Solicitud->recepcion = now()->format('Y-m-d');
+                    //             }
 
-                                $prefactura = new Prefactura();
-                                $prefactura->FK_Comercial = $Solicitud->cliente->comercialAsignado->ID_Pers;
-                                $prefactura->FK_Cliente = $Solicitud->FK_SolSerCliente;
-                                $prefactura->FK_Servicio = $Solicitud->ID_SolSer;
-                                $prefactura->Costo_transporte = $request->input('costoTransporte');
-                                $prefactura->Subtotal_procesos = 0; /**sin incluir el costo por transportes */
-                                $prefactura->Total_prefactura = $prefactura->Costo_transporte; /** total servicios mas costo de transportes */
-                                $prefactura->status_prefactura = 'Abierta';
-                                $prefactura->orden_compra = $request->input('ordenCompra');
-                                $prefactura->Fecha_Servicio = $Solicitud->recepcion;
-                                $prefactura->save();
-
-
-                                $rms_list = array();
-
-                                foreach ($Solicitud->SolicitudResiduo as $key => $residuo) {
-                                    /**validar el peso segun el tipo de unidad */
-                                    $pesoConciliado = 0;
-                                    switch ($residuo->SolResTypeUnidad) {
-                                        case 'Unidad':
-                                        case 'Litros':
-                                            $pesoConciliado = $residuo->SolResCantiUnidadConciliada;
-                                            $unidadpesaje = $residuo->SolResTypeUnidad;
-                                            break;
-
-                                        default:
-                                            $pesoConciliado = $residuo->SolResKgConciliado;
-                                            $unidadpesaje = 'Kg';
-                                            break;
-                                    }
-                                    // saltar si no hay cantidad conciliada
-                                    if ($pesoConciliado <= 0) {
-                                        continue;
-                                    }
-                                    // consltar el tipo de tratamiento
-                                    $prefacturaTratamiento = PrefacturaTratamiento::with('prefacresiduo')
-                                    ->where('FK_Prefactura', $prefactura->ID_Prefactura)
-                                    ->where('FK_Tratamiento', $residuo->requerimiento->FK_ReqTrata)
-                                    ->where('unidad_tratamiento', $unidadpesaje)
-                                    ->first();
-
-                                    /**validar si existe la prefac_tratamiento */
-                                    if ($prefacturaTratamiento === null) {
-                                        // en caso de que no esxista se crea una nuevo registro de prefactura tratamiento
-                                        $prefacturaTratamiento = new prefacturaTratamiento();
-                                        $prefacturaTratamiento->FK_Prefactura = $prefactura->ID_Prefactura;
-                                        $prefacturaTratamiento->FK_Tratamiento = $residuo->requerimiento->FK_ReqTrata;
-                                        $prefacturaTratamiento->unidad_tratamiento = $unidadpesaje;
-                                        $prefacturaTratamiento->cantidad_tratamiento = 0;
-                                        $prefacturaTratamiento->Subtotal_tarifa_trat = 0;
-                                        $prefacturaTratamiento->Total_prefactratamiento = 0;
-
-                                        if (Arr::accessible($residuo->SolResRM)) {
-                                            if (Arr::isAssoc($residuo->SolResRM)) {
-                                                $prefacturaTratamiento->RMs = '{"a":array asociativo}';
-                                            }else{
-                                                $prefacturaTratamiento->RMs = json_encode($residuo->SolResRM);
-                                            }
-                                            // $prefacturaTratamiento->RMs = $residuo->SolResRM;
-                                        }else{
-                                            $prefacturaTratamiento->RMs = '{"a":no array}';
-                                        }
-                                        $prefacturaTratamiento->save();
-                                    }
-
-                                    $prefacturaResiduo = new PrefacturaResiduo();
-                                    $prefacturaResiduo->FK_Prefactura = $prefactura->ID_Prefactura;
-                                    $prefacturaResiduo->FK_PreFacTratamiento = $prefacturaTratamiento->ID_PrefacTratamiento;
-                                    $prefacturaResiduo->precio_tarifa = $residuo->SolResPrecio;
-                                    switch ($residuo->SolResTypeUnidad) {
-                                        case 'Unidad':
-                                        case 'Litros':
-                                            $prefacturaResiduo->subtotal_respel = $residuo->SolResPrecio * $residuo->SolResCantiUnidadConciliada;
-                                            $prefacturaResiduo->cantidad_respel = $residuo->SolResCantiUnidadConciliada;
-                                            $prefacturaResiduo->unidad_respel = $residuo->SolResTypeUnidad;
-                                            break;
-
-                                        default:
-                                            $prefacturaResiduo->subtotal_respel = $residuo->SolResPrecio * $residuo->SolResKgConciliado;
-                                            $prefacturaResiduo->cantidad_respel = $residuo->SolResKgConciliado;
-                                            $prefacturaResiduo->unidad_respel = 'Kg';
-                                            break;
-                                    }
-                                    if (Arr::accessible($residuo->SolResRM)) {
-                                        if (Arr::isAssoc($residuo->SolResRM)) {
-                                            $prefacturaResiduo->RMs = '{"a":array asociativo}';
-                                        }else{
-                                            $prefacturaResiduo->RMs = $residuo->SolResRM;
-                                        }
-                                        // $prefacturaResiduo->RMs = $residuo->SolResRM;
-                                    }else{
-                                        $prefacturaResiduo->RMs = '{"a":no array}';
-                                    }
-                                    $prefacturaResiduo->FK_SolRespel = $residuo->ID_SolRes;
-                                    $prefacturaResiduo->save();
-
-                                    $prefacturaTratamiento->cantidad_tratamiento += $prefacturaResiduo->cantidad_respel;
-                                    $prefacturaTratamiento->Subtotal_tarifa_trat = $prefacturaResiduo->precio_tarifa;
-                                    $prefacturaTratamiento->Total_prefactratamiento += $prefacturaResiduo->subtotal_respel;
-                                    /* falta agrupar los numeros de los recibos de materiales ya que estan en formato string y puede dar error */
-                                    if (Arr::accessible($residuo->SolResRM)) {
-                                        if (Arr::isAssoc($residuo->SolResRM)) {
-                                            $prefacturaTratamiento->RMs = '{"a":array asociativo}';
-                                        }else{
-                                            $rmsprevios = json_decode($prefacturaTratamiento->RMs, true) ;
-                                            $prefacturaTratamiento->RMs = json_encode(array_unique(Arr::collapse([$rmsprevios, $residuo->SolResRM])));
-                                        }
-                                    }else{
-                                        $prefacturaTratamiento->RMs = '{"a":no array}';
-                                    }
-                                    $prefacturaTratamiento->save();
-                                    /**actualizar los totales de la factura */
-                                    $prefactura->Subtotal_procesos += $prefacturaResiduo->subtotal_respel;
-                                    $prefactura->Total_prefactura += $prefacturaResiduo->subtotal_respel;
-                                    $prefactura->save();
-
-                                }
-
-                                break;
-
-                            case 'Facturado':
-                                $resCode = 400;
-                                $res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' ya se encuentra Facturada';
-                                break;
-
-                            case 'Certificacion':
-                                $resCode = 400;
-                                $res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' ya se encuentra certificada y no admite cambios de status';
-                                break;
-
-                            default:
-                                $resCode = 403;
-                                $res = 'La solicitud de servicio #'.$Solicitud->ID_SolSer.', aun no se puede facturar, ya que se encuentra en status de '.$Solicitud->SolSerStatus;
-                                break;
-                        }
-                        if ($resCode == 200) {
-
-                            /*se guarda la observacion inicial de la creación del servicio*/
-                            $Observacion = new Observacion();
-                            $Observacion->ObsStatus = $Solicitud->SolSerStatus;
-                            if ($Solicitud->SolSerDescript == "" || $Solicitud->SolSerDescript == null) {
-                                $Observacion->ObsMensaje = 'Servicio enviado a Facturación';
-                            }else{
-                                $Observacion->ObsMensaje = $Solicitud->SolSerDescript;
-                            }
-                            $Observacion->ObsTipo = 'prosarc';
-                            $Observacion->ObsRepeat = 1;
-                            $Observacion->ObsDate = now();
-                            $Observacion->ObsUser = Auth::user()->email;
-                            $Observacion->ObsRol = Auth::user()->UsRol;
-                            $Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
-                            $Observacion->save();
-
-                            // $email = DB::table('solicitud_servicios')
-                            // 	->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-                            // 	->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
-                            // 	->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.CliName', 'clientes.CliComercial')
-                            // 	->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
-                            // 	->first();
-
-                            // $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
-
-                            // if ($comercial) {
-                            // 	$destinatarios = [$comercial->PersEmail];
-                            // } else {
-                            // 	$destinatarios = [];
-                            // }
+                    //             $prefactura = new Prefactura();
+                    //             $prefactura->FK_Comercial = $Solicitud->cliente->comercialAsignado->ID_Pers;
+                    //             $prefactura->FK_Cliente = $Solicitud->FK_SolSerCliente;
+                    //             $prefactura->FK_Servicio = $Solicitud->ID_SolSer;
+                    //             $prefactura->Costo_transporte = $request->input('costoTransporte');
+                    //             $prefactura->Subtotal_procesos = 0; /**sin incluir el costo por transportes */
+                    //             $prefactura->Total_prefactura = $prefactura->Costo_transporte; /** total servicios mas costo de transportes */
+                    //             $prefactura->status_prefactura = 'Abierta';
+                    //             $prefactura->orden_compra = $request->input('ordenCompra');
+                    //             $prefactura->Fecha_Servicio = $Solicitud->recepcion;
+                    //             $prefactura->save();
 
 
-                            // $destinatarios = [$comercial->PersEmail];
-                            // if ($Solicitud->SolServMailCopia == "null") {
-                            //     Mail::to($email->PersEmail)
-                            //     ->cc($destinatarios)
-                            //     ->send(new SolSerEmail($email));
-                            // }else{
-                            //     foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
-                            //         array_push($destinatarios, $value);
-                            //     }
-                            //     Mail::to($email->PersEmail)
-                            //     ->cc($destinatarios)
-                            //     ->send(new SolSerEmail($email));
-                            // }
-                        }
-                        if ($Solicitud->cliente->comercialAsignado->ID_Pers <> null) {
-                            $comercial = Personal::where('ID_Pers', $Solicitud->cliente->comercialAsignado->ID_Pers)->first();
-                            // $destinatarios = ['gestion@prosarc.com.co',
-                            // 					'sistemas@prosarc.com.co',
-                            // 					'subgerencia@prosarc.com.co',
-                            // 					$comercial->PersEmail
-                            // 				];
-                            $destinatarios = ['sistemas@prosarc.com.co'];
-                        }else{
-                            $comercial = "";
-                            $destinatarios = ['logistica@prosarc.com.co',
-                                                'asistentelogistica@prosarc.com.co',
-                                                'subgerencia@prosarc.com.co',
-                                                'recepcionpda@prosarc.com.co'
-                                            ];
-                        }
+                    //             $rms_list = array();
 
-                        $prefacturas = Prefactura::with(['cliente', 'comercial', 'servicio.programacionesrecibidas', 'prefacTratamiento.prefacresiduo'])->where('ID_Prefactura', $prefactura->ID_Prefactura)->get();
+                    //             foreach ($Solicitud->SolicitudResiduo as $key => $residuo) {
+                    //                 /**validar el peso segun el tipo de unidad */
+                    //                 $pesoConciliado = 0;
+                    //                 switch ($residuo->SolResTypeUnidad) {
+                    //                     case 'Unidad':
+                    //                     case 'Litros':
+                    //                         $pesoConciliado = $residuo->SolResCantiUnidadConciliada;
+                    //                         $unidadpesaje = $residuo->SolResTypeUnidad;
+                    //                         break;
 
-                        Mail::to($destinatarios)->send(new ServicioFacturado($prefacturas));
-                        return response()->json([
-                            'message' => $res,
-                            'code' => $resCode,
-                            'new_token' => csrf_token()],
-                            $resCode);
-                    }
+                    //                     default:
+                    //                         $pesoConciliado = $residuo->SolResKgConciliado;
+                    //                         $unidadpesaje = 'Kg';
+                    //                         break;
+                    //                 }
+                    //                 // saltar si no hay cantidad conciliada
+                    //                 if ($pesoConciliado <= 0) {
+                    //                     continue;
+                    //                 }
+                    //                 // consltar el tipo de tratamiento
+                    //                 $prefacturaTratamiento = PrefacturaTratamiento::with('prefacresiduo')
+                    //                 ->where('FK_Prefactura', $prefactura->ID_Prefactura)
+                    //                 ->where('FK_Tratamiento', $residuo->requerimiento->FK_ReqTrata)
+                    //                 ->where('unidad_tratamiento', $unidadpesaje)
+                    //                 ->first();
+
+                    //                 /**validar si existe la prefac_tratamiento */
+                    //                 if ($prefacturaTratamiento === null) {
+                    //                     // en caso de que no esxista se crea una nuevo registro de prefactura tratamiento
+                    //                     $prefacturaTratamiento = new prefacturaTratamiento();
+                    //                     $prefacturaTratamiento->FK_Prefactura = $prefactura->ID_Prefactura;
+                    //                     $prefacturaTratamiento->FK_Tratamiento = $residuo->requerimiento->FK_ReqTrata;
+                    //                     $prefacturaTratamiento->unidad_tratamiento = $unidadpesaje;
+                    //                     $prefacturaTratamiento->cantidad_tratamiento = 0;
+                    //                     $prefacturaTratamiento->Subtotal_tarifa_trat = 0;
+                    //                     $prefacturaTratamiento->Total_prefactratamiento = 0;
+
+                    //                     if (Arr::accessible($residuo->SolResRM)) {
+                    //                         if (Arr::isAssoc($residuo->SolResRM)) {
+                    //                             $prefacturaTratamiento->RMs = '{"a":array asociativo}';
+                    //                         }else{
+                    //                             $prefacturaTratamiento->RMs = json_encode($residuo->SolResRM);
+                    //                         }
+                    //                         // $prefacturaTratamiento->RMs = $residuo->SolResRM;
+                    //                     }else{
+                    //                         $prefacturaTratamiento->RMs = '{"a":no array}';
+                    //                     }
+                    //                     $prefacturaTratamiento->save();
+                    //                 }
+
+                    //                 $prefacturaResiduo = new PrefacturaResiduo();
+                    //                 $prefacturaResiduo->FK_Prefactura = $prefactura->ID_Prefactura;
+                    //                 $prefacturaResiduo->FK_PreFacTratamiento = $prefacturaTratamiento->ID_PrefacTratamiento;
+                    //                 $prefacturaResiduo->precio_tarifa = $residuo->SolResPrecio;
+                    //                 switch ($residuo->SolResTypeUnidad) {
+                    //                     case 'Unidad':
+                    //                     case 'Litros':
+                    //                         $prefacturaResiduo->subtotal_respel = $residuo->SolResPrecio * $residuo->SolResCantiUnidadConciliada;
+                    //                         $prefacturaResiduo->cantidad_respel = $residuo->SolResCantiUnidadConciliada;
+                    //                         $prefacturaResiduo->unidad_respel = $residuo->SolResTypeUnidad;
+                    //                         break;
+
+                    //                     default:
+                    //                         $prefacturaResiduo->subtotal_respel = $residuo->SolResPrecio * $residuo->SolResKgConciliado;
+                    //                         $prefacturaResiduo->cantidad_respel = $residuo->SolResKgConciliado;
+                    //                         $prefacturaResiduo->unidad_respel = 'Kg';
+                    //                         break;
+                    //                 }
+                    //                 if (Arr::accessible($residuo->SolResRM)) {
+                    //                     if (Arr::isAssoc($residuo->SolResRM)) {
+                    //                         $prefacturaResiduo->RMs = '{"a":array asociativo}';
+                    //                     }else{
+                    //                         $prefacturaResiduo->RMs = $residuo->SolResRM;
+                    //                     }
+                    //                     // $prefacturaResiduo->RMs = $residuo->SolResRM;
+                    //                 }else{
+                    //                     $prefacturaResiduo->RMs = '{"a":no array}';
+                    //                 }
+                    //                 $prefacturaResiduo->FK_SolRespel = $residuo->ID_SolRes;
+                    //                 $prefacturaResiduo->save();
+
+                    //                 $prefacturaTratamiento->cantidad_tratamiento += $prefacturaResiduo->cantidad_respel;
+                    //                 $prefacturaTratamiento->Subtotal_tarifa_trat = $prefacturaResiduo->precio_tarifa;
+                    //                 $prefacturaTratamiento->Total_prefactratamiento += $prefacturaResiduo->subtotal_respel;
+                    //                 /* falta agrupar los numeros de los recibos de materiales ya que estan en formato string y puede dar error */
+                    //                 if (Arr::accessible($residuo->SolResRM)) {
+                    //                     if (Arr::isAssoc($residuo->SolResRM)) {
+                    //                         $prefacturaTratamiento->RMs = '{"a":array asociativo}';
+                    //                     }else{
+                    //                         $rmsprevios = json_decode($prefacturaTratamiento->RMs, true) ;
+                    //                         $prefacturaTratamiento->RMs = json_encode(array_unique(Arr::collapse([$rmsprevios, $residuo->SolResRM])));
+                    //                     }
+                    //                 }else{
+                    //                     $prefacturaTratamiento->RMs = '{"a":no array}';
+                    //                 }
+                    //                 $prefacturaTratamiento->save();
+                    //                 /**actualizar los totales de la factura */
+                    //                 $prefactura->Subtotal_procesos += $prefacturaResiduo->subtotal_respel;
+                    //                 $prefactura->Total_prefactura += $prefacturaResiduo->subtotal_respel;
+                    //                 $prefactura->save();
+
+                    //             }
+
+                    //             break;
+
+                    //         case 'Facturado':
+                    //             $resCode = 400;
+                    //             $res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' ya se encuentra Facturada';
+                    //             break;
+
+                    //         case 'Certificacion':
+                    //             $resCode = 400;
+                    //             $res = 'la solicitud de servicio #'.$Solicitud->ID_SolSer.' ya se encuentra certificada y no admite cambios de status';
+                    //             break;
+
+                    //         default:
+                    //             $resCode = 403;
+                    //             $res = 'La solicitud de servicio #'.$Solicitud->ID_SolSer.', aun no se puede facturar, ya que se encuentra en status de '.$Solicitud->SolSerStatus;
+                    //             break;
+                    //     }
+                    //     if ($resCode == 200) {
+
+                    //         /*se guarda la observacion inicial de la creación del servicio*/
+                    //         $Observacion = new Observacion();
+                    //         $Observacion->ObsStatus = $Solicitud->SolSerStatus;
+                    //         if ($Solicitud->SolSerDescript == "" || $Solicitud->SolSerDescript == null) {
+                    //             $Observacion->ObsMensaje = 'Servicio enviado a Facturación';
+                    //         }else{
+                    //             $Observacion->ObsMensaje = $Solicitud->SolSerDescript;
+                    //         }
+                    //         $Observacion->ObsTipo = 'prosarc';
+                    //         $Observacion->ObsRepeat = 1;
+                    //         $Observacion->ObsDate = now();
+                    //         $Observacion->ObsUser = Auth::user()->email;
+                    //         $Observacion->ObsRol = Auth::user()->UsRol;
+                    //         $Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
+                    //         $Observacion->save();
+
+                    //         // $email = DB::table('solicitud_servicios')
+                    //         // 	->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+                    //         // 	->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+                    //         // 	->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.CliName', 'clientes.CliComercial')
+                    //         // 	->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
+                    //         // 	->first();
+
+                    //         // $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+
+                    //         // if ($comercial) {
+                    //         // 	$destinatarios = [$comercial->PersEmail];
+                    //         // } else {
+                    //         // 	$destinatarios = [];
+                    //         // }
+
+
+                    //         // $destinatarios = [$comercial->PersEmail];
+                    //         // if ($Solicitud->SolServMailCopia == "null") {
+                    //         //     Mail::to($email->PersEmail)
+                    //         //     ->cc($destinatarios)
+                    //         //     ->send(new SolSerEmail($email));
+                    //         // }else{
+                    //         //     foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
+                    //         //         array_push($destinatarios, $value);
+                    //         //     }
+                    //         //     Mail::to($email->PersEmail)
+                    //         //     ->cc($destinatarios)
+                    //         //     ->send(new SolSerEmail($email));
+                    //         // }
+                    //     }
+                    //     if ($Solicitud->cliente->comercialAsignado->ID_Pers <> null) {
+                    //         $comercial = Personal::where('ID_Pers', $Solicitud->cliente->comercialAsignado->ID_Pers)->first();
+                    //         // $destinatarios = ['gestion@prosarc.com.co',
+                    //         // 					'sistemas@prosarc.com.co',
+                    //         // 					'subgerencia@prosarc.com.co',
+                    //         // 					$comercial->PersEmail
+                    //         // 				];
+                    //         $destinatarios = ['sistemas@prosarc.com.co'];
+                    //     }else{
+                    //         $comercial = "";
+                    //         $destinatarios = ['logistica@prosarc.com.co',
+                    //                             'asistentelogistica@prosarc.com.co',
+                    //                             'subgerencia@prosarc.com.co',
+                    //                             'recepcionpda@prosarc.com.co'
+                    //                         ];
+                    //     }
+
+                    //     $prefacturas = Prefactura::with(['cliente', 'comercial', 'servicio.programacionesrecibidas', 'prefacTratamiento.prefacresiduo'])->where('ID_Prefactura', $prefactura->ID_Prefactura)->get();
+
+                    //     Mail::to($destinatarios)->send(new ServicioFacturado($prefacturas));
+                    //     return response()->json([
+                    //         'message' => $res,
+                    //         'code' => $resCode,
+                    //         'new_token' => csrf_token()],
+                    //         $resCode);
+                    // }
                 } else {
                     if (!$Solicitudorigin) {
                         abort(404);
@@ -896,19 +896,18 @@ class AjaxController extends Controller
                     }
                     if ($Solicitudorigin->cliente->comercialAsignado->ID_Pers <> null) {
                         $comercial = Personal::where('ID_Pers', $Solicitudorigin->cliente->comercialAsignado->ID_Pers)->first();
-                        // $destinatarios = ['gestion@prosarc.com.co',
-                        // 					'sistemas@prosarc.com.co',
-                        // 					'subgerencia@prosarc.com.co',
-                        // 					$comercial->PersEmail
-                        // 				];
-                        $destinatarios = ['sistemas@prosarc.com.co'];
+                        $destinatarios = ['gestion@prosarc.com.co',
+                        					'sistemas@prosarc.com.co',
+                        					'subgerencia@prosarc.com.co',
+                        					$comercial->PersEmail
+                        				];
+                        // $destinatarios = ['sistemas@prosarc.com.co'];
                     }else{
                         $comercial = "";
-                        $destinatarios = ['logistica@prosarc.com.co',
-                                            'asistentelogistica@prosarc.com.co',
-                                            'subgerencia@prosarc.com.co',
-                                            'recepcionpda@prosarc.com.co'
-                                        ];
+                        $destinatarios = ['gestion@prosarc.com.co',
+                        					'sistemas@prosarc.com.co',
+                        					'subgerencia@prosarc.com.co'
+                        				];
                     }
 
                     $prefacturas = Prefactura::with(['cliente', 'comercial', 'servicio.programacionesrecibidas', 'prefacTratamiento.prefacresiduo'])->where('ID_Prefactura', $prefactura->ID_Prefactura)->get();
