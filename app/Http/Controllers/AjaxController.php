@@ -381,7 +381,7 @@ class AjaxController extends Controller
 	/*Funcion para certtificacion de servicios via ajax*/
 	public function facturarServicio(Request $request, $servicio)
 	{
-        // return $request;
+        // return $servicio;
 		$request->validate([
 			'FacturacionTipo' => 'required|in:Mensual,Servicio',
 			'ordenCompra' => 'nullable|max:20',
@@ -418,10 +418,33 @@ class AjaxController extends Controller
 		// return response()->json($data);
 
 		// return $servicio;
-        return $request;
+        // return $request;
 		if ($request->ajax()) {
 			if (in_array(Auth::user()->UsRol, Permisos::COMERCIALES) || in_array(Auth::user()->UsRol2, Permisos::COMERCIALES)) {
 				$Solicitud = SolicitudServicio::with('SolicitudResiduo')->where('SolSerSlug', $servicio)->first();
+
+                // CHECK TYPE OF FACTURATION
+                if ($request->FacturacionTipo == 'Mensual') {
+                    // query services of clients with programacion de servicios
+                    $from = $request->FechaInicial;
+                    $to = $request->FechaFinal;
+                    $serviciosPorFacturar = SolicitudServicio::with(['SolicitudResiduo'
+                    // 'programacionDefinitiva' => function ($query) use ($from, $to) {
+                    //     return $query->whereBetween('ProgVehSalida', [$from, $to]);
+                    ])
+                    // ->whereHas('programacionDefinitiva', function ($query) use ($from, $to) {
+                    //     return $query->whereBetween('ProgVehSalida', [$from, $to]);
+                    // })
+                    ->where('FK_SolSerCliente', $Solicitud->FK_SolSerCliente)
+                    ->where('SolSerStatus', '=', 'Conciliado')
+                    ->get();
+
+                    return $serviciosPorFacturar;
+                } else {
+                    // RETURN SINGLE SERVICE
+                    return $Solicitud;
+                }
+
 				if (!$Solicitud) {
 					abort(404);
 				}
