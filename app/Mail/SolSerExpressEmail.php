@@ -38,35 +38,18 @@ class SolSerExpressEmail extends Mailable
      */
     public function build()
     {
-        switch ($this->email->SolSerStatus) {
-            case 'Notificado':
-                $asuntoStatus = 'El Servicio Express #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." ya cuenta con fecha PROGRAMADA";
-                break;
-            case 'Completado':
-                $asuntoStatus = 'En el Servicio Express #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." se ha COMPLETADO la recepción de los residuos";
-                break;
-            case 'Conciliado':
-                $asuntoStatus = 'El Servicio Express #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." ha sido CONCILIADO";
-                break;
-            case 'No Conciliado':
-                $asuntoStatus = 'Algunos Peso(s) del Servicio Express #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." han sido RECHAZADOS";
-                break;
-            case 'Certificacion':
-                $asuntoStatus = 'El Servicio Express #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." ha sido CERTIFICADO por Prosarc S.A. ESP";
-                break;
-            case 'Corregido':
-                $asuntoStatus = 'El Servicio Express #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." ha sido CORREGIDO en las cantidades conciliadas que corresponden";
-                break;
-            case 'Residuo Faltante':
-                $asuntoStatus = 'El Servicio Express #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName." ha sido habilitado para añadir el RESIDUO FALTANTE";
-                break;
-            default:
-                $asuntoStatus = "Solicitud de Servicio Express";
-                break;
+        $mensaje = $this->from('notificaciones@prosarc.com.co', 'Prosarc S.A. ESP');
+
+        if ($this->certificado->CertType == 0) {
+            $mensaje->attachData($this->pdf->output(), 'E-'.sprintf("%07s", $this->certificado->ID_Cert).'.pdf', ['mime' => 'application/pdf'])
+            ->markdown('emails.Express.sendCertificadoExpress')
+            ->subject('CERTIFICADO '.'E-'.sprintf("%07s", $this->certificado->ID_Cert).' generado para el Servicio Express #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName);
+        }else{
+            $mensaje->attachData($this->pdf->output(), 'ME-'.sprintf("%07s", $this->certificado->CertManifNumero).'.pdf', ['mime' => 'application/pdf'])
+            ->markdown('emails.Express.sendManifiestoExpress')
+            ->subject('MANIFIESTO '.'ME-'.sprintf("%07s", $this->certificado->CertManifNumero).' generado para el Servicio Express #'.$this->email->ID_SolSer." del cliente ".$this->email->CliName);
         }
-        return $this->from('notificaciones@prosarc.com.co', 'Prosarc S.A. ESP')
-                    ->subject($asuntoStatus)
-                    ->attachData($this->pdf->output(), 'E-'.sprintf("%07s", $this->certificado->ID_Cert).'.pdf', ['mime' => 'application/pdf'])
-                    ->markdown('emails.Express.sendCertificadoExpress');
+
+        return $mensaje;
     }
 }
