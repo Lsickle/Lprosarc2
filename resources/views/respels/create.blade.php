@@ -7,7 +7,7 @@
 	{{ trans('adminlte_lang::LangRespel.Respelcreate') }}
   <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
-@endsection	
+@endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
@@ -66,7 +66,7 @@
 								@include('layouts.RespelPartials.respelform1')
 							</div>
 							<!-- /.box-body -->
-							<div class="box box-info">	
+							<div class="box box-info">
 								<div class="box-footer">
 									{{-- <a onclick="AgregarRes()" class="btn btn-primary"><i class="fa fa-plus"></i>{{ trans('adminlte_lang::LangRespel.addrespelButton') }}</a>	 --}}
 									<button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::LangRespel.registerrespelButton') }}</button>
