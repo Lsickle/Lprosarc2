@@ -2218,24 +2218,19 @@ class ServiceExpressController extends Controller
 		/*
 			espacio para el codigo de generacion de los pdf de los certificados / manifiestos
 		*/
-		$certificados = CertificadoExpress::with(['certdato.solres'])
+		$certificados = CertificadoExpress::with(['certdato.solres', 'cliente.sedes.Municipios.Departamento', 'sedegenerador.generadors', 'sedegenerador.municipio.Departamento', 'gestor.sedes.Municipios.Departamento', 'tratamiento', 'transportador.sedes.Municipios.Departamento', 'SolicitudServicio' => function ($query){
+                    $query->with(['SolicitudResiduo' => function ($query){
+                        $query->where('SolResKgConciliado', '>', 0);
+                        $query->orWhere('SolResCantiUnidadConciliada', '>', 0);
+                        $query->with('generespel.respels');
+                        $query->with('requerimiento');
+                    }]);
+                }])
 				->where('FK_CertSolser', $Solicitud->ID_SolSer)
 				->get();
 
 		//loop over $certificados
 		foreach ($certificados as $certificado) {
-
-			$certificado = CertificadoExpress::with(['SolicitudServicio' => function ($query){
-				$query->with(['SolicitudResiduo' => function ($query){
-					$query->where('SolResKgConciliado', '>', 0);
-					$query->orWhere('SolResCantiUnidadConciliada', '>', 0);
-					$query->with('generespel.respels');
-					$query->with('requerimiento');
-				}]);
-
-			}, 'cliente.sedes.Municipios.Departamento', 'sedegenerador.generadors', 'sedegenerador.municipio.Departamento', 'gestor.sedes.Municipios.Departamento', 'tratamiento', 'transportador.sedes.Municipios.Departamento','certdato.solres'])
-			->where('CertSlug', $certificados[0]->CertSlug)
-			->first();
 
 			$fecharecepcionenplanta = $certificado->SolicitudServicio->programacionesrecibidas()->first('ProgVehSalida');
 			if ($fecharecepcionenplanta != null) {
@@ -2262,7 +2257,7 @@ class ServiceExpressController extends Controller
 
 				default:
 					$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdfmanifesto', compact(['certificado','Solicitud','qrCode']));
-					Storage::put('manifiestosExpress'.'/ME-'.sprintf("%07s", $certificado->CertNumeroExt).'.pdf', $pdf->output(), 'public');
+					Storage::put('manifiestosExpress'.'/ME-'.sprintf("%07s", $certificado->CertManifNumero).'.pdf', $pdf->output(), 'public');
 
 					break;
 			}
@@ -2317,15 +2312,16 @@ class ServiceExpressController extends Controller
 			// 	}
 			// }
 
-			if ($totalrerspel > 10) {
-				Mail::to('coordinadorse@prosarc.com.co')->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
-			}else{
-				if ($totalrerspel > 0) {
-					Mail::to('coordinadorse@prosarc.com.co')->send(new SolSerExpressEmail($email, $pdf, $certificado));
-				}else{
-					Mail::to('coordinadorse@prosarc.com.co')->send(new CertExpressSinSaldoEmail($email, $pdf, $certificado));
-				}
-			}
+			// if ($totalrerspel > 10) {
+			// 	Mail::to('coordinadorse@prosarc.com.co')->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
+			// }else{
+			// 	if ($totalrerspel > 0) {
+			// 		Mail::to('coordinadorse@prosarc.com.co')->send(new SolSerExpressEmail($email, $pdf, $certificado));
+			// 	}else{
+			// 		Mail::to('coordinadorse@prosarc.com.co')->send(new CertExpressSinSaldoEmail($email, $pdf, $certificado));
+			// 	}
+			// }
+            Mail::to('coordinadorse@prosarc.com.co')->send(new SolSerExpressEmail($email, $pdf, $certificado));
 		}
 
 		return redirect()->route('serviciosexpress.show', ['id' => $Solicitud->SolSerSlug]);
@@ -2480,7 +2476,11 @@ class ServiceExpressController extends Controller
 										$certificado->CertObservacion = "manifiesto Express con observacion generica";
 										$certificado->CertAnexo = "anexo de manifiesto ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
 										$certificado->CertManifPrepend = "ME-";
-										$certificado->CertManifNumero = $manifiestoprevio->CertManifNumero + 1;
+                                        if ($manifiestoprevio) {
+                                            $certificado->CertManifNumero = $manifiestoprevio->CertManifNumero + 1;
+                                        }else{
+                                            $certificado->CertManifNumero = 1;
+                                        }
 									}
 									$certificado->CertNumero = "";
 									$certificado->CertiEspName = "";

@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
   {{-- <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'> --}}
-  <title>Manifiesto ME-{{sprintf("%07s", $certificado->CertNumeroExt)}}</title>
+  <title>Manifiesto ME-{{sprintf("%07s", $certificado->CertManifNumero)}}</title>
 
   <style>
 	@page {
@@ -158,7 +158,7 @@
 								</td>
 
 								<td style="font-size: 16px; text-align: right;">
-									<b>N°:</b> <b style="color:red;">ME-{{sprintf("%07s", $certificado->CertNumeroExt)}}</b><br>
+									<b>N°:</b> <b style="color:red;">ME-{{sprintf("%07s", $certificado->CertManifNumero)}}</b><br>
 									Fecha: {{date('Y-m-d', strtotime(today()))}}<br>
 								</td>
 							</tr>
@@ -308,63 +308,53 @@
 					$totalKg = 0;
                     switch ($certificado->tratamiento->TratName) {
                             case 'Celda de Seguridad':
-                                $TratName = 'Tratamiento';
-                                $Gestor = 'Gestor';
-                                $Descripcion = 'Descripcion';
+                                $TratName = 'CELDA DE SEGURIDAD';
+                                $gestor = 'TRACOL S.A ESP';
                                 break;
 
                             case 'Aprovechamiento':
-                                $TratName = 'Tratamiento';
-                                $Gestor = 'Gestor';
-                                $Descripcion = 'Descripcion';
+                                $TratName = 'APROVECHAMIENTO';
+                                $gestor = 'RHEMACOL';
                                 break;
 
                             case 'Fisico-Quimico':
-                                $TratName = 'Tratamiento';
-                                $Gestor = 'Gestor';
-                                $Descripcion = 'Descripcion';
+                                $TratName = 'FISICO-QUIMICO';
+                                $gestor = 'BIOMUÑA S.A ESP';
                                 break;
 
                             case 'Posconsumo luminarias':
-                                $TratName = 'Tratamiento';
-                                $Gestor = 'Gestor';
-                                $Descripcion = 'Descripcion';
+                                $TratName = 'POSCONSUMO LUMINARIAS';
+                                $gestor = 'ECOINDUSTRIA S.A ESP';
                                 break;
 
                             case 'Posconsumo pilas y baterias':
-                                $TratName = 'Tratamiento';
-                                $Gestor = 'Gestor';
-                                $Descripcion = 'Descripcion';
+                                $TratName = 'POSCONSUMO PILAS Y BATERIAS';
+                                $gestor = 'ECOINDUSTRIA S.A ESP';
                                 break;
 
                             case 'Estabilización y tratamiento de lodos y aguas no peligrosas':
-                                $TratName = 'Tratamiento';
-                                $Gestor = 'Gestor';
-                                $Descripcion = 'Descripcion';
+                                $TratName = 'ESTABILIZACIÓN Y TRATAMIENTO DE LODOS Y AGUAS NO PELIGROSAS';
+                                $gestor = 'PLANETA S.A ESP';
                                 break;
 
                             case 'Despiece y disposición de RAEE':
-                                $TratName = 'Tratamiento';
-                                $Gestor = 'Gestor';
-                                $Descripcion = 'Descripcion';
+                                $TratName = 'DESPIECE Y DISPOSICIÓN DE RAEE';
+                                $gestor = 'PROUTILES';
                                 break;
 
                             case 'Aprovechamiento y valorización de llantas':
-                                $TratName = 'Tratamiento';
-                                $Gestor = 'Gestor';
-                                $Descripcion = 'Descripcion';
+                                $TratName = 'APROVECHAMIENTO Y VALORIZACIÓN DE LLANTAS';
+                                $gestor = 'GESTORES DE CAUCHO RECICLADO';
                                 break;
 
                             case 'Compostaje':
-                                $TratName = 'Tratamiento';
-                                $Gestor = 'Gestor';
-                                $Descripcion = 'Descripcion';
+                                $TratName = 'COMPOSTAJE';
+                                $gestor = 'EKOBOJACÁ';
                                 break;
 
                             case 'Disposición en escombrera':
-                                $TratName = 'Tratamiento';
-                                $Gestor = 'Gestor';
-                                $Descripcion = 'Descripcion';
+                                $TratName = 'DISPOSICIÓN EN ESCOMBRERA';
+                                $gestor = 'AGREGADOS Y RELLENOS TERRENA';
                                 break;
 
 
@@ -427,9 +417,9 @@
 							<table>
 								<tr>
 									<td style="text-align: justify; font-size: 10px; line-height: 10px;">
-										El material será entregado al gestor {{$nombredelgestor}}, Empresa autorizada para el tratamiento {{$TratName}} de acuerdo con los requerimientos técnicos y ambientales establecidos<br><br>
+										El material será entregado al gestor <b>{{$gestor}}</b>, Empresa autorizada para el tratamiento <b>{{$TratName}}</b> de acuerdo con los requerimientos técnicos y ambientales establecidos<br><br>
 										<br><br>
-                                        <b>Para constancia se firma en Mosquera, el dia 19 de agosto de 2021</b>
+                                        {{-- <b>Para constancia se firma en Mosquera, el dia 19 de agosto de 2021</b> --}}
 									</td>
 								</tr>
 							</table>
