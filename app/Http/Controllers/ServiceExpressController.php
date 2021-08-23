@@ -2218,115 +2218,110 @@ class ServiceExpressController extends Controller
 		/*
 			espacio para el codigo de generacion de los pdf de los certificados / manifiestos
 		*/
-		$certificados = CertificadoExpress::with(['certdato.solres'])
+		$certificados = CertificadoExpress::with(['certdato.solres', 'cliente.sedes.Municipios.Departamento', 'sedegenerador.generadors', 'sedegenerador.municipio.Departamento', 'gestor.sedes.Municipios.Departamento', 'tratamiento', 'transportador.sedes.Municipios.Departamento', 'SolicitudServicio' => function ($query){
+                    $query->with(['SolicitudResiduo' => function ($query){
+                        $query->where('SolResKgConciliado', '>', 0);
+                        $query->orWhere('SolResCantiUnidadConciliada', '>', 0);
+                        $query->with('generespel.respels');
+                        $query->with('requerimiento');
+                    }]);
+                }])
 				->where('FK_CertSolser', $Solicitud->ID_SolSer)
 				->get();
 
-		$certificado = CertificadoExpress::with(['SolicitudServicio' => function ($query){
-            $query->with(['SolicitudResiduo' => function ($query){
-                $query->where('SolResKgConciliado', '>', 0);
-                $query->orWhere('SolResCantiUnidadConciliada', '>', 0);
-                $query->with('generespel.respels');
-                $query->with('requerimiento');
-            }]);
+		//loop over $certificados
+		foreach ($certificados as $certificado) {
 
-        }, 'cliente.sedes.Municipios.Departamento', 'sedegenerador.generadors', 'sedegenerador.municipio.Departamento', 'gestor.sedes.Municipios.Departamento', 'tratamiento', 'transportador.sedes.Municipios.Departamento','certdato.solres'])
-        ->where('CertSlug', $certificados[0]->CertSlug)
-        ->first();
-
-        $fecharecepcionenplanta = $certificado->SolicitudServicio->programacionesrecibidas()->first('ProgVehSalida');
-        if ($fecharecepcionenplanta != null) {
-            $certificado->recepcion = $fecharecepcionenplanta->ProgVehSalida;
-        }else{
-            $certificado->recepcion = "";
-        }
-
-		$Solicitud->nombreDeFirma = 'firmasClientes/'.$nombreDeFirma.'.png';
-
-		$qrCode = new QrCode(route('certificadosexpress.show', ['certificado' => $certificado->CertSlug]));
-		$qrCode->setLogoPath(asset('img/LogoQR.png'));
-		$qrCode->setLogoSize(60, 60);
-		$qrCode->setSize(300);
-		$qrCode->setMargin(0);
-		$qrCode->setRoundBlockSize(true, QrCode::ROUND_BLOCK_SIZE_MODE_SHRINK);
-
-        switch ($certificado->tratamiento->TratName) {
-            case 'TermoDestrucción':
-			$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact(['certificado','Solicitud','qrCode']));
-			Storage::put('certificadoExpress'.'/E-'.sprintf("%07s", $certificado->ID_Cert).'.pdf', $pdf->output(), 'public');
-
-                break;
-            case 'Posconsumo luminarias':
-				abort(403, 'Solo se pueden generar certificados express para el tratamiento termodestrucción, de ser necesario valide la información e intente nuevamente');
-			$pdf = PDF::loadView('certificadosExpress.luminarias', compact('certificado'));
-
-                break;
-            default:
-				abort(403, 'Solo se pueden generar certificados express para el tratamiento termodestrucción, de ser necesario valide la información e intente nuevamente');
-
-			$pdf = PDF::loadView('certificadosExpress.manifiesto', compact('certificado'));
-
-                break;
-        }
-
-		/**se envia notificacion con los archivos en formato pdf de los certificados */
-		$email = DB::table('solicitud_servicios')
-			->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
-			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
-			->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
-			->select('personals.PersEmail', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida', 'clientes.CliName', 'clientes.CliComercial')
-			->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
-			->where('progvehiculos.FK_ProgServi', '=', $Solicitud->ID_SolSer)
-			->where('progvehiculos.ProgVehDelete', 0)
-			->first();
-
-		$comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
-
-		if ($comercial) {
-			$destinatarios = [$comercial->PersEmail];
-		} else {
-			$destinatarios = [];
-		}
-
-		$destinatarios = [$comercial->PersEmail];
-
-		if ($Solicitud->SolServMailCopia == "null"||$Solicitud->SolServMailCopia == "") {
-
-		}else{
-			foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
-				array_push($destinatarios, $value);
-			}
-		}
-
-		// if ($totalrerspel > 10) {
-		// 	//enviar correo avisando que excede la cantidad de 5 kg
-		// 	if ($comercial) {
-		// 		Mail::to($comercial->PersEmail)->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
-		// 	} else {
-		// 		Mail::to('subgerencia@prosarc.com.co')->cc($destinatarios)->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
-		// 	}
-		// }else{
-		// 	if ($totalrerspel > 0) {
-		// 		//enviar certificado al cliente con copia a los destinatarios
-		// 		Mail::to($email->PersEmail)->cc($destinatarios)->send(new SolSerExpressEmail($email, $pdf, $certificado));
-		// 	}else{
-		// 		//enviar correo avisando que la cantidad total es inferior o igual a 0 kg
-		// 		if ($comercial) {
-		// 			Mail::to($comercial->PersEmail)->send(new CertExpressSinSaldoEmail($email, $pdf, $certificado));
-		// 		} else {
-		// 			Mail::to('subgerencia@prosarc.com.co')->send(new CertExpressSinSaldoEmail($email, $pdf, $certificado));
-		// 		}
-		// 	}
-		// }
-
-        if ($totalrerspel > 10) {
-            Mail::to('coordinadorse@prosarc.com.co')->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
-		}else{
-			if ($totalrerspel > 0) {
-				Mail::to('coordinadorse@prosarc.com.co')->send(new SolSerExpressEmail($email, $pdf, $certificado));
+			$fecharecepcionenplanta = $certificado->SolicitudServicio->programacionesrecibidas()->first('ProgVehSalida');
+			if ($fecharecepcionenplanta != null) {
+				$certificado->recepcion = $fecharecepcionenplanta->ProgVehSalida;
 			}else{
-                Mail::to('coordinadorse@prosarc.com.co')->send(new CertExpressSinSaldoEmail($email, $pdf, $certificado));
+				$certificado->recepcion = "";
 			}
+
+			$Solicitud->nombreDeFirma = 'firmasClientes/'.$nombreDeFirma.'.png';
+
+			$qrCode = new QrCode(route('certificadosexpress.show', ['certificado' => $certificado->CertSlug]));
+			$qrCode->setLogoPath(asset('img/LogoQR.png'));
+			$qrCode->setLogoSize(60, 60);
+			$qrCode->setSize(300);
+			$qrCode->setMargin(0);
+			$qrCode->setRoundBlockSize(true, QrCode::ROUND_BLOCK_SIZE_MODE_SHRINK);
+
+			switch ($certificado->tratamiento->TratName) {
+				case 'TermoDestrucción':
+                    $pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact(['certificado','Solicitud','qrCode']));
+                    Storage::put('certificadoExpress'.'/E-'.sprintf("%07s", $certificado->ID_Cert).'.pdf', $pdf->output(), 'public');
+
+					break;
+
+				default:
+					$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdfmanifesto', compact(['certificado','Solicitud','qrCode']));
+					Storage::put('manifiestosExpress'.'/ME-'.sprintf("%07s", $certificado->CertManifNumero).'.pdf', $pdf->output(), 'public');
+
+					break;
+			}
+
+			/**se envia notificacion con los archivos en formato pdf de los certificados */
+			$email = DB::table('solicitud_servicios')
+				->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
+				->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
+				->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
+				->select('personals.PersEmail', 'solicitud_servicios.*', 'progvehiculos.ProgVehFecha', 'progvehiculos.ProgVehSalida', 'clientes.CliName', 'clientes.CliComercial')
+				->where('solicitud_servicios.SolSerSlug', '=', $Solicitud->SolSerSlug)
+				->where('progvehiculos.FK_ProgServi', '=', $Solicitud->ID_SolSer)
+				->where('progvehiculos.ProgVehDelete', 0)
+				->first();
+
+			$comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
+
+			if ($comercial) {
+				$destinatarios = [$comercial->PersEmail];
+			} else {
+				$destinatarios = [];
+			}
+
+			$destinatarios = [$comercial->PersEmail];
+
+			if ($Solicitud->SolServMailCopia == "null"||$Solicitud->SolServMailCopia == "") {
+
+			}else{
+				foreach (json_decode($Solicitud->SolServMailCopia) as $key => $value) {
+					array_push($destinatarios, $value);
+				}
+			}
+
+			// if ($totalrerspel > 10) {
+			// 	//enviar correo avisando que excede la cantidad de 5 kg
+			// 	if ($comercial) {
+			// 		Mail::to($comercial->PersEmail)->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
+			// 	} else {
+			// 		Mail::to('subgerencia@prosarc.com.co')->cc($destinatarios)->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
+			// 	}
+			// }else{
+			// 	if ($totalrerspel > 0) {
+			// 		//enviar certificado al cliente con copia a los destinatarios
+			// 		Mail::to($email->PersEmail)->cc($destinatarios)->send(new SolSerExpressEmail($email, $pdf, $certificado));
+			// 	}else{
+			// 		//enviar correo avisando que la cantidad total es inferior o igual a 0 kg
+			// 		if ($comercial) {
+			// 			Mail::to($comercial->PersEmail)->send(new CertExpressSinSaldoEmail($email, $pdf, $certificado));
+			// 		} else {
+			// 			Mail::to('subgerencia@prosarc.com.co')->send(new CertExpressSinSaldoEmail($email, $pdf, $certificado));
+			// 		}
+			// 	}
+			// }
+
+			// if ($totalrerspel > 10) {
+			// 	Mail::to('coordinadorse@prosarc.com.co')->send(new CertExpressRetenidoEmail($email, $pdf, $certificado));
+			// }else{
+			// 	if ($totalrerspel > 0) {
+			// 		Mail::to('coordinadorse@prosarc.com.co')->send(new SolSerExpressEmail($email, $pdf, $certificado));
+			// 	}else{
+			// 		Mail::to('coordinadorse@prosarc.com.co')->send(new CertExpressSinSaldoEmail($email, $pdf, $certificado));
+			// 	}
+			// }
+            Mail::to('coordinadorse@prosarc.com.co')->send(new SolSerExpressEmail($email, $pdf, $certificado));
 		}
 
 		return redirect()->route('serviciosexpress.show', ['id' => $Solicitud->SolSerSlug]);
@@ -2424,22 +2419,22 @@ class ServiceExpressController extends Controller
 		$serviciovalidado = $id;
 		/*cuenta los diferentes generadores*/
 		$generadoresdelasolicitud = GenerSede::whereHas('resgener.solres', function ($query) use ($serviciovalidado) {
-		    $query->where('solicitud_residuos.FK_SolResSolSer', $serviciovalidado);
+			$query->where('solicitud_residuos.FK_SolResSolSer', $serviciovalidado);
 		})
 		->with(['resgener' => function ($query) use ($serviciovalidado){
-		    $query->with(['solres' => function ($query) use ($serviciovalidado){
-		    	$query->where('FK_SolResSolSer', $serviciovalidado);
-		    	$query->with(['requerimiento.tratamiento.gestor', 'requerimiento:ID_Req,FK_ReqTrata']);
-		    }]);
-		    $query->whereHas('solres', function ($query) use ($serviciovalidado){
-		    	$query->where('FK_SolResSolSer', $serviciovalidado);
-		    });
+			$query->with(['solres' => function ($query) use ($serviciovalidado){
+				$query->where('FK_SolResSolSer', $serviciovalidado);
+				$query->with(['requerimiento.tratamiento.gestor', 'requerimiento:ID_Req,FK_ReqTrata']);
+			}]);
+			$query->whereHas('solres', function ($query) use ($serviciovalidado){
+				$query->where('FK_SolResSolSer', $serviciovalidado);
+			});
 		}])
 		->get();
 		// return $generadoresdelasolicitud;
 		/*consulta para el cliente de esta solicitud*/
 		$cliente = Cliente::whereHas('sedes.generador', function ($query) use ($generadoresdelasolicitud) {
-		    $query->where('generadors.ID_Gener', $generadoresdelasolicitud[0]->FK_GSede);
+			$query->where('generadors.ID_Gener', $generadoresdelasolicitud[0]->FK_GSede);
 		})->first();
 		foreach ($generadoresdelasolicitud as $genersede) {
 			foreach ($genersede->resgener as $resgener) {
@@ -2448,6 +2443,9 @@ class ServiceExpressController extends Controller
 						switch ($key->requerimiento->tratamiento->TratTipo) {
 							case '0':
 								// "tratamiento tipo: interno; Certificado";
+
+                                //check CertManifNumero previous counter
+                                $manifiestoprevio = CertificadoExpress::where('CertType', 1)->first();
 
 								$certificadoprevio = CertificadoExpress::where('FK_CertTrat', $key->requerimiento->tratamiento->ID_Trat)
 								->where('FK_CertSolser', $id)
@@ -2470,13 +2468,21 @@ class ServiceExpressController extends Controller
 									if ($key->requerimiento->tratamiento->TratName == 'TermoDestrucción') {
 										$certificado->CertType = 0;
 										$certificado->CertObservacion = "certificado Express con observacion generica";
+										$certificado->CertAnexo = "anexo de certificado ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
+										$certificado->CertManifPrepend = "";
+										$certificado->CertManifNumero = 0;
 									}else{
 										$certificado->CertType = 1;
 										$certificado->CertObservacion = "manifiesto Express con observacion generica";
+										$certificado->CertAnexo = "anexo de manifiesto ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
+										$certificado->CertManifPrepend = "ME-";
+                                        if ($manifiestoprevio) {
+                                            $certificado->CertManifNumero = $manifiestoprevio->CertManifNumero + 1;
+                                        }else{
+                                            $certificado->CertManifNumero = 1;
+                                        }
 									}
 									$certificado->CertNumero = "";
-									$certificado->CertManifNumero = "";
-									$certificado->CertManifPrepend = "";
 									$certificado->CertiEspName = "";
 									$certificado->CertiEspValue = "";
 									$certificado->CertSlug = hash('sha256', rand().time());
@@ -2486,7 +2492,6 @@ class ServiceExpressController extends Controller
 									$certificado->CertAuthDp = 1;
 									$certificado->CertAuthJl = 2;
 									$certificado->CertAuthJo = 3;
-									$certificado->CertAnexo = "anexo de certificado ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
 									$certificado->FK_CertSolser = $id;
 									$certificado->FK_CertCliente = $cliente->ID_Cli;
 									$certificado->FK_CertGenerSede = $genersede->ID_GSede;
