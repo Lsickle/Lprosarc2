@@ -1210,6 +1210,7 @@ class RespelController extends Controller
                         $query->where('respels.RespelDelete',0);
                         $query->where('respels.RespelPublic',0);
                         $query->where('clientes.ID_Cli', $UserSedeID);
+                        $query->where('clientes.CliDelete', 0);
                         break;
 
                     case 'Comercial':
@@ -1221,11 +1222,13 @@ class RespelController extends Controller
                         $query->where('respels.RespelDelete',0);
                         $query->where('respels.RespelPublic',0);
                         $query->where('clientes.CliComercial', $ComercialAsignado);
+                        $query->where('clientes.CliDelete', 0);
                         break;
 
                     default:
                         $query->where('respels.RespelDelete',0);
                         $query->where('respels.RespelPublic',0);
+                        $query->where('clientes.CliDelete', 0);
                         break;
                 }
             })
