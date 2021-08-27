@@ -64,6 +64,10 @@ class ServiceExpressController extends Controller
      */
     public function index()
     {
+        // check user  email
+        $user = Auth::user();
+        $user_email = $user->email;
+
         $Servicios = DB::table('solicitud_servicios')
 			->join('clientes', 'clientes.ID_Cli', '=', 'solicitud_servicios.FK_SolSerCliente')
 			->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
@@ -108,6 +112,11 @@ class ServiceExpressController extends Controller
 						$query->where('Comercial.ID_Pers', Auth::user()->FK_UserPers);
 					}
 				}
+			})
+            ->where(function($query) use ($user_email){
+				if($user_email !== 'Sistemas@prosarc.com.co'){
+                    $query->where('solicitud_servicios.SolSerDelete', 0);
+                }
 			})
 			->where('CliCategoria', 'ClientePrepago')
 			->orderBy('created_at', 'desc')

@@ -95,7 +95,11 @@ class registroexpressController extends Controller
         $Sede->SedePhone1 = $request->input('SedePhone1');
         $Sede->SedeEmail = $request->input("PersEmail");
         $Sede->SedeCelular = $request->input("PersCellphone");
-        $Sede->SedeMapLocalidad = $request->input("SedeMapLocalidad");
+        if ($request->input('FK_SedeMun') == 169) {
+            $Sede->SedeMapLocalidad = $request->input("SedeMapLocalidad");
+        }else {
+            $Sede->SedeMapLocalidad = 'No Definida';
+        }
         $Sede->SedeMapAddressSearch = $request->input("SedeMapAddressSearch");
         $Sede->SedeMapAddressResult = $request->input("SedeMapAddressResult");
         $Sede->SedeMapLat = $request->input("SedeMapLat");
@@ -172,7 +176,11 @@ class registroexpressController extends Controller
         $SGener->GSedePhone1 = $Sede->SedePhone1;
         $SGener->GSedeEmail = $Personal->PersEmail;
         $SGener->GSedeCelular = $Personal->PersCellphone;
-        $SGener->GSedeMapLocalidad = $request->input("SedeMapLocalidad");
+        if ($request->input('FK_SedeMun') == 169) {
+            $SGener->GSedeMapLocalidad = $request->input("SedeMapLocalidad");
+        }else {
+            $SGener->GSedeMapLocalidad = 'No Definida';
+        }
         $SGener->GSedeMapAddressSearch = $request->input("SedeMapAddressSearch");
         $SGener->GSedeMapAddressResult = $request->input("SedeMapAddressResult");
         $SGener->GSedeMapLat = $request->input("SedeMapLat");
