@@ -253,9 +253,9 @@ class RespelController extends Controller
                 $respel->SustanciaControlada = 0;
             }
             if ($request['FK_SubCategoryRP'] == 'Agregado-Manual') {
-                $respel->RespelStatus = "Pendiente";
-            }else{
                 $respel->RespelStatus = "Aprobado";
+            }else{
+                $respel->RespelStatus = "Pendiente";
             }
             // $respel->RespelStatus = $statusinicial;
             $respel->RespelHojaSeguridad = $hoja;
