@@ -46,6 +46,7 @@ class PersonalController extends Controller
 				/*Validacion del personal de Prosarc autorizado para el personal del cliente solo los que no esten eliminados*/
 				else{
 					$query->where('clientes.ID_Cli', '<>', $id);
+                    $query->where('clientes.CliDelete', 0);
 					$query->where('personals.PersDelete', '=', 0);
 				}
 			})
@@ -309,7 +310,7 @@ class PersonalController extends Controller
 		else{
 			$Cargo = Cargo::select('ID_Carg')->where('CargSlug', $request->input('FK_PersCargo'))->first()->ID_Carg;
 		}
-		
+
 		$Persona->fill($request->except('FK_PersCargo'));
 		$Persona->FK_PersCargo = $Cargo;
 		$Persona->Persfactura = $request->input('Persfactura');
@@ -350,7 +351,7 @@ class PersonalController extends Controller
 			// $Personadefacturacion = Personal::where('ID_Pers', $IdPersonaFacturacion[0]->ID_Pers)->first();
 			// $Personadefacturacion->Persfactura = 0;
 			// $Personadefacturacion->save();
-			
+
 			/*en caso de que vaya a quedar el cliente sin persona de facturacion*/
 			if (($Persona->ID_Pers == $IdPersonaFacturacion[0]->ID_Pers)) {
 				$Personadefacturacionpredeterminada = Personal::where('ID_Pers', $IdPersonaAdmin[0]->ID_Pers)->first();
