@@ -2484,7 +2484,11 @@ class ServiceExpressController extends Controller
 										$certificado->CertObservacion = "manifiesto Express con observacion generica";
 										$certificado->CertAnexo = "anexo de manifiesto ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
 										$certificado->CertManifPrepend = "ME-";
-                                        $certificado->CertManifNumero = $manifiestoprevio->CertManifNumero + 1;
+                                        if ($manifiestoprevio) {
+                                            $certificado->CertManifNumero = $manifiestoprevio->CertManifNumero + 1;
+                                        }else{
+                                            $certificado->CertManifNumero = 1;
+                                        }
 									}
 									$certificado->CertNumero = "";
 									$certificado->CertiEspName = "";
