@@ -2454,15 +2454,14 @@ class ServiceExpressController extends Controller
 								// "tratamiento tipo: interno; Certificado";
 
                                 //check CertManifNumero previous counter
-                                $manifiestoprevio = CertificadoExpress::where('CertType', 1)->first();
+                                $manifiestoprevio = CertificadoExpress::where('CertType', 1)->orderBy('ID_Cert','desc')->first();
 
 								$certificadoprevio = CertificadoExpress::where('FK_CertTrat', $key->requerimiento->tratamiento->ID_Trat)
 								->where('FK_CertSolser', $id)
 								->where('FK_CertGenerSede', $genersede->ID_GSede)
 								->first();
 
-								$gestor = Sede::where('ID_Sede', $key->requerimiento->tratamiento->FK_TratProv)
-								->first();
+								$gestor = Sede::where('ID_Sede', $key->requerimiento->tratamiento->FK_TratProv)->first();
 
 								if ((isset($certificadoprevio))&&($certificadoprevio->FK_CertTrat == $key->requerimiento->tratamiento->ID_Trat)&&($certificadoprevio->FK_CertGenerSede == $genersede->ID_GSede)) {
 
@@ -2485,11 +2484,7 @@ class ServiceExpressController extends Controller
 										$certificado->CertObservacion = "manifiesto Express con observacion generica";
 										$certificado->CertAnexo = "anexo de manifiesto ".$key->requerimiento->tratamiento->TratName.$key->requerimiento->tratamiento->FK_TratProv;
 										$certificado->CertManifPrepend = "ME-";
-                                        if ($manifiestoprevio) {
-                                            $certificado->CertManifNumero = $manifiestoprevio->CertManifNumero + 1;
-                                        }else{
-                                            $certificado->CertManifNumero = 1;
-                                        }
+                                        $certificado->CertManifNumero = $manifiestoprevio->CertManifNumero + 1;
 									}
 									$certificado->CertNumero = "";
 									$certificado->CertiEspName = "";
