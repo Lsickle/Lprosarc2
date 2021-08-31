@@ -34,7 +34,7 @@ class CertificadoController extends Controller
      */
     public function index()
     {
-            
+
         $certificados = Certificado::where(function($query){
             switch (Auth::user()->UsRol) {
                 case 'Cliente':
@@ -65,7 +65,7 @@ class CertificadoController extends Controller
                     // return $clientes;
                     $query->whereIn('FK_CertCliente', $clientes);
                     break;
-                
+
                 default:
                     // $query->where('ID_Cert', '>', 0);
                     break;
@@ -85,7 +85,7 @@ class CertificadoController extends Controller
             return $certificado ;
         });
         // return $certificados;
-        return view('certificados.index', compact('certificados')); 
+        return view('certificados.index', compact('certificados'));
     }
 
     /**
@@ -116,7 +116,7 @@ class CertificadoController extends Controller
         // $certificado->update();
 
 
-        // return view('certificados.edit', compact('SolicitudServicio')); 
+        // return view('certificados.edit', compact('SolicitudServicio'));
 
         // return redirect()->route('solicitud-servicio.solservdocindex', compact('id'));
     }
@@ -150,7 +150,7 @@ class CertificadoController extends Controller
                 $query->with('generespel.respels');
                 $query->with('requerimiento');
             }]);
-            
+
         }, 'cliente.sedes.Municipios.Departamento', 'sedegenerador.generadors', 'sedegenerador.municipio.Departamento', 'gestor.sedes.Municipios.Departamento', 'tratamiento', 'transportador.sedes.Municipios.Departamento','certdato.solres'])
         ->where('CertSlug', $id)
         ->first();
@@ -160,9 +160,9 @@ class CertificadoController extends Controller
 	        $item->SolResRM2 = $rm->SolResRM;
 		  	return $item;
 		});
-        
+
         // return $certificado;
-        return view('certificados.show', compact('certificado')); 
+        return view('certificados.show', compact('certificado'));
     }
 
     /**
@@ -181,14 +181,14 @@ class CertificadoController extends Controller
                     $query->with('generespel.respels');
                     $query->with('requerimiento');
                 }]);
-                
+
             }, 'cliente.sedes.Municipios.Departamento', 'sedegenerador.generadors', 'sedegenerador.municipio.Departamento', 'gestor.sedes.Municipios.Departamento', 'tratamiento', 'transportador.sedes.Municipios.Departamento'])
             ->where('CertSlug', $id)
             ->first();
 
             $ultimoCertificado = Certificado::where('CertNumero', '!=', NULL)->orderBy('CertNumero', 'desc')->first('CertNumero');
             $proximoCertificado = ($ultimoCertificado->CertNumero == NULL) ? 1 : $ultimoCertificado->CertNumero+1 ;
-            
+
             $ultimoManif = Certificado::where('CertManifNumero', '!=', NULL)->orderBy('CertManifNumero', 'desc')->first('CertManifNumero');
 			$proximoManif = ($ultimoManif == NULL) ? 1 : ($ultimoManif->CertManifNumero+1);
             $certificado->SolicitudServicio->SolicitudResiduo = $certificado->SolicitudServicio->SolicitudResiduo->map(function ($item) {
@@ -205,7 +205,7 @@ class CertificadoController extends Controller
                 case '1':
                 $qrCode = new QrCode('https://sispro.prosarc.com/img/Manifiestos/'.$certificado->CertSlug.'.pdf');
                     break;
-                
+
                 default:
                 $qrCode = new QrCode('https://sispro.prosarc.com/img/Certificados/'.$certificado->CertSlug.'.pdf');
                     break;
@@ -218,11 +218,11 @@ class CertificadoController extends Controller
             $qrCode->setRoundBlockSize(true, QrCode::ROUND_BLOCK_SIZE_MODE_SHRINK);
 
                 // return $qrCode->writeDataUri();
-            return view('certificados.edit', compact(['certificado', 'proximoCertificado', 'proximoManif', 'qrCode']))->withHeaders('Content-Type', $qrCode->getContentType()); 
+            return view('certificados.edit', compact(['certificado', 'proximoCertificado', 'proximoManif', 'qrCode']))->withHeaders('Content-Type', $qrCode->getContentType());
         }else{
             abort(404, "no posee permisos para la edición de certificados");
         }
-        
+
     }
 
     /**
@@ -334,7 +334,7 @@ class CertificadoController extends Controller
                 }
                 $certificado->CertSrcExt = $hoja;
                 break;
-            
+
             default:
                 $certificado->CertNumero = $request->input('CertNumero');
                 break;
@@ -345,16 +345,16 @@ class CertificadoController extends Controller
 
             $servicio = SolicitudServicio::where('ID_SolSer', $certificado->FK_CertSolser)->first();
             $destinatarios = ['dirtecnica@prosarc.com.co',
-                                    'logistica@prosarc.com.co',
+                                    'coordinadorse@prosarc.com.co',
                                     'gerenteplanta@prosarc.com.co'
                                     ];
 
             $cliente = Cliente::where('ID_Cli', $servicio->FK_SolSerCliente)->first();
-            
+
             Mail::to($destinatarios)->send(new CertUpdated($certificado, $servicio, $cliente));
 
         }
-        
+
         $log = new audit();
         $log->AuditTabla="certificados";
         $log->AuditType="actualizado";
@@ -363,7 +363,7 @@ class CertificadoController extends Controller
         $log->Auditlog=json_encode($id);
         $log->save();
 
-        // return view('certificados.edit', compact('certificado')); 
+        // return view('certificados.edit', compact('certificado'));
         // return redirect()->action('CertificadoController@edit', ['CertSlug' => $certificado->CertSlug]);
         return redirect()->route('certificados.index');
 
@@ -432,7 +432,7 @@ class CertificadoController extends Controller
                             $c=$c+1;
                         }
                     }
-                    
+
                     break;
 
                 case 'AsistenteLogistica':
@@ -457,10 +457,10 @@ class CertificadoController extends Controller
                             $c=$c+1;
                         }
                     }
-                    
+
                     break;
 
-                    
+
                 case 'Programador':
                     if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
                         # code...
@@ -483,9 +483,9 @@ class CertificadoController extends Controller
                             $c=$c+1;
                         }
                     }
-                    
+
                     break;
-                
+
                 default:
                     # code...
                     break;
@@ -530,7 +530,7 @@ class CertificadoController extends Controller
                             $c=$c+1;
                         }
                     }
-                    
+
                     break;
 
                 case 'AsistenteLogistica':
@@ -555,10 +555,10 @@ class CertificadoController extends Controller
                             $c=$c+1;
                         }
                     }
-                    
+
                     break;
 
-                    
+
                 case 'Programador':
                     if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
                         # code...
@@ -581,9 +581,9 @@ class CertificadoController extends Controller
                             $c=$c+1;
                         }
                     }
-                    
+
                     break;
-                
+
                 default:
                     # code...
                     break;
@@ -610,7 +610,7 @@ class CertificadoController extends Controller
                 Mail::to($destinatariosComercial)->send(new CertUpdatedComercial($certificado, $servicio, $cliente));
             }
         }
-                  
+
 
         return redirect()->route('solicitud-servicio.documentos', [$servicio]);
     }
@@ -668,7 +668,7 @@ class CertificadoController extends Controller
                             $c=$c+1;
                         }
                     }
-                    
+
                     break;
 
                 case 'AsistenteLogistica':
@@ -693,10 +693,10 @@ class CertificadoController extends Controller
                             $c=$c+1;
                         }
                     }
-                    
+
                     break;
 
-                    
+
                 case 'Programador':
                     if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
                         # code...
@@ -719,9 +719,9 @@ class CertificadoController extends Controller
                             $c=$c+1;
                         }
                     }
-                    
+
                     break;
-                
+
                 default:
                     # code...
                     break;
@@ -766,7 +766,7 @@ class CertificadoController extends Controller
                             $c=$c+1;
                         }
                     }
-                    
+
                     break;
 
                 case 'AsistenteLogistica':
@@ -791,10 +791,10 @@ class CertificadoController extends Controller
                             $c=$c+1;
                         }
                     }
-                    
+
                     break;
 
-                    
+
                 case 'Programador':
                     if (($certificado->CertAuthDp == 0)&&($certificado->CertAuthJl == 0)&&($certificado->CertAuthJo == 0)) {
                         # code...
@@ -817,9 +817,9 @@ class CertificadoController extends Controller
                             $c=$c+1;
                         }
                     }
-                    
+
                     break;
-                
+
                 default:
                     # code...
                     break;
@@ -867,7 +867,7 @@ class CertificadoController extends Controller
                 $query->with('generespel.respels');
                 $query->with('requerimiento');
             }]);
-            
+
         }, 'cliente.sedes.Municipios.Departamento', 'sedegenerador.generadors', 'sedegenerador.municipio.Departamento', 'gestor.sedes.Municipios.Departamento', 'tratamiento', 'transportador.sedes.Municipios.Departamento','certdato.solres'])
         ->where('CertSlug', $id)
         ->first();
@@ -882,20 +882,20 @@ class CertificadoController extends Controller
         // return $certificado;
         switch ($certificado->tratamiento->TratName) {
             case 'TermoDestrucción':
-                return view('certificados.imprimible', compact('certificado')); 
+                return view('certificados.imprimible', compact('certificado'));
                 break;
             case 'Posconsumo luminarias':
-                return view('certificados.luminarias', compact('certificado')); 
+                return view('certificados.luminarias', compact('certificado'));
                 break;
             default:
-                return view('certificados.manifiesto', compact('certificado')); 
+                return view('certificados.manifiesto', compact('certificado'));
                 break;
         }
     }
 
 
     public function independiente(Request $request, $id)
-	{        
+	{
         $certificadoOld = Certificado::where('ID_Cert', $id)->first();
 
         $certificadoNew = $certificadoOld->replicate()->fill([
@@ -913,7 +913,7 @@ class CertificadoController extends Controller
             'CertAuthDp' => 0,
         ]);
         $certificadoNew->save();
-        
+
         foreach ($request->input('residuos') as $key => $value) {
             $certdato = Certdato::where('ID_CertDato', $value)->first();
             $certdato->FK_DatoCert = $certificadoNew->ID_Cert;
@@ -927,7 +927,7 @@ class CertificadoController extends Controller
         $log->AuditUser=Auth::user()->email;
         $log->Auditlog=json_encode($request);
         $log->save();
-        
+
         return redirect()->route('certificados.show', ['id' => $certificadoNew->CertSlug]);
 	}
 
