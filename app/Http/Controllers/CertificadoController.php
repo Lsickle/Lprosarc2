@@ -345,7 +345,7 @@ class CertificadoController extends Controller
 
             $servicio = SolicitudServicio::where('ID_SolSer', $certificado->FK_CertSolser)->first();
             $destinatarios = ['dirtecnica@prosarc.com.co',
-                                    'coordinadorse@prosarc.com.co',
+                                    'logistica@prosarc.com.co',
                                     'gerenteplanta@prosarc.com.co'
                                     ];
 
