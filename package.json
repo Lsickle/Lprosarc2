@@ -12,6 +12,7 @@
     "stats": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=production node_modules/webpack/bin/webpack.js --config=node_modules/laravel-mix/setup/webpack.config.js --profile --json > stats.json"
   },
   "devDependencies": {
+    "@babel/helper-compilation-targets": "^7.15.4",
     "@fortawesome/fontawesome-free": "^5.12.0",
     "@fullcalendar/core": "^4.3.1",
     "@fullcalendar/daygrid": "^4.3.0",
