@@ -179,47 +179,47 @@ información:</span></p>
   case 1:
   $mesrecepciontexto = 'Enero';
   break;
-  
+
   case 2:
   $mesrecepciontexto = 'Febrero';
   break;
-  
+
   case 3:
   $mesrecepciontexto = 'Marzo';
   break;
-  
+
   case 4:
   $mesrecepciontexto = 'Abril';
   break;
-  
+
   case 5:
   $mesrecepciontexto = 'Mayo';
   break;
-  
+
   case 6:
   $mesrecepciontexto = 'Junio';
   break;
-  
+
   case 7:
   $mesrecepciontexto = 'Julio';
   break;
-  
+
   case 8:
   $mesrecepciontexto = 'Agosto';
   break;
-  
+
   case 9:
-  $mesrecepciontexto = 'Setiembre';
+  $mesrecepciontexto = 'Septiembre';
   break;
-  
+
   case 10:
   $mesrecepciontexto = 'Octubre';
   break;
-  
+
   case 11:
   $mesrecepciontexto = 'Noviembre';
   break;
-  
+
   case 12:
   $mesrecepciontexto = 'Diciembre';
   break;
@@ -401,47 +401,47 @@ $totalUnid = 0;
   case 1:
   $mesrecepciontexto = 'Enero';
   break;
-  
+
   case 2:
   $mesrecepciontexto = 'Febrero';
   break;
-  
+
   case 3:
   $mesrecepciontexto = 'Marzo';
   break;
-  
+
   case 4:
   $mesrecepciontexto = 'Abril';
   break;
-  
+
   case 5:
   $mesrecepciontexto = 'Mayo';
   break;
-  
+
   case 6:
   $mesrecepciontexto = 'Junio';
   break;
-  
+
   case 7:
   $mesrecepciontexto = 'Julio';
   break;
-  
+
   case 8:
   $mesrecepciontexto = 'Agosto';
   break;
-  
+
   case 9:
   $mesrecepciontexto = 'Setiembre';
   break;
-  
+
   case 10:
   $mesrecepciontexto = 'Octubre';
   break;
-  
+
   case 11:
   $mesrecepciontexto = 'Noviembre';
   break;
-  
+
   case 12:
   $mesrecepciontexto = 'Diciembre';
   break;
@@ -478,7 +478,7 @@ El material será entregado al gestor (<b>NOMBRE DEL GESTOR</b>), empresa autori
 
 <p class=MsoNormal style='text-align:justify'><b><span lang=ES
 style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>&nbsp;</span></b></p>
-@php 
+@php
 $añofirma=date('Y', strtotime(now()));
 $mesfirma=date('m', strtotime(now()));
 $diafirma=date('d', strtotime(now()));
