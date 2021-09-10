@@ -26,7 +26,7 @@
     "bootstrap-daterangepicker": "^3.0.5",
     "bootstrap-switch": "^3.4.0",
     "bootstrap-validator": "^0.11.9",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "cross-env": "^5.2.1",
     "datatables.net-autofill-dt": "^2.3.4",
     "datatables.net-buttons-dt": "^1.6.1",
