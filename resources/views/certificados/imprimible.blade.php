@@ -210,7 +210,7 @@ style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>&nbsp;</spa
   <td width=340 colspan=4 style='width:255.2pt;border:solid gray 0.5pt;
   border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span lang=ES style='font-size:7.5pt;font-family:"Arial",sans-serif;
-  color:#0D0D0D'>@php 
+  color:#0D0D0D'>@php
   if($certificado->recepcion != ""){
     $añorecepcion=date('Y', strtotime($certificado->recepcion));
     $mesrecepcion=date('m', strtotime($certificado->recepcion));
@@ -220,53 +220,53 @@ style='font-size:7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>&nbsp;</spa
       case 1:
       $mesrecepciontexto = 'Enero';
       break;
-      
+
       case 2:
       $mesrecepciontexto = 'Febrero';
       break;
-      
+
       case 3:
       $mesrecepciontexto = 'Marzo';
       break;
-      
+
       case 4:
       $mesrecepciontexto = 'Abril';
       break;
-      
+
       case 5:
       $mesrecepciontexto = 'Mayo';
       break;
-      
+
       case 6:
       $mesrecepciontexto = 'Junio';
       break;
-      
+
       case 7:
       $mesrecepciontexto = 'Julio';
       break;
-      
+
       case 8:
       $mesrecepciontexto = 'Agosto';
       break;
-      
+
       case 9:
-      $mesrecepciontexto = 'Setiembre';
+      $mesrecepciontexto = 'Septiembre';
       break;
-      
+
       case 10:
       $mesrecepciontexto = 'Octubre';
       break;
-      
+
       case 11:
       $mesrecepciontexto = 'Noviembre';
       break;
-      
+
       case 12:
       $mesrecepciontexto = 'Diciembre';
       break;
     }
   }
-  @endphp 
+  @endphp
   {{$diarecepcion}} de {{$mesrecepciontexto}} del {{$añorecepcion}}</span></p>
   </td>
  </tr>
@@ -470,7 +470,7 @@ de 2006, expedida por la CAR.</span></p>
 
 <p class=MsoNormal style='text-align:justify'><span lang=ES style='font-size:
 7.5pt;font-family:"Arial",sans-serif;color:#0D0D0D'>&nbsp;</span></p>
-@php 
+@php
 $añofirma=date('Y', strtotime(now()));
 $mesfirma=date('m', strtotime(now()));
 $diafirma=date('d', strtotime(now()));
