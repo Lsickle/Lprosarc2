@@ -38,7 +38,7 @@
                                             <div id="form-step-0" role="form" data-toggle="validator">
                                                 <div class="col-md-6 form-group ">
                                                     <label for="ClienteInputNit">{{ trans('adminlte_lang::message.clientNIT') }}</label><small class="help-block with-errors">*</small>
-                                                    <input type="text" name="CliNit" class="form-control nit" id="ClienteInputNit" data-minlength="13" data-maxlength="13" placeholder="{{ trans('adminlte_lang::message.clientNITplacehoder') }}" value="{{ old('CliNit') }}" required>
+                                                    <input  type="text" name="CliNit" class="form-control nitlargo" id="ClienteInputNit" data-minlength="13" data-maxlength="15" placeholder="{{ trans('adminlte_lang::message.clientNITplacehoder') }}" value="{{ old('CliNit') }}" required>
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <label for="ClienteInputRazon">{{ trans('adminlte_lang::message.clirazonsoc') }}</label><small class="help-block with-errors">*</small>
@@ -181,6 +181,15 @@
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_API_KEY', 'YOUR_API_KEY')}}"></script>
+<script>
+	$(document).ready(function() {
+		$('.nitlargo').inputmask({
+            mask: ["999.999.999-9", "9.999.999.999-9", ],
+            // mask: "[9.]999.999.999-9",
+            keepStatic: true,
+        });
+	});
+</script>
 <script>
 var geocoder;
 var map;

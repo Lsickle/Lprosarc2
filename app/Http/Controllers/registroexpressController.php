@@ -64,6 +64,8 @@ class registroexpressController extends Controller
 
         if (old('FK_SedeMun') !== null){
             $Municipios = Municipio::select()->where('FK_MunCity', old('departamento'))->get();
+        }else {
+            $Municipios = Municipio::select()->where('FK_MunCity', 6)->get();
         }
         return view('clientes.registroexpress', compact('Departamentos', 'Municipios', 'comerciales'));
     }
