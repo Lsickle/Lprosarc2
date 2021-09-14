@@ -31,7 +31,7 @@ class ClienteExpressStoreRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'CliNit' => ['required','min:13','max:13',Rule::unique('clientes')->where(function ($query) use ($request){
+            'CliNit' => ['required','min:13','max:15',Rule::unique('clientes')->where(function ($query) use ($request){
                 $Cliente = DB::table('clientes')
                     ->select('clientes.CliNit')
                     ->where('CliNit', $request->input('CliNit'))
