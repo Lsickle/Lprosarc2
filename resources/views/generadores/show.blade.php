@@ -14,7 +14,7 @@
   <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
 @endif
-@endsection	
+@endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
 	<div class="row">
@@ -58,28 +58,28 @@
 					<ul class="list-group list-group-unbordered">
 						@if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) || in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC))
 							<li class="list-group-item">
-								<b>{{ trans('adminlte_lang::message.clientcliente') }}</b> 
+								<b>{{ trans('adminlte_lang::message.clientcliente') }}</b>
 								<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clientcliente') }}" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Cliente->CliName}}</p>">{{$Cliente->CliName}}</a>
 							</li>
 						@endif
 						<li class="list-group-item">
-							<b>{{ trans('adminlte_lang::message.sclientsede') }}</b> 
+							<b>{{ trans('adminlte_lang::message.sclientsede') }}</b>
 							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.sclientsede') }}" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Sede->SedeName}}</p>">{{$Sede->SedeName}}</a>
 						</li>
 						<li class="list-group-item">
-							<b>{{ trans('adminlte_lang::message.clientNIT') }}</b> 
+							<b>{{ trans('adminlte_lang::message.clientNIT') }}</b>
 							<a href="#" class="pull-right">{{$Generador->GenerNit}}</a>
 						</li>
 						<li class="list-group-item">
-							<b>{{ trans('adminlte_lang::message.clirazonsoc') }}</b> 
+							<b>{{ trans('adminlte_lang::message.clirazonsoc') }}</b>
 							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clirazonsoc') }}" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Generador->GenerName}}</p>">{{$Generador->GenerName}}</a>
 						</li>
 						{{-- <li class="list-group-item">
-							<b>{{ trans('adminlte_lang::message.clientnombrecorto') }}</b> 
+							<b>{{ trans('adminlte_lang::message.clientnombrecorto') }}</b>
 							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.clientnombrecorto') }}" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Generador->GenerShortname}}</p>">{{$Generador->GenerShortname}}</a>
 						</li> --}}
 						<li class="list-group-item">
-							<b>{{ trans('adminlte_lang::message.genercode') }}</b> 
+							<b>{{ trans('adminlte_lang::message.genercode') }}</b>
 							<a href="#" class="pull-right textpopover" title="{{ trans('adminlte_lang::message.genercode') }}" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="bottom" data-content="<p class='textolargo'>{{$Generador->GenerCode}}</p>">{{$Generador->GenerCode}}</a>
 						</li>
 						{{-- @if (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC) ||in_array(Auth::user()->UsRol2, Permisos::TODOPROSARC)) --}}
@@ -91,7 +91,7 @@
 							@foreach ($GenerSedes as $GenerSede)
 								<li class="list-group-item col-md-12 col-xs-12">
 									<div class="col-md-6 col-xs-6">
-										<b class="textolargo" style="{{in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && $GenerSede->GSedeDelete == 1 ? 'color:red;': ''}}">{{$GenerSede->GSedeName}}</b> 
+										<b class="textolargo" style="{{in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) && $GenerSede->GSedeDelete == 1 ? 'color:red;': ''}}">{{$GenerSede->GSedeName}}</b>
 										<a title="{{ trans('adminlte_lang::message.copy') }}" onclick="copiarAlPortapapeles('SGeneraddress{{$i}}')"><i class="far fa-copy"></i></a>
 									</div>
 									<div>
@@ -136,7 +136,7 @@
 									<label for="FK_SGener">{{ trans('adminlte_lang::message.sedesgener') }}</label><small class="help-block with-errors">*</small>
 									<select class="form-control select" id="FK_SGener" name="FK_SGener" required>
 										<option value="">{{ trans('adminlte_lang::message.select') }}</option>
-										@foreach ($GenerSedes as $GenerSede)	
+										@foreach ($GenerSedes as $GenerSede)
 											<option value="{{$GenerSede->GSedeSlug}}">{{$GenerSede->GSedeName}}</option>
 										@endforeach
 									</select>
@@ -147,8 +147,8 @@
 										@if(isset($Residuos))
 											@foreach ($Residuos as $Residuo)
 												<option value="{{$Residuo->RespelSlug}}">{{$Residuo->RespelName}}</option>
-											@endforeach 
-										@endif 
+											@endforeach
+										@endif
 									</select>
 								</div>
 							</div>

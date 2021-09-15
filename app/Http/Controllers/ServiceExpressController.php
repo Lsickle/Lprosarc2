@@ -379,6 +379,7 @@ class ServiceExpressController extends Controller
 		$TextProgramacion = null;
 		switch ($SolicitudServicio->SolSerStatus) {
 			case 'Notificado':
+			case 'Aprobado':
 			case 'Programado':
 				setlocale(LC_ALL, "es_CO.UTF-8");
 				$Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->first();
