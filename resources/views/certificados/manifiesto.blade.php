@@ -456,7 +456,7 @@ $totalKg = 0;
   break;
 
   case 9:
-  $mesrecepciontexto = 'Setiembre';
+  $mesrecepciontexto = 'Septiembre';
   break;
 
   case 10:
