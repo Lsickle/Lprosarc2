@@ -509,7 +509,7 @@ switch ($mesfirma) {
     break;
 
     case 9:
-    $mesTexto = 'Setiembre';
+    $mesTexto = 'Septiembre';
     break;
 
     case 10:
