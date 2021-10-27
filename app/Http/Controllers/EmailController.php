@@ -67,7 +67,8 @@ class EmailController extends Controller
                                             'dirtecnica@prosarc.com.co',
                                             'conciliaciones@prosarc.com.co',
                                             'recepcionpda@prosarc.com.co',
-                                            'asistentedplanta@prosarc.com.co'
+                                            'asistentedplanta@prosarc.com.co',
+                                            'jefedetratamiento@prosarc.com.co'
                                         ];
                         Mail::to($destinatarios)
                         ->cc($destinatarioscc)
@@ -91,7 +92,8 @@ class EmailController extends Controller
                                                 'ingtratamiento3@prosarc.com.co',
                                                 'conciliaciones@prosarc.com.co',
                                                 'recepcionpda@prosarc.com.co',
-                                                'asistentedplanta@prosarc.com.co'
+                                                'asistentedplanta@prosarc.com.co',
+                                                'jefedetratamiento@prosarc.com.co'
                                             ];
 
                             if ($SolSer->SolServMailCopia !== "null") {
@@ -105,7 +107,7 @@ class EmailController extends Controller
                             ->send(new SolSerEmail($email));
                         }
                     }
-                    
+
                     break;
 
                 case 'Programado':
@@ -128,7 +130,7 @@ class EmailController extends Controller
                         ->send(new SolSerEmail($email));
                     }
                     break;
-                
+
                 case 'Notificado':
                     $email = DB::table('solicitud_servicios')
                         ->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
@@ -162,7 +164,7 @@ class EmailController extends Controller
                     }
                     return redirect()->route('vehicle-programacion.index')->with('mensaje', trans('servicio notificado correctamente'));
                     break;
-                
+
                 case 'Completado':
                     $email = DB::table('solicitud_servicios')
                         ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
@@ -170,7 +172,7 @@ class EmailController extends Controller
                         ->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.CliName')
                         ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
                         ->first();
-                    
+
                     $destinatarios = ['recepcionpda@prosarc.com.co',
                                     'conciliaciones@prosarc.com.co',
                                     $email->PersEmail];
@@ -184,7 +186,7 @@ class EmailController extends Controller
                         ->send(new SolSerEmail($email));
                     }
                     break;
-                
+
                 case 'Corregido':
                     $email = DB::table('solicitud_servicios')
                         ->join('progvehiculos', 'progvehiculos.FK_ProgServi', '=', 'solicitud_servicios.ID_SolSer')
@@ -207,7 +209,7 @@ class EmailController extends Controller
                         }
                     }
                     Mail::to($email->PersEmail)->cc($destinatarios)->send(new SolSerEmail($email));
-                    break;               
+                    break;
                 case 'Residuo Faltante':
                     $email = DB::table('solicitud_servicios')
                         ->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
@@ -215,9 +217,9 @@ class EmailController extends Controller
                         ->select('personals.PersEmail', 'solicitud_servicios.*', 'clientes.CliName', 'clientes.CliComercial')
                         ->where('solicitud_servicios.SolSerSlug', '=', $SolSer->SolSerSlug)
                         ->first();
-                    
+
                     $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
-                    
+
                     $destinatarios = ['recepcionpda@prosarc.com.co',
                                     'conciliaciones@prosarc.com.co',
                                     $comercial->PersEmail];
@@ -240,15 +242,15 @@ class EmailController extends Controller
                         ->where('progvehiculos.FK_ProgServi', '=', $SolSer->ID_SolSer)
                         ->where('progvehiculos.ProgVehDelete', 0)
                         ->first();
-                        
+
                     $comercial = Personal::where('ID_Pers', $email->CliComercial)->first();
-					
+
 					if ($comercial) {
-						$destinatarios = [$comercial->PersEmail];
+						$destinatarios = [$comercial->PersEmail, 'jefedetratamiento@prosarc.com.co'];
 					} else {
-						$destinatarios = [];
+						$destinatarios = ['jefedetratamiento@prosarc.com.co'];
 					}
-					
+
 
 					$destinatarios = [$comercial->PersEmail];
 					if ($SolSer->SolServMailCopia == "null") {
@@ -306,7 +308,7 @@ class EmailController extends Controller
             ->where('clientes.ID_Cli', $respel->ID_Cli)
             ->select('users.email')
             ->first();
-            
+
         Mail::to($email->email)->send(new RespelMail($respel));
         // return back();
         return redirect()->route('respels.index');
