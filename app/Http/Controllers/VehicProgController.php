@@ -73,7 +73,7 @@ class VehicProgController extends Controller
 			        ->where('ID_ProgVeh', $item->ID_ProgVeh)
 			        // ->where('forevaluation', 0)
 			        ->first();
-		        
+
 		        $item->puntosderecoleccion =  $programacion->puntosderecoleccion;
 			  	return $item;
 			});
@@ -187,11 +187,11 @@ class VehicProgController extends Controller
 				/*ProgVehtipo = 0 -> transporte externo*/
 				/*ProgVehtipo = 1 -> transporte interno prosarc*/
 				/*ProgVehtipo = 2 -> transporte alquilado*/
-				
+
 				$programacion->ProgVehtipo = 1;
 				$programacion->FK_ProgVehiculo = $request->input('FK_ProgVehiculo');
 				$programacion->ProgVehColor = $request->input('ProgVehColor');
-				
+
 				$programacion->ProgVehPrecintos = $request->input('ProgVehPrecintos');
 
 				$programacion->FK_ProgConductor = $request->input('FK_ProgConductor');
@@ -223,7 +223,7 @@ class VehicProgController extends Controller
 				}else{
 					$vehiculo = null;
 				}
-				
+
 				$nomConduct = null;
 				$transportador = DB::table('clientes')
 					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
@@ -248,7 +248,7 @@ class VehicProgController extends Controller
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
 
 		if ($SolicitudServicio->SolSerStatus == 'Aprobado') {
-			
+
 			$serviciovalidado = $request->input('FK_ProgServi');
 			/*cuenta los diferentes generadores*/
 			$generadoresdelasolicitud = GenerSede::whereHas('resgener.solres', function ($query) use ($serviciovalidado) {
@@ -335,7 +335,7 @@ class VehicProgController extends Controller
 							// return $nuevodoc;
 
 							break;
-						
+
 						default:
 							return "no encontro el tipo de servicio";
 							break;
@@ -354,7 +354,7 @@ class VehicProgController extends Controller
 					$puntoderecoleccion->FK_ColectSgen = $sole->ID_GSede;
 					$puntoderecoleccion->FK_ColectProg = $programacion->ID_ProgVeh;
 					$puntoderecoleccion->save();
-				
+
 					// return $puntoderecoleccion;
 
 				}
@@ -425,7 +425,7 @@ class VehicProgController extends Controller
 							// return $nuevodoc;
 
 							break;
-						
+
 						default:
 							return "no encontro el tipo de servicio";
 							break;
@@ -447,7 +447,7 @@ class VehicProgController extends Controller
 					$puntoderecoleccion->save();
 
 
-					
+
 					// return $puntoderecoleccion;
 				break;
 
@@ -516,7 +516,7 @@ class VehicProgController extends Controller
 						// return $nuevodoc;
 
 						break;
-					
+
 					default:
 						return "no encontro el tipo de servicio";
 						break;
@@ -537,12 +537,12 @@ class VehicProgController extends Controller
 				$puntoderecoleccion->FK_ColectProg = $programacion->ID_ProgVeh;
 				$puntoderecoleccion->save();
 				break;
-			
+
 			default:
 				// return "el tipo de servicio es externo";
 				break;
 		}
-		
+
 		$SolicitudServicio->SolSerStatus = 'Programado';
 		if(!is_null($request->input('typetransportador'))){
 			$SolicitudServicio->SolSerConductor = $nomConduct;
@@ -553,7 +553,7 @@ class VehicProgController extends Controller
 			$SolicitudServicio->SolSerCityTrans = $transportador->ID_Mun;
 		}
 		$SolicitudServicio->save();
-		
+
 		// return redirect()->route('vehicle-programacion.create');
 		return redirect()->route('vehicle-programacion.edit' , ['id' => $programacion->ID_ProgVeh]);
 	}
@@ -635,7 +635,7 @@ class VehicProgController extends Controller
 			->select('clientes.CliNit', 'clientes.CliName', 'sedes.SedeAddress', 'sedes.SedePhone1', 'sedes.SedeExt1', 'sedes.SedePhone2', 'sedes.SedeExt2', 'municipios.MunName')
 			->where('clientes.ID_Cli', $SolicitudServicio->FK_SolSerCliente)
 			->first();
-		/*puntos de recoleccion de la solicitud array de ID_Gsede*/	
+		/*puntos de recoleccion de la solicitud array de ID_Gsede*/
 		$puntos = $Programacion->puntosderecoleccion->map(function ($item) {
 		  	return $item->ID_GSede;
 		});
@@ -668,13 +668,13 @@ class VehicProgController extends Controller
 			// ->where('requerimientos.ofertado', 1)
 	        // ->where('forevaluation', 0)
 			->get();
-		
+
 		$Residuos = $Residuosoriginal->map(function ($item) {
 		  $requerimientos = Requerimiento::with(['pretratamientosSelected'])
 	        ->where('ID_Req', $item->FK_SolResRequerimiento)
 	        // ->where('forevaluation', 0)
 	        ->first();
-	        
+
 	        $item->pretratamientosSelected = $requerimientos->pretratamientosSelected;
 		  	return $item;
 		});
@@ -838,7 +838,7 @@ class VehicProgController extends Controller
 				$vehiculo = Vehiculo::where('ID_Vehic', $request->input('FK_ProgVehiculo'))->first();
 				$vehiculo->VehicKmActual = $request->input('progVehKm');
 				$vehiculo->save();
-				
+
 			}
 			else{
 				$programacion->ProgVehEntrada = null;
@@ -952,17 +952,17 @@ class VehicProgController extends Controller
 							$SolicitudServicio->SolSerCityTrans = $transportador->ID_Mun;
 						}
 						$SolicitudServicio->save();
-		
+
 						/*inicio de espacio para notificacion de programacion cancelada*/
 						$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
-		
+
 						$emailCliente = DB::table('solicitud_servicios')
 						->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
 						->select('personals.PersEmail', 'solicitud_servicios.*')
 						->where('solicitud_servicios.SolSerSlug', '=', $SolicitudServicio->SolSerSlug)
 						->first();
-					
-		
+
+
 						// se establece la lista de destinatarios
 						if ($SolicitudServicio['cliente']->CliComercial <> null) {
 							$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
@@ -981,12 +981,12 @@ class VehicProgController extends Controller
 												'gerenteplanta@prosarc.com.co',
 												'recepcionpda@prosarc.com.co',
 												$emailCliente->PersEmail
-											];	
+											];
 						}
-		
+
 						$SolicitudServicio['comercial'] = $comercial;
 						$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudServicio->FK_SolSerPersona)->first();
-		
+
 						if ($SolicitudServicio->SolServMailCopia == "null") {
 							Mail::to($destinatarios)
 							->send(new CancelSolServEmail($SolicitudServicio));
@@ -995,11 +995,11 @@ class VehicProgController extends Controller
 							->cc(json_decode($SolicitudServicio->SolServMailCopia))
 							->send(new CancelSolServEmail($SolicitudServicio));
 						}
-		
+
 						/*fin de espacio para notificacion de programacion cancelada*/
-		
+
 					}
-		
+
 					$log = new audit();
 					$log->AuditTabla = "progvehiculos";
 					$log->AuditType = "Eliminado";
@@ -1019,7 +1019,7 @@ class VehicProgController extends Controller
 						}
 						$SolicitudServicio->save();
 					}
-		
+
 					$log = new audit();
 					$log->AuditTabla = "progvehiculos";
 					$log->AuditType = "Restaurado";
@@ -1031,7 +1031,7 @@ class VehicProgController extends Controller
 					return redirect()->route('vehicle-programacion.edit',['id' => $id])->with('mensaje', trans('adminlte_lang::message.progvehcdelete2success'));
 				}
 			break;
-			
+
 			case 'Notificado':
 				if ($programacion->ProgVehDelete == 0){
 					$programacion->ProgVehDelete = 1;
@@ -1054,17 +1054,17 @@ class VehicProgController extends Controller
 							$SolicitudServicio->SolSerCityTrans = $transportador->ID_Mun;
 						}
 						$SolicitudServicio->save();
-		
+
 						/*inicio de espacio para notificacion de programacion cancelada*/
 						$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
-		
+
 						$emailCliente = DB::table('solicitud_servicios')
 						->join('personals', 'personals.ID_Pers', '=', 'solicitud_servicios.FK_SolSerPersona')
 						->select('personals.PersEmail', 'solicitud_servicios.*')
 						->where('solicitud_servicios.SolSerSlug', '=', $SolicitudServicio->SolSerSlug)
 						->first();
-					
-		
+
+
 						// se establece la lista de destinatarios
 						if ($SolicitudServicio['cliente']->CliComercial <> null) {
 							$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
@@ -1082,12 +1082,12 @@ class VehicProgController extends Controller
 												'gerenteplanta@prosarc.com.co',
 												'recepcionpda@prosarc.com.co',
 												$emailCliente->PersEmail
-											];	
+											];
 						}
-		
+
 						$SolicitudServicio['comercial'] = $comercial;
 						$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudServicio->FK_SolSerPersona)->first();
-		
+
 						if ($SolicitudServicio->SolServMailCopia == "null") {
 							Mail::to($destinatarios)
 							->send(new CancelSolServEmail($SolicitudServicio));
@@ -1096,11 +1096,11 @@ class VehicProgController extends Controller
 							->cc(json_decode($SolicitudServicio->SolServMailCopia))
 							->send(new CancelSolServEmail($SolicitudServicio));
 						}
-		
+
 						/*fin de espacio para notificacion de programacion cancelada*/
-		
+
 					}
-		
+
 					$log = new audit();
 					$log->AuditTabla = "progvehiculos";
 					$log->AuditType = "Eliminado";
@@ -1132,7 +1132,7 @@ class VehicProgController extends Controller
 						$SolicitudServicio->SolSerVehiculo = $programacion->FK_ProgVehiculo;
 						$SolicitudServicio->save();
 					}
-		
+
 					$log = new audit();
 					$log->AuditTabla = "progvehiculos";
 					$log->AuditType = "Restaurado";
@@ -1140,7 +1140,7 @@ class VehicProgController extends Controller
 					$log->AuditUser = Auth::user()->email;
 					$log->Auditlog = $programacion->ProgVehDelete;
 					$log->save();
-					
+
 					return redirect()->route('vehicle-programacion.edit',['id' => $id])->with('mensaje', trans('adminlte_lang::message.progvehcdelete2success'));
 				}
 			break;
@@ -1185,7 +1185,7 @@ class VehicProgController extends Controller
 		}
 
 		// return $cantidadDeResiduosControlados;
-		
+
 		$log = new audit();
 		$log->AuditTabla="solicitud_servicios";
 		$log->AuditType="Notificado";
@@ -1223,7 +1223,7 @@ class VehicProgController extends Controller
 						];
 		if ($cantidadDeResiduosControlados > 0) {
 			//enviar notificacion de servicion con sustancia controladas
-			Mail::to('dirtecnica@prosarc.com.co')->cc(['sistemas@prosarc.com.co', 'logistica@prosarc.com.co', 'recepcionpda@prosarc.com.co', 'auxiliarpda@prosarc.com.co'])->send(new SustanciaControladaProgramada($email, $SolicitudServicio));
+			Mail::to('dirtecnica@prosarc.com.co')->cc(['sistemas@prosarc.com.co', 'logistica@prosarc.com.co', 'recepcionpda@prosarc.com.co', 'auxiliarpda@prosarc.com.co', 'jefedetratamiento@prosarc.com.co'])->send(new SustanciaControladaProgramada($email, $SolicitudServicio));
 		}else{
 			array_push($destinatarios, 'dirtecnica@prosarc.com.co');
 		}
@@ -1234,7 +1234,7 @@ class VehicProgController extends Controller
 			}else{
 				Mail::to($email->PersEmail)->cc($destinatarios)->send(new SolSerEmail($email));
 			}
-			
+
 		}else{
 			foreach (json_decode($SolicitudServicio->SolServMailCopia) as $key => $value) {
 				array_push($destinatarios, $value);
@@ -1252,7 +1252,7 @@ class VehicProgController extends Controller
 			return redirect()->route('vehicle-programacion.index');
 		}
 
-		
+
 	}
 
 		/**
@@ -1313,7 +1313,7 @@ class VehicProgController extends Controller
 				}else{
 					$vehiculo = null;
 				}
-				
+
 				$nomConduct = null;
 				$transportador = DB::table('clientes')
 					->join('sedes', 'clientes.ID_Cli', '=', 'sedes.FK_SedeCli')
@@ -1345,9 +1345,9 @@ class VehicProgController extends Controller
 		// 	$SolicitudServicio->SolSerCityTrans = $transportador->ID_Mun;
 		// }
 		// $SolicitudServicio->save();
-		
+
 		return redirect()->route('vehicle-programacion.index');
-		
+
 	}
 
 			/**
@@ -1366,7 +1366,7 @@ class VehicProgController extends Controller
 		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $programacion->FK_ProgServi)->first();
 		$SolicitudServicio->SolSerDescript=$request->input('solserdescript');
 		$SolicitudServicio->save();
-		
+
 		$log = new audit();
 		$log->AuditTabla="solicitud_servicios";
 		$log->AuditType="parafiscales";
