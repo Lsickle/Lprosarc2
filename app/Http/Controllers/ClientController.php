@@ -512,4 +512,37 @@ class ClientController extends Controller
                 abort(403);
         }
     }
+
+        /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $ID_Cli
+     * @return \Illuminate\Http\Response
+     */
+    public function editExpress(Cliente $cliente)
+    {
+        switch (true) {
+
+            case (in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)):
+                $Departamentos = Departamento::all();
+                $comerciales = DB::table('personals')
+                ->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+                ->select('personals.*')
+                ->where('personals.PersDelete', 0)
+                ->where('users.UsRol', 'Comercial')
+                ->orWhere('users.UsRol2', 'Comercial')
+                ->get();
+
+                if (old('FK_SedeMun') !== null){
+                    $Municipios = Municipio::select()->where('FK_MunCity', old('departamento'))->get();
+                }else {
+                    $Municipios = Municipio::select()->where('FK_MunCity', 6)->get();
+                }
+                return view('clientes.editExpress', compact('Departamentos', 'Municipios', 'comerciales', 'cliente'));
+                break;
+
+            default:
+                abort(403);
+            }
+    }
 }

@@ -61,6 +61,9 @@
 						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
 							<a href="/cliente/{{$cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
 						@endif
+                        @if (in_array(Auth::user()->UsRol, Permisos::COMERCIALEXPRESS) || in_array(Auth::user()->UsRol, Permisos::COMERCIALEXPRESS))
+							<a href="/clientesexpress/{{$cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
+						@endif
 						{{-- <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.respeldescriptittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.respeldescriptinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.descripcion') }}</label> --}}
 						@if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO))
 							@if($cliente->CliStatus=='Autorizado')

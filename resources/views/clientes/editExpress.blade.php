@@ -38,11 +38,11 @@
                                             <div id="form-step-0" role="form" data-toggle="validator">
                                                 <div class="col-md-6 form-group ">
                                                     <label for="ClienteInputNit">{{ trans('adminlte_lang::message.clientNIT') }}</label><small class="help-block with-errors">*</small>
-                                                    <input type="text" name="CliNit" class="form-control nitlargo" id="ClienteInputNit" data-minlength="13" data-maxlength="15" placeholder="{{ trans('adminlte_lang::message.clientNITplacehoder') }}" value="{{ old('CliNit') }}" required>
+                                                    <input value="{{$cliente->CliNit}}" type="text" name="CliNit" class="form-control nitlargo" id="ClienteInputNit" data-minlength="13" data-maxlength="15" placeholder="{{ trans('adminlte_lang::message.clientNITplacehoder') }}" value="{{ old('CliNit') }}" required>
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <label for="ClienteInputRazon">{{ trans('adminlte_lang::message.clirazonsoc') }}</label><small class="help-block with-errors">*</small>
-                                                    <input type="text" name="CliName" class="form-control" id="ClienteInputRazon" maxlength="100" required value="{{ old('CliName') }}">
+                                                    <input value="{{$cliente->CliName}}" type="text" name="CliName" class="form-control" id="ClienteInputRazon" maxlength="100" required value="{{ old('CliName') }}">
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label for="departamentoExpress">{{ trans('adminlte_lang::message.departamento') }}</label><small class="help-block with-errors">*</small>

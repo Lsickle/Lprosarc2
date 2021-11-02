@@ -77,6 +77,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::get('/cliente/{slug}/TipoFacturacionContado', 'ClienteController@facturacionContado')->name('cliente-facturacionContado');
 	Route::get('/cliente/{slug}/TipoFacturacionCredito', 'ClienteController@facturacionCredito')->name('cliente-facturacionCredito');
 	Route::get('/clientesexpress', 'ClientController@indexExpress')->name('clientes.clientesExpress');
+	Route::get('/clientesexpress/{slug}/edit', 'ClientController@editExpress')->name('clientes.editExpress');
 	Route::resource('/contactos', 'ContactoController');
 	Route::post('/contacto-vehiculo-create/{id}', 'VehiculoContactoController@store');
 	Route::put('/contacto-vehiculo-edit/{id}', 'VehiculoContactoController@update');
