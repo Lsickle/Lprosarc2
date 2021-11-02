@@ -268,8 +268,14 @@ class registroexpressController extends Controller
             $ResiduoSedeGener->SlugSGenerRes = hash('sha256', rand().time().$ResiduoSedeGener->FK_Respel);
             $ResiduoSedeGener->save();
         }
+        // is authenticated
+        if (Auth::check()) {
+            return redirect()->route('cliente-show', [$Cliente->CliSlug]);
+        }else{
+            return redirect()->route('registroexpress');
+        }
 
-        return redirect()->route('registroexpress');
+
     }
 
     /**

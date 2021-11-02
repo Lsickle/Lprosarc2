@@ -487,8 +487,8 @@ class ClientController extends Controller
                 return redirect()->route('home');
                 break;
             case (in_array(Auth::user()->UsRol, Permisos::COMERCIAL)):
-                $clientes = Cliente::where('CliDelete', 0)->where('CliCategoria', 'Cliente')->where('CliComercial', Auth::user()->FK_UserPers)->get();
-                return view('clientes.index', compact('clientes'));
+                $clientes = Cliente::where('CliDelete', 0)->where('CliCategoria', 'ClientePrepago')->where('CliComercial', Auth::user()->FK_UserPers)->get();
+                return view('clientes.indexExpress', compact('clientes'));
                 break;
             case (in_array(Auth::user()->UsRol, Permisos::TODOPROSARC)):
                 $clientes = DB::table('clientes')
