@@ -21,6 +21,7 @@
 						<table id="clientesTable" class="table table-compact table-bordered table-striped">
 							<thead>
 							<tr>
+								<th>{{ 'Registro' }}</th>
 								<th>{{ trans('adminlte_lang::message.clientNIT') }}</th>
 								<th>{{ trans('adminlte_lang::message.clirazonsoc') }}</th>
 								<th>{{ trans('adminlte_lang::message.clientnombrecorto') }}</th>
@@ -33,6 +34,7 @@
 							<tbody onload="renderTable()" id="readyTable">
 							@foreach($clientes as $cliente)
 							<tr style="{{$cliente->CliDelete === 1 ? 'color: red;' : ''}}">
+                                <td>{{date('Y/m/d', strtotime($cliente->created_at))}}</td>
 								<td>{{$cliente->CliNit}}</td>
 								<td>{{$cliente->CliName}}</td>
 								<td>{{$cliente->CliShortname}}</td>
@@ -84,7 +86,7 @@
 										<label>Seleccione el comercial</label><small class="help-block with-errors">*</small>
 										<select name="Comercial" id="Comercial" class="form-control" required>
 											<option value="">Seleccione...</option>
-											
+
 										</select>
 									</div>
 									<div class="form-group has-feedback">
@@ -109,7 +111,7 @@
 					$('#Comercial').append(`<option selected value='`+personal[index]['ID_Pers']+`'> `+personal[index]['PersFirstName']+` `+personal[index]['PersLastName']+` </option>`);
 			    }else{
 			    	$('#Comercial').append(`<option value='`+personal[index]['ID_Pers']+`'> `+personal[index]['PersFirstName']+` `+personal[index]['PersLastName']+` </option>`);
-			    }			    
+			    }
 			});
 			popover();
 			$('form').validator('update');
