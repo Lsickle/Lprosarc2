@@ -13,6 +13,7 @@ use App\Http\Controllers\SolicitudResiduoController;
 use App\Mail\NewSolServEmail;
 use App\Mail\SolSerLeftRespel;
 use App\Mail\NewSolServProsarcEmail;
+use App\Mail\ServicioReversado;
 use App\SolicitudServicio;
 use App\SolicitudResiduo;
 use App\audit;
@@ -129,9 +130,9 @@ class SolicitudServicioController extends Controller
 			}
 		}
 		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
-			return view('solicitud-serv.index', compact('Servicios', 'Residuos', 'Cliente'));
+			return view('solicitud-serv.index', compact('Servicios', 'Cliente'));
 		}else{
-			return view('solicitud-serv.indexprosarc', compact('Servicios', 'Residuos', 'Cliente'));
+			return view('solicitud-serv.indexprosarc', compact('Servicios', 'Cliente'));
 		}
 	}
 
@@ -833,7 +834,21 @@ class SolicitudServicioController extends Controller
 			$SolicitudServicio->recepcion = null;
 		}
 
-		return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento', 'tratamientos', 'Observaciones', 'ultimoRecordatorio'));
+        // adjuntar variables segun status del servicio
+        switch ($SolicitudServicio->SolSerStatus) {
+            case 'Residuo Faltante':
+            case 'Notificado':
+		        return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'Municipio', 'Programaciones', 'ProgramacionesActivas', 'total', 'cantidadesXtratamiento', 'tratamientos', 'Observaciones'));
+                break;
+
+            case 'Completado':
+		        return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento', 'tratamientos', 'Observaciones', 'ultimoRecordatorio'));
+                break;
+
+            default:
+                return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento', 'tratamientos', 'Observaciones'));
+                break;
+        }
 	}
 
 
@@ -2215,6 +2230,11 @@ class SolicitudServicioController extends Controller
 				abort(403, 'el servicio ya ha sido certificado y no admite cambios de status');
 			}
 		}
+        // se guarda el status nuevo y el anterior
+        $oldValue = $Solicitud->SolSerStatus;
+        $newValue = $request->input('solserstatus');
+
+
 		switch ($request->input('solserstatus')) {
 			case 'Notificado':
 			case 'Completado':
@@ -2288,6 +2308,32 @@ class SolicitudServicioController extends Controller
 		$Observacion->ObsRol = Auth::user()->UsRol;
 		$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
 		$Observacion->save();
+
+        $Solicitud['oldValue'] = $oldValue;
+        $Solicitud['newValue'] = $newValue;
+
+        $SolicitudServicio = $Solicitud;
+
+        // verificar el status anterior del servicio para validar si se eliminaron certificados o manifiestos y enviar la notificacion al comercial
+
+        // se consulta el correo del comercial respectivo
+        $comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
+
+        // se verifica si el cliente tiene comercial asignado
+        $SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
+        // se establece la lista de destinatarios
+        if ($SolicitudServicio['cliente']->CliComercial <> null) {
+            $comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
+            $destinatarios = ['subgerencia@prosarc.com.co',
+                                $comercial->PersEmail
+                            ];
+        }else{
+            $comercial = "";
+            $destinatarios = ['subgerencia@prosarc.com.co'];
+        }
+
+        // enviar correo  al comercial respectivo
+        Mail::to($destinatarios)->send(new ServicioReversado($SolicitudServicio, $Observacion));
 
 		return redirect()->route('solicitud-servicio.show', ['id' => $Solicitud->SolSerSlug]);
 
