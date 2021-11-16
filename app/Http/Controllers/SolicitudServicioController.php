@@ -129,9 +129,9 @@ class SolicitudServicioController extends Controller
 			}
 		}
 		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE)){
-			return view('solicitud-serv.index', compact('Servicios', 'Residuos', 'Cliente'));
+			return view('solicitud-serv.index', compact('Servicios', 'Cliente'));
 		}else{
-			return view('solicitud-serv.indexprosarc', compact('Servicios', 'Residuos', 'Cliente'));
+			return view('solicitud-serv.indexprosarc', compact('Servicios', 'Cliente'));
 		}
 	}
 

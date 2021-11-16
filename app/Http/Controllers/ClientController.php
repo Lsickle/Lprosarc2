@@ -521,6 +521,7 @@ class ClientController extends Controller
      */
     public function editExpress(Cliente $cliente)
     {
+
         switch (true) {
 
             case (in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)):
@@ -538,6 +539,7 @@ class ClientController extends Controller
                 }else {
                     $Municipios = Municipio::select()->where('FK_MunCity', 6)->get();
                 }
+
                 return view('clientes.editExpress', compact('Departamentos', 'Municipios', 'comerciales', 'cliente'));
                 break;
 

@@ -49,7 +49,7 @@
                                                     <select class="form-control select" id="departamentoExpress" name="departamento" required data-dependent="FK_SedeMun">
                                                         <option value="">{{ trans('adminlte_lang::message.select') }}</option>
                                                         @foreach ($Departamentos as $Departamento)
-                                                        <option value="{{$Departamento->ID_Depart}}" {{ old('departamento')==$Departamento->ID_Depart ? 'selected' : '' }}>{{$Departamento->DepartName}}</option>
+                                                        <option value="{{$Departamento->ID_Depart}}" {{ old('departamento')==$Departamento->ID_Depart ? 'selected' : '' }} {{ $cliente->sedes[0]->Municipios->FK_MunCity == $Departamento->ID_Depart ? 'selected' : '' }}>{{$Departamento->DepartName}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -64,41 +64,41 @@
                                                         @endif
                                                     </select>
                                                 </div>
-                                                <div class="col-md-6 form-group" id="SedeMapLocalidadContainer" hidden>
+                                                <div class="col-md-6 form-group" id="SedeMapLocalidadContainer" {{ 169==$cliente->sedes[0]->FK_SedeMun ? '' : 'hidden' }}>
                                                     <label for="SedeMapLocalidad">Localidad</label><small class="help-block with-errors">*</small>
                                                     <select class="form-control select" id="SedeMapLocalidad" name="SedeMapLocalidad" required>
                                                         <option value="">Seleccione...</option>
-                                                        <option value="Engativá" {{ old('SedeMapLocalidad')=='Engativá' ? 'selected' : '' }}>Engativá</option>
-                                                        <option value="Kennedy" {{ old('SedeMapLocalidad')=='Kennedy' ? 'selected' : '' }}>Kennedy</option>
-                                                        <option value="Suba" {{ old('SedeMapLocalidad')=='Suba' ? 'selected' : '' }}>Suba</option>
-                                                        <option value="Usaquén" {{ old('SedeMapLocalidad')=='Usaquén' ? 'selected' : '' }}>Usaquén</option>
-                                                        <option value="Fontibón" {{ old('SedeMapLocalidad')=='Fontibón' ? 'selected' : '' }}>Fontibón</option>
-                                                        <option value="Puente Aranda" {{ old('SedeMapLocalidad')=='Puente Aranda' ? 'selected' : '' }}>Puente Aranda</option>
-                                                        <option value="Rafael Uribe Uribe" {{ old('SedeMapLocalidad')=='Rafael Uribe Uribe' ? 'selected' : '' }}>Rafael Uribe Uribe</option>
-                                                        <option value="Antonio Nariño" {{ old('SedeMapLocalidad')=='Antonio Nariño' ? 'selected' : '' }}>Antonio Nariño</option>
-                                                        <option value="Santa Fe" {{ old('SedeMapLocalidad')=='Santa Fe' ? 'selected' : '' }}>Santa Fe</option>
-                                                        <option value="Chapinero" {{ old('SedeMapLocalidad')=='Chapinero' ? 'selected' : '' }}>Chapinero</option>
-                                                        <option value="Teusaquillo" {{ old('SedeMapLocalidad')=='Teusaquillo' ? 'selected' : '' }}>Teusaquillo</option>
-                                                        <option value="Tunjuelito" {{ old('SedeMapLocalidad')=='Tunjuelito' ? 'selected' : '' }}>Tunjuelito</option>
-                                                        <option value="Barrios Unidos" {{ old('SedeMapLocalidad')=='Barrios Unidos' ? 'selected' : '' }}>Barrios Unidos</option>
-                                                        <option value="San Cristóbal" {{ old('SedeMapLocalidad')=='San Cristóbal' ? 'selected' : '' }}>San Cristóbal</option>
-                                                        <option value="Bosa" {{ old('SedeMapLocalidad')=='Bosa' ? 'selected' : '' }}>Bosa</option>
-                                                        <option value="Usme" {{ old('SedeMapLocalidad')=='Usme' ? 'selected' : '' }}>Usme</option>
-                                                        <option value="Ciudad Bolívar" {{ old('SedeMapLocalidad')=='Ciudad Bolívar' ? 'selected' : '' }}>Ciudad Bolívar</option>
-                                                        <option value="Los Mártires" {{ old('SedeMapLocalidad')=='Los Mártires' ? 'selected' : '' }}>Los Mártires</option>
-                                                        <option value="La Candelaria" {{ old('SedeMapLocalidad')=='La Candelaria' ? 'selected' : '' }}>La Candelaria</option>
-                                                        <option value="Sumapaz" {{ old('SedeMapLocalidad')=='Sumapaz' ? 'selected' : '' }}>Sumapaz</option>
+                                                        <option value="Engativá" {{ 'Engativá'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Engativá' ? 'selected' : '' }}>Engativá</option>
+                                                        <option value="Kennedy" {{ 'Kennedy'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Kennedy' ? 'selected' : '' }}>Kennedy</option>
+                                                        <option value="Suba" {{ 'Suba'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Suba' ? 'selected' : '' }}>Suba</option>
+                                                        <option value="Usaquén" {{ 'Usaquén'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Usaquén' ? 'selected' : '' }}>Usaquén</option>
+                                                        <option value="Fontibón" {{ 'Fontibón'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Fontibón' ? 'selected' : '' }}>Fontibón</option>
+                                                        <option value="Puente Aranda" {{ 'Puente Aranda'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Puente Aranda' ? 'selected' : '' }}>Puente Aranda</option>
+                                                        <option value="Rafael Uribe Uribe" {{ 'Rafael Uribe Uribe'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Rafael Uribe Uribe' ? 'selected' : '' }}>Rafael Uribe Uribe</option>
+                                                        <option value="Antonio Nariño" {{ 'Antonio Nariño'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Antonio Nariño' ? 'selected' : '' }}>Antonio Nariño</option>
+                                                        <option value="Santa Fe" {{ 'Santa Fe'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Santa Fe' ? 'selected' : '' }}>Santa Fe</option>
+                                                        <option value="Chapinero" {{ 'Chapinero'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Chapinero' ? 'selected' : '' }}>Chapinero</option>
+                                                        <option value="Teusaquillo" {{ 'Teusaquillo'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Teusaquillo' ? 'selected' : '' }}>Teusaquillo</option>
+                                                        <option value="Tunjuelito" {{ 'Tunjuelito'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Tunjuelito' ? 'selected' : '' }}>Tunjuelito</option>
+                                                        <option value="Barrios Unidos" {{ 'Barrios Unidos'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Barrios Unidos' ? 'selected' : '' }}>Barrios Unidos</option>
+                                                        <option value="San Cristóbal" {{ 'San Cristóbal'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='San Cristóbal' ? 'selected' : '' }}>San Cristóbal</option>
+                                                        <option value="Bosa" {{ 'Bosa'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Bosa' ? 'selected' : '' }}>Bosa</option>
+                                                        <option value="Usme" {{ 'Usme'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Usme' ? 'selected' : '' }}>Usme</option>
+                                                        <option value="Ciudad Bolívar" {{ 'Ciudad Bolívar'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Ciudad Bolívar' ? 'selected' : '' }}>Ciudad Bolívar</option>
+                                                        <option value="Los Mártires" {{ 'Los Mártires'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Los Mártires' ? 'selected' : '' }}>Los Mártires</option>
+                                                        <option value="La Candelaria" {{ 'La Candelaria'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='La Candelaria' ? 'selected' : '' }}>La Candelaria</option>
+                                                        <option value="Sumapaz" {{ 'Sumapaz'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Sumapaz' ? 'selected' : '' }}>Sumapaz</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <label for="sedeinputaddress">Dirección de certificación</label><small class="help-block with-errors">*</small>
-                                                    <input type="text" class="form-control" id="sedeinputaddress" name="SedeAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" minlength="5" maxlength="128" required value="{{ old('SedeAddress') }}">
+                                                    <input value="{{$cliente->sedes[0]->SedeAddress}}" type="text" class="form-control" id="sedeinputaddress" name="SedeAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" minlength="5" maxlength="128" required value="{{ old('SedeAddress') }}">
                                                 </div>
                                                 <!-- search input box -->
                                                 <div class="form-group col-md-6 " id="SedeMapAddressContainer">
                                                     <label for="sedeinputaddress">Dirección de recolección (Mapa)</label><small class="help-block with-errors">*</small>
                                                     <div class="input-group">
-                                                        <input type="text" id="search_location" name="SedeMapAddressSearch" class="form-control" placeholder="Search location" value="{{ old('SedeMapAddressSearch') }}">
+                                                        <input value="{{$cliente->sedes[0]->SedeMapAddressSearch}}" type="text" id="search_location" name="SedeMapAddressSearch" class="form-control" placeholder="Search location" value="{{ old('SedeMapAddressSearch') }}">
                                                         <div class="input-group-btn">
                                                             <button class="btn btn-default get_map" type="submit">
                                                                 <i class="fas fa-map-marker-alt"></i> Ubicar
@@ -113,9 +113,9 @@
                                                 <!-- display selected location information -->
                                                 <div class="col-md-12 form-group">
                                                     <label for="sedeinputaddress">Detalles de la dirección</label><small class="help-block with-errors">*</small>
-                                                    <p>Dirección: <input type="text" class="form-control search_addr" id="SedeMapAddressResult" value="{{ old('SedeMapAddressResult') }}" name="SedeMapAddressResult"></p>
-                                                    <p>Latitud: <input type="text" class="form-control search_latitude" id="SedeMapLat" value="{{ old('SedeMapLat') }}" name="SedeMapLat"></p>
-                                                    <p>Longitud: <input type="text" class="form-control search_longitude" id="SedeMapLong" value="{{ old('SedeMapLong') }}" name="SedeMapLong"></p>
+                                                    <p>Dirección: <input value="{{$cliente->sedes[0]->SedeMapAddressResult}}"  type="text" class="form-control search_addr" id="SedeMapAddressResult" value="{{ old('SedeMapAddressResult') }}" name="SedeMapAddressResult"></p>
+                                                    <p>Latitud: <input value="{{$cliente->sedes[0]->SedeMapLat}}"  type="text" class="form-control search_latitude" id="SedeMapLat" value="{{ old('SedeMapLat') }}" name="SedeMapLat"></p>
+                                                    <p>Longitud: <input value="{{$cliente->sedes[0]->SedeMapLong}}"  type="text" class="form-control search_longitude" id="SedeMapLong" value="{{ old('SedeMapLong') }}" name="SedeMapLong"></p>
                                                 </div>
                                             </div>
                                         </div>

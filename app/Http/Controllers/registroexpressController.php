@@ -297,7 +297,7 @@ class registroexpressController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
