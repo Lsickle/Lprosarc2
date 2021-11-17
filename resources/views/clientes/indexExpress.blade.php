@@ -37,7 +37,7 @@
                                     <td>{{$cliente->created_at}}</td>
                                     <td>{{$cliente->CliNit}}</td>
                                     <td>{{$cliente->CliName}}</td>
-                                    <td>{{$cliente->sedes[0]->SedeAddress}}  {{$cliente->sedes[0]->SedeMapLocalidad !== 'No Definida' ? 'Localidad: '.$cliente->sedes[0]->SedeMapLocalidad : ''}}</td>
+                                    <td>{{$cliente->sedes()->first()->SedeAddress}}  {{$cliente->sedes()->first()->SedeMapLocalidad !== 'No Definida' ? 'Localidad: '.$cliente->sedes()->first()->SedeMapLocalidad : ''}}</td>
                                     @if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARCMenosComercial))
                                     <td>
                                         @if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial))
