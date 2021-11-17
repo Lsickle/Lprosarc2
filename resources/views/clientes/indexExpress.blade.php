@@ -24,7 +24,7 @@
                                     <th>Registro</th>
                                     <th>{{ trans('adminlte_lang::message.clientNIT') }}</th>
                                     <th>{{ trans('adminlte_lang::message.clirazonsoc') }}</th>
-                                    <th>{{ trans('adminlte_lang::message.clientnombrecorto') }}</th>
+                                    <th>Dirección</th>
                                     @if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARCMenosComercial))
                                     <th>Comercial Asignado</th>
                                     @endif
@@ -37,7 +37,7 @@
                                     <td>{{$cliente->created_at}}</td>
                                     <td>{{$cliente->CliNit}}</td>
                                     <td>{{$cliente->CliName}}</td>
-                                    <td>{{$cliente->CliShortname}}</td>
+                                    <td>{{$cliente->sedes[0]->SedeAddress}}  {{$cliente->sedes[0]->SedeMapLocalidad !== 'No Definida' ? 'Localidad: '.$cliente->sedes[0]->SedeMapLocalidad : ''}}</td>
                                     @if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARCMenosComercial))
                                     <td>
                                         @if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial))
