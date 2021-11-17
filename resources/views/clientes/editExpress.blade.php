@@ -1,9 +1,9 @@
-@extends('layouts.appinvitado')
+@extends('layouts.app')
 @section('htmlheader_title')
 {{ trans('adminlte_lang::message.clientcliente') }}
 @endsection
 @section('contentheader_title')
-{{ 'Registro Express' }}
+{{ 'Edición de cliente Express' }}
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -60,14 +60,14 @@
                                                     <select class="form-control select" id="municipio" name="FK_SedeMun" required>
                                                         @if (isset($Municipios))
                                                         @foreach ($Municipios as $Municipio)
-                                                        <option value="{{$Municipio->ID_Mun}}" {{ old('FK_SedeMun')==$Municipio->ID_Mun ? 'selected' : '' }}>{{$Municipio->MunName}}</option>
+                                                        <option value="{{$Municipio->ID_Mun}}" {{ old('FK_SedeMun')==$Municipio->ID_Mun ? 'selected' : '' }} {{ $cliente->sedes[0]->Municipios->ID_Mun == $Municipio->ID_Mun ? 'selected' : '' }}>{{$Municipio->MunName}}</option>
                                                         @endforeach
                                                         @endif
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6 form-group" id="SedeMapLocalidadContainer" {{ 169==$cliente->sedes[0]->FK_SedeMun ? '' : 'hidden' }}>
                                                     <label for="SedeMapLocalidad">Localidad</label><small class="help-block with-errors">*</small>
-                                                    <select class="form-control select" id="SedeMapLocalidad" name="SedeMapLocalidad" required>
+                                                    <select class="form-control select" id="SedeMapLocalidad" name="SedeMapLocalidad" {{ 169!==$cliente->sedes[0]->FK_SedeMun ? '' : 'required' }} >
                                                         <option value="">Seleccione...</option>
                                                         <option value="Engativá" {{ 'Engativá'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Engativá' ? 'selected' : '' }}>Engativá</option>
                                                         <option value="Kennedy" {{ 'Kennedy'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Kennedy' ? 'selected' : '' }}>Kennedy</option>
