@@ -14,9 +14,10 @@
                     <h3 class="box-title">{{ trans('adminlte_lang::message.smartwizzardtitle') }}</h3>
                 </div>
                 <div class="box box-info">
-                    <form role="form" action="/sendregisterexpress" method="POST" enctype="multipart/form-data" data-toggle="validator">
+                    <form role="form" action="/clientexpress/{{$cliente->CliSlug}}/update" method="POST" enctype="multipart/form-data" data-toggle="validator">
                         {{csrf_field()}}
                         @csrf
+                        @method('PUT')
                         @if ($errors->any())
                         <div class="alert alert-danger" role="alert">
                             <ul>
@@ -126,22 +127,24 @@
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label for="PersFirstName">{{'Nombre'}}</label><small class="help-block with-errors">*</small>
-                                                    <input type="text" class="form-control nombres" id="PersFirstName" name="PersFirstName" maxlength="25" required value="{{ old('PersFirstName') }}">
+                                                    <input value="{{$personal->PersFirstName}}"  type="text" class="form-control nombres" id="PersFirstName" name="PersFirstName" maxlength="25" required value="{{ old('PersFirstName') }}">
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label for="PersLastName">{{'Apellidos'}}</label><small class="help-block with-errors">*</small>
-                                                    <input type="text" class="form-control inputText" id="PersLastName" name="PersLastName" maxlength="64" required value="{{ old('PersLastName') }}">
+                                                    <input value="{{$personal->PersLastName}}"  type="text" class="form-control inputText" id="PersLastName" name="PersLastName" maxlength="64" required value="{{ old('PersLastName') }}">
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <label for="CliComercial">Correo electrónico</label><small class="help-block with-errors">*</small>
-                                                    <input type="email" class="form-control" id="PersEmail" name="PersEmail" maxlength="255" required value="{{ old('PersEmail') }}" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}">
+                                                    <label for="PersEmail">Correo electrónico</label><small class="help-block with-errors">*</small>
+                                                    <input value="{{$personal->PersEmail}}" type="email" class="form-control" id="PersEmail" name="PersEmail" maxlength="255" required value="{{ old('PersEmail') }}" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}">
 
                                                 </div>
+                                                <input type="text" hidden name="PersSlug" value="{{$personal->PersSlug}}">
+                                                <input type="text" hidden name="UsSlug" value="{{$user->UsSlug}}">
                                                 <div class="form-group col-md-6">
                                                     <label for="PersCellphone">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
                                                     <div class="input-group">
                                                         <span class="input-group-addon">(+57)</span>
-                                                        <input type="text" class="form-control mobile" id="PersCellphone" name="PersCellphone" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-minlength="12" maxlength="12" value="{{ old('PersCellphone') }}" required>
+                                                        <input value="{{$personal->PersCellphone}}" type="text" class="form-control mobile" id="PersCellphone" name="PersCellphone" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-minlength="12" maxlength="12" value="{{ old('PersCellphone') }}" required>
                                                     </div>
                                                 </div>
 
@@ -155,7 +158,7 @@
                                                     <select class="form-control select" id="CliComercial" name="CliComercial" required>
                                                         <option value="">{{ trans('adminlte_lang::message.select') }}</option>
                                                         @foreach ($comerciales as $comercial)
-                                                        <option value="{{$comercial->ID_Pers}}" {{ old('CliComercial')==$comercial->ID_Pers ? 'selected' : '' }}>{{ $comercial->PersFirstName }} {{$comercial->PersSecondName}} {{$comercial->PersLastName}}</option>
+                                                        <option value="{{$comercial->ID_Pers}}"  {{ $cliente->comercialAsignado->ID_Pers == $comercial->ID_Pers ? 'selected' : '' }} {{ old('CliComercial')==$comercial->ID_Pers ? 'selected' : '' }}>{{ $comercial->PersFirstName }} {{$comercial->PersSecondName}} {{$comercial->PersLastName}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -163,7 +166,7 @@
                                             </div>
 
                                             <div class="box-footer">
-                                                <button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.register') }}</button>
+                                                <button type="submit" class="btn btn-primary pull-right">Actualizar</button>
                                             </div>
                                         </div>
                                     </div>
