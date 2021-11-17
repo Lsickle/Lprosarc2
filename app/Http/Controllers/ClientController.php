@@ -540,7 +540,7 @@ class ClientController extends Controller
                 if (old('FK_SedeMun') !== null){
                     $Municipios = Municipio::select()->where('FK_MunCity', old('departamento'))->get();
                 }else {
-                    $Municipios = Municipio::select()->where('FK_MunCity', 6)->get();
+                    $Municipios = Municipio::select()->where('FK_MunCity',  $cliente->sedes[0]->Municipios->FK_MunCity)->get();
                 }
 
                 // get personal of client
