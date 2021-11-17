@@ -37,7 +37,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function persona(){
         return $this->belongsTo('App\Personal', 'FK_UserPers', 'ID_Pers');
     }
-    
+
     //se especifica la raclacion con la tabla declaraciones
     public function ArticuloProv()
     {

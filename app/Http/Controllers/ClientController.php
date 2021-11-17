@@ -10,12 +10,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\auditController;
 use App\Http\Requests\ClienteStoreRequest;
-use App\Http\Requests\ClienteUpdateRequest;
+use App\Http\Requests\ClienteExpressUpdateRequest;
 use App\Http\Controllers\userController;
 use App\AuditRequest;
 use App\Departamento;
 use App\Municipio;
 use App\Cliente;
+use App\Generador;
+use App\GenerSede;
 use App\audit;
 use App\Sede;
 use App\Area;
@@ -511,5 +513,132 @@ class ClientController extends Controller
             default:
                 abort(403);
         }
+    }
+
+        /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $ID_Cli
+     * @return \Illuminate\Http\Response
+     */
+    public function editExpress(Cliente $cliente)
+    {
+        switch (true) {
+            case (Auth::user()->email == 'asesorse2@prosarc.com.co'):
+            case (Auth::user()->email == 'asesorse1@prosarc.com.co'):
+            case (Auth::user()->email == 'coordinadorse@prosarc.com.co'):
+            case (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)):
+                $Departamentos = Departamento::all();
+                $comerciales = DB::table('personals')
+                ->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
+                ->select('personals.*')
+                ->where('personals.PersDelete', 0)
+                ->where('users.UsRol', 'Comercial')
+                ->orWhere('users.UsRol2', 'Comercial')
+                ->get();
+
+                if (old('FK_SedeMun') !== null){
+                    $Municipios = Municipio::select()->where('FK_MunCity', old('departamento'))->get();
+                }else {
+                    $Municipios = Municipio::select()->where('FK_MunCity', 6)->get();
+                }
+
+                // get personal of client
+                $personal = $cliente->sedes()->first()->Areas()->first()->Cargos()->first()->Personal()->first();
+
+                $user = User::where('FK_UserPers', $personal->ID_Pers)->first();
+
+                return view('clientes.editExpress', compact('Departamentos', 'Municipios', 'comerciales', 'cliente', 'personal', 'user'));
+                break;
+
+            default:
+                abort(403, 'Solo el personal autorizado puede editar la información del cliente');
+            }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $ID_Cli
+     * @return \Illuminate\Http\Response
+     */
+    public function updateExpress(ClienteExpressUpdateRequest $request, Cliente $cliente)
+    {
+        $cliente->CliNit = $request->input('CliNit');
+        $cliente->CliName = $request->input('CliName');
+        $cliente->CliComercial = $request->input('CliComercial');
+        $cliente->CliShortname = $request->input('CliName');
+        $cliente->save();
+
+        $Sede = Sede::where('FK_SedeCli', $cliente->ID_Cli)->first();
+        $Sede->SedeAddress = $request->input('SedeAddress');
+        $Sede->SedePhone1 = $request->input('SedePhone1');
+        $Sede->SedeEmail = $request->input("PersEmail");
+        $Sede->SedeCelular = $request->input("PersCellphone");
+        if ($request->input('FK_SedeMun') == 169) {
+            $Sede->SedeMapLocalidad = $request->input("SedeMapLocalidad");
+        }else {
+            $Sede->SedeMapLocalidad = 'No Definida';
+        }
+        $Sede->SedeMapAddressSearch = $request->input("SedeMapAddressSearch");
+        $Sede->SedeMapAddressResult = $request->input("SedeMapAddressResult");
+        $Sede->SedeMapLat = $request->input("SedeMapLat");
+        $Sede->SedeMapLong = $request->input("SedeMapLong");
+        $Sede->FK_SedeMun = $request->input('FK_SedeMun');
+        $Sede->save();
+
+        $Area = Area::where('FK_AreaSede', $Sede->ID_Sede)->first();
+
+        $Cargo = Cargo::where('CargArea', $Area->ID_Area)->first();
+
+        $Personal = Personal::where('FK_PersCargo', $Cargo->ID_Carg)->first();
+        $Personal->PersFirstName = $request->input("PersFirstName");
+        $Personal->PersLastName = $request->input("PersLastName");
+        $Personal->PersEmail = $request->input("PersEmail");
+        $Personal->PersCellphone = $request->input("PersCellphone");
+        $Personal->save();
+
+        $user = User::where('FK_UserPers', $Personal->ID_Pers)->first();
+        $user->name = $Personal->PersFirstName;
+        $user->email = $Personal->PersEmail;
+        $user->password = bcrypt($cliente->CliNit);
+        $user->save();
+
+        $Gener = Generador::where('FK_GenerCli', $Sede->ID_Sede)->first();
+        $Gener->GenerNit = $cliente->CliNit;
+        $Gener->GenerName = $cliente->CliName;
+        $Gener->save();
+
+        $SGener = GenerSede::where('FK_GSede', $Gener->ID_Gener)->first();
+        $SGener->GSedeName = $Sede->SedeName;
+        $SGener->GSedeAddress = $Sede->SedeAddress;
+        $SGener->GSedePhone1 = $Sede->SedePhone1;
+        $SGener->GSedeEmail = $Personal->PersEmail;
+        $SGener->GSedeCelular = $Personal->PersCellphone;
+        if ($request->input('FK_SedeMun') == 169) {
+            $SGener->GSedeMapLocalidad = $request->input("SedeMapLocalidad");
+        }else {
+            $SGener->GSedeMapLocalidad = 'No Definida';
+        }
+        $SGener->GSedeMapAddressSearch = $request->input("SedeMapAddressSearch");
+        $SGener->GSedeMapAddressResult = $request->input("SedeMapAddressResult");
+        $SGener->GSedeMapLat = $request->input("SedeMapLat");
+        $SGener->GSedeMapLong = $request->input("SedeMapLong");
+        $SGener->GSedeSlug = hash('sha256', rand().time().$SGener->GSedeName);
+        $SGener->FK_GSede = $Gener->ID_Gener;
+        $SGener->FK_GSedeMun = $Sede->FK_SedeMun;
+        $SGener->GSedeDelete = $Sede->SedeDelete;
+        $SGener->save();
+
+         $log = new audit();
+        $log->AuditTabla="Varias";
+        $log->AuditType="Update Cliente Express";
+        $log->AuditRegistro=$cliente->ID_Cli;
+        $log->AuditUser=Auth::user()->email;
+        $log->Auditlog=json_encode($request);
+        $log->save();
+
+        return redirect()->route('cliente-show', [$cliente->CliSlug]);
     }
 }
