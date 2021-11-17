@@ -3,69 +3,68 @@
 {{ trans('adminlte_lang::message.clientmenu') }}
 @endsection
 @section('contentheader_title')
-<span style="background-image: linear-gradient(40deg, #d4fc79, #00C851); padding-right:30vw; position:relative; overflow:hidden;">
-	Clientes Express
-  <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
+<span style="background-image: linear-gradient(40deg, rgb(255, 216, 111), rgb(252, 98, 98)); padding-right:30vw; position:relative; overflow:hidden;">
+    {{ trans('adminlte_lang::message.clientmenu') }}
+    <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
-	<div class="row">
-		<div class="col-md-16 col-md-offset-0">
-			<div class="box">
-				<div class="box-header">
-					<h3 class="box-title">{{ trans('adminlte_lang::message.clientindexboxtitle') }}</h3>
-				</div>
-				<div class="box box-info">
-					<div class="box-body">
-						<table id="clientesTable" class="table table-compact table-bordered table-striped">
-							<thead>
-							<tr>
-								<th>{{ 'Registro' }}</th>
-								<th>{{ trans('adminlte_lang::message.clientNIT') }}</th>
-								<th>{{ trans('adminlte_lang::message.clirazonsoc') }}</th>
-								<th>{{ trans('adminlte_lang::message.clientnombrecorto') }}</th>
-								@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARCMenosComercial))
-								<th>Comercial Asignado</th>
-								@endif
-								<th>{{ trans('adminlte_lang::message.seemore') }}</th>
-							</tr>
-							</thead>
-							<tbody onload="renderTable()" id="readyTable">
-							@foreach($clientes as $cliente)
-							<tr style="{{$cliente->CliDelete === 1 ? 'color: red;' : ''}}">
-                                <td>{{date('Y/m/d', strtotime($cliente->created_at))}}</td>
-								<td>{{$cliente->CliNit}}</td>
-								<td>{{$cliente->CliName}}</td>
-								<td>{{$cliente->CliShortname}}</td>
-								@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARCMenosComercial))
-								<td>
-								@if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial))
-									<a href="#" class="kg" onclick="changeComercial(`{{$cliente->CliSlug}}`, {{intval($cliente->CliComercial)}}, `{{$cliente->CliShortname}}`)"><i class="fas fa-marker"></i></a>
-								@endif
-									{{$cliente->PersFirstName <> null ? $cliente->PersFirstName.' '.$cliente->PersLastName : 'Sin Asignar'}}
-
-								</td>
-								@endif
-								<td>
-									<a method='get' href='/clientes/{{$cliente->CliSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a>
-								</td>
-							</tr>
-							@endforeach
-							</tbody>
-						</table>
-						<div id="divchangeComercial"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-md-16 col-md-offset-0">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">{{ trans('adminlte_lang::message.clientindexboxtitle') }}</h3>
+                </div>
+                <div class="box box-info">
+                    <div class="box-body">
+                        <table id="clientesTable" class="table table-compact table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Registro</th>
+                                    <th>{{ trans('adminlte_lang::message.clientNIT') }}</th>
+                                    <th>{{ trans('adminlte_lang::message.clirazonsoc') }}</th>
+                                    <th>{{ trans('adminlte_lang::message.clientnombrecorto') }}</th>
+                                    @if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARCMenosComercial))
+                                    <th>Comercial Asignado</th>
+                                    @endif
+                                    <th>{{ trans('adminlte_lang::message.seemore') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody onload="renderTable()" id="readyTable">
+                                @foreach($clientes as $cliente)
+                                <tr style="{{$cliente->CliDelete === 1 ? 'color: red;' : ''}}">
+                                    <td>{{$cliente->created_at}}</td>
+                                    <td>{{$cliente->CliNit}}</td>
+                                    <td>{{$cliente->CliName}}</td>
+                                    <td>{{$cliente->CliShortname}}</td>
+                                    @if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARCMenosComercial))
+                                    <td>
+                                        @if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial))
+                                        <a href="#" class="kg" onclick="changeComercial(`{{$cliente->CliSlug}}`, {{intval($cliente->CliComercial)}}, `{{$cliente->CliShortname}}`)"><i class="fas fa-marker"></i></a>
+                                        @endif
+                                        {{$cliente->PersFirstName <> null ? $cliente->PersFirstName.' '.$cliente->PersLastName : 'Sin Asignar'}}
+                                    </td>
+                                    @endif
+                                    <td>
+                                        <a method='get' href='/clientes/{{$cliente->CliSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div id="divchangeComercial"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 @if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial))
 @section('NewScript')
-	<script>
-		function changeComercial(slug, idPers, clishorname){
+<script>
+    function changeComercial(slug, idPers, clishorname){
 			var selected = idPers;
 			var personal = [];
 			var personals = <?php echo json_encode($personals);  ?>;
@@ -117,6 +116,6 @@
 			$('form').validator('update');
 			$('#changeComercial').modal();
 		}
-	</script>
+</script>
 @endsection
 @endif

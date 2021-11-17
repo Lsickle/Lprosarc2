@@ -58,9 +58,21 @@
 								</form>
 							@endif
 						@endif --}}
-						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+						@if (in_array(Auth::user()->UsRol, Permisos::CLIENTE) || Auth::user()->email == 'sistemas@prosarc.com.co')
 							<a href="/cliente/{{$cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
 						@endif
+                        @if ($cliente->CliCategoria == 'ClientePrepago')
+                            @switch(true)
+                                @case(Auth::user()->email == 'asesorse2@prosarc.com.co')
+                                @case(Auth::user()->email == 'asesorse1@prosarc.com.co')
+                                @case(Auth::user()->email == 'coordinadorse@prosarc.com.co')
+                                @case(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+                                    <a href="/clientesexpress/{{$cliente->CliSlug}}/edit" class="btn btn-warning pull-right"><i class="fas fa-edit"></i><b> {{ trans('adminlte_lang::message.edit') }}</b></a>
+                                    @break
+                                @default
+
+                            @endswitch
+                        @endif
 						{{-- <label data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 500}' title="{{ trans('adminlte_lang::LangRespel.respeldescriptittle') }}" data-content="{{ trans('adminlte_lang::LangRespel.respeldescriptinfo') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{ trans('adminlte_lang::LangRespel.descripcion') }}</label> --}}
 						@if(in_array(Auth::user()->UsRol, Permisos::SOLSERACEPTADO))
 							@if($cliente->CliStatus=='Autorizado')
