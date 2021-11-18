@@ -9,8 +9,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests\SedeRequest;
 use App\Http\Controllers\userController;
 use App\AuditRequest;
-use App\Sede;
 use App\Cliente;
+use App\Sede;
+use App\Generador;
+use App\GenerSede;
 use App\audit;
 use App\Departamento;
 use App\Municipio;
@@ -43,7 +45,7 @@ class sclientcontroller extends Controller
             if (old('FK_SedeMun') !== null){
                 $Municipios = Municipio::where('FK_MunCity', old('departamento'))->get();
             }
-            $Departamentos = Departamento::all();            
+            $Departamentos = Departamento::all();
             return view('sclientes.create', compact('Clientes', 'Departamentos', 'Municipios'));
         }else{
             abort(403);
@@ -144,7 +146,7 @@ class sclientcontroller extends Controller
         $Sede->save();
 
         AuditRequest::auditUpdate($this->table, $Sede->ID_Sede, $request->all());
-        
+
         return redirect()->route('clientes.show', [$Cliente->CliSlug]);
     }
 
@@ -179,5 +181,86 @@ class sclientcontroller extends Controller
         }else{
             abort(403);
         }
+    }
+        /**
+     * Show the form for creating a new resource.
+     * @param  int  $cliente
+     * @return \Illuminate\Http\Response
+     */
+    public function createSedeExpress(Cliente $cliente)
+    {
+        switch (true) {
+            case Auth::user()->email == 'asesorse1@prosarc.com.co':
+            case Auth::user()->email == 'asesorse2@prosarc.com.co':
+            case Auth::user()->email == 'coordinadorse@prosarc.com.co':
+            case in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR):
+
+                $Municipios = Municipio::all();
+                $Departamentos = Departamento::all();
+                $personal = $cliente->sedes()->first()->Areas()->first()->Cargos()->first()->Personal()->first();
+
+                return view('sclientes.createExpress', compact('cliente', 'Departamentos', 'Municipios', 'personal'));
+                break;
+
+            default:
+                abort(403);
+                break;
+        }
+    }
+
+        /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeSedeExpress(Request $request, Cliente $cliente)
+    {
+        // return $cliente;
+        $Sede = new Sede();
+        $Sede->SedeName =$request->input('SedeName');
+        $Sede->SedeAddress = $request->input('SedeAddress');
+        $Sede->SedePhone1 = $request->input('SedePhone1');
+        $Sede->SedeEmail = $request->input("PersEmail");
+        $Sede->SedeCelular = $request->input("PersCellphone");
+        if ($request->input('FK_SedeMun') == 169) {
+            $Sede->SedeMapLocalidad = $request->input("SedeMapLocalidad");
+        }else {
+            $Sede->SedeMapLocalidad = 'No Definida';
+        }
+        $Sede->SedeMapAddressSearch = $request->input("SedeMapAddressSearch");
+        $Sede->SedeMapAddressResult = $request->input("SedeMapAddressResult");
+        $Sede->SedeMapLat = $request->input("SedeMapLat");
+        $Sede->SedeMapLong = $request->input("SedeMapLong");
+        $Sede->SedeSlug = hash('sha256', rand().time().$Sede->SedeName);
+        $Sede->FK_SedeCli = $cliente->ID_Cli;
+        $Sede->FK_SedeMun = $request->input('FK_SedeMun');
+        $Sede->SedeDelete = 0;
+        $Sede->save();
+
+        $Gener = Generador::where('FK_GenerCli', $cliente->sedes()->first()->ID_Sede)->first();
+
+        $SGener = new GenerSede();
+        $SGener->GSedeName = $Sede->SedeName;
+        $SGener->GSedeAddress = $Sede->SedeAddress;
+        $SGener->GSedePhone1 = $Sede->SedePhone1;
+        $SGener->GSedeEmail = $Sede->SedeEmail;
+        $SGener->GSedeCelular = $Sede->SedeCelular;
+        if ($request->input('FK_SedeMun') == 169) {
+            $SGener->GSedeMapLocalidad = $request->input("SedeMapLocalidad");
+        }else {
+            $SGener->GSedeMapLocalidad = 'No Definida';
+        }
+        $SGener->GSedeMapAddressSearch = $request->input("SedeMapAddressSearch");
+        $SGener->GSedeMapAddressResult = $request->input("SedeMapAddressResult");
+        $SGener->GSedeMapLat = $request->input("SedeMapLat");
+        $SGener->GSedeMapLong = $request->input("SedeMapLong");
+        $SGener->GSedeSlug = hash('sha256', rand().time().$SGener->GSedeName);
+        $SGener->FK_GSede = $Gener->ID_Gener;
+        $SGener->FK_GSedeMun = $Sede->FK_SedeMun;
+        $SGener->GSedeDelete = 0;
+        $SGener->save();
+
+        return redirect()->route('cliente-show', compact('cliente'));
     }
 }
