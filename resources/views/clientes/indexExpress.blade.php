@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::message.clientmenu') }}
+Clientes Express
 @endsection
 @section('contentheader_title')
-<span style="background-image: linear-gradient(40deg, rgb(255, 216, 111), rgb(252, 98, 98)); padding-right:30vw; position:relative; overflow:hidden;">
-    {{ trans('adminlte_lang::message.clientmenu') }}
+<span style="background-image: linear-gradient(40deg, #d4fc79, #00C851); padding-right:30vw; position:relative; overflow:hidden;">
+    {{'Clientes Express'}}
     <div style="background-color:#ecf0f5; position:absolute; height:145%; width:40vw; transform:rotate(30deg); right:-20vw; top:-45%;"></div>
 </span>
 @endsection
@@ -37,13 +37,17 @@
                                     <td>{{$cliente->created_at}}</td>
                                     <td>{{$cliente->CliNit}}</td>
                                     <td>{{$cliente->CliName}}</td>
+                                    @if ($cliente->sedes()->count() > 0)
                                     <td>{{$cliente->sedes()->first()->SedeAddress}}  {{$cliente->sedes()->first()->SedeMapLocalidad !== 'No Definida' ? 'Localidad: '.$cliente->sedes()->first()->SedeMapLocalidad : ''}}</td>
+                                    @else
+                                    <td>sin sede definida</td>
+                                    @endif
                                     @if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARCMenosComercial))
                                     <td>
                                         @if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial))
                                         <a href="#" class="kg" onclick="changeComercial(`{{$cliente->CliSlug}}`, {{intval($cliente->CliComercial)}}, `{{$cliente->CliShortname}}`)"><i class="fas fa-marker"></i></a>
                                         @endif
-                                        {{$cliente->PersFirstName <> null ? $cliente->PersFirstName.' '.$cliente->PersLastName : 'Sin Asignar'}}
+                                        {{$cliente->comercialAsignado->PersFirstName <> null ? $cliente->comercialAsignado->PersFirstName.' '.$cliente->comercialAsignado->PersLastName : 'Sin Asignar'}}
                                     </td>
                                     @endif
                                     <td>
