@@ -468,13 +468,17 @@ class ClientController extends Controller
     {
         switch (true) {
             case (in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)):
-                // $clientes = Cliente::where('CliCategoria', 'Cliente')->get();
-                $clientes = DB::table('clientes')
-                    ->leftjoin('personals', 'clientes.CliComercial', '=', 'personals.ID_Pers')
-                    ->select('clientes.*', 'personals.PersFirstName','personals.PersLastName')
-                    ->where('CliDelete', 0)
-                    ->where('CliCategoria', 'ClientePrepago')
-                    ->get();
+                $clientes = Cliente::with(['comercialAsignado'])
+                ->where('CliCategoria', 'ClientePrepago')
+                ->where('CliDelete', 0)
+                ->get();
+                // $clientes = DB::table('clientes')
+                //     ->leftjoin('personals', 'clientes.CliComercial', '=', 'personals.ID_Pers')
+                //     ->select('clientes.*', 'personals.PersFirstName','personals.PersLastName')
+                //     ->where('CliDelete', 0)
+                //     ->where('CliCategoria', 'ClientePrepago')
+                //     ->get();
+
                  $personals = DB::table('personals')
                         ->rightjoin('users', 'personals.ID_Pers', '=', 'users.FK_UserPers')
                         ->select('personals.*')
