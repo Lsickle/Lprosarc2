@@ -76,6 +76,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::get('/cliente/{slug}/negarCliStatus', 'ClienteController@negarCliStatus')->name('cliente-negarCliStatus');
 	Route::get('/cliente/{slug}/TipoFacturacionContado', 'ClienteController@facturacionContado')->name('cliente-facturacionContado');
 	Route::get('/cliente/{slug}/TipoFacturacionCredito', 'ClienteController@facturacionCredito')->name('cliente-facturacionCredito');
+	Route::resource('/clientexpress', 'clientExpressController');
 	Route::get('/clientesexpress', 'ClientController@indexExpress')->name('clientes.clientesExpress');
 	Route::get('/clientesexpress/{cliente}/edit', 'ClientController@editExpress')->name('clientes.editExpress');
 	Route::put('/clientexpress/{cliente}/update', 'ClientController@updateExpress')->name('clientes.updateExpress');

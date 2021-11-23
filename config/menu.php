@@ -50,7 +50,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 							->addIf(in_array(Auth::user()->UsRol, Permisos::CONTACTOS) || in_array(Auth::user()->UsRol2, Permisos::CONTACTOS), (Link::toUrl('/contactos', '<i class="fas fa-handshake"></i> <span>'. trans('adminlte_lang::message.MenuContactos').'</span>')))
 							/*PESTAÑA DE LISTA DE CLIENTES*/
 							->addIf(in_array(Auth::user()->UsRol, Permisos::LISTACLIENTES) || in_array(Auth::user()->UsRol2, Permisos::LISTACLIENTES), (Link::toUrl('/clientes', '<i class="fas fa-users"></i> <span>'. trans('adminlte_lang::message.MenuClien').'</span>')))
-							->addIf(in_array(Auth::user()->UsRol, Permisos::LISTACLIENTES) || in_array(Auth::user()->UsRol2, Permisos::LISTACLIENTES), (Link::toUrl('/clientesexpress', '<i style="color: #66B032;" class="fas fa-users"></i> <span>Clientes Express</span>')))
+							->addIf(in_array(Auth::user()->UsRol, Permisos::LISTACLIENTES) || in_array(Auth::user()->UsRol2, Permisos::LISTACLIENTES), (Link::toUrl('/clientexpress', '<i style="color: #66B032;" class="fas fa-users"></i> <span>Clientes Express</span>')))
 							/*PESTAÑA DE PERSONAL DEL CLIENTE*/
 							->addIf(in_array(Auth::user()->UsRol, Permisos::PERSONALCLIENTE) || in_array(Auth::user()->UsRol2, Permisos::PERSONALCLIENTE),(Link::toUrl('/personal', '<i class="fas fa-id-card"></i> <span>'.trans('adminlte_lang::message.MenuPersonal2').'</span>')))
 							/*PESTAÑA DE GENERADORES*/
@@ -198,7 +198,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				->action('HomeController@index', '<i class="fa fa-home"></i> <span>'.trans('adminlte_lang::message.home').'</span>')
 				// PREGUNTAS FRECUENTES
 				// ->add(Link::toUrl('/preguntas-frecuentes', '<i class="fas fa-question-circle"></i> <span>'.trans('adminlte_lang::message.frequent questions').'</span>'))
-				
+
 				->setActiveFromRequest();
 		}
 	else{
@@ -209,7 +209,7 @@ Menu::macro('sidebar', function () {//COMIENZO DEL SIDEBAR EN VERSION DE MENU
 				->action('HomeController@index', '<i class="fa fa-home"></i> <span>'.trans('adminlte_lang::message.home').'</span>')
 				// PREGUNTAS FRECUENTES
 				// ->add(Link::toUrl('/preguntas-frecuentes', '<i class="fas fa-question-circle"></i> <span>'.trans('adminlte_lang::message.frequent questions').'</span>'))
-				
+
 				->setActiveFromRequest();
 	}
 });

@@ -14,7 +14,7 @@
                     <h3 class="box-title">{{ trans('adminlte_lang::message.smartwizzardtitle') }}</h3>
                 </div>
                 <div class="box box-info">
-                    <form role="form" action="/clientexpress/{{$cliente->CliSlug}}/update" method="POST" enctype="multipart/form-data" data-toggle="validator">
+                    <form role="form" action="/clientexpress/{{$cliente->CliSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
                         {{csrf_field()}}
                         @csrf
                         @method('PUT')

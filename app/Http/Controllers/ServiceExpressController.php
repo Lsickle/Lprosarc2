@@ -172,7 +172,11 @@ class ServiceExpressController extends Controller
     {
 		// return $request;
 
-		$Cliente = Cliente::where('CliSlug', $request->input('FK_SolSerCliente'))->first();
+        //sede segun input
+
+        $sede = Sede::where('SedeSlug', $request->input('SedeSlug'))->first();
+
+		$Cliente = Cliente::where('ID_Cli', $sede->FK_SedeCli)->first();
 
         $file = $request->file('pagoComprobante');
 
@@ -229,8 +233,6 @@ class ServiceExpressController extends Controller
 		$qrCode->setMargin(0);
 		$qrCode->setRoundBlockSize(true, QrCode::ROUND_BLOCK_SIZE_MODE_SHRINK);
 
-        $sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
-
         $pdf = PDF::setPaper('letter', 'portrait')->loadView('recibos.recibotopdf', compact(['recibo','Cliente','qrCode','sede']));
         Storage::put('recibosdepago/'.$foldername.'/RP-'.sprintf("%07s", $recibo->ID_Recibo).'.pdf', $pdf->output(), 'public');
 
@@ -244,9 +246,8 @@ class ServiceExpressController extends Controller
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
 				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 				->select('personals.*')
-				->where('clientes.ID_Cli', $Cliente->ID_Cli)
+				->where('sedes.ID_Sede', $sede->ID_Sede)
 				->where('personals.PersDelete', 0)
 				->first();
 

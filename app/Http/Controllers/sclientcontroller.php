@@ -11,6 +11,9 @@ use App\Http\Controllers\userController;
 use App\AuditRequest;
 use App\Cliente;
 use App\Sede;
+use App\Area;
+use App\Cargo;
+use App\Personal;
 use App\Generador;
 use App\GenerSede;
 use App\audit;
@@ -216,7 +219,7 @@ class sclientcontroller extends Controller
      */
     public function storeSedeExpress(Request $request, Cliente $cliente)
     {
-        // return $cliente;
+        // return $request;
         $Sede = new Sede();
         $Sede->SedeName =$request->input('SedeName');
         $Sede->SedeAddress = $request->input('SedeAddress');
@@ -237,6 +240,33 @@ class sclientcontroller extends Controller
         $Sede->FK_SedeMun = $request->input('FK_SedeMun');
         $Sede->SedeDelete = 0;
         $Sede->save();
+
+        $Area = new Area();
+        $Area->AreaName = 'Administración';
+        $Area->FK_AreaSede = $Sede->ID_Sede;
+        $Area->AreaDelete = 0;
+        $Area->AreaSlug = hash('sha256', rand().time().$Area->AreaName);
+        $Area->save();
+
+        $Cargo = new Cargo();
+        $Cargo->CargName = 'Encargado';
+        $Cargo->CargArea =  $Area->ID_Area;
+        $Cargo->CargDelete =  0;
+        $Cargo->CargSlug = hash('sha256', rand().time().$Cargo->CargName);
+        $Cargo->save();
+
+        $Personal = new Personal();
+        $Personal->PersFirstName = $request->input("PersFirstName");
+        $Personal->PersLastName = $request->input("PersLastName");
+        $Personal->PersEmail = $request->input("PersEmail");
+        $Personal->PersCellphone = $request->input("PersCellphone");
+        $Personal->PersType = 1;
+        $Personal->PersSlug = hash('sha256', rand().time().$Personal->PersFirstName);
+        $Personal->PersDelete = 0;
+        $Personal->PersFactura = 0;
+        $Personal->PersAdmin = 0;
+        $Personal->FK_PersCargo = $Cargo->ID_Carg;
+        $Personal->save();
 
         $Gener = Generador::where('FK_GenerCli', $cliente->sedes()->first()->ID_Sede)->first();
 

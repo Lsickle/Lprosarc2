@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
+
 class ClienteExpressUpdateRequest extends FormRequest
 {
     /**
@@ -27,7 +28,7 @@ class ClienteExpressUpdateRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'CliNit' => ['required','min:13','max:15',Rule::unique('clientes')->ignore($this->cliente)],
+            'CliNit' => ['required','min:13','max:15',Rule::unique('clientes')->ignore($this->cliente->CliSlug , 'CliSlug')],
             'CliName'       => 'required|max:255|min:1',
 
             'SedeAddress'   => 'required|max:255|min:1',
