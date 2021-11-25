@@ -170,7 +170,7 @@ class ServiceExpressController extends Controller
      */
     public function store(StoreServExpressRequest $request)
     {
-		// return $request;
+		return $request;
 
         //sede segun input
 
@@ -281,7 +281,11 @@ class ServiceExpressController extends Controller
 			$SolicitudServicio->FK_SolSerCliente = $Cliente->ID_Cli;
 			$SolicitudServicio->FK_ReciboSolserv = $recibo->ID_Recibo;
 			$SolicitudServicio->save();
-			$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
+            if ($request->input('SolServTypeRecolection') == 'Especifica') {
+                $this->createSolRes($request, $SolicitudServicio->ID_SolSer);
+            }else{
+                $this->addAllRespels($request, $SolicitudServicio->ID_SolSer, true);
+            }
 
 			/*se guarda la observacion inicial de la creación del servicio*/
 			$Observacion = new Observacion();
@@ -2603,6 +2607,146 @@ class ServiceExpressController extends Controller
 		$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact('certificado'));
 
 		return $pdf->stream();
+	}
+
+    	/*
+	*
+	* Add all respels into express service
+	*
+	*/
+	public function addAllRespels($CliSlug, $)
+	{
+            $Cliente = Cliente::where('CliSlug', $CliSlug)->first();
+			$Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
+			$generador = Generador::where('FK_GenerCli', $Sede->ID_Sede)->first();
+			$sGener = GenerSede::with(['resgener.respels'])->where('FK_GSede', $generador->ID_Gener)->first();
+
+            $sedes = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->get();
+
+			$Respels = DB::table('residuos_geners')
+				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+				->join('requerimientos', 'requerimientos.FK_ReqRespel', '=', 'respels.ID_Respel')
+				->select('gener_sedes.*', 'residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.RespelSlug', 'respels.ID_Respel', 'requerimientos.FK_ReqTrata', 'requerimientos.forevaluation', 'requerimientos.ofertado')
+				->whereIn('respels.RespelStatus', ['Aprobado', 'Revisado', 'Falta TDE', 'TDE actualizada', 'Vencido'])
+				->where('respels.RespelDelete', 0)
+				->where('gener_sedes.GSedeSlug', $sGener->GSedeSlug)
+				->where('residuos_geners.DeleteSGenerRes', '=', 0)
+				->where('requerimientos.forevaluation', 1)
+				->where('requerimientos.ofertado', 1)
+				->get();
+		foreach ($request->input('SGenerador') as $Generador => $value) {
+			for ($y=0; $y < count($request['FK_SolResRg'][$Generador]); $y++) {
+				$SolicitudResiduo = new SolicitudResiduo();
+				$SolicitudResiduo->SolResKgEnviado = $request['SolResKgEnviado'][$Generador][$y];
+				$SolicitudResiduo->SolResKgRecibido = 0;
+				$SolicitudResiduo->SolResKgConciliado = 0;
+				$SolicitudResiduo->SolResKgTratado = 0;
+				$SolicitudResiduo->SolResDelete = 0;
+				$SolicitudResiduo->SolResSlug = hash('sha256', rand().time().$SolicitudResiduo->SolResKgEnviado);
+				$SolicitudResiduo->FK_SolResSolSer = $ID_SolSer;
+				if ((isset($request['SolResTypeUnidad'][$Generador][$y]))){
+					if($request['SolResTypeUnidad'][$Generador][$y] == 99){
+						$SolicitudResiduo->SolResTypeUnidad = "Unidad";
+					}
+					else if($request['SolResTypeUnidad'][$Generador][$y] == 98){
+						$SolicitudResiduo->SolResTypeUnidad = "Litros";
+					}
+					if (isset($request['SolResCantiUnidad'][$Generador][$y])&&$request['SolResCantiUnidad'][$Generador][$y] != null) {
+						$SolicitudResiduo->SolResCantiUnidad = $request['SolResCantiUnidad'][$Generador][$y];
+						$SolicitudResiduo->SolResCantiUnidadConciliada = 0;
+						$SolicitudResiduo->SolResCantiUnidadRecibida = 0;
+					}else {
+						$SolicitudResiduo->SolResCantiUnidad = 0;
+						$SolicitudResiduo->SolResCantiUnidadConciliada = 0;
+						$SolicitudResiduo->SolResCantiUnidadRecibida = 0;
+					}
+				}
+
+				switch ($request['SolResEmbalaje'][$Generador][$y]) {
+					case 99:
+						$SolicitudResiduo->SolResEmbalaje = "Sacos/Bolsas";
+						break;
+					case 98:
+						$SolicitudResiduo->SolResEmbalaje = "Bidones Pequeños";
+						break;
+					case 97:
+						$SolicitudResiduo->SolResEmbalaje = "Bidones Grandes";
+						break;
+					case 96:
+						$SolicitudResiduo->SolResEmbalaje = "Estibas";
+						break;
+					case 95:
+						$SolicitudResiduo->SolResEmbalaje = "Garrafones/Jerricanes";
+						break;
+					case 94:
+						$SolicitudResiduo->SolResEmbalaje = "Cajas";
+						break;
+					case 93:
+						$SolicitudResiduo->SolResEmbalaje = "Cuñetes";
+						break;
+					case 92:
+						$SolicitudResiduo->SolResEmbalaje = "Big Bags";
+						break;
+					case 91:
+						$SolicitudResiduo->SolResEmbalaje = "Isotanques";
+						break;
+					case 90:
+						$SolicitudResiduo->SolResEmbalaje = "Tachos";
+						break;
+					case 89:
+						$SolicitudResiduo->SolResEmbalaje = "Embalajes Compuestos";
+						break;
+					case 88:
+						$SolicitudResiduo->SolResEmbalaje = "Granel";
+						break;
+					case 87:
+						$SolicitudResiduo->SolResEmbalaje = "Canecas 55 gal.";
+						break;
+					case 86:
+						$SolicitudResiduo->SolResEmbalaje = "Canecas 05 gal.";
+						break;
+				}
+
+				$SolicitudResiduo->FK_SolResRg = ResiduosGener::select('ID_SGenerRes')->where('SlugSGenerRes',$request['FK_SolResRg'][$Generador][$y])->first()->ID_SGenerRes;
+				/*validar el residuo para saber el tratamiento*/
+				$respelref = ResiduosGener::select('FK_Respel')->where('SlugSGenerRes',$request['FK_SolResRg'][$Generador][$y])->first()->FK_Respel;
+				/*asignar el requerimiento segun el tratamiento ofertado actualmente*/
+				// $SolicitudResiduo->FK_SolResRequerimiento = Requerimiento::select('ID_Req')
+				// ->where('FK_ReqRespel', $respelref)
+				// ->where('ofertado', 1)
+				// ->first()->ID_Req;
+				// $SolicitudResiduo->save();
+				$requerimientoparacopiar = Requerimiento::with(['pretratamientosSelected'])
+				->where('FK_ReqRespel', $respelref)
+				->where('ofertado', 1)
+				->where('forevaluation', 1)
+				->first();
+				$nuevorequerimiento = $requerimientoparacopiar->replicate();
+                $nuevorequerimiento->ReqSlug= hash('md5', rand().time().$respelref);
+                $nuevorequerimiento->forevaluation=0;
+                $nuevorequerimiento->ofertado=0;
+                $nuevorequerimiento->save();
+                $nuevorequerimiento->pretratamientosSelected()->attach($requerimientoparacopiar['pretratamientosSelected']);
+
+                $tarifaparacopiar = Tarifa::with(['rangos'])
+                ->where('FK_TarifaReq', $requerimientoparacopiar->ID_Req)->first();
+                $nuevatarifa = $tarifaparacopiar->replicate();
+                $nuevatarifa->FK_TarifaReq=$nuevorequerimiento->ID_Req;
+                $nuevatarifa->save();
+
+                foreach ($tarifaparacopiar->rangos as $rango) {
+                	$rangoparacopiar = Rango::find($rango->ID_Rango);
+                	$nuevarango = $rangoparacopiar->replicate();
+                	$nuevarango->FK_RangoTarifa = $nuevatarifa->ID_Tarifa;
+                	$nuevarango->save();
+                }
+
+
+                $SolicitudResiduo->FK_SolResRequerimiento = $nuevorequerimiento->ID_Req;
+                $SolicitudResiduo->save();
+			}
+		}
 	}
 
     public function recibotest()

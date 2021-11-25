@@ -88,7 +88,7 @@
                             <small class="help-block with-errors">*</small>
                             <input type="number" class="form-control" id="montodepago" name="montodepago" step=".1" min="0" required value="35000">
                         </div>
-                        <div id="mediodepagoDiv" class="form-group col-md-6">
+                        <div id="mediodepagoDiv" class="form-group col-md-3">
                             <label>medio de pago</label>
                             <small class="help-block with-errors">*</small>
                             <select class="form-control" id="mediodepago" name="mediodepago" required>
@@ -131,6 +131,15 @@
                                 <option value="trimestral">trimestral</option>
                                 <option value="semestral">semestral</option>
                                 <option value="anual">anual</option>
+                            </select>
+                        </div>
+                        <div id="SolServTypeRecolectionDiv" class="form-group col-md-3">
+                            <label>Tipo de recolección</label>
+                            <small class="help-block with-errors">*</small>
+                            <select class="form-control" id="SolServTypeRecolection" name="SolServTypeRecolection" required>
+                                <option value="">seleccione...</option>
+                                <option value="General">General</option>
+                                <option value="Especifica">Especifica</option>
                             </select>
                         </div>
                         <div class="col-md-12">

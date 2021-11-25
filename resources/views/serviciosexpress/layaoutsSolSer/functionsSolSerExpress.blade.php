@@ -309,4 +309,74 @@ $("#departamento2").change(function(e){
 		}
 	})
 });
+
+$("#SolServTypeRecolection").change(function(e){
+    type=$("#SolServTypeRecolection").val();
+    if (type == 'General') {
+        id_div = 0;
+        $("#DivRepel"+id_div).empty();
+        $("#CreateSolSer").validator('update');
+    } else {
+        id=$("#FK_SolSerCliente").val();
+        e.preventDefault();
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        }
+        });
+        $.ajax({
+            url: "{{url('/ClienteExpress-Residuos')}}/"+id,
+            method: 'GET',
+            data:{},
+            beforeSend: function(){
+                $(".load").append('<i class="fas fa-sync-alt fa-spin"></i>');
+                // $("#FK_SolSerCliente").prop('disabled', true);
+            },
+            success: function(res){
+                id_div = 0;
+                ID_Gener =res.respels[0].GSedeSlug;
+                contadorRespel[id_div] = 0;
+                $("#SGenerador").val(ID_Gener);
+                $("#DivRepel"+id_div).empty();
+                $("#DivRepel"+id_div).append(`@include('serviciosexpress.layaoutsSolSer.OneRespel')`);
+                numeroKg();
+                popover();
+                ChangeSelect();
+                Selects();
+
+                icon = $('button[data-target=".Respel'+id_div+'"]').find('svg');
+                $(icon).removeClass('fa-plus');
+                $(icon).addClass('fa-minus');
+
+                var residuos = new Array();
+                // $("#FK_SolResRg"+id_div+contadorRespel[id_div]).empty();
+                $("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="HiddenRequeRespel(`+id_div+`,`+contadorRespel[id_div]+`)" value="">{{ trans('adminlte_lang::message.select') }}</option>`);
+                for(var i = res.respels.length -1; i >= 0; i--){
+                    if ($.inArray(res.respels[i].SlugSGenerRes, residuos) < 0) {
+                        $("#FK_SolResRg"+id_div+contadorRespel[id_div]).append(`<option onclick="RequeRespel(`+id_div+`,`+contadorRespel[id_div]+`,'`+res.respels[i].RespelSlug+`')" value="${res.respels[i].SlugSGenerRes}">${res.respels[i].RespelName} (${res.respels[i].TratName})</option>`);
+                        residuos.push(res.respels[i].SlugSGenerRes);
+                    }
+                }
+
+                var sedes = new Array();
+                // $("#FK_SolResRg"+id_div+contadorRespel[id_div]).empty();
+                $("#SedeSlug").empty();
+                $("#SedeSlug").append(`<option value="">{{ trans('adminlte_lang::message.select') }}</option>`);
+                for(var i = res.sedes.length -1; i >= 0; i--){
+                    if ($.inArray(res.sedes[i].SedeSlug, sedes) < 0) {
+                        $("#SedeSlug").append(`<option value="${res.sedes[i].SedeSlug}">${res.sedes[i].SedeName} (${res.sedes[i].SedeAddress})</option>`);
+                        sedes.push(res.sedes[i].SedeSlug);
+                    }
+                }
+            },
+            complete: function(){
+                $(".load").empty();
+                $("#municipio2").prop('disabled', false);
+                // $("#CreateSolSer").validator('destroy');
+                $("#CreateSolSer").validator('update');
+            }
+        })
+    }
+
+});
 </script>
