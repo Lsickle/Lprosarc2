@@ -170,7 +170,7 @@ class ServiceExpressController extends Controller
      */
     public function store(StoreServExpressRequest $request)
     {
-		return $request;
+		// return $request;
 
         //sede segun input
 
@@ -284,7 +284,7 @@ class ServiceExpressController extends Controller
             if ($request->input('SolServTypeRecolection') == 'Especifica') {
                 $this->createSolRes($request, $SolicitudServicio->ID_SolSer);
             }else{
-                $this->addAllRespels($request, $SolicitudServicio->ID_SolSer, true);
+                $this->addAllRespels($SolicitudServicio);
             }
 
 			/*se guarda la observacion inicial de la creación del servicio*/
@@ -2614,14 +2614,12 @@ class ServiceExpressController extends Controller
 	* Add all respels into express service
 	*
 	*/
-	public function addAllRespels($CliSlug, $)
+	public function addAllRespels(SolicitudServicio $SolicitudServicio)
 	{
-            $Cliente = Cliente::where('CliSlug', $CliSlug)->first();
+            $Cliente = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
 			$Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
 			$generador = Generador::where('FK_GenerCli', $Sede->ID_Sede)->first();
 			$sGener = GenerSede::with(['resgener.respels'])->where('FK_GSede', $generador->ID_Gener)->first();
-
-            $sedes = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->get();
 
 			$Respels = DB::table('residuos_geners')
 				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
@@ -2635,88 +2633,21 @@ class ServiceExpressController extends Controller
 				->where('requerimientos.forevaluation', 1)
 				->where('requerimientos.ofertado', 1)
 				->get();
-		foreach ($request->input('SGenerador') as $Generador => $value) {
-			for ($y=0; $y < count($request['FK_SolResRg'][$Generador]); $y++) {
+
+		foreach ($Respels as $Respel) {
 				$SolicitudResiduo = new SolicitudResiduo();
-				$SolicitudResiduo->SolResKgEnviado = $request['SolResKgEnviado'][$Generador][$y];
+				$SolicitudResiduo->SolResKgEnviado = 1;
 				$SolicitudResiduo->SolResKgRecibido = 0;
 				$SolicitudResiduo->SolResKgConciliado = 0;
 				$SolicitudResiduo->SolResKgTratado = 0;
 				$SolicitudResiduo->SolResDelete = 0;
-				$SolicitudResiduo->SolResSlug = hash('sha256', rand().time().$SolicitudResiduo->SolResKgEnviado);
-				$SolicitudResiduo->FK_SolResSolSer = $ID_SolSer;
-				if ((isset($request['SolResTypeUnidad'][$Generador][$y]))){
-					if($request['SolResTypeUnidad'][$Generador][$y] == 99){
-						$SolicitudResiduo->SolResTypeUnidad = "Unidad";
-					}
-					else if($request['SolResTypeUnidad'][$Generador][$y] == 98){
-						$SolicitudResiduo->SolResTypeUnidad = "Litros";
-					}
-					if (isset($request['SolResCantiUnidad'][$Generador][$y])&&$request['SolResCantiUnidad'][$Generador][$y] != null) {
-						$SolicitudResiduo->SolResCantiUnidad = $request['SolResCantiUnidad'][$Generador][$y];
-						$SolicitudResiduo->SolResCantiUnidadConciliada = 0;
-						$SolicitudResiduo->SolResCantiUnidadRecibida = 0;
-					}else {
-						$SolicitudResiduo->SolResCantiUnidad = 0;
-						$SolicitudResiduo->SolResCantiUnidadConciliada = 0;
-						$SolicitudResiduo->SolResCantiUnidadRecibida = 0;
-					}
-				}
-
-				switch ($request['SolResEmbalaje'][$Generador][$y]) {
-					case 99:
-						$SolicitudResiduo->SolResEmbalaje = "Sacos/Bolsas";
-						break;
-					case 98:
-						$SolicitudResiduo->SolResEmbalaje = "Bidones Pequeños";
-						break;
-					case 97:
-						$SolicitudResiduo->SolResEmbalaje = "Bidones Grandes";
-						break;
-					case 96:
-						$SolicitudResiduo->SolResEmbalaje = "Estibas";
-						break;
-					case 95:
-						$SolicitudResiduo->SolResEmbalaje = "Garrafones/Jerricanes";
-						break;
-					case 94:
-						$SolicitudResiduo->SolResEmbalaje = "Cajas";
-						break;
-					case 93:
-						$SolicitudResiduo->SolResEmbalaje = "Cuñetes";
-						break;
-					case 92:
-						$SolicitudResiduo->SolResEmbalaje = "Big Bags";
-						break;
-					case 91:
-						$SolicitudResiduo->SolResEmbalaje = "Isotanques";
-						break;
-					case 90:
-						$SolicitudResiduo->SolResEmbalaje = "Tachos";
-						break;
-					case 89:
-						$SolicitudResiduo->SolResEmbalaje = "Embalajes Compuestos";
-						break;
-					case 88:
-						$SolicitudResiduo->SolResEmbalaje = "Granel";
-						break;
-					case 87:
-						$SolicitudResiduo->SolResEmbalaje = "Canecas 55 gal.";
-						break;
-					case 86:
-						$SolicitudResiduo->SolResEmbalaje = "Canecas 05 gal.";
-						break;
-				}
-
-				$SolicitudResiduo->FK_SolResRg = ResiduosGener::select('ID_SGenerRes')->where('SlugSGenerRes',$request['FK_SolResRg'][$Generador][$y])->first()->ID_SGenerRes;
+				$SolicitudResiduo->SolResSlug = hash('sha256', rand().time().$Respel->RespelSlug);
+				$SolicitudResiduo->FK_SolResSolSer =  $SolicitudServicio->ID_SolSer;
+                $SolicitudResiduo->SolResEmbalaje = "Sacos/Bolsas";
+				$SolicitudResiduo->FK_SolResRg = ResiduosGener::select('ID_SGenerRes')->where('SlugSGenerRes', $Respel->SlugSGenerRes)->first()->ID_SGenerRes;
 				/*validar el residuo para saber el tratamiento*/
-				$respelref = ResiduosGener::select('FK_Respel')->where('SlugSGenerRes',$request['FK_SolResRg'][$Generador][$y])->first()->FK_Respel;
-				/*asignar el requerimiento segun el tratamiento ofertado actualmente*/
-				// $SolicitudResiduo->FK_SolResRequerimiento = Requerimiento::select('ID_Req')
-				// ->where('FK_ReqRespel', $respelref)
-				// ->where('ofertado', 1)
-				// ->first()->ID_Req;
-				// $SolicitudResiduo->save();
+				$respelref = ResiduosGener::select('FK_Respel')->where('SlugSGenerRes', $Respel->SlugSGenerRes)->first()->FK_Respel;
+
 				$requerimientoparacopiar = Requerimiento::with(['pretratamientosSelected'])
 				->where('FK_ReqRespel', $respelref)
 				->where('ofertado', 1)
@@ -2742,10 +2673,8 @@ class ServiceExpressController extends Controller
                 	$nuevarango->save();
                 }
 
-
                 $SolicitudResiduo->FK_SolResRequerimiento = $nuevorequerimiento->ID_Req;
                 $SolicitudResiduo->save();
-			}
 		}
 	}
 
