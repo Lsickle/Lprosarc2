@@ -291,6 +291,6 @@ class sclientcontroller extends Controller
         $SGener->GSedeDelete = 0;
         $SGener->save();
 
-        return redirect()->route('cliente-show', compact('cliente'));
+        return redirect()->route('clientexpress.show', compact('cliente'));
     }
 }
