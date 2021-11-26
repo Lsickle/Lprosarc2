@@ -329,6 +329,15 @@
 						</td>
 
 						<td>
+                            @switch($Residuo->SolResTypeUnidad)
+                                @case('Unidad')
+                                {{$Residuo->SolResCantiUnidadConciliada === null ? 'N/A' : $Residuo->SolResCantiUnidadConciliada }} Unid. /
+                                    @break
+                                @case('Litros')
+                                {{$Residuo->SolResCantiUnidadConciliada === null ? 'N/A' : $Residuo->SolResCantiUnidadConciliada }} Lt. /
+                                    @break
+                                @default
+                            @endswitch
 							{{$Residuo->SolResKgConciliado === null ? 'N/A' : $Residuo->SolResKgConciliado }} Kg.
 						</td>
 					</tr>
