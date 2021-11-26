@@ -524,7 +524,11 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResAuditoria = $request['SolResAuditoria'][$Generador][$y];
 				// $SolicitudResiduo->SolResAuditoriaTipo = $request['SolResAuditoriaTipo'][$Generador][$y];
 				$SolicitudResiduo->SolResDevolucion = $request['SolResDevolucion'][$Generador][$y];
-				$SolicitudResiduo->SolResDevolCantidad = $request['SolResDevolCantidad'][$Generador][$y];
+                if ($SolicitudResiduo->SolResDevolucion == 0 || $SolicitudResiduo->SolResDevolucion == null) {
+                    $SolicitudResiduo->SolResDevolCantidad = 0;
+                }else{
+                    $SolicitudResiduo->SolResDevolCantidad = $request['SolResDevolCantidad'][$Generador][$y];
+                }
 				$SolicitudResiduo->FK_SolResRg = ResiduosGener::select('ID_SGenerRes')->where('SlugSGenerRes',$request['FK_SolResRg'][$Generador][$y])->first()->ID_SGenerRes;
 				/*validar el residuo para saber el tratamiento*/
 				$respelref = ResiduosGener::select('FK_Respel')->where('SlugSGenerRes',$request['FK_SolResRg'][$Generador][$y])->first()->FK_Respel;
