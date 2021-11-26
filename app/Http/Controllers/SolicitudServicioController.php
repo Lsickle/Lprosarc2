@@ -841,6 +841,7 @@ class SolicitudServicioController extends Controller
 		        return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'Municipio', 'Programaciones', 'ProgramacionesActivas', 'total', 'cantidadesXtratamiento', 'tratamientos', 'Observaciones'));
                 break;
 
+            case 'Corregido':
             case 'Completado':
 		        return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento', 'tratamientos', 'Observaciones', 'ultimoRecordatorio'));
                 break;
