@@ -424,11 +424,31 @@ class ServiceExpressController extends Controller
 				// $ProgramacionesActivas = ($Programaciones);
 				break;
 
+            case 'Aprobado':
+				setlocale(LC_ALL, "es_CO.UTF-8");
+				$TextProgramacion = "";
+				$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+				->where('ProgVehDelete', 0)
+				->get();
+				$ProgramacionesActivas = count(ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+				->where('ProgVehEntrada', null)
+				->where('ProgVehDelete', 0)
+				->get());
+				// $ProgramacionesActivas = ($Programaciones);
+				break;
+
 			default:
 				$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
 				// ->where('ProgVehEntrada', null)
 				->where('ProgVehDelete', 0)
 				->get();
+                $Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->first();
+				if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
+					$horas = " en las horas de la tarde";
+				}
+				else{
+					$horas = " en las horas de la mañana";
+				}
 				$ProgramacionesActivas = count(ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
 				->where('ProgVehEntrada', null)
 				->where('ProgVehDelete', 0)

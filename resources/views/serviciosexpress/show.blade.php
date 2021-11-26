@@ -241,13 +241,13 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 												@php
 													switch ($Residuo->SolResTypeUnidad) {
 														case 'Unidad':
-															$TypeUnidad = 'Unid.';
+															$TypeUnidad = 'Unidades';
 															break;
 														case 'Litros':
-															$TypeUnidad = 'Lt.';
+															$TypeUnidad = 'Litros';
 															break;
 														default:
-															$TypeUnidad = 'Kg.';
+															$TypeUnidad = 'Kilogramos';
 															break;
 													}
 												@endphp
