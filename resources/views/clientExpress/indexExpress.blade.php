@@ -51,7 +51,7 @@ Clientes Express
                                     </td>
                                     @endif
                                     <td>
-                                        <a method='get' href='/clientes/{{$cliente->CliSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a>
+                                        <a method='get' href='/clientexpress/{{$cliente->CliSlug}}' class='btn btn-info btn-block' title="{{ trans('adminlte_lang::message.seemoredetails')}}"><i class="fas fa-search"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

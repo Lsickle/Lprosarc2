@@ -1,6 +1,6 @@
 <div class="col-md-12" style="border-top:#00a65a solid 3px; padding-top: 20px; margin-top: 20px;">
 	<table id="SolserGenerTable" class="table table-compact table-bordered table-striped">
-		@php 
+		@php
 			// $TotalEnv = 0;
 			// $TotalRec = 0;
 			// $TotalCons = 0;
@@ -9,7 +9,7 @@
 		<thead>
 			<tr>
 				<th># RM</th>
-				<th>{{trans('adminlte_lang::message.solserembaja')}}</th> 
+				<th>{{trans('adminlte_lang::message.solserembaja')}}</th>
 				<th>{{trans('adminlte_lang::message.solserrespel')}}</th>
 				<th>Corriente</th>
 				@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
@@ -17,7 +17,7 @@
 				@endif
 				<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercanticonsi')}}</th>
 				@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)||in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR))
-				<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantitrat')}}</th>		
+				<th>{{trans('adminlte_lang::message.solsercantidad')}} <br> {{trans('adminlte_lang::message.solsercantitrat')}}</th>
 				@endif
 			</tr>
 		</thead>
@@ -50,7 +50,7 @@
 					@endforeach
 				@else
 					{{'RM Invalido -> '}} {{$Residuo->SolResRM}}
-				@endif	
+				@endif
 				</td>
 				<td><a title="Ver Residuo" href="/respels/{{$Residuo->generespel->respels->RespelSlug}}" target="_blank" ><i class="fas fa-external-link-alt"></i></a>{{$Residuo->SolResEmbalaje}}</td>
 				<td>{{$Residuo->generespel->respels->RespelName}}</td>
@@ -65,14 +65,13 @@
 				@else
 					<td>N/A</td>
 				@endif
-				<td>{{$Residuo->generespel->respels->YRespelClasf4741}}{{$Residuo->generespel->respels->ARespelClasf4741}}</td>
 				@if(in_array(Auth::user()->UsRol, Permisos::COMERCIAL)||in_array(Auth::user()->UsRol2, Permisos::COMERCIAL))
 					<td style="text-align: center;">
 					{{$Residuo->SolResPrecio}}
 						 Pesos
 					</td>
 				@endif
-			
+
 				<td style="text-align: center;">
 					@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 						{{$Residuo->SolResCantiUnidadConciliada === null ? 'N/A' : $Residuo->SolResCantiUnidadConciliada }}

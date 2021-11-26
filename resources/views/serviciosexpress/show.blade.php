@@ -270,9 +270,17 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														{{$Residuo->SolResCantiUnidadRecibida === null ? 'N/A' : $Residuo->SolResCantiUnidadRecibida }}
 													@else
 													@endif --}}
-                                                    {{' '.number_format($Residuo->SolResKgRecibido, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}
-														{{-- {{$TypeUnidad}} --}}
-                                                        {{'Kilogramos'}}
+                                                    @if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
+                                                        {{' '.number_format($Residuo->SolResKgRecibido, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}
+                                                        {{'Kg.'}}
+                                                        <br>
+                                                        {{' '.number_format($Residuo->SolResCantiUnidadRecibida, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}
+                                                        {{$TypeUnidad}}
+                                                    @else
+                                                        {{' '.number_format($Residuo->SolResKgRecibido, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}
+                                                        {{'Kg.'}}
+                                                    @endif
+
 												</td>
 												<td>{{$Residuo->TratName}}</td>
 												<td>{{$Residuo->SolResEmbalaje}}</td>
