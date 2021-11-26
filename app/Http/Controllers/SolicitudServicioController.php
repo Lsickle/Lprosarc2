@@ -327,8 +327,9 @@ class SolicitudServicioController extends Controller
 						$direccioncollect = "Recolección en la sede de cada generador";
 						break;
 					case 98:
-						$sede = Sede::select('ID_Sede')->where('SedeSlug', $request->input('SedeCollect'))->first();
+						$sede = Sede::select(['ID_Sede','FK_SedeMun'])->where('SedeSlug', $request->input('SedeCollect'))->first();
 						$direccioncollect = $sede->ID_Sede;
+						$SolicitudServicio->FK_SolSerCollectMun = $sede->FK_SedeMun;
 						break;
 					case 97:
 						$direccioncollect = $request->input('AddressCollect');
@@ -2071,7 +2072,7 @@ class SolicitudServicioController extends Controller
 			foreach ($KGenviados as $KGenviado) {
 				$totalenviado = $totalenviado + $KGenviado->SolResKgEnviado;
 			}
-			return view('solicitud-serv.addrespel', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado', 'Requerimientos'));
+            return view('solicitud-serv.addrespel', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado', 'Requerimientos'));
 		}
 		else{
 			abort(403);
