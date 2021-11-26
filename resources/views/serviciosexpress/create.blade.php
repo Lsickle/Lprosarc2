@@ -40,6 +40,7 @@
                                     @endforeach
                                 </select>
                             </div>
+
                             {{-- <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">{{'comprobante de pago'}}</label>
                             <small class="help-block with-errors">*</small>
@@ -66,6 +67,13 @@
                             </div><!-- /input-group image-preview [TO HERE]-->
                         </div>
                         <div class="form-group col-md-6">
+                            <label>Sede</label>
+                            <small class="help-block with-errors">*</small>
+                            <select id="SedeSlug" name="SedeSlug" class="form-control" required data-validate="true">
+                                <option value="">{{ trans('adminlte_lang::message.select') }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
                             <label for="fechadepago">{{'fecha de pago'}}</label>
                             <small class="help-block with-errors">*</small>
                             <input type="date" class="form-control" id="fechadepago" name="fechadepago" required value="{{date('Y-m-d')}}">
@@ -75,7 +83,12 @@
                             <small class="help-block with-errors">*</small>
                             <input type="text" class="form-control" id="Referencia" name="Referencia" maxlength="30" required value="P-5000">
                         </div>
-                        <div id="mediodepagoDiv" class="form-group col-md-6">
+                        <div class="form-group col-md-6">
+                            <label for="montodepago">{{'monto de pago'}}</label>
+                            <small class="help-block with-errors">*</small>
+                            <input type="number" class="form-control" id="montodepago" name="montodepago" step=".1" min="0" required value="35000">
+                        </div>
+                        <div id="mediodepagoDiv" class="form-group col-md-3">
                             <label>medio de pago</label>
                             <small class="help-block with-errors">*</small>
                             <select class="form-control" id="mediodepago" name="mediodepago" required>
@@ -93,12 +106,7 @@
                                 <option value="deposito occidente">deposito occidente</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="montodepago">{{'monto de pago'}}</label>
-                            <small class="help-block with-errors">*</small>
-                            <input type="number" class="form-control" id="montodepago" name="montodepago" step=".1" min="0" required value="35000">
-                        </div>
-                        <div id="SolServCantidadDiv" class="form-group col-md-6">
+                        <div id="SolServCantidadDiv" class="form-group col-md-3">
                             <label>N° de Servicios</label>
                             <small class="help-block with-errors">*</small>
                             <select class="form-control" id="SolServCantidad" name="SolServCantidad" required>
@@ -111,7 +119,7 @@
                                 <option selected value="1">1</option>
                             </select>
                         </div>
-                        <div id="SolServFrecuenciaDiv" class="form-group col-md-6">
+                        <div id="SolServFrecuenciaDiv" class="form-group col-md-3">
                             <label>Frecuencia de recolección</label>
                             <small class="help-block with-errors">*</small>
                             <select class="form-control" id="SolServFrecuencia" name="SolServFrecuencia" required>
@@ -123,6 +131,15 @@
                                 <option value="trimestral">trimestral</option>
                                 <option value="semestral">semestral</option>
                                 <option value="anual">anual</option>
+                            </select>
+                        </div>
+                        <div id="SolServTypeRecolectionDiv" class="form-group col-md-3">
+                            <label>Tipo de recolección</label>
+                            <small class="help-block with-errors">*</small>
+                            <select class="form-control" id="SolServTypeRecolection" name="SolServTypeRecolection" required>
+                                <option value="">seleccione...</option>
+                                <option value="General">General</option>
+                                <option value="Especifica">Especifica</option>
                             </select>
                         </div>
                         <div class="col-md-12">

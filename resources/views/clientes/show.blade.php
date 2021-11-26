@@ -236,6 +236,20 @@
 					@if ((Route::currentRouteName() === 'cliente-show')&&(in_array(Auth::user()->UsRol, Permisos::CLIENTE)))
 						<a href="/sclientes/create" class="btn btn-primary pull-right" style="margin-top: 0.5em; margin-right: 0.5em;"><b>{{ trans('adminlte_lang::message.create') }} Sede</b></a>
 					@endif
+                    @if ($cliente->CliCategoria == 'ClientePrepago')
+                            @switch(true)
+                                @case(Auth::user()->email == 'asesorse2@prosarc.com.co')
+                                @case(Auth::user()->email == 'asesorse1@prosarc.com.co')
+                                @case(Auth::user()->email == 'coordinadorse@prosarc.com.co')
+                                @case(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
+                                    <li class="navbar-right">
+                                        <button><a href="{{route('cliente.createSedeExpress', ['cliente' => $cliente->CliSlug])}}" class="btn btn-success" target="_blank" rel="noopener noreferrer"><b><i class="fas fa-plus"></i> Sede</b></a></button>
+                                    </li>
+                                    @break
+                                @default
+
+                            @endswitch
+                        @endif
 					<li class="navbar-right">
 						<button><a href="{{route('clientetarifas.create', ['cliente' => $cliente->CliSlug])}}" class="btn btn-primary" target="_blank" rel="noopener noreferrer"><b><i class="fas fa-plus"></i> Tarifa</b></a></button>
 					</li>

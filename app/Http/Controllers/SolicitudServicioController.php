@@ -327,8 +327,9 @@ class SolicitudServicioController extends Controller
 						$direccioncollect = "Recolección en la sede de cada generador";
 						break;
 					case 98:
-						$sede = Sede::select('ID_Sede')->where('SedeSlug', $request->input('SedeCollect'))->first();
+						$sede = Sede::select(['ID_Sede','FK_SedeMun'])->where('SedeSlug', $request->input('SedeCollect'))->first();
 						$direccioncollect = $sede->ID_Sede;
+						$SolicitudServicio->FK_SolSerCollectMun = $sede->FK_SedeMun;
 						break;
 					case 97:
 						$direccioncollect = $request->input('AddressCollect');
@@ -524,7 +525,11 @@ class SolicitudServicioController extends Controller
 				$SolicitudResiduo->SolResAuditoria = $request['SolResAuditoria'][$Generador][$y];
 				// $SolicitudResiduo->SolResAuditoriaTipo = $request['SolResAuditoriaTipo'][$Generador][$y];
 				$SolicitudResiduo->SolResDevolucion = $request['SolResDevolucion'][$Generador][$y];
-				$SolicitudResiduo->SolResDevolCantidad = $request['SolResDevolCantidad'][$Generador][$y];
+                if ($SolicitudResiduo->SolResDevolucion == 0 || $SolicitudResiduo->SolResDevolucion == null) {
+                    $SolicitudResiduo->SolResDevolCantidad = 0;
+                }else{
+                    $SolicitudResiduo->SolResDevolCantidad = $request['SolResDevolCantidad'][$Generador][$y];
+                }
 				$SolicitudResiduo->FK_SolResRg = ResiduosGener::select('ID_SGenerRes')->where('SlugSGenerRes',$request['FK_SolResRg'][$Generador][$y])->first()->ID_SGenerRes;
 				/*validar el residuo para saber el tratamiento*/
 				$respelref = ResiduosGener::select('FK_Respel')->where('SlugSGenerRes',$request['FK_SolResRg'][$Generador][$y])->first()->FK_Respel;
@@ -841,6 +846,7 @@ class SolicitudServicioController extends Controller
 		        return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'Municipio', 'Programaciones', 'ProgramacionesActivas', 'total', 'cantidadesXtratamiento', 'tratamientos', 'Observaciones'));
                 break;
 
+            case 'Corregido':
             case 'Completado':
 		        return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento', 'tratamientos', 'Observaciones', 'ultimoRecordatorio'));
                 break;
@@ -2066,7 +2072,7 @@ class SolicitudServicioController extends Controller
 			foreach ($KGenviados as $KGenviado) {
 				$totalenviado = $totalenviado + $KGenviado->SolResKgEnviado;
 			}
-			return view('solicitud-serv.addrespel', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado', 'Requerimientos'));
+            return view('solicitud-serv.addrespel', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado', 'Requerimientos'));
 		}
 		else{
 			abort(403);

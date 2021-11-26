@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('htmlheader_title')
-{{ trans('adminlte_lang::message.clientcliente') }}
+Añadir Sede Express
 @endsection
 @section('contentheader_title')
-{{ 'Edición de cliente Express' }}
+Añadir Sede Express
 @endsection
 @section('main-content')
 <div class="container-fluid spark-screen">
@@ -11,13 +11,11 @@
         <div class="col-md-16 col-md-offset-0">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">{{ trans('adminlte_lang::message.smartwizzardtitle') }}</h3>
+                    <h3 class="box-title"><b>{{ $cliente->CliName}}</b></h3>
                 </div>
                 <div class="box box-info">
-                    <form role="form" action="/clientexpress/{{$cliente->CliSlug}}/update" method="POST" enctype="multipart/form-data" data-toggle="validator">
-                        {{csrf_field()}}
+                    <form role="form" action="/sedexpress/{{$cliente->CliSlug}}" method="POST" enctype="multipart/form-data" data-toggle="validator">
                         @csrf
-                        @method('PUT')
                         @if ($errors->any())
                         <div class="alert alert-danger" role="alert">
                             <ul>
@@ -37,20 +35,17 @@
                                     <div class="row">
                                         <div id="step-1" class="tab-pane step-content">
                                             <div id="form-step-0" role="form" data-toggle="validator">
-                                                <div class="col-md-6 form-group ">
-                                                    <label for="ClienteInputNit">{{ trans('adminlte_lang::message.clientNIT') }}</label><small class="help-block with-errors">*</small>
-                                                    <input value="{{$cliente->CliNit}}" type="text" name="CliNit" class="form-control nitlargo" id="ClienteInputNit" data-minlength="13" data-maxlength="15" placeholder="{{ trans('adminlte_lang::message.clientNITplacehoder') }}" value="{{ old('CliNit') }}" required>
-                                                </div>
-                                                <div class="col-md-6 form-group">
-                                                    <label for="ClienteInputRazon">{{ trans('adminlte_lang::message.clirazonsoc') }}</label><small class="help-block with-errors">*</small>
-                                                    <input value="{{$cliente->CliName}}" type="text" name="CliName" class="form-control" id="ClienteInputRazon" maxlength="100" required value="{{ old('CliName') }}">
+
+                                                <div class="col-md-12 form-group">
+                                                    <label for="SedeName">Nombre de la Sede</label><small class="help-block with-errors">*</small>
+                                                    <input type="text" name="SedeName" class="form-control" id="SedeName" maxlength="100" required value="{{ old('CliName') }}">
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label for="departamentoExpress">{{ trans('adminlte_lang::message.departamento') }}</label><small class="help-block with-errors">*</small>
                                                     <select class="form-control select" id="departamentoExpress" name="departamento" required data-dependent="FK_SedeMun">
                                                         <option value="">{{ trans('adminlte_lang::message.select') }}</option>
                                                         @foreach ($Departamentos as $Departamento)
-                                                        <option value="{{$Departamento->ID_Depart}}" {{ old('departamento')==$Departamento->ID_Depart ? 'selected' : '' }} {{ $cliente->sedes[0]->Municipios->FK_MunCity == $Departamento->ID_Depart ? 'selected' : '' }}>{{$Departamento->DepartName}}</option>
+                                                        <option value="{{$Departamento->ID_Depart}}" {{ old('departamento')==$Departamento->ID_Depart ? 'selected' : '' }}>{{$Departamento->DepartName}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -60,46 +55,46 @@
                                                     <select class="form-control select" id="municipio" name="FK_SedeMun" required>
                                                         @if (isset($Municipios))
                                                         @foreach ($Municipios as $Municipio)
-                                                        <option value="{{$Municipio->ID_Mun}}" {{ old('FK_SedeMun')==$Municipio->ID_Mun ? 'selected' : '' }} {{ $cliente->sedes[0]->Municipios->ID_Mun == $Municipio->ID_Mun ? 'selected' : '' }}>{{$Municipio->MunName}}</option>
+                                                        <option value="{{$Municipio->ID_Mun}}" {{ old('FK_SedeMun')==$Municipio->ID_Mun ? 'selected' : '' }}>{{$Municipio->MunName}}</option>
                                                         @endforeach
                                                         @endif
                                                     </select>
                                                 </div>
-                                                <div class="col-md-6 form-group" id="SedeMapLocalidadContainer" {{ 169==$cliente->sedes[0]->FK_SedeMun ? '' : 'hidden' }}>
+                                                <div class="col-md-6 form-group" id="SedeMapLocalidadContainer" hidden>
                                                     <label for="SedeMapLocalidad">Localidad</label><small class="help-block with-errors">*</small>
-                                                    <select class="form-control select" id="SedeMapLocalidad" name="SedeMapLocalidad" {{ 169!==$cliente->sedes[0]->FK_SedeMun ? '' : 'required' }} >
+                                                    <select class="form-control select" id="SedeMapLocalidad" name="SedeMapLocalidad" required>
                                                         <option value="">Seleccione...</option>
-                                                        <option value="Engativá" {{ 'Engativá'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Engativá' ? 'selected' : '' }}>Engativá</option>
-                                                        <option value="Kennedy" {{ 'Kennedy'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Kennedy' ? 'selected' : '' }}>Kennedy</option>
-                                                        <option value="Suba" {{ 'Suba'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Suba' ? 'selected' : '' }}>Suba</option>
-                                                        <option value="Usaquén" {{ 'Usaquén'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Usaquén' ? 'selected' : '' }}>Usaquén</option>
-                                                        <option value="Fontibón" {{ 'Fontibón'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Fontibón' ? 'selected' : '' }}>Fontibón</option>
-                                                        <option value="Puente Aranda" {{ 'Puente Aranda'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Puente Aranda' ? 'selected' : '' }}>Puente Aranda</option>
-                                                        <option value="Rafael Uribe Uribe" {{ 'Rafael Uribe Uribe'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Rafael Uribe Uribe' ? 'selected' : '' }}>Rafael Uribe Uribe</option>
-                                                        <option value="Antonio Nariño" {{ 'Antonio Nariño'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Antonio Nariño' ? 'selected' : '' }}>Antonio Nariño</option>
-                                                        <option value="Santa Fe" {{ 'Santa Fe'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Santa Fe' ? 'selected' : '' }}>Santa Fe</option>
-                                                        <option value="Chapinero" {{ 'Chapinero'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Chapinero' ? 'selected' : '' }}>Chapinero</option>
-                                                        <option value="Teusaquillo" {{ 'Teusaquillo'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Teusaquillo' ? 'selected' : '' }}>Teusaquillo</option>
-                                                        <option value="Tunjuelito" {{ 'Tunjuelito'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Tunjuelito' ? 'selected' : '' }}>Tunjuelito</option>
-                                                        <option value="Barrios Unidos" {{ 'Barrios Unidos'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Barrios Unidos' ? 'selected' : '' }}>Barrios Unidos</option>
-                                                        <option value="San Cristóbal" {{ 'San Cristóbal'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='San Cristóbal' ? 'selected' : '' }}>San Cristóbal</option>
-                                                        <option value="Bosa" {{ 'Bosa'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Bosa' ? 'selected' : '' }}>Bosa</option>
-                                                        <option value="Usme" {{ 'Usme'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Usme' ? 'selected' : '' }}>Usme</option>
-                                                        <option value="Ciudad Bolívar" {{ 'Ciudad Bolívar'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Ciudad Bolívar' ? 'selected' : '' }}>Ciudad Bolívar</option>
-                                                        <option value="Los Mártires" {{ 'Los Mártires'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Los Mártires' ? 'selected' : '' }}>Los Mártires</option>
-                                                        <option value="La Candelaria" {{ 'La Candelaria'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='La Candelaria' ? 'selected' : '' }}>La Candelaria</option>
-                                                        <option value="Sumapaz" {{ 'Sumapaz'==$cliente->sedes[0]->SedeMapLocalidad || old('SedeMapLocalidad')=='Sumapaz' ? 'selected' : '' }}>Sumapaz</option>
+                                                        <option value="Engativá" {{ old('SedeMapLocalidad')=='Engativá' ? 'selected' : '' }}>Engativá</option>
+                                                        <option value="Kennedy" {{ old('SedeMapLocalidad')=='Kennedy' ? 'selected' : '' }}>Kennedy</option>
+                                                        <option value="Suba" {{ old('SedeMapLocalidad')=='Suba' ? 'selected' : '' }}>Suba</option>
+                                                        <option value="Usaquén" {{ old('SedeMapLocalidad')=='Usaquén' ? 'selected' : '' }}>Usaquén</option>
+                                                        <option value="Fontibón" {{ old('SedeMapLocalidad')=='Fontibón' ? 'selected' : '' }}>Fontibón</option>
+                                                        <option value="Puente Aranda" {{ old('SedeMapLocalidad')=='Puente Aranda' ? 'selected' : '' }}>Puente Aranda</option>
+                                                        <option value="Rafael Uribe Uribe" {{ old('SedeMapLocalidad')=='Rafael Uribe Uribe' ? 'selected' : '' }}>Rafael Uribe Uribe</option>
+                                                        <option value="Antonio Nariño" {{ old('SedeMapLocalidad')=='Antonio Nariño' ? 'selected' : '' }}>Antonio Nariño</option>
+                                                        <option value="Santa Fe" {{ old('SedeMapLocalidad')=='Santa Fe' ? 'selected' : '' }}>Santa Fe</option>
+                                                        <option value="Chapinero" {{ old('SedeMapLocalidad')=='Chapinero' ? 'selected' : '' }}>Chapinero</option>
+                                                        <option value="Teusaquillo" {{ old('SedeMapLocalidad')=='Teusaquillo' ? 'selected' : '' }}>Teusaquillo</option>
+                                                        <option value="Tunjuelito" {{ old('SedeMapLocalidad')=='Tunjuelito' ? 'selected' : '' }}>Tunjuelito</option>
+                                                        <option value="Barrios Unidos" {{ old('SedeMapLocalidad')=='Barrios Unidos' ? 'selected' : '' }}>Barrios Unidos</option>
+                                                        <option value="San Cristóbal" {{ old('SedeMapLocalidad')=='San Cristóbal' ? 'selected' : '' }}>San Cristóbal</option>
+                                                        <option value="Bosa" {{ old('SedeMapLocalidad')=='Bosa' ? 'selected' : '' }}>Bosa</option>
+                                                        <option value="Usme" {{ old('SedeMapLocalidad')=='Usme' ? 'selected' : '' }}>Usme</option>
+                                                        <option value="Ciudad Bolívar" {{ old('SedeMapLocalidad')=='Ciudad Bolívar' ? 'selected' : '' }}>Ciudad Bolívar</option>
+                                                        <option value="Los Mártires" {{ old('SedeMapLocalidad')=='Los Mártires' ? 'selected' : '' }}>Los Mártires</option>
+                                                        <option value="La Candelaria" {{ old('SedeMapLocalidad')=='La Candelaria' ? 'selected' : '' }}>La Candelaria</option>
+                                                        <option value="Sumapaz" {{ old('SedeMapLocalidad')=='Sumapaz' ? 'selected' : '' }}>Sumapaz</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <label for="sedeinputaddress">Dirección de certificación</label><small class="help-block with-errors">*</small>
-                                                    <input value="{{$cliente->sedes[0]->SedeAddress}}" type="text" class="form-control" id="sedeinputaddress" name="SedeAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" minlength="5" maxlength="128" required value="{{ old('SedeAddress') }}">
+                                                    <input type="text" class="form-control" id="sedeinputaddress" name="SedeAddress" placeholder="{{ trans('adminlte_lang::message.addressplaceholder') }}" minlength="5" maxlength="128" required value="{{ old('SedeAddress') }}">
                                                 </div>
                                                 <!-- search input box -->
                                                 <div class="form-group col-md-6 " id="SedeMapAddressContainer">
                                                     <label for="sedeinputaddress">Dirección de recolección (Mapa)</label><small class="help-block with-errors">*</small>
                                                     <div class="input-group">
-                                                        <input value="{{$cliente->sedes[0]->SedeMapAddressSearch}}" type="text" id="search_location" name="SedeMapAddressSearch" class="form-control" placeholder="Search location" value="{{ old('SedeMapAddressSearch') }}">
+                                                        <input type="text" id="search_location" name="SedeMapAddressSearch" class="form-control" placeholder="Search location" value="{{ old('SedeMapAddressSearch') }}">
                                                         <div class="input-group-btn">
                                                             <button class="btn btn-default get_map" type="submit">
                                                                 <i class="fas fa-map-marker-alt"></i> Ubicar
@@ -114,9 +109,9 @@
                                                 <!-- display selected location information -->
                                                 <div class="col-md-12 form-group">
                                                     <label for="sedeinputaddress">Detalles de la dirección</label><small class="help-block with-errors">*</small>
-                                                    <p>Dirección: <input value="{{$cliente->sedes[0]->SedeMapAddressResult}}"  type="text" class="form-control search_addr" id="SedeMapAddressResult" value="{{ old('SedeMapAddressResult') }}" name="SedeMapAddressResult"></p>
-                                                    <p>Latitud: <input value="{{$cliente->sedes[0]->SedeMapLat}}"  type="text" class="form-control search_latitude" id="SedeMapLat" value="{{ old('SedeMapLat') }}" name="SedeMapLat"></p>
-                                                    <p>Longitud: <input value="{{$cliente->sedes[0]->SedeMapLong}}"  type="text" class="form-control search_longitude" id="SedeMapLong" value="{{ old('SedeMapLong') }}" name="SedeMapLong"></p>
+                                                    <p>Dirección: <input type="text" class="form-control search_addr" id="SedeMapAddressResult" value="{{ old('SedeMapAddressResult') }}" name="SedeMapAddressResult"></p>
+                                                    <p>Latitud: <input type="text" class="form-control search_latitude" id="SedeMapLat" value="{{ old('SedeMapLat') }}" name="SedeMapLat"></p>
+                                                    <p>Longitud: <input type="text" class="form-control search_longitude" id="SedeMapLong" value="{{ old('SedeMapLong') }}" name="SedeMapLong"></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -127,57 +122,56 @@
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label for="PersFirstName">{{'Nombre'}}</label><small class="help-block with-errors">*</small>
-                                                    <input value="{{$personal->PersFirstName}}"  type="text" class="form-control nombres" id="PersFirstName" name="PersFirstName" maxlength="25" required value="{{ old('PersFirstName') }}">
+                                                    <input value="{{$personal->PersFirstName}}" type="text" class="form-control nombres" id="PersFirstName" name="PersFirstName" maxlength="25" required value="{{ old('PersFirstName') }}">
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label for="PersLastName">{{'Apellidos'}}</label><small class="help-block with-errors">*</small>
-                                                    <input value="{{$personal->PersLastName}}"  type="text" class="form-control inputText" id="PersLastName" name="PersLastName" maxlength="64" required value="{{ old('PersLastName') }}">
+                                                    <input value="{{$personal->PersLastName}}" type="text" class="form-control inputText" id="PersLastName" name="PersLastName" maxlength="64" required value="{{ old('PersLastName') }}">
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label for="PersEmail">Correo electrónico</label><small class="help-block with-errors">*</small>
-                                                    <input value="{{$personal->PersEmail}}" type="email" class="form-control" id="PersEmail" name="PersEmail" maxlength="255" required value="{{ old('PersEmail') }}" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}">
-
+                                                    <input value="{{$cliente->sedes()->first()->SedeEmail}}" type="email" class="form-control" id="PersEmail" name="PersEmail" maxlength="255" required value="{{ old('PersEmail') }}" placeholder="{{ trans('adminlte_lang::message.emailplaceholder') }}">
                                                 </div>
-                                                <input type="text" hidden name="PersSlug" value="{{$personal->PersSlug}}">
-                                                <input type="text" hidden name="UsSlug" value="{{$user->UsSlug}}">
                                                 <div class="form-group col-md-6">
                                                     <label for="PersCellphone">{{ trans('adminlte_lang::message.mobile') }}</label><small class="help-block with-errors">*</small>
                                                     <div class="input-group">
                                                         <span class="input-group-addon">(+57)</span>
-                                                        <input value="{{$personal->PersCellphone}}" type="text" class="form-control mobile" id="PersCellphone" name="PersCellphone" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-minlength="12" maxlength="12" value="{{ old('PersCellphone') }}" required>
+                                                        <input value="{{$cliente->sedes()->first()->SedeCelular}}" type="text" class="form-control mobile" id="PersCellphone" name="PersCellphone" placeholder="{{ trans('adminlte_lang::message.mobileplaceholder') }}" data-minlength="12" maxlength="12" value="{{ old('PersCellphone') }}" required>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6 form-group">
                                                     <label for="sedeinputphone1">{{ trans('adminlte_lang::message.phone') }}</label><small class="help-block with-errors"></small>
-                                                    <input type="text" class="form-control phone tel" id="sedeinputphone1" name="SedePhone1" placeholder="{{ trans('adminlte_lang::message.phoneplaceholder') }}" data-minlength="11" value="{{ old('SedePhone1') }}">
-                                                </div>
-
-                                                <div class="form-group col-md-6">
-                                                    <label for="CliComercial">Comercial Asignado</label><small class="help-block with-errors">*</small>
-                                                    <select class="form-control select" id="CliComercial" name="CliComercial" required>
-                                                        <option value="">{{ trans('adminlte_lang::message.select') }}</option>
-                                                        @foreach ($comerciales as $comercial)
-                                                        <option value="{{$comercial->ID_Pers}}"  {{ $cliente->comercialAsignado->ID_Pers == $comercial->ID_Pers ? 'selected' : '' }} {{ old('CliComercial')==$comercial->ID_Pers ? 'selected' : '' }}>{{ $comercial->PersFirstName }} {{$comercial->PersSecondName}} {{$comercial->PersLastName}}</option>
-                                                        @endforeach
-                                                    </select>
+                                                    <input value="{{$cliente->sedes()->first()->SedePhone1}}" type="text" class="form-control phone tel" id="sedeinputphone1" name="SedePhone1" placeholder="{{ trans('adminlte_lang::message.phoneplaceholder') }}" data-minlength="11" value="{{ old('SedePhone1') }}">
                                                 </div>
 
                                             </div>
 
-                                            <div class="box-footer">
-                                                <button type="submit" class="btn btn-primary pull-right">Actualizar</button>
-                                            </div>
+                                            {{-- <div class="box-footer">
+                                                <button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.register') }}</button>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="box box-info">
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-success pull-right">{{ trans('adminlte_lang::message.register') }}</button>
+                            </div>
+                        </div>
                     </form>
+                    <!-- /.box -->
                 </div>
+                <!-- /.box-body -->
             </div>
+            <!-- /.box -->
         </div>
+        <!--/.col (right) -->
     </div>
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->
 </div>
 @endsection
 @section('NewScript')
@@ -185,16 +179,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_API_KEY', 'YOUR_API_KEY')}}"></script>
 <script>
-    $(document).ready(function() {
-		$('.nitlargo').inputmask({
-            mask: ["999.999.999-9", "9.999.999.999-9", ],
-            // mask: "[9.]999.999.999-9",
-            keepStatic: true,
-        });
-	});
+
 </script>
 <script>
-    var geocoder;
+var geocoder;
 var map;
 var marker;
 

@@ -1266,6 +1266,8 @@ class AjaxController extends Controller
 			$generador = Generador::where('FK_GenerCli', $Sede->ID_Sede)->first();
 			$sGener = GenerSede::with(['resgener.respels'])->where('FK_GSede', $generador->ID_Gener)->first();
 
+            $sedes = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->get();
+
 			$Respels = DB::table('residuos_geners')
 				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
 				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
@@ -1291,7 +1293,10 @@ class AjaxController extends Controller
 					$Respels[$key]->TratName = '';
 				}
 			}
-				return response()->json($Respels);
+            // $response['respels'] = $Respels;
+            // $response['sedes'] = $sedes;
+            // return response()->json($response);
+            return response()->json(["respels"=>$Respels, "sedes"=>$sedes]);
 		}
 	}
 	/*Funcion para ver por medio de Ajax los Municipios que le competen a un Departamento*/

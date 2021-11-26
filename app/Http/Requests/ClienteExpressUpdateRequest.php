@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
+
 class ClienteExpressUpdateRequest extends FormRequest
 {
     /**
@@ -19,6 +20,10 @@ class ClienteExpressUpdateRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation()
+    {
+        $this->merge(['CliSlug' => $this->route('clientexpress')]);
+    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -27,7 +32,7 @@ class ClienteExpressUpdateRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'CliNit' => ['required','min:13','max:15',Rule::unique('clientes')->ignore($this->cliente)],
+            'CliNit' => ['required','min:13','max:15',Rule::unique('clientes')->ignore($this->CliSlug , 'CliSlug')],
             'CliName'       => 'required|max:255|min:1',
 
             'SedeAddress'   => 'required|max:255|min:1',

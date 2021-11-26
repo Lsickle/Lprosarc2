@@ -172,7 +172,11 @@ class ServiceExpressController extends Controller
     {
 		// return $request;
 
-		$Cliente = Cliente::where('CliSlug', $request->input('FK_SolSerCliente'))->first();
+        //sede segun input
+
+        $sede = Sede::where('SedeSlug', $request->input('SedeSlug'))->first();
+
+		$Cliente = Cliente::where('ID_Cli', $sede->FK_SedeCli)->first();
 
         $file = $request->file('pagoComprobante');
 
@@ -229,8 +233,6 @@ class ServiceExpressController extends Controller
 		$qrCode->setMargin(0);
 		$qrCode->setRoundBlockSize(true, QrCode::ROUND_BLOCK_SIZE_MODE_SHRINK);
 
-        $sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
-
         $pdf = PDF::setPaper('letter', 'portrait')->loadView('recibos.recibotopdf', compact(['recibo','Cliente','qrCode','sede']));
         Storage::put('recibosdepago/'.$foldername.'/RP-'.sprintf("%07s", $recibo->ID_Recibo).'.pdf', $pdf->output(), 'public');
 
@@ -244,9 +246,8 @@ class ServiceExpressController extends Controller
 				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
 				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
 				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 				->select('personals.*')
-				->where('clientes.ID_Cli', $Cliente->ID_Cli)
+				->where('sedes.ID_Sede', $sede->ID_Sede)
 				->where('personals.PersDelete', 0)
 				->first();
 
@@ -280,7 +281,11 @@ class ServiceExpressController extends Controller
 			$SolicitudServicio->FK_SolSerCliente = $Cliente->ID_Cli;
 			$SolicitudServicio->FK_ReciboSolserv = $recibo->ID_Recibo;
 			$SolicitudServicio->save();
-			$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
+            if ($request->input('SolServTypeRecolection') == 'Especifica') {
+                $this->createSolRes($request, $SolicitudServicio->ID_SolSer);
+            }else{
+                $this->addAllRespels($SolicitudServicio);
+            }
 
 			/*se guarda la observacion inicial de la creación del servicio*/
 			$Observacion = new Observacion();
@@ -419,11 +424,31 @@ class ServiceExpressController extends Controller
 				// $ProgramacionesActivas = ($Programaciones);
 				break;
 
+            case 'Aprobado':
+				setlocale(LC_ALL, "es_CO.UTF-8");
+				$TextProgramacion = "";
+				$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+				->where('ProgVehDelete', 0)
+				->get();
+				$ProgramacionesActivas = count(ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
+				->where('ProgVehEntrada', null)
+				->where('ProgVehDelete', 0)
+				->get());
+				// $ProgramacionesActivas = ($Programaciones);
+				break;
+
 			default:
 				$Programaciones = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
 				// ->where('ProgVehEntrada', null)
 				->where('ProgVehDelete', 0)
 				->get();
+                $Programacion = ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)->where('ProgVehDelete', 0)->first();
+				if(date('H', strtotime($Programacion->ProgVehSalida)) >= 12){
+					$horas = " en las horas de la tarde";
+				}
+				else{
+					$horas = " en las horas de la mañana";
+				}
 				$ProgramacionesActivas = count(ProgramacionVehiculo::where('FK_ProgServi', $SolicitudServicio->ID_SolSer)
 				->where('ProgVehEntrada', null)
 				->where('ProgVehDelete', 0)
@@ -558,7 +583,7 @@ class ServiceExpressController extends Controller
                 break;
 
                 default:
-                return view('serviciosexpress.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento', 'tratamientos', 'Observaciones', 'ultimoRecordatorio'));
+                return view('serviciosexpress.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'ProgramacionesActivas', 'Programacion','Municipio', 'Programaciones', 'total', 'cantidadesXtratamiento', 'tratamientos', 'Observaciones'));
                 break;
         }
 
@@ -2602,6 +2627,75 @@ class ServiceExpressController extends Controller
 		$pdf = PDF::setPaper('letter', 'portrait')->loadView('certificadosExpress.topdf', compact('certificado'));
 
 		return $pdf->stream();
+	}
+
+    	/*
+	*
+	* Add all respels into express service
+	*
+	*/
+	public function addAllRespels(SolicitudServicio $SolicitudServicio)
+	{
+            $Cliente = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
+			$Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
+			$generador = Generador::where('FK_GenerCli', $Sede->ID_Sede)->first();
+			$sGener = GenerSede::with(['resgener.respels'])->where('FK_GSede', $generador->ID_Gener)->first();
+
+			$Respels = DB::table('residuos_geners')
+				->join('respels', 'respels.ID_Respel', '=', 'residuos_geners.FK_Respel')
+				->join('gener_sedes', 'gener_sedes.ID_GSede', '=', 'residuos_geners.FK_SGener')
+				->join('requerimientos', 'requerimientos.FK_ReqRespel', '=', 'respels.ID_Respel')
+				->select('gener_sedes.*', 'residuos_geners.SlugSGenerRes', 'respels.RespelName', 'respels.RespelSlug', 'respels.ID_Respel', 'requerimientos.FK_ReqTrata', 'requerimientos.forevaluation', 'requerimientos.ofertado')
+				->whereIn('respels.RespelStatus', ['Aprobado', 'Revisado', 'Falta TDE', 'TDE actualizada', 'Vencido'])
+				->where('respels.RespelDelete', 0)
+				->where('gener_sedes.GSedeSlug', $sGener->GSedeSlug)
+				->where('residuos_geners.DeleteSGenerRes', '=', 0)
+				->where('requerimientos.forevaluation', 1)
+				->where('requerimientos.ofertado', 1)
+				->get();
+
+		foreach ($Respels as $Respel) {
+				$SolicitudResiduo = new SolicitudResiduo();
+				$SolicitudResiduo->SolResKgEnviado = 1;
+				$SolicitudResiduo->SolResKgRecibido = 0;
+				$SolicitudResiduo->SolResKgConciliado = 0;
+				$SolicitudResiduo->SolResKgTratado = 0;
+				$SolicitudResiduo->SolResDelete = 0;
+				$SolicitudResiduo->SolResSlug = hash('sha256', rand().time().$Respel->RespelSlug);
+				$SolicitudResiduo->FK_SolResSolSer =  $SolicitudServicio->ID_SolSer;
+                $SolicitudResiduo->SolResEmbalaje = "Sacos/Bolsas";
+				$SolicitudResiduo->FK_SolResRg = ResiduosGener::select('ID_SGenerRes')->where('SlugSGenerRes', $Respel->SlugSGenerRes)->first()->ID_SGenerRes;
+				/*validar el residuo para saber el tratamiento*/
+				$respelref = ResiduosGener::select('FK_Respel')->where('SlugSGenerRes', $Respel->SlugSGenerRes)->first()->FK_Respel;
+
+				$requerimientoparacopiar = Requerimiento::with(['pretratamientosSelected'])
+				->where('FK_ReqRespel', $respelref)
+				->where('ofertado', 1)
+				->where('forevaluation', 1)
+				->first();
+				$nuevorequerimiento = $requerimientoparacopiar->replicate();
+                $nuevorequerimiento->ReqSlug= hash('md5', rand().time().$respelref);
+                $nuevorequerimiento->forevaluation=0;
+                $nuevorequerimiento->ofertado=0;
+                $nuevorequerimiento->save();
+                $nuevorequerimiento->pretratamientosSelected()->attach($requerimientoparacopiar['pretratamientosSelected']);
+
+                $tarifaparacopiar = Tarifa::with(['rangos'])
+                ->where('FK_TarifaReq', $requerimientoparacopiar->ID_Req)->first();
+                $nuevatarifa = $tarifaparacopiar->replicate();
+                $nuevatarifa->FK_TarifaReq=$nuevorequerimiento->ID_Req;
+                $nuevatarifa->save();
+
+                foreach ($tarifaparacopiar->rangos as $rango) {
+                	$rangoparacopiar = Rango::find($rango->ID_Rango);
+                	$nuevarango = $rangoparacopiar->replicate();
+                	$nuevarango->FK_RangoTarifa = $nuevatarifa->ID_Tarifa;
+                	$nuevarango->save();
+                }
+
+                $SolicitudResiduo->FK_SolResRequerimiento = $nuevorequerimiento->ID_Req;
+                $SolicitudResiduo->save();
+		}
 	}
 
     public function recibotest()
