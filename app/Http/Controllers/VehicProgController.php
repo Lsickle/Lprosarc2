@@ -131,8 +131,9 @@ class VehicProgController extends Controller
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
 				->whereIn('AreaName', ['Operaciones', 'Logística', 'Mantenimiento'])
-				->whereNotIn('CargName', ["Asistente", 'Jefe'])
+				->whereNotIn('CargName', ["Asistente", 'Jefe', 'Supervisor'])
 				->where('ID_Cli', 1)
+				->where('PersDelete', '!=' , 1)
 				->get();
 			$vehiculos = DB::table('vehiculos')
 				->select('ID_Vehic','VehicPlaca')
