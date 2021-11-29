@@ -131,8 +131,9 @@ class VehicProgController extends Controller
 				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
 				->select('ID_Pers', 'PersFirstName', 'PersLastName')
 				->whereIn('AreaName', ['Operaciones', 'Logística', 'Mantenimiento'])
-				->whereNotIn('CargName', ["Asistente", 'Jefe'])
+				->whereNotIn('CargName', ["Asistente", 'Jefe', 'Supervisor'])
 				->where('ID_Cli', 1)
+				->where('PersDelete', '!=' , 1)
 				->get();
 			$vehiculos = DB::table('vehiculos')
 				->select('ID_Vehic','VehicPlaca')
@@ -1223,7 +1224,7 @@ class VehicProgController extends Controller
 						];
 		if ($cantidadDeResiduosControlados > 0) {
 			//enviar notificacion de servicion con sustancia controladas
-			Mail::to('dirtecnica@prosarc.com.co')->cc(['sistemas@prosarc.com.co', 'logistica@prosarc.com.co', 'recepcionpda@prosarc.com.co', 'auxiliarpda@prosarc.com.co', 'jefedetratamiento@prosarc.com.co'])->send(new SustanciaControladaProgramada($email, $SolicitudServicio));
+			Mail::to('dirtecnica@prosarc.com.co')->cc(['sistemas@prosarc.com.co', 'logistica@prosarc.com.co', 'recepcionpda@prosarc.com.co', 'auxiliarpda@prosarc.com.co', 'jefedetratamiento@prosarc.com.co', 'asistentelogistica@prosarc.com.co', 'auxiliarlogistico@prosarc.com.co', 'conciliaciones@prosarc.com.co'])->send(new SustanciaControladaProgramada($email, $SolicitudServicio));
 		}else{
 			array_push($destinatarios, 'dirtecnica@prosarc.com.co');
 		}
