@@ -123,7 +123,7 @@ class ServiceExpressController extends Controller
 			->get();
 		foreach ($Servicios as $servicio) {
 			$sedeExpress = Sede::where('FK_SedeCli',$servicio->ID_Cli)->first();
-			$servicio->SolSerCollectAddress = $sedeExpress->SedeAddress;
+			// $servicio->SolSerCollectAddress = $sedeExpress->SedeAddress;
 			$servicio->FK_SedeMun = $sedeExpress->FK_SedeMun;
 			$servicio->SedeMapLocalidad = $sedeExpress->SedeMapLocalidad;
 			$servicio->SedeMapLat = $sedeExpress->SedeMapLat;
