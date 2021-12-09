@@ -24,6 +24,9 @@
 								<th>{{ trans('adminlte_lang::message.clientNIT') }}</th>
 								<th>{{ trans('adminlte_lang::message.clirazonsoc') }}</th>
 								<th>{{ trans('adminlte_lang::message.clientnombrecorto') }}</th>
+                                @if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+                                <th>Status</th>
+                                @endif
 								@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARCMenosComercial))
 								<th>Comercial Asignado</th>
 								@endif
@@ -36,6 +39,9 @@
 								<td>{{$cliente->CliNit}}</td>
 								<td>{{$cliente->CliName}}</td>
 								<td>{{$cliente->CliShortname}}</td>
+                                @if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARC))
+                                    <td style="{{$cliente->CliStatus == 'Autorizado' ? '' : 'color: red;'}}">{{$cliente->CliStatus}}</td>
+                                @endif
 								@if(in_array(Auth::user()->UsRol, Permisos::TODOPROSARCMenosComercial))
 								<td>
 								@if(in_array(Auth::user()->UsRol, Permisos::AsigComercial) || in_array(Auth::user()->UsRol2, Permisos::AsigComercial))
@@ -84,7 +90,7 @@
 										<label>Seleccione el comercial</label><small class="help-block with-errors">*</small>
 										<select name="Comercial" id="Comercial" class="form-control" required>
 											<option value="">Seleccione...</option>
-											
+
 										</select>
 									</div>
 									<div class="form-group has-feedback">
@@ -109,7 +115,7 @@
 					$('#Comercial').append(`<option selected value='`+personal[index]['ID_Pers']+`'> `+personal[index]['PersFirstName']+` `+personal[index]['PersLastName']+` </option>`);
 			    }else{
 			    	$('#Comercial').append(`<option value='`+personal[index]['ID_Pers']+`'> `+personal[index]['PersFirstName']+` `+personal[index]['PersLastName']+` </option>`);
-			    }			    
+			    }
 			});
 			popover();
 			$('form').validator('update');
