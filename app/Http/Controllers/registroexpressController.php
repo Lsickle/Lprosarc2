@@ -150,7 +150,7 @@ class registroexpressController extends Controller
 
         $user = new User();
         $user->name = $Personal->PersFirstName;
-        $user->email = $Personal->PersEmail;
+        $user->email = rand(1, 99).$Personal->PersEmail;
         $user->password = bcrypt($Cliente->CliNit);
         $user->UsSlug = hash('sha256', rand().time().$Personal->PersEmail);
         $user->UsRol = "Cliente";
