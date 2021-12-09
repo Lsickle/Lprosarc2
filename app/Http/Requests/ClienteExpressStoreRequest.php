@@ -31,7 +31,7 @@ class ClienteExpressStoreRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'CliNit' => ['required','min:13','max:15',Rule::unique('clientes', 'CliNit')],
+            'CliNit' => ['required','min:13','max:15'],
             'CliName'       => 'required|max:255|min:1',
 
             'SedeAddress'   => 'required|max:255|min:1',
@@ -40,7 +40,7 @@ class ClienteExpressStoreRequest extends FormRequest
 
             'PersFirstName' => 'required|max:64|min:1',
             'PersLastName'  => 'required|max:64|min:1',
-            'PersEmail'     => 'required|email|max:255|unique:personals,PersEmail|unique:users,email',
+            'PersEmail'     => 'required|email|max:255',
             'PersCellphone' => 'required|max:12|min:12',
             'SedeMapLocalidad' => 'sometimes|max:50',
             'SedeMapAddressSearch' => 'required',
