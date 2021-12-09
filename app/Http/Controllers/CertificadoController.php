@@ -34,6 +34,12 @@ class CertificadoController extends Controller
      */
     public function index()
     {
+        // validacion del status del cliente segun cartera
+        $clienteID = userController::IDClienteSegunUsuario();
+        $clienteStatus= Cliente::where('ID_Cli', $clienteID)->first('CliStatus');
+        if ($clienteStatus->CliStatus == 'Bloqueado') {
+            abort(403, "el acceso a la lista de certificados se encuentra bloqueado, comuniquese con su asesor comercial en PROSARC S.A. ESP");
+        }
 
         $certificados = Certificado::where(function($query){
             switch (Auth::user()->UsRol) {
