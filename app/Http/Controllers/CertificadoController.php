@@ -45,6 +45,7 @@ class CertificadoController extends Controller
                     ->join('sedes', 'sedes.ID_Sede', 'areas.FK_AreaSede')
                     ->join('clientes', 'clientes.ID_Cli', 'sedes.FK_SedeCli')
                     ->where('personals.ID_Pers', Auth::user()->FK_UserPers)
+                    ->where('clientes.CliStatus', 'Autorizado')
                     ->value('clientes.ID_Cli');
 
                     $servicioscertificadosdelcliente = SolicitudServicio::where('FK_SolSerCliente',$UserSedeID)
