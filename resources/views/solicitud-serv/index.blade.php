@@ -16,11 +16,12 @@
 				<div class="box-header">
 					<h3 class="box-title">{{ trans('adminlte_lang::message.solsertitleindex') }}</h3>
 					@if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR))
-						@if(isset($Cliente)&&($Cliente->CliStatus=="Autorizado"))
+						{{-- @if(isset($Cliente)&&($Cliente->CliStatus=="Autorizado"))
 							<a href="solicitud-servicio/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
 						@else
 							<a href="#" disabled class="btn btn-default pull-right" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" data-delay='{"show": 200}' title="<b>Solicitudes nuevas deshabilitadas</b>" data-content="<p style='width: 50%'> Actualmente se encuentra deshabilitado para realizar nuevas solicitudes de servicio <br>Para más detalles comuníquese con su <b>Asesor Comercial</b> </p>">{{ trans('adminlte_lang::message.create') }}</a>
-						@endif
+						@endif --}}
+							<a href="solicitud-servicio/create" class="btn btn-primary pull-right">{{ trans('adminlte_lang::message.create') }}</a>
 					@endif
 				</div>
 				<div class="box box-info">
@@ -192,7 +193,7 @@
 								<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
 									<i class="fas fa-exclamation-triangle"></i>
 									<span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere `+text+` la solicitud <b>N° `+id+`</b>?</p></span>
-								</div> 
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
@@ -244,7 +245,7 @@
 
 							toastr.success(res['message']);
 							break;
-					
+
 						default:
 							buttonsubmit.each(function() {
 								$(this).on('click', function(event) {
@@ -275,9 +276,9 @@
 							buttonsubmit.prop('class', 'btn btn-default');
 							buttonsubmit.empty();
 							buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificado`);
-							
+
 							break;
-					
+
 						default:
 							buttonsubmit.each(function() {
 								$(this).on('click', function(event) {
@@ -316,7 +317,7 @@
 								<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
 									<i class="fas fa-exclamation-triangle"></i>
 									<span style="font-size: 0.3em; color: black;"><p>¿Seguro(a) quiere `+text+` la solicitud <b>N° `+id+`</b>?</p></span>
-								</div> 
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">No, salir</button>
@@ -368,7 +369,7 @@
 
 							toastr.success(res['message']);
 							break;
-					
+
 						default:
 							buttonsubmit.each(function() {
 								$(this).on('click', function(event) {
@@ -399,9 +400,9 @@
 							buttonsubmit.prop('class', 'btn btn-default');
 							buttonsubmit.empty();
 							buttonsubmit.append(`<i class="fas fa-certificate"></i> Certificado`);
-							
+
 							break;
-					
+
 						default:
 							buttonsubmit.each(function() {
 								$(this).on('click', function(event) {
