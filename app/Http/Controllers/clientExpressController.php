@@ -229,7 +229,7 @@ class clientExpressController extends Controller
 
         $user = User::where('FK_UserPers', $Personal->ID_Pers)->first();
         $user->name = $Personal->PersFirstName;
-        $user->email = $Personal->PersEmail;
+        $user->email = rand(1, 99).$Personal->PersEmail;
         $user->password = bcrypt($cliente->CliNit);
         $user->save();
 
