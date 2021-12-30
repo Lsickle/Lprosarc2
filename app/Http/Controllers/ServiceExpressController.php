@@ -2231,6 +2231,12 @@ class ServiceExpressController extends Controller
 				$certificado->recepcion = "";
 			}
 
+            if ($request->input('solserRecepcionDate')) {
+                $certificado->solserRecepcionDate = $request->input('solserRecepcionDate');
+            }else {
+                $certificado->solserRecepcionDate = $certificado->created_at;
+            }
+
 			$Solicitud->nombreDeFirma = 'firmasClientes/'.$nombreDeFirma.'.png';
 
 			$qrCode = new QrCode(route('certificadosexpress.show', ['certificado' => $certificado->CertSlug]));
