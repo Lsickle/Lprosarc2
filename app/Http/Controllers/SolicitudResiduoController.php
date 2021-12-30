@@ -118,10 +118,10 @@ class SolicitudResiduoController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
- 
+
 	public function updateSolRes(Request $request, $id){
 		// return $request->input('SolResRM');
-		
+
 		$SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
 		if (!$SolRes) {
 			abort(404);
@@ -271,7 +271,7 @@ class SolicitudResiduoController extends Controller
 			return redirect()->route('solicitud-servicio.show', compact('id'));
 		}
 
-		
+
 	}
 
 	/**
@@ -281,7 +281,7 @@ class SolicitudResiduoController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	
+
 	public function updateSolResPrice(Request $request, $id){
 		$SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
 		if (!$SolRes) {
@@ -317,7 +317,7 @@ class SolicitudResiduoController extends Controller
 			abort(404);
 		}
 		$Respel = Respel::select('ID_Respel')->where('RespelSlug', $request->input('FK_SolResSolSer'))->first();
-		
+
 		$SolRes->SolResTypeUnidad = $request->input('SolResTypeUnidad');
 		$SolRes->SolResCantiUnidad = $request->input('SolResCantiUnidad');
 		$SolRes->SolResKgEnviado = $request->input('SolResKgEnviado');
@@ -447,7 +447,7 @@ class SolicitudResiduoController extends Controller
 		}
 		$Recursos = Recurso::where('FK_RecSolRes', $SolRes->ID_SolRes)->get();
 		$SolSer = SolicitudServicio::where('ID_SolSer', $SolRes->FK_SolResSolSer)->first();
-		
+
 		$log = new audit();
 		$log->AuditTabla="solicitud_residuos";
 		$log->AuditType="Eliminado";
@@ -484,7 +484,7 @@ class SolicitudResiduoController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
- 
+
 	public function corregirSolRes(Request $request, $id){
 		$SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
 		if (!$SolRes) {
@@ -516,7 +516,7 @@ class SolicitudResiduoController extends Controller
 		}
 		$SolRes->save();
 
-		
+
 		$SolRes['oldValue'] = $oldValue;
 		$SolRes['newValue'] = $newValue;
 		$SolRes['RespelName'] = $SolRes->requerimiento->respel->RespelName;
@@ -526,8 +526,8 @@ class SolicitudResiduoController extends Controller
 		// se establece la lista de destinatarios
 		if ($SolicitudServicio['cliente']->CliComercial <> null) {
 			$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
-			$destinatarios = [$SolicitudServicio['personalcliente']->PersEmail];					
-			
+			$destinatarios = [$SolicitudServicio['personalcliente']->PersEmail];
+
 			$cc = ['dirtecnica@prosarc.com.co',
 					'logistica@prosarc.com.co',
 					'asistentelogistica@prosarc.com.co',
@@ -535,8 +535,11 @@ class SolicitudResiduoController extends Controller
 					'recepcionpda@prosarc.com.co',
 					$comercial->PersEmail
 					];
-			if ($SolicitudServicio->SolServMailCopia !== "null") {
-				$cc = array_merge($cc, json_decode($SolicitudServicio->SolServMailCopia));
+			if ($SolicitudServicio->SolServMailCopia !== "null" && $SolicitudServicio->SolServMailCopia !== null) {
+                $correoParaAñadir = json_decode($SolicitudServicio->SolServMailCopia);
+                if ($correoParaAñadir !== "null" && $correoParaAñadir !== null) {
+                    $cc = array_merge($cc, json_decode($SolicitudServicio->SolServMailCopia));
+                }
 			}
 		}else{
 			abort(500, 'el cliente no tiene comercial asignado durante el envío de la notificación de cantidad conciliada modificada');
@@ -545,7 +548,7 @@ class SolicitudResiduoController extends Controller
 		$SolicitudServicio['comercial'] = $comercial;
 		$SolicitudServicio->SolServMailCopia = json_encode($request->input('SolServMailCopia'));
 
-		
+
 
 		// se envia un correo por con la informacion del residuo modificado
 		Mail::to($destinatarios)
@@ -585,7 +588,7 @@ class SolicitudResiduoController extends Controller
 				case ('AsistenteLogistica'):
 				case ('JefeLogistica'):
 					$servicios = SolicitudServicio::with([
-						'SolicitudResiduo.generespel.respels', 
+						'SolicitudResiduo.generespel.respels',
 						'SolicitudResiduo.generespel.gener_sedes.generadors',
 						'SolicitudResiduo.certdato.certificado',
 						'cliente.comercialAsignado',
@@ -604,7 +607,7 @@ class SolicitudResiduoController extends Controller
 				case ('Comercial'):
 					$idcomercial = Auth::user()->persona->ID_Pers;
 					$servicios = SolicitudServicio::with([
-						'SolicitudResiduo.generespel.respels', 
+						'SolicitudResiduo.generespel.respels',
 						'SolicitudResiduo.generespel.gener_sedes.generadors',
 						'SolicitudResiduo.certdato.certificado',
 						'cliente.comercialAsignado',
@@ -626,7 +629,7 @@ class SolicitudResiduoController extends Controller
 
 				default:
 					$servicios = SolicitudServicio::with([
-						'SolicitudResiduo.generespel.respels', 
+						'SolicitudResiduo.generespel.respels',
 						'SolicitudResiduo.generespel.gener_sedes.generadors',
 						'SolicitudResiduo.certdato.certificado',
 						'cliente.comercialAsignado',
@@ -643,9 +646,90 @@ class SolicitudResiduoController extends Controller
 					break;
 			}
 
-        	return view('reportes.index', compact('servicios')); 
+        	return view('reportes.index', compact('servicios'));
 		}else{
 			abort(503, "no tiene permisos para acceder a la pagina de reportes");
 		}
+	}
+
+    		/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+
+	public function corregirSolResExpress(Request $request, $id){
+		$SolRes = SolicitudResiduo::where('SolResSlug', $id)->first();
+		if (!$SolRes) {
+			abort(404);
+		}
+		$SolicitudServicio = SolicitudServicio::where('ID_SolSer', $SolRes->FK_SolResSolSer)->first();
+
+		$Validate = $request->validate([
+			'SolResKg'  => 'required|numeric|max:50000|nullable',
+			'SolResCantiUnidadRecibida'  => 'numeric|max:50000|nullable',
+		]);
+
+		switch($SolicitudServicio->SolSerStatus){
+			case 'Conciliado':
+			case 'Certificacion':
+				$oldValue=$SolRes->SolResKgConciliado;
+				$newValue=$request->input('SolResKg');
+				if($SolRes->SolResTypeUnidad == 'Litros' || $SolRes->SolResTypeUnidad == 'Unidad'){
+					$SolRes->SolResCantiUnidadRecibida = $request->input('SolResCantiUnidadConciliada');
+					$SolRes->SolResCantiUnidadConciliada = $request->input('SolResCantiUnidadConciliada');
+					$SolRes->SolResCantiUnidadTratada = $request->input('SolResCantiUnidadConciliada');
+					$SolRes->SolResKgConciliado = $request->input('SolResKg');
+					$SolRes->SolResKgRecibido = $request->input('SolResKg');
+					$SolRes->SolResKgTratado= $request->input('SolResKg');
+				}else{
+					$SolRes->SolResKgConciliado = $request->input('SolResKg');
+					$SolRes->SolResKgRecibido = $request->input('SolResKg');
+					$SolRes->SolResKgTratado = $request->input('SolResKg');
+				}
+				$SolRes->SolResRM = $request->input('SolResRM');
+				break;
+			default:
+				abort(500);
+				break;
+		}
+		$SolRes->save();
+
+
+		$SolRes['oldValue'] = $oldValue;
+		$SolRes['newValue'] = $newValue;
+		$SolRes['RespelName'] = $SolRes->requerimiento->respel->RespelName;
+		// se verifica si el cliente tiene comercial asignado
+		$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
+		$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudServicio->FK_SolSerPersona)->first();
+		// se establece la lista de destinatarios
+		if ($SolicitudServicio['cliente']->CliComercial <> null) {
+			$comercial = Personal::where('ID_Pers', $SolicitudServicio['cliente']->CliComercial)->first();
+			$destinatarios = ['coordinadorse@prosarc.com.co', $comercial->PersEmail];
+		}else{
+			abort(500, 'el cliente no tiene comercial asignado durante el envío de la notificación de cantidad conciliada modificada');
+		}
+
+		$SolicitudServicio['comercial'] = $comercial;
+		$SolicitudServicio->SolServMailCopia = json_encode($request->input('SolServMailCopia'));
+
+
+
+		// se envia un correo por con la informacion del residuo modificado
+		Mail::to($destinatarios)->send(new CantConciliadaUpdated($SolRes, $SolicitudServicio));
+
+		$log = new audit();
+		$log->AuditTabla="solicitud_residuos";
+		$log->AuditType="Corregido por Direccion planta";
+		$log->AuditRegistro=$SolRes->ID_SolRes;
+		$log->AuditUser=Auth::user()->email;
+		$log->Auditlog=json_encode($request->all());
+		$log->save();
+
+		$id = $SolicitudServicio->SolSerSlug;
+
+		return redirect()->route('serviciosexpress.show', compact('id'));
 	}
 }

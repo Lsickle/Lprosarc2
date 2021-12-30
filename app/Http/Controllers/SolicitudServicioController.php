@@ -845,6 +845,7 @@ class SolicitudServicioController extends Controller
         switch ($SolicitudServicio->SolSerStatus) {
             case 'Residuo Faltante':
             case 'Notificado':
+            case 'Programado':
 		        return view('solicitud-serv.show', compact('SolicitudServicio','Residuos', 'GenerResiduos', 'Cliente', 'SolSerCollectAddress', 'SolSerConductor', 'TextProgramacion', 'Municipio', 'Programaciones', 'ProgramacionesActivas', 'total', 'cantidadesXtratamiento', 'tratamientos', 'Observaciones'));
                 break;
 
