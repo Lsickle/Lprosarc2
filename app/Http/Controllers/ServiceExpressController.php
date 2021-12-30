@@ -1776,56 +1776,24 @@ class ServiceExpressController extends Controller
 	 */
 	public function addRespel($id)
 	{
-		if(in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
+		if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)){
 			$Solicitud = SolicitudServicio::where('SolSerSlug', $id)->first();
 			if (!$Solicitud) {
 				abort(404);
 			}
-			if($Solicitud->SolSerStatus !== 'Residuo Faltante'){
-				abort(403, 'el servicio no se encuentra en el status correcto para añadir residuos');
-			}
-			if($Solicitud->SolSerCityTrans <> null){
-				$Municipio = Municipio::select('FK_MunCity')->where('ID_Mun', $Solicitud->SolSerCityTrans)->first();
-				$Departamento = Departamento::where('ID_Depart', $Municipio->FK_MunCity)->first();
-				$Municipios = Municipio::where('FK_MunCity', $Departamento->ID_Depart)->get();
-			}
-			if($Solicitud->FK_SolSerCollectMun <> null){
-				$Municipio2 = Municipio::select('FK_MunCity')->where('ID_Mun', $Solicitud->FK_SolSerCollectMun)->first();
-				$Departamento2 = Departamento::where('ID_Depart', $Municipio2->FK_MunCity)->first();
-				$Municipios2 = Municipio::where('FK_MunCity', $Departamento2->ID_Depart)->get();
-			}
-			$Departamentos = Departamento::all();
+			// if($Solicitud->SolSerStatus !== 'Residuo Faltante'){
+			// 	abort(403, 'el servicio no se encuentra en el status correcto para añadir residuos');
+			// }
+
 			$Cliente = Cliente::where('ID_Cli', $Solicitud->FK_SolSerCliente)->first();
-            $Requerimientos = RequerimientosCliente::where('FK_RequeClient', $Cliente->ID_Cli)->get();
-			$Sedes = Sede::select('SedeSlug','SedeName', 'ID_Sede')->where('FK_SedeCli', $Cliente->ID_Cli)->get();
-			$SGeneradors = DB::table('gener_sedes')
-				->join('generadors', 'gener_sedes.FK_GSede', '=', 'generadors.ID_Gener')
-				->join('sedes', 'generadors.FK_GenerCli', '=', 'sedes.ID_Sede')
-				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('gener_sedes.GSedeSlug', 'gener_sedes.GSedeName', 'generadors.GenerName')
-				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-				->get();
+
 			$Persona = Personal::where('ID_Pers', $Solicitud->FK_SolSerPersona)
 				->select('PersSlug','PersFirstName','PersLastName')
 				->first();
-			$Personals = DB::table('personals')
-				->join('cargos', 'personals.FK_PersCargo', '=', 'cargos.ID_Carg')
-				->join('areas', 'cargos.CargArea', '=', 'areas.ID_Area')
-				->join('sedes', 'areas.FK_AreaSede', '=', 'sedes.ID_Sede')
-				->join('clientes', 'sedes.FK_SedeCli', '=', 'clientes.ID_Cli')
-				->select('personals.PersSlug', 'personals.PersFirstName', 'personals.PersLastName', 'personals.PersEmail')
-				->where('clientes.ID_Cli', userController::IDClienteSegunUsuario())
-				->where('personals.PersDelete', 0)
-				->get();
-			$KGenviados = DB::table('solicitud_residuos')
-				->select('SolResKgEnviado')
-				->where('FK_SolResSolSer', $Solicitud->ID_SolSer)
-				->get();
-			$totalenviado = 0;
-			foreach ($KGenviados as $KGenviado) {
-				$totalenviado = $totalenviado + $KGenviado->SolResKgEnviado;
-			}
-			return view('solicitud-serv.addrespel', compact('Solicitud','Cliente','Persona','Personals','Departamentos','SGeneradors', 'Departamento','Municipios', 'Departamento2','Municipios2', 'Sedes', 'totalenviado', 'Requerimientos'));
+
+			$Sede = Sede::where('FK_SedeCli', $Cliente->ID_Cli)->first();
+
+			return view('serviciosexpress.addrespel', compact('Solicitud','Cliente','Sede','Persona'));
 		}
 		else{
 			abort(403);
@@ -1850,9 +1818,6 @@ class ServiceExpressController extends Controller
 		if(!is_null($request->input('SGenerador'))){
 			$this->createSolRes($request, $SolicitudServicio->ID_SolSer);
 		}
-
-
-		$SolicitudServicio->SolSerStatus = 'Notificado';
 		$SolicitudServicio->SolSerDescript = $request->input('SolSerDescript');
 		$SolicitudServicio->save();
 
@@ -1873,7 +1838,7 @@ class ServiceExpressController extends Controller
 		}else{
 			$Observacion->ObsMensaje = $SolicitudServicio->SolSerDescript;
 		}
-		$Observacion->ObsTipo = 'cliente';
+		$Observacion->ObsTipo = 'prosarc';
 		$Observacion->ObsRepeat = 1;
 		$Observacion->ObsDate = now();
 		$Observacion->ObsUser = Auth::user()->email;
@@ -1883,7 +1848,7 @@ class ServiceExpressController extends Controller
 
 		$SolicitudServicio['cliente'] = Cliente::where('ID_Cli', $SolicitudServicio->FK_SolSerCliente)->first();
 		// se establece la lista de destinatarios
-		$destinatarios = ['recepcionpda@prosarc.com.co'];
+		$destinatarios = ['coordinadorse@prosarc.com.co'];
 		$destinatarioscc = [];
 
 		if ($SolicitudServicio['cliente']->CliComercial <> null) {
@@ -1895,13 +1860,6 @@ class ServiceExpressController extends Controller
 
 		$SolicitudServicio['comercial'] = $comercial;
 		$SolicitudServicio['personalcliente'] = Personal::where('ID_Pers', $SolicitudServicio->FK_SolSerPersona)->first();
-
-		// añadir destinatarios para copia del cliente
-		if ($SolicitudServicio->SolServMailCopia !== "null") {
-			foreach (json_decode($SolicitudServicio->SolServMailCopia) as $key => $value) {
-				array_push($destinatarioscc, $value);
-			}
-		}
 
 		Mail::to($destinatarios)->cc($destinatarioscc)->send(new SolSerLeftRespel($SolicitudServicio));
 
@@ -2206,12 +2164,7 @@ class ServiceExpressController extends Controller
 		}
 
 		/* se guarda la firma del cliente */
-		$data_uri = $request->input('solserFirma');
-		$encoded_image = explode(",", $data_uri)[1];
-		$decoded_image = base64_decode($encoded_image);
 		$nombreDeFirma = $request->input('solserslug');
-		Storage::put('firmasClientes/'.$nombreDeFirma.'.png', $decoded_image, 'public');
-		// return Storage::download('firmasClientes/'.$nombreDeFirma.'.png');
 
 		if ($Solicitud->SolSerStatus == 'Certificacion') {
 			$certificadosDelete = CertificadoExpress::with('certdato')->where('FK_CertSolser', $Solicitud->ID_SolSer)->get();
@@ -2224,11 +2177,9 @@ class ServiceExpressController extends Controller
 		}
 
 		/* se generan los registros para certificados y manifiestos */
-
 		$this->solservdocstoreExpress($Solicitud->ID_SolSer);
 
 		/**se cambia el status del servicio a certificado */
-
 		$Solicitud->SolSerStatus = 'Certificacion';
 		$Solicitud->SolServCertStatus = 2;
 		$Solicitud->SolSerDescript = $request->input('solserdescript');
@@ -2380,7 +2331,6 @@ class ServiceExpressController extends Controller
 
 		$totalrerspel = $Solicitud->SolicitudResiduo()->get('SolResKgConciliado')->sum('SolResKgConciliado');
 
-
 		if ($totalrerspel <= 0) {
 			abort(403, 'debe indicar las cantidades de los residuos antes de poder continuar');
 		}
@@ -2394,14 +2344,12 @@ class ServiceExpressController extends Controller
 		// return Storage::download('firmasClientes/'.$nombreDeFirma.'.png');
 
 		/**se cambia el status del servicio a conciliado */
-
 		$Solicitud->SolSerStatus = 'Conciliado';
 		$Solicitud->SolServCertStatus = 1;
 		$Solicitud->SolSerDescript = $request->input('solserdescript');
 		$Solicitud->save();
 
 		/** se guarda log en la tabla de auditoria */
-
 		$log = new audit();
 		$log->AuditTabla="solicitud_servicios";
 		$log->AuditType="conciliado Express";
@@ -2421,11 +2369,6 @@ class ServiceExpressController extends Controller
 		$Observacion->ObsRol = Auth::user()->UsRol;
 		$Observacion->FK_ObsSolSer = $Solicitud->ID_SolSer;
 		$Observacion->save();
-
-		/* se generan los pdf con los certificados correspondientes */
-		/*
-			espacio para el codigo de generacion de los pdf de los certificados / manifiestos
-		*/
 
 		/**se envia notificacion con los archivos en formato pdf de los certificados */
 		$emailData = DB::table('solicitud_servicios')
@@ -2447,7 +2390,6 @@ class ServiceExpressController extends Controller
 		}
 
         Mail::to('coordinadorse@prosarc.com.co')->cc($comercialaddress)->send(new SolSerExpressConciliado($emailData));
-
 
 		return redirect()->route('serviciosexpress.show', ['id' => $Solicitud->SolSerSlug]);
 

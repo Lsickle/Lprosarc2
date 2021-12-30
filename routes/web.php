@@ -162,6 +162,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::resource('/solicitud-residuo', 'SolicitudResiduoController');
 	Route::put('/solicitud-residuo/{id}/Update', 'SolicitudResiduoController@updateSolRes');
 	Route::put('/solicitud-residuo/{id}/corregirSolRes', 'SolicitudResiduoController@corregirSolRes');
+	Route::put('/solicitud-residuo/{id}/corregirSolResExpress', 'SolicitudResiduoController@corregirSolResExpress');
 	Route::put('/solicitud-residuo/{id}/UpdatePrice', 'SolicitudResiduoController@updateSolResPrice');
 	Route::get('/reportes', 'SolicitudResiduoController@reportes')->name('solicitud-residuos.reportes');
 	Route::resource('/solicitud-servicio', 'SolicitudServicioController');

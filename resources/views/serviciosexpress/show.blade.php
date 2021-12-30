@@ -266,6 +266,19 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 														@endif
 														<i class="fas fa-marker"></i></a>
 													@endif
+
+                                                    @if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR))
+														@if(($SolicitudServicio->SolSerStatus === 'Conciliado'||$SolicitudServicio->SolSerStatus === 'Certificacion') && (count($Programaciones)>$ProgramacionesActivas))
+															@if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
+																<a onclick="editKgConciliado(`{{$Residuo->SolResSlug}}`, `{{$Residuo->SolResCantiUnidadRecibida}}`, `{{$Residuo->SolResCantiUnidadConciliada}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido == 0 ? '' : number_format($Residuo->SolResKgRecibido, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)">
+															@else
+																<a onclick="editKgConciliado(`{{$Residuo->SolResSlug}}`, `{{number_format($Residuo->SolResKgRecibido, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{number_format($Residuo->SolResKgConciliado, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, `{{$TypeUnidad}}`, `{{$Residuo->SolResKgRecibido == 0 ? '' : number_format($Residuo->SolResKgRecibido, $decimals = 2, $dec_point = ',', $thousands_sep = '.')}}`, null, `{!!json_encode($Residuo->SolResRM2, JSON_NUMERIC_CHECK)!!}`)">
+															@endif
+														@else
+															<a style="color: black">
+														@endif
+														<i class="fas fa-marker"></i></a>
+													@endif
 													{{-- @if($Residuo->SolResTypeUnidad == 'Litros' || $Residuo->SolResTypeUnidad == 'Unidad')
 														{{$Residuo->SolResCantiUnidadRecibida === null ? 'N/A' : $Residuo->SolResCantiUnidadRecibida }}
 													@else
@@ -678,6 +691,8 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 	@endif
 @endif
 
+{{-- funcion para corregir peso luego de la certificacion --}}
+
 @if(in_array(Auth::user()->UsRol, Permisos::UpdateCantConciliada) || in_array(Auth::user()->UsRol2, Permisos::UpdateCantConciliada))
 <script>
 	function editKgConciliado(slug, cantidad, cantidadmax, tipo, cantidadKG, KgConciliado, SolResRM){
@@ -688,7 +703,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 		// var arrayRMs = {!! json_encode($SolicitudServicio->SolSerRMs) !!};
 		$('#addkgmodal').empty();
 		$('#addkgmodal').append(`
-			<form role="form" action="/solicitud-residuo/`+slug+`/corregirSolRes" method="POST" enctype="multipart/form-data" data-toggle="validator" id="FormKg">
+			<form role="form" action="/solicitud-residuo/`+slug+`/corregirSolResExpress" method="POST" enctype="multipart/form-data" data-toggle="validator" id="FormKg">
 				@method('PUT')
 				@csrf
 				<div class="modal modal-default fade in" id="editkgRecibido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -831,7 +846,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 								<span style="font-size: 0.3em; color: black;"><p>¿Acepta marcar la solicitud de servicio como <b>`+status+`</b>?</p></span>
 							</div>
 						</div>
-						<form action="/serviciosexpress/certificarExpress" method="POST" enctype="multipart/form-data" data-toggle="validator" id="SolSer">
+						<form action="/serviciosexpress/conciliarExpress" method="POST" enctype="multipart/form-data" data-toggle="validator" id="SolSer">
 							<div class="modal-header">
 								@csrf
 								<div class="form-group col-md-12">
@@ -966,7 +981,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			observacion = area.value;
 		});
 
-		function envsubmitcertificarExpress(){
+		function envsubmitconciliarExpress(){
 			$('form').on('submit', function(){
 				var data = signaturePad.toDataURL('image/png');
   				var input = document.getElementById('signature-data');
@@ -994,9 +1009,82 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 				}
 			});
 		}
+		envsubmitconciliarExpress();
+		$('#myModal').modal();
+	}
+
+    function ModalCertificar(slug, status){
+		$('#ModalStatus').empty();
+		$('#ModalStatus').append(`
+			<div class="modal modal-default fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<div style="font-size: 5em; color: #f39c12; text-align: center; margin: auto;">
+								<span style="font-size: 0.3em; color: black;"><p>¿Acepta marcar la solicitud de servicio como <b>`+status+`</b>?</p></span>
+							</div>
+						</div>
+						<form action="/serviciosexpress/certificarExpress" method="POST" enctype="multipart/form-data" data-toggle="validator" id="SolSer">
+							<div class="modal-header">
+								@csrf
+								<div class="form-group col-md-12">
+									<label  color: black; text-align: left;" data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>{{ trans('adminlte_lang::message.solserstatusdescrip') }}</b>" data-content="{{ trans('adminlte_lang::message.solserstatusdescripdetaill') }}"><i style="font-size: 1.8rem; color: Dodgerblue;" class="fas fa-info-circle fa-2x fa-spin"></i>{{trans('adminlte_lang::message.solserstatusdescrip')}}</label>
+									<small id="caracteresrestantes" class="help-block with-errors">`+(status == 'No Deacuerdo' ? '*' : '')+`</small>
+									<textarea onchange="updatecaracteres()" id="textDescription" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" `+(status == 'No Deacuerdo' ? 'required' : '')+` name="solserdescript"></textarea>
+								</div>
+								<input type="submit" id="Cambiar`+slug+`" style="display: none;">
+								<input type="text" name="solserslug" value="`+slug+`" style="display: none;">
+								<input type="text" name="solserstatus" value="`+status+`" style="display: none;">
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-warning pull-left" data-dismiss="modal">Cancelar</button>
+								<label for="Cambiar`+slug+`" class='btn btn-success'>Enviar</label>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		`);
+
+		$('#SolSer').validator('update');
+		popover();
+		var area = document.getElementById("textDescription");
+		var message = document.getElementById("caracteresrestantes");
+		var maxLength = 4000;
+		$('#textDescription').keyup(function () {
+			message.innerHTML = (maxLength-area.value.length) + " caracteres restantes";
+			observacion = area.value;
+		});
+
+		function envsubmitcertificarExpress(){
+			$('form').on('submit', function(){
+				var buttonsubmit = $(this).find('[type="submit"]');
+				var idbutton = buttonsubmit[0].id;
+				if(buttonsubmit.hasClass('disabled')){
+					return false;
+				}
+				else{
+					if(idbutton != ''){
+						var label = $('label[for="'+idbutton+'"]');
+						$(label).empty();
+						$(label).append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+						$(label).attr('disabled', true);
+					}
+					buttonsubmit.prop('disabled', true);
+					buttonsubmit.empty();
+					buttonsubmit.append(`<i class="fas fa-sync fa-spin"></i> Enviando...`);
+					$(this).submit(function(){
+						return false;
+					});
+					return true;
+				}
+			});
+		}
 		envsubmitcertificarExpress();
 		$('#myModal').modal();
 	}
+
 	$('.testswitch').bootstrapSwitch('disabled',true);
 	$('.fotoswitch').bootstrapSwitch('disabled',true);
 	$('.videoswitch').bootstrapSwitch('disabled',true);
@@ -1103,6 +1191,14 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 				</div>
 				`);
 			@endif
+
+            @if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)||in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR))
+				$('#titulo').append(`
+                    <a href='/serviciosexpress/{{$SolicitudServicio->SolSerSlug}}/add-respel ' style="margin-right:1em;" class="btn btn-warning pull-right"><i class="fas fa-exclamation-triangle"></i> Añadir Residuo </a>
+                `);
+			@endif
+
+
 			@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Cliente'))
 				@if(Auth::user()->UsRol <> trans('adminlte_lang::message.Programador'))
 					$('#titulo').append(`
@@ -1112,7 +1208,6 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			@endif
 		@break
 		@case('Programado')
-		@case('Certificacion')
 			$('#titulo').empty();
 			@if((in_array(Auth::user()->UsRol, Permisos::CLIENTE) || in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR)) && ($SolicitudServicio->SolSerTipo == 'Externo'))
 				$('#titulo').append(`
@@ -1135,6 +1230,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 					</ul>
 				</div>
 				`);
+                $('#titulo').append(`
+                    <a href='/serviciosexpress/{{$SolicitudServicio->SolSerSlug}}/add-respel ' style="margin-right:1em;" class="btn btn-warning pull-right"><i class="fas fa-exclamation-triangle"></i> Añadir Residuo </a>
+                `);
 			@endif
 			@if(in_array(Auth::user()->UsRol, Permisos::ProgVehic1) || in_array(Auth::user()->UsRol2, Permisos::ProgVehic1))
 				/*$('#titulo').append(`
@@ -1328,10 +1426,13 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 					</div>
 				`);
 			@endif
-			@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
+			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR))
 				$('#titulo').append(`
-					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Tratada')" style="float: right;" class="btn btn-success"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatustratado')}}</a>
+					<a href='#' onclick="ModalCertificar('{{$SolicitudServicio->SolSerSlug}}', 'Certificacion')" style="float: right;" class="btn btn-success"><i class="fas fa-clipboard-check"></i> Certificar</a>
 				`);
+                $('#titulo').append(`
+                    <a href='/serviciosexpress/{{$SolicitudServicio->SolSerSlug}}/add-respel ' style="margin-right:1em;" class="btn btn-warning pull-right"><i class="fas fa-exclamation-triangle"></i> Añadir Residuo </a>
+                `);
 			@endif
 			$('#titulo').append(`
 				<b>{{trans('adminlte_lang::message.solsershowconciliado')}}</b>
@@ -1389,7 +1490,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 				@endif
 			@endif
 		@break
-		@case('Certificacion')
+        @case('Certificacion')
 			$('#titulo').empty();
 			@if(in_array(Auth::user()->UsRol, Permisos::REVERSARADMIN) || in_array(Auth::user()->UsRol2, Permisos::REVERSARADMIN))
 				$('#titulo').append(`
@@ -1413,19 +1514,13 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 			$('#titulo').append(`
 				<b>{{trans('adminlte_lang::message.solsershowcertifica')}}</b>
 			`);
-			@if(in_array(Auth::user()->UsRol, Permisos::ASISTENTELOGISTICA) || in_array(Auth::user()->UsRol2, Permisos::ASISTENTELOGISTICA))
-				@if(in_array(Auth::user()->UsRol, Permisos::JEFELOGISTICA))
-				@else
-					@if ($SolicitudServicio->SolServCertStatus == 0)
-					$('#titulo').append(`
-						<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Enviar Certificados/Manifiestos</b>" data-content="<p style='width: 50%'>Asegúrese de haber cargado toda la documentación correspondiente a los certificados y/o manifiestos antes de usar este botón para enviarlos a facturación... úselo únicamente cuando este seguro de los datos de la haber completado todos los documentos </p>" href="/serviciosexpress/{{$SolicitudServicio->SolSerSlug}}/sendtobilling" class="btn btn-danger pull-right"><i class="fas fa-file-invoice-dollar"></i><b> Enviar Certificados/Manifiestos</b></a>
-					`);
-					@else
-					$('#titulo').append(`
-						<a data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Certificados/Manifiestos Enviados</b>" data-content="<p style='width: 50%'>Toda la documentación correspondiente a los certificados y/o manifiestos ya esta disponible para facturación... Aun puede modificar los archivos cargados en el sistema, sin ambargo, es conveniente que notifique los cambios al área encargada de facturación</p>" class="btn btn-default pull-right"><i class="fas fa-file-invoice-dollar"></i><b>Certificados/Manifiestos Enviados</b></a>
-					`);
-					@endif
-				@endif
+			@if(in_array(Auth::user()->UsRol, Permisos::PROGRAMADOR) || in_array(Auth::user()->UsRol2, Permisos::PROGRAMADOR))
+				$('#titulo').append(`
+					<a href='#' onclick="ModalCertificar('{{$SolicitudServicio->SolSerSlug}}', 'Certificacion')" style="float: right;" class="btn btn-success"><i class="fas fa-clipboard-check"></i> Certificar</a>
+				`);
+                $('#titulo').append(`
+                    <a href='/serviciosexpress/{{$SolicitudServicio->SolSerSlug}}/add-respel ' style="margin-right:1em;" class="btn btn-warning pull-right"><i class="fas fa-exclamation-triangle"></i> Añadir Residuo </a>
+                `);
 			@endif
 		@break
 		@case('Facturado')
