@@ -1033,6 +1033,8 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 									<small id="caracteresrestantes" class="help-block with-errors">`+(status == 'No Deacuerdo' ? '*' : '')+`</small>
 									<textarea onchange="updatecaracteres()" id="textDescription" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" `+(status == 'No Deacuerdo' ? 'required' : '')+` name="solserdescript"></textarea>
 								</div>
+                                `+('<div class="form-group col-md-12"><label color: black; text-align: left;" >fecha de recepción</label><input required type="date" name="solserRecepcionDate" class="form-control col-xs-12"></div>')+`
+
 								<input type="submit" id="Cambiar`+slug+`" style="display: none;">
 								<input type="text" name="solserslug" value="`+slug+`" style="display: none;">
 								<input type="text" name="solserstatus" value="`+status+`" style="display: none;">
@@ -1244,25 +1246,6 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 					<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Conciliada')" style="float: right;" class="btn btn-success"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusconciliado')}}</a>
 				`);
 			@endif
-			@if(in_array(Auth::user()->UsRol, Permisos::SolSer1) || in_array(Auth::user()->UsRol2, Permisos::SolSer1))
-				@if($ProgramacionesActivas == count($Programaciones))
-
-				@elseif($ProgramacionesActivas == 0)
-					$('#titulo').append(`
-						<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-success pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}</a>
-					`);
-					$('#titulo').append(`
-						<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Residuo Faltante')" style="margin-right:1em;" class="btn btn-warning pull-right"><i class="fas fa-exclamation-triangle"></i> Residuo Faltante</a>
-					`);
-				@else
-					$('#titulo').append(`
-						<a href='#' data-placement="auto" data-trigger="hover" data-html="true" data-toggle="popover" title="<b>Faltan Vehiculos por Recibir</b>" data-content="<p style='width: 50%'>Asegúrese de que todos los vehículos correspondientes a la solicitud de servicio <b>#{{$SolicitudServicio->ID_SolSer}}</b> hayan sido recibidos por el área de Logística antes de marcar solicitud de servicio como <b>recibida</b><br>Para mas detalles comuníquese con el <b>Jefe de Logística</b> </p>" onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Recibida')" class="btn btn-warning pull-right"><i class="fas fa-clipboard-check"></i> {{trans('adminlte_lang::message.solserstatusrecibido')}}-Faltan Vehiculos</a>
-					`);
-					$('#titulo').append(`
-						<a href='#' onclick="ModalStatus('{{$SolicitudServicio->SolSerSlug}}', 'Residuo Faltante')" style="margin-right:1em;" class="btn btn-warning pull-right"><i class="fas fa-exclamation-triangle"></i> Residuo Faltante</a>
-					`);
-				@endif
-			@endif
 		@break
 		@case('Notificado')
 			$('#titulo').empty();
@@ -1417,11 +1400,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 							Reversar <span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu">
-							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Notificado')" href="#">Notificado</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Completado')" href="#">Completado</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Residuo Faltante')" href="#">Residuo Faltante</a></li>
+							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Programado')" href="#">Programado</a></li>
 						</ul>
 					</div>
 				`);
@@ -1461,11 +1440,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 					Reversar <span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Notificado')" href="#">Notificado</a></li>
-					<li role="separator" class="divider"></li>
-					<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Completado')" href="#">Completado</a></li>
-					<li role="separator" class="divider"></li>
-					<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Residuo Faltante')" href="#">Residuo Faltante</a></li>
+					<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Programado')" href="#">Programado</a></li>
 					<li role="separator" class="divider"></li>
 					<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Conciliado')" href="#">Conciliado</a></li>
 				</ul>
@@ -1499,14 +1474,9 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 							Reversar <span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu">
-							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Notificado')" href="#">Notificado</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Completado')" href="#">Completado</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Residuo Faltante')" href="#">Residuo Faltante</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Conciliado')" href="#">Conciliado</a></li>
-							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Facturado')" href="#">Facturado</a></li>
+							<li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Programado')" href="#">Programado</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a onclick="ModalReversar('{{$SolicitudServicio->SolSerSlug}}', 'Conciliado')" href="#">Conciliado</a></li>
 						</ul>
 					</div>
 				`);
