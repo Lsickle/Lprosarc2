@@ -2174,7 +2174,6 @@ class ServiceExpressController extends Controller
 				}
 				$value->delete();
 			}
-            $solserRecepcionDate = $request->input('solserRecepcionDate');
 		}
 
 		/* se generan los registros para certificados y manifiestos */
@@ -2232,8 +2231,8 @@ class ServiceExpressController extends Controller
 				$certificado->recepcion = "";
 			}
 
-            if ($solserRecepcionDate != null) {
-                $certificado->solserRecepcionDate = $solserRecepcionDate;
+            if ($request->input('solserRecepcionDate')) {
+                $certificado->solserRecepcionDate = $request->input('solserRecepcionDate');
             }else {
                 $certificado->solserRecepcionDate = $certificado->created_at;
             }

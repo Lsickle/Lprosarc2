@@ -1033,7 +1033,7 @@ Solicitud de servicio N° {{$SolicitudServicio->ID_SolSer}}
 									<small id="caracteresrestantes" class="help-block with-errors">`+(status == 'No Deacuerdo' ? '*' : '')+`</small>
 									<textarea onchange="updatecaracteres()" id="textDescription" rows ="5" style="resize: vertical;" maxlength="4000" class="form-control col-xs-12" `+(status == 'No Deacuerdo' ? 'required' : '')+` name="solserdescript"></textarea>
 								</div>
-                                `+(status == 'Certificacion' ? '<div class="form-group col-md-12"><label color: black; text-align: left;" >fecha de recepción</label><input required type="date" name="solserRecepcionDate" class="form-control col-xs-12"></div>' : '')+`
+                                `+('<div class="form-group col-md-12"><label color: black; text-align: left;" >fecha de recepción</label><input required type="date" name="solserRecepcionDate" class="form-control col-xs-12"></div>')+`
 
 								<input type="submit" id="Cambiar`+slug+`" style="display: none;">
 								<input type="text" name="solserslug" value="`+slug+`" style="display: none;">
