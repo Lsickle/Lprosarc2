@@ -283,7 +283,7 @@
 							<table>
 								<tr>
 									<td style="text-align: justify; font-size: 12px; line-height: 14px;">
-										El <b><i>GENERADOR</i></b> entregó su(s) residuo(s) y/o desecho(s) a <b>Prosarc S.A. ESP.</b> para tratamiento de <b>TermoDestrucción</b> durante el dia <b>{{date('Y-m-d', strtotime($certificado->created_at))}}</b>, de acuerdo con la información del servicio <b>#{{$certificado->FK_CertSolser}}</b>:
+										El <b><i>GENERADOR</i></b> entregó su(s) residuo(s) y/o desecho(s) a <b>Prosarc S.A. ESP.</b> para tratamiento de <b>TermoDestrucción</b> durante el dia <b>{{date('Y-m-d', strtotime($certificado->solserRecepcionDate))}}</b>, de acuerdo con la información del servicio <b>#{{$certificado->FK_CertSolser}}</b>:
 									</td>
 								</tr>
 							</table>
