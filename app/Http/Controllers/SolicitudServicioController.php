@@ -118,7 +118,11 @@ class SolicitudServicioController extends Controller
 		foreach ($Servicios as $servicio) {
 			if($servicio->SolSerTypeCollect == 98){
 				$Address = Sede::select('SedeAddress')->where('ID_Sede',$servicio->SolSerCollectAddress)->first();
-				$servicio->SolSerCollectAddress = $Address->SedeAddress;
+                //validacion de servicio con error
+            //     if  (!$Address) {
+            //         return $servicio->ID_SolSer;
+            //    }
+                    $servicio->SolSerCollectAddress = $Address->SedeAddress;
 			}
 
 			/* validacion para encontrar la fecha de recepción en planta del servicio */
