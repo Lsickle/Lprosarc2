@@ -55,7 +55,7 @@
     "jszip": "^3.2.2",
     "laravel-mix": "^4.1.4",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "pdfmake": "^0.1.63",
     "popper.js": "^1.16.1",
     "select2": "^4.0.13",
